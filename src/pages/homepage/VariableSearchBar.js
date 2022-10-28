@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function VariableSearchBar(props) {
   const { variables } = props;
 
-  const history = useHistory();
+  const history = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
 
   // We add logic here to reduce the number of searchable variables

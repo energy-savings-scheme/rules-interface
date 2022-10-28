@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Switch } from 'react-router-dom';
 
 // Import Pages
 import CalculatePage from 'pages/calculate/CalculatePage';
@@ -96,82 +96,56 @@ function App() {
 
       {loading && <SpinnerFullscreen />}
 
-      <Switch>
-        <Route path="/" exact>
-          <Breadcrumb />
-          <Homepage schedules={schedules} variables={variables} />
-        </Route>
-        <Route path="/calculate" exact>
-          <Breadcrumb />
-          <CalculatePage entities={entities} variables={variables} />
-        </Route>
-        <Route path="/commercialac" exact>
-          <Breadcrumb />
-          <CommercialAC entities={entities} variables={variables} />
-        </Route>
-        <Route path="/commercialwh" exact>
-          <Breadcrumb />
-          <CommercialWH entities={entities} variables={variables} />
-        </Route>
-        <Route path="/commercialwh/base_eligibility_commercialwh" exact>
-          <Breadcrumb />
-          <BaseEligibilityCommercialWH
-            entities={entities}
-            variables={variables}
-            variableToLoad="ESS__PDRS__ACP_base_scheme_eligibility"
-            setEntities={setEntities}
-            setVariables={setVariables}
-            setLoading={setLoading}
-          />
-        </Route>
-        <Route path="/commercialac/base_eligibility_commercialac" exact>
-          <Breadcrumb />
-          <BaseEligibilityCommercialAC
-            entities={entities}
-            variables={variables}
-            variableToLoad="ESS__PDRS__ACP_base_scheme_eligibility"
-            setEntities={setEntities}
-            setVariables={setVariables}
-            setLoading={setLoading}
-          />
-        </Route>
-        <Route path="/commercialac/activity-requirements" exact>
-          <Breadcrumb />
-          <ActivityRequirementsCommercialAC
-            entities={entities}
-            variables={variables}
-            variableToLoad="HVAC2_installation_replacement_final_activity_eligibility"
-            setEntities={setEntities}
-            setVariables={setVariables}
-            setLoading={setLoading}
-          />
-        </Route>
-        <Route path="/commercialac/certificate-estimator" exact>
-          <Breadcrumb />
-          <CertificateEstimatorHVAC
-            entities={entities}
-            variables={variables}
-            hvacBrands={hvacBrands}
-            loading={loading}
-            setEntities={setEntities}
-            setVariables={setVariables}
-            setLoading={setLoading}
-            setHvacBrands={setHvacBrands}
-          />
-        </Route>
-        <Route path="/commercialwh/certificate-estimator" exact>
-          <Breadcrumb />
-          <CertificateEstimatorWH
-            entities={entities}
-            variables={variables}
-            brands={whBrands}
-            setEntities={setEntities}
-            setVariables={setVariables}
-            setLoading={setLoading}
-          />
-        </Route>
+      <Breadcrumb />
+      
+      <Routes>
+        <Route exact path="/" element={<Homepage schedules={schedules} variables={variables} />} />
+
+        <Route exact path="/calculate" element={<CalculatePage schedules={schedules} variables={variables} />} />
+
+        <Route exact path="/commercialac" element={<CommercialAC schedules={schedules} variables={variables} />} />
+
+        <Route exact path="/commercialwh" element={<CommercialWH schedules={schedules} variables={variables} />} />
+
+        <Route exact path="/commercialwh/base_eligibility_commercialwh" element={<BaseEligibilityCommercialWH entities={entities}
+          variables={variables}
+          variableToLoad="ESS__PDRS__ACP_base_scheme_eligibility"
+          setEntities={setEntities}
+          setVariables={setVariables}
+          setLoading={setLoading} />} />
+
+        <Route exact path="/commercialac/base_eligibility_commercialac" element={<BaseEligibilityCommercialAC entities={entities}
+          variables={variables}
+          variableToLoad="ESS__PDRS__ACP_base_scheme_eligibility"
+          setEntities={setEntities}
+          setVariables={setVariables}
+          setLoading={setLoading} />} />
+
+        <Route exact path="/commercialac/activity-requirements" element={<ActivityRequirementsCommercialAC entities={entities}
+          variables={variables}
+          variableToLoad="HVAC2_installation_replacement_final_activity_eligibility"
+          setEntities={setEntities}
+          setVariables={setVariables}
+          setLoading={setLoading} />} />
+
+        <Route exact path="/commercialac/certificate-estimator" element={<CertificateEstimatorHVAC entities={entities}
+          variables={variables}
+          hvacBrands={hvacBrands}
+          loading={loading}
+          setEntities={setEntities}
+          setVariables={setVariables}
+          setLoading={setLoading}
+          setHvacBrands={setHvacBrands} />} />
+
+        <Route exact path="/commercialwh/certificate-estimator" element={<CertificateEstimatorWH entities={entities}
+          variables={variables}
+          brands={whBrands}
+          setEntities={setEntities}
+          setVariables={setVariables}
+          setLoading={setLoading} />} />
+
         <Route path="*">Not Found</Route>
-      </Switch>
+      </Routes>
 
       <Footer />
     </Router>

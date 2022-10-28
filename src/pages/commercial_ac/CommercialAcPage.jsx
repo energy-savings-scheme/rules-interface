@@ -1,9 +1,6 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import Card from 'nsw-ds-react/card/card';
 
-import VariableSearchBar from 'pages/homepage/VariableSearchBar';
-
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
-import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
 
 export default function CommercialAC(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;

@@ -5,7 +5,6 @@ import ScheduleTile from './ScheduleTile';
 
 import Card, { CardCopy } from 'nsw-ds-react/card/card';
 import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
-import { Breadcrumbs } from 'nsw-ds-react/breadcrumbs/breadcrumb';
 
 export default function Homepage(props) {
   const { variables, schedules } = props;
