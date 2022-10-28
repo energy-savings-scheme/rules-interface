@@ -31,3 +31,5 @@ src/fullList.json
 # IDE tools
 .vscode
 .idea
+yarn.lock
+package-lock.json
