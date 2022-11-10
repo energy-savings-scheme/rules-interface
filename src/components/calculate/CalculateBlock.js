@@ -18,6 +18,7 @@ export default function CalculateBlock(props) {
     setCalculationResult,
     setCalculationResult2,
     setCalculationError,
+    setCalculationError2,
     stepNumber,
     setStepNumber,
     formValues,
@@ -358,6 +359,7 @@ export default function CalculateBlock(props) {
       setCalculationResult={setCalculationResult}
       setCalculationResult2={setCalculationResult2}
       setCalculationError={setCalculationError}
+      setCalculationError2={setCalculationError2}
       stepNumber={stepNumber}
       setStepNumber={setStepNumber}
       dependencies={dependencies}

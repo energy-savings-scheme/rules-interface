@@ -8,18 +8,29 @@ import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progres
 import DropDownMenu from 'components/form_elements/DropDownMenu';
 import Button from 'nsw-ds-react/button/button';
 import { FormGroupSelect } from 'nsw-ds-react/forms';
-import RegistryApi from 'services/registry_api';
-import CertificateEstimatorLoadClausesWH from './CertificateEstimatorLoadClausesWH';
 import { FormGroup, TextInput, Select } from 'nsw-ds-react/forms';
-import OpenFiscaApi from 'services/openfisca_api';
+import RegistryApi from 'services/registry_api';
+import CertificateEstimatorLoadClauses from './CertificatEstimatorLoadClausesRC';
+import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
+import OpenFiscaApi from 'services/openfisca_api';
+import Notification from 'nsw-ds-react/notification/notification';
+import CertificateEstimatorLoadClausesRC from './CertificatEstimatorLoadClausesRC';
 
-export default function CertificateEstimatorWH(props) {
-  const { entities, variables, brands, loading, setLoading } = props;
+export default function CertificateEstimatorRC(props) {
+  const {
+    entities,
+    variables,
+    RF2Brands,
+    setVariables,
+    setEntities,
+    setRF2Brands,
+    loading,
+    setLoading,
+  } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
-  const [dependencies, setDependencies] = useState([]);
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [dropdownOptionsModels, setDropdownOptionsModels] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState(null);
@@ -27,15 +38,50 @@ export default function CertificateEstimatorWH(props) {
   const [models, setModels] = useState([]);
   const [metadata, setMetadata] = useState(null);
   const [calculationResult, setCalculationResult] = useState(null);
+  const [calculationResult2, setCalculationResult2] = useState(null);
   const [calculationError, setCalculationError] = useState(false);
   const [calculationError2, setCalculationError2] = useState(false);
   const [postcode, setPostcode] = useState(null);
-  const [calculationResult2, setCalculationResult2] = useState(null);
-  const [zone, setZone] = useState(0);
+  const [zone, setZone] = useState(null);
   const [registryData, setRegistryData] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    setDropdownOptions([{ value: '', text: 'Please select brand' }]);
+
+    if (variables.length < 1) {
+      OpenFiscaAPI.listEntities()
+        .then((res) => {
+          setEntities(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    if (entities.length < 1) {
+      OpenFiscaAPI.listVariables()
+        .then((res) => {
+          setVariables(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    if (RF2Brands.length < 1) {
+      RegistryApi.getRF2Brands()
+        .then((res) => {
+          setRF2Brands(res.data);
+          setLoading(false);
+          setRegistryData(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          setRegistryData(false);
+        });
+    }
   }, []);
 
   // For brands
@@ -54,6 +100,7 @@ export default function CertificateEstimatorWH(props) {
 
   useEffect(() => {
     setDropdownOptionsModels([{ value: '', text: 'Please select model' }]);
+
     models.forEach((item) => populateModelDropDown({ text: item, value: item }));
   }, [models]);
 
@@ -66,7 +113,7 @@ export default function CertificateEstimatorWH(props) {
       model: selectedModel,
     };
     console.log(payload);
-    RegistryApi.getWHModelsMetadata(payload)
+    RegistryApi.getRF2ModelsMetadata(payload)
       .then((res) => {
         setMetadata(res.data);
       })
@@ -78,15 +125,15 @@ export default function CertificateEstimatorWH(props) {
   }, [selectedModel]);
 
   useEffect(() => {
-    setDropdownOptions([{ value: '', text: 'Please select brand' }]);
-
-    brands.forEach((item) => populateDropDown({ text: item, value: item }));
-  }, [brands]);
+    if (RF2Brands.length > 1) {
+      RF2Brands.forEach((item) => populateDropDown({ text: item, value: item }));
+    }
+  }, [RF2Brands]);
 
   useEffect(() => {
     console.log(selectedBrand);
 
-    RegistryApi.listWHModels(selectedBrand)
+    RegistryApi.listRF2Models(selectedBrand)
       .then((res) => {
         setModels(res.data);
         setRegistryData(true);
@@ -99,36 +146,8 @@ export default function CertificateEstimatorWH(props) {
     console.log(models);
   }, [selectedBrand]);
 
-  useEffect(() => {
-    const payload = {
-      buildings: {
-        building_1: {
-          WH1_PDRS__postcode: { '2021-01-01': postcode },
-          WH1_get_zone_by_postcode: { '2021-01-01': null },
-        },
-      },
-      persons: {
-        person1: {},
-      },
-    };
-
-    OpenFiscaApi.postCalculate(payload)
-      .then((res) => {
-        var result = res.data.buildings.building_1['WH1_get_zone_by_postcode']['2021-01-01'];
-        setZone(result);
-        console.log(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    console.log('********');
-    console.log(zone);
-  }, [postcode]);
-
   return (
     <Fragment>
-      {/* Search section */}
       <br></br>
       <div className="nsw-layout">
         <div class="nsw-hero-banner nsw-hero-banner--dark">
@@ -137,9 +156,9 @@ export default function CertificateEstimatorWH(props) {
               <div class="nsw-hero-banner__box">
                 <img
                   class="nsw-hero-banner__image"
-                  src="/commercial_wh/WH1_Activity_Page_Hero.jpeg"
+                  src="/CommercialRefrigeratedCabinet.jpg"
                   alt=""
-                  style={{ top: '80%' }}
+                  style={{ top: '100%' }}
                 />
               </div>
             </div>
@@ -157,8 +176,8 @@ export default function CertificateEstimatorWH(props) {
             </h2>
             <br></br>
             <p className="nsw-content-block__copy">
-              Estimate your ESCs and PRCs for the Commercial Heat Pump Water Heater Activity (F16 in
-              the ESS and WH1 in the PDRS) by answering the following questions.{' '}
+              Estimate your ESCs and PRCs for the Commercial Refrigerated Cabinet Activity (F1 in
+              the ESS and RF2 in the PDRS) by answering the following questions.
             </p>
             <p className="nsw-content-block__copy">
               Please keep in mind that the results are indicative only and cannot be promoted or
@@ -168,8 +187,9 @@ export default function CertificateEstimatorWH(props) {
         </div>
 
         <p className="nsw-content-block__copy">
-          <b> Commercial heat pump water heater certificate estimator </b>
+          <b> Commercial refrigerated cabinet certificate estimator</b>
         </p>
+
         <ProgressIndicator step={stepNumber} of={3} />
 
         <Fragment>
@@ -177,6 +197,7 @@ export default function CertificateEstimatorWH(props) {
             <div className="nsw-row">
               <div className="nsw-col" style={{ padding: 'inherit' }}>
                 <div className="nsw-content-block">
+                  <br></br>
                   <br></br>
                   <br></br>
                   <div className="nsw-content-block__content">
@@ -203,14 +224,14 @@ export default function CertificateEstimatorWH(props) {
                     </FormGroup>
                     <FormGroup
                       label="Brand"
-                      helper="Select commercial water heater brand" // primary question text
+                      helper="Select refrigerated cabinet brand" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
                         style={{ maxWidth: '50%' }}
                         options={dropdownOptions}
                         onChange={(e) => {
-                          setSelectedBrand(brands.find((item) => item === e.target.value));
+                          setSelectedBrand(RF2Brands.find((item) => item === e.target.value));
                         }}
                         value={selectedBrand}
                         required
@@ -219,7 +240,7 @@ export default function CertificateEstimatorWH(props) {
 
                     <FormGroup
                       label="Model"
-                      helper="Select commercial water heater model" // primary question text
+                      helper="Select refrigerated cabinet model" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
@@ -238,39 +259,46 @@ export default function CertificateEstimatorWH(props) {
             </div>
           )}
 
+          {stepNumber === 1 && !registryData && (
+            <Notification as="error" title="Sorry! An error has occurred.">
+              <p>Unable to load data from the product registry. Please try again later.</p>
+            </Notification>
+          )}
+
+          {stepNumber === 2 && loading && <SpinnerFullscreen />}
+
           {stepNumber === 2 && (
-            <CertificateEstimatorLoadClausesWH
-              variableToLoad1={'WH1_PRC_calculation'}
-              variableToLoad2={'WH1_ESC_calculation'}
+            <CertificateEstimatorLoadClausesRC
+              variableToLoad1={'RF2_PRC_calculation'}
+              variableToLoad2={'RF2_ESC_calculation'}
               variables={variables}
+              setVariables={setVariables}
               entities={entities}
               metadata={metadata}
               calculationResult={calculationResult}
+              calculationResult2={calculationResult2}
               setCalculationResult={setCalculationResult}
+              setCalculationResult2={setCalculationResult2}
               calculationError={calculationError}
               calculationError2={calculationError2}
               setCalculationError={setCalculationError}
               setCalculationError2={setCalculationError2}
-              zone={zone}
-              postcode={postcode}
-              calculationResult2={calculationResult2}
-              setCalculationResult2={setCalculationResult2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
+              zone={zone}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
             />
           )}
 
-          {stepNumber === 2 && loading && <SpinnerFullscreen />}
-
           {stepNumber === 3 && (
-            <CertificateEstimatorLoadClausesWH
-              // calculationDate={calculationDate}
-              variableToLoad1={'WH1_PRC_calculation'}
-              variableToLoad2={'WH1_ESC_calculation'}
+            <CertificateEstimatorLoadClausesRC
+              variableToLoad1={'RF2_PRC_calculation'}
+              variableToLoad2={'RF2_ESC_calculation'}
               variables={variables}
+              setVariables={setVariables}
               entities={entities}
               metadata={metadata}
               calculationResult={calculationResult}
@@ -279,16 +307,13 @@ export default function CertificateEstimatorWH(props) {
               setCalculationError={setCalculationError}
               calculationResult2={calculationResult2}
               setCalculationResult2={setCalculationResult2}
-              // calculationResult={calculationResult}
-              // setCalculationResult={setCalculationResult}
-              // setCalculationError={setCalculationError}
-              //   dependencies={dependencies}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
-              //   formValues={formValues}
-              //   setFormValues={setFormValues}
+              zone={zone}
             />
           )}
+
+          {stepNumber === 3 && calculationError && calculationError2 && <SpinnerFullscreen />}
 
           {stepNumber === 1 &&
             registryData &&

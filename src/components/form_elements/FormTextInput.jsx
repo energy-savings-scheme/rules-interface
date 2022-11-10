@@ -7,8 +7,8 @@ export default function FormTextInput(props) {
 
   return (
     <FormGroup
-      // label={formItem.metadata && formItem.metadata.alias ? formItem.metadata.alias : formItem.name} // primary label
-      helper={formItem.metadata.display_question} // helper text (secondary label)
+      helper={formItem.metadata.display_question} // primary label
+      label={formItem.metadata.label} // helper text (secondary label)
       errorText="Invalid value!" // error text if invalid
       status={formItem.invalid && 'invalid'} // if `true` renders invalid formatting
     >

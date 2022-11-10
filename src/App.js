@@ -28,6 +28,8 @@ import CommercialWH from 'pages/commercial_wh/CommercialWhPage';
 import RegistryApi from 'services/registry_api';
 import CertificateEstimatorHVAC from 'pages/commercial_ac/CertificateEstimator';
 import CertificateEstimatorWH from 'pages/commercial_wh/CertificateEstimatorWH';
+import CertificateEstimatorResidentialAC from 'pages/residential_ac/CertificateEstimatorResidentialAC';
+import CertificateEstimatorRC from 'pages/refrigerated_cabinets/CertificateEstimatorRC';
 
 function App() {
   const [entities, setEntities] = useState([]);
@@ -37,6 +39,7 @@ function App() {
   const [hvacBrands, setHvacBrands] = useState([]);
   const [hvacModels, setHvacModels] = useState([]);
   const [whBrands, setWhBrands] = useState([]);
+  const [RF2Brands, setRF2Brands] = useState([]);
 
   const [schedules, setSchedules] = useState(variable_tree);
 
@@ -83,6 +86,14 @@ function App() {
     RegistryApi.getCommercialWHBrands()
       .then((res) => {
         setWhBrands(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    RegistryApi.getRF2Brands()
+      .then((res) => {
+        setRF2Brands(res.data);
         setLoading(false);
       })
       .catch((err) => {

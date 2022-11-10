@@ -11,14 +11,16 @@ import { FormGroup, FormGroupSelect, TextInput } from 'nsw-ds-react/forms';
 import { Notification } from 'nsw-ds-react/notification/notification';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import OpenFiscaApi from 'services/openfisca_api';
+import OpenFiscaAPI from 'services/openfisca_api';
 import VariableTreeListItem from 'components/VariableTreeListItem';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 
-export default function CertificateEstimatorLoadClauses(props) {
+export default function CertificateEstimatorLoadClausesRC(props) {
   const {
     variableToLoad1,
     variableToLoad2,
     variables,
+    setVariables,
     entities,
     setStepNumber,
     stepNumber,
@@ -41,7 +43,6 @@ export default function CertificateEstimatorLoadClauses(props) {
   console.log(postcode);
 
   console.log(stepNumber);
-  console.log(zone);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -95,85 +96,70 @@ export default function CertificateEstimatorLoadClauses(props) {
   }
 
   useEffect(() => {
-    if (variables) {
-      const variable1 = variables.find((item) => item.name === variableToLoad1);
-      const variable2 = variables.find((item) => item.name === variableToLoad2);
-
-      const offsprings1 = variable1.metadata.input_offspring;
-      const offsprings2 = variable2.metadata.input_offspring;
-
-      const children1 = variables.filter((item) => offsprings1.includes(item.name));
-      const children2 = variables.filter((item) => offsprings2.includes(item.name));
-
-      console.log(children1);
-      console.log(children2);
-
-      // Define the original array (at a minimum include the Implementation Date)
-      var array1 = [];
-      var array2 = [];
-
-      children1.map((child) => {
-        array1.push({ ...child, form_value: '', invalid: false });
-      });
-
-      children2.map((child) => {
-        array2.push({ ...child, form_value: '', invalid: false });
-      });
-
-      array2.forEach((item) => addElement(array1, item));
-
-      console.log(array1);
-
-      array1.map((formItem) => {
-        if (formItem.name === 'HVAC2_rated_AEER_input') {
-          console.log(formItem.form_value);
-          formItem.form_value = metadata['Rated AEER'];
-        }
-
-        if (formItem.name === 'HVAC2_cooling_capacity_input') {
-          if (parseInt(metadata[`cooling_SEER_${zone}`]) > 0) {
-            console.log(parseInt(metadata[`cooling_SEER_${zone}`]));
-            formItem.form_value = metadata[`cooling_SEER_${zone}`];
-          } else if (parseInt(metadata[`Commercial tcec_${zone}`]) > 0) {
-            formItem.form_value = metadata[`Commercial tcec_${zone}`];
-            console.log(parseInt(metadata[`Commercial tcec_${zone}`]));
-          } else if (metadata['Cooling Capacity'] !== '') {
-            console.log(metadata['Cooling Capacity']);
-            formItem.form_value = metadata['Cooling Capacity'];
-          }
-        }
-
-        if (formItem.name === 'HVAC2_heating_capacity_input') {
-          if (parseInt(metadata[`heating_SEER_${zone}`]) > 0) {
-            formItem.form_value = metadata[`heating_SEER_${zone}`];
-          } else if (parseInt(metadata[`Commercial thec_${zone}`]) > 0) {
-            formItem.form_value = metadata[`Commercial thec_${zone}`];
-          } else {
-            formItem.form_value = metadata['Heating Capacity'];
-          }
-        }
-
-        if (formItem.name === 'HVAC2_input_power' && metadata['Input Power'] != '') {
-          formItem.form_value = metadata['Input Power'];
-        }
-
-        if (
-          formItem.name === 'HVAC2_rated_ACOP_input' &&
-          metadata['Rated ACOP'] != '' &&
-          metadata['Rated ACOP'] != '-'
-        ) {
-          formItem.form_value = metadata['Rated ACOP'];
-        }
-        if (formItem.name === 'HVAC2_PDRS__postcode') {
-          formItem.form_value = postcode;
-          formItem.read_only = true;
-        }
-      });
-
-      array1.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
-
-      setFormValues(array1);
+    if (variables.length < 1) {
+      OpenFiscaAPI.listVariables()
+        .then((res) => {
+          setVariables(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
+    console.log(variables);
+    const variable1 = variables.find((item) => item.name === variableToLoad1);
+    console.log(variable1);
+    const variable2 = variables.find((item) => item.name === variableToLoad2);
+    console.log(variable2);
+
+    const offsprings1 = variable1.metadata.input_offspring;
+    const offsprings2 = variable2.metadata.input_offspring;
+
+    const children1 = variables.filter((item) => offsprings1.includes(item.name));
+    const children2 = variables.filter((item) => offsprings2.includes(item.name));
+
+    console.log(children1);
+    console.log(children2);
+
+    // Define the original array (at a minimum include the Implementation Date)
+    var array1 = [];
+    var array2 = [];
+
+    children1.map((child) => {
+      array1.push({ ...child, form_value: '', invalid: false });
+    });
+
+    children2.map((child) => {
+      array2.push({ ...child, form_value: '', invalid: false });
+    });
+
+    array2.forEach((item) => addElement(array1, item));
+
+    console.log(array1);
+
+    console.log(metadata);
+
+    array1.map((formItem) => {
+      if (formItem.name === 'RF2_product_EEI') {
+        console.log(formItem.form_value);
+        formItem.form_value = metadata['product_eei'];
+      }
+
+      if (formItem.name === 'RF2_total_display_area') {
+        formItem.form_value = metadata['total_display_area'];
+      }
+
+      if (formItem.name === 'RF2_total_energy_consumption') {
+        formItem.form_value = metadata['total_energy_consumption'];
+      }
+      if (formItem.name === 'RF2_PDRS__postcode') {
+        formItem.form_value = postcode;
+        formItem.read_only = true;
+      }
+    });
+
+    array1.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
+
+    setFormValues(array1);
   }, [variableData1, variableData2]);
 
   const formatResultString = (result) => {

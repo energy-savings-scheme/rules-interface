@@ -4,7 +4,7 @@ import FooterNSW, { FooterLinks, FooterLower } from 'nsw-ds-react/footer/footer'
 
 export default function Footer() {
   return (
-    <FooterNSW>
+    <FooterNSW style={{ marginTop: '8%' }}>
       <FooterLower>
         <div className="nsw-container">
           <p>

@@ -13,6 +13,9 @@ import { FormGroup, TextInput, Select } from 'nsw-ds-react/forms';
 import RegistryApi from 'services/registry_api';
 import CertificateEstimatorLoadClauses from './CertificatEstimatorLoadClauses';
 import OpenFiscaAPI from 'services/openfisca_api';
+import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
+import OpenFiscaApi from 'services/openfisca_api';
+import Notification from 'nsw-ds-react/notification/notification';
 
 export default function CertificateEstimatorHVAC(props) {
   const {
@@ -28,7 +31,6 @@ export default function CertificateEstimatorHVAC(props) {
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
-  const [dependencies, setDependencies] = useState([]);
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [dropdownOptionsModels, setDropdownOptionsModels] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState(null);
@@ -36,12 +38,17 @@ export default function CertificateEstimatorHVAC(props) {
   const [models, setModels] = useState([]);
   const [metadata, setMetadata] = useState(null);
   const [calculationResult, setCalculationResult] = useState(null);
-  const [calculationError, setCalculationError] = useState(false);
   const [calculationResult2, setCalculationResult2] = useState(null);
+  const [calculationError, setCalculationError] = useState(false);
+  const [calculationError2, setCalculationError2] = useState(false);
   const [postcode, setPostcode] = useState(null);
+  const [zone, setZone] = useState(null);
+  const [registryData, setRegistryData] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    setDropdownOptions([{ value: '', text: 'Please select brand' }]);
 
     if (variables.length < 1) {
       OpenFiscaAPI.listEntities()
@@ -68,9 +75,11 @@ export default function CertificateEstimatorHVAC(props) {
         .then((res) => {
           setHvacBrands(res.data);
           setLoading(false);
+          setRegistryData(true);
         })
         .catch((err) => {
           console.log(err);
+          setRegistryData(false);
         });
     }
   }, []);
@@ -91,6 +100,7 @@ export default function CertificateEstimatorHVAC(props) {
 
   useEffect(() => {
     setDropdownOptionsModels([{ value: '', text: 'Please select model' }]);
+
     models.forEach((item) => populateModelDropDown({ text: item, value: item }));
   }, [models]);
 
@@ -116,8 +126,6 @@ export default function CertificateEstimatorHVAC(props) {
 
   useEffect(() => {
     if (hvacBrands.length > 1) {
-      setDropdownOptions([{ value: '', text: 'Please select brand' }]);
-
       hvacBrands.forEach((item) => populateDropDown({ text: item, value: item }));
     }
   }, [hvacBrands]);
@@ -128,13 +136,42 @@ export default function CertificateEstimatorHVAC(props) {
     RegistryApi.listHvacModels(selectedBrand)
       .then((res) => {
         setModels(res.data);
+        setRegistryData(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        setRegistryData(false);
+      });
+
+    console.log(models);
+  }, [selectedBrand]);
+
+  useEffect(() => {
+    const payload = {
+      buildings: {
+        building_1: {
+          HVAC2_PDRS__postcode: { '2021-01-01': postcode },
+          HVAC2_get_climate_zone_by_postcode: { '2021-01-01': null },
+        },
+      },
+      persons: {
+        person1: {},
+      },
+    };
+
+    OpenFiscaApi.postCalculate(payload)
+      .then((res) => {
+        var result =
+          res.data.buildings.building_1['HVAC2_get_climate_zone_by_postcode']['2021-01-01'];
+        setZone(result);
+        console.log(result);
       })
       .catch((err) => {
         console.log(err);
       });
 
-    console.log(models);
-  }, [selectedBrand]);
+    console.log(zone);
+  }, [postcode]);
 
   return (
     <Fragment>
@@ -147,9 +184,9 @@ export default function CertificateEstimatorHVAC(props) {
               <div class="nsw-hero-banner__box">
                 <img
                   class="nsw-hero-banner__image"
-                  src="/commercialac/Base_Eligibility_Hero.jpg"
+                  src="/commercialac/HVAC2Hero.jpeg"
                   alt=""
-                  style={{ top: '50%' }}
+                  style={{ top: '80%' }}
                 />
               </div>
             </div>
@@ -168,8 +205,11 @@ export default function CertificateEstimatorHVAC(props) {
             <br></br>
             <p className="nsw-content-block__copy">
               Estimate your ESCs and PRCs for the Commercial Air Conditioner Activity (F4 in the ESS
-              and HVAC2 in the PDRS) by answering the following questions. Please keep in mind that
-              the results are indicative only and cannot be promoted or published.{' '}
+              and HVAC2 in the PDRS) by answering the following questions.
+            </p>
+            <p className="nsw-content-block__copy">
+              Please keep in mind that the results are indicative only and cannot be promoted or
+              published.{' '}
             </p>
           </div>
         </div>
@@ -194,6 +234,7 @@ export default function CertificateEstimatorHVAC(props) {
                     </h5>
 
                     <FormGroup
+                      label="Postcode"
                       helper="What is your postcode?" // helper text (secondary label)
                       errorText="Invalid value!" // error text if invalid
                     >
@@ -210,7 +251,8 @@ export default function CertificateEstimatorHVAC(props) {
                       />
                     </FormGroup>
                     <FormGroup
-                      helper="Select commercial water heater brand" // primary question text
+                      label="Brand"
+                      helper="Select commercial air conditioner brand" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
@@ -225,7 +267,8 @@ export default function CertificateEstimatorHVAC(props) {
                     </FormGroup>
 
                     <FormGroup
-                      helper="Select commercial water heater model" // primary question text
+                      label="Model"
+                      helper="Select commercial air conditioner model" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
@@ -244,23 +287,33 @@ export default function CertificateEstimatorHVAC(props) {
             </div>
           )}
 
+          {stepNumber === 1 && !registryData && (
+            <Notification as="error" title="Sorry! An error has occurred.">
+              <p>Unable to load data from the product registry. Please try again later.</p>
+            </Notification>
+          )}
+
+          {stepNumber === 2 && loading && <SpinnerFullscreen />}
+
           {stepNumber === 2 && (
             <CertificateEstimatorLoadClauses
-              // calculationDate={calculationDate}
               variableToLoad1={'HVAC2_PRC_calculation'}
               variableToLoad2={'HVAC2_ESC_calculation'}
               variables={variables}
               entities={entities}
               metadata={metadata}
               calculationResult={calculationResult}
-              setCalculationResult={setCalculationResult}
-              calculationError={calculationError}
-              setCalculationError={setCalculationError}
               calculationResult2={calculationResult2}
+              setCalculationResult={setCalculationResult}
               setCalculationResult2={setCalculationResult2}
+              calculationError={calculationError}
+              calculationError2={calculationError2}
+              setCalculationError={setCalculationError}
+              setCalculationError2={setCalculationError2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
               postcode={postcode}
+              zone={zone}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
@@ -269,7 +322,6 @@ export default function CertificateEstimatorHVAC(props) {
 
           {stepNumber === 3 && (
             <CertificateEstimatorLoadClauses
-              // calculationDate={calculationDate}
               variableToLoad1={'HVAC2_PRC_calculation'}
               variableToLoad2={'HVAC2_ESC_calculation'}
               variables={variables}
@@ -283,72 +335,36 @@ export default function CertificateEstimatorHVAC(props) {
               setCalculationResult2={setCalculationResult2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              zone={zone}
             />
           )}
 
-          {stepNumber !== 3 && stepNumber !== 2 && (
-            <div className="nsw-row">
-              <div className="nsw-col">
-                <Button
-                  as="primary"
-                  onClick={(e) => {
-                    setStepNumber(stepNumber + 1);
-                  }}
-                  style={{ float: 'right' }}
-                >
-                  Next
-                </Button>
+          {/* {stepNumber === 3 && !calculationResult && !calculationResult2 && <SpinnerFullscreen />} */}
+
+          {stepNumber === 3 && calculationError && calculationError2 && <SpinnerFullscreen />}
+
+          {stepNumber === 1 &&
+            registryData &&
+            postcode &&
+            postcode.length === 4 &&
+            selectedBrand &&
+            selectedModel && (
+              <div className="nsw-row">
+                <div className="nsw-col">
+                  <Button
+                    as="primary"
+                    onClick={(e) => {
+                      setStepNumber(stepNumber + 1);
+                    }}
+                    style={{ float: 'right' }}
+                  >
+                    Next
+                  </Button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
         </Fragment>
       </div>
-      <section class="nsw-section nsw-section--off-white" style={{ backgroundColor: '#F5F5F5' }}>
-        <div class="nsw-container" style={{ paddingBottom: '4rem' }}>
-          <div class="nsw-layout">
-            <div class="nsw-layout__main">
-              <br></br>
-              <br></br>
-              <h2 className="nsw-col nsw-content-block__title">
-                Check your eligibility and estimate certificates
-              </h2>
-              <br></br>
-              <div class="nsw-grid">
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Review schemes base eligibility, activity requirements and estimate certificates"
-                    link="base_eligibility_commercialac/"
-                    image="/commercialac/navigation_row/full_flow_card.jpeg"
-                  >
-                    {/* <p class="nsw-card__copy" style={{ fontSize: '21px', color: '#202D61' }}><b>
-                        Review schemes base eligibility, activity requirements and estimate certificates</b></p> */}
-                  </Card>
-                </div>
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Check activity requirements and estimate certificates"
-                    link="activity-requirements/"
-                    image="/commercialac/navigation_row/activity_certificates.png"
-                  >
-                    {/* <p class="nsw-card__copy" style={{ fontSize: '21px', color: '#202D61' }}><b>
-                        Check activity requirements and estimate certificates</b></p> */}
-                  </Card>
-                </div>
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Estimate certificates only"
-                    link="certificate-estimator/"
-                    image="/commercialac/navigation_row/certificates_only.jpg"
-                  >
-                    {/* <p class="nsw-card__copy" style={{ fontSize: '21px', color: '#202D61' }}><b>
-                        Estimate certificates only</b></p> */}
-                  </Card>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </Fragment>
   );
 }

@@ -5,6 +5,7 @@ import Button from 'nsw-ds-react/button/button';
 import { Notification } from 'nsw-ds-react/notification/notification';
 
 import { Spinner } from 'react-bootstrap';
+import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 
 export default function CalculateForm(props) {
   const {
@@ -15,6 +16,7 @@ export default function CalculateForm(props) {
     calculationResult,
     setCalculationResult,
     setCalculationError,
+    setCalculationError2,
     stepNumber,
     setStepNumber,
     backAction,
@@ -51,7 +53,11 @@ export default function CalculateForm(props) {
     e.preventDefault();
 
     setLoading(true);
-    setCalculationError(false);
+    setCalculationError(true);
+
+    if (variable2) {
+      setCalculationError2(true);
+    }
 
     const entity = entities.find((item) => item.name === variable.entity);
 
@@ -74,16 +80,16 @@ export default function CalculateForm(props) {
 
     console.log('payload', payload);
 
+    console.log(loading);
     OpenFiscaApi.postCalculate(payload)
       .then((res) => {
         var result = res.data[entity.plural][`${entity.name}_1`][variable.name][date];
-        console.log(res.data);
         setCalculationResult(result);
+        setCalculationError(false);
       })
       .catch((err) => {
         setCalculationResult(null);
         setCalculationError(true);
-        console.log(err);
       })
       .finally(() => {
         setLoading(false);
@@ -111,10 +117,15 @@ export default function CalculateForm(props) {
           var result = res.data[entity2.plural][`${entity2.name}_1`][variable2.name][date];
           console.log(res.data);
           setCalculationResult2(result);
+          setCalculationError2(false);
         })
         .catch((err) => {
           setCalculationResult2(null);
+          setCalculationError2(true);
           console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
 
@@ -156,6 +167,7 @@ export default function CalculateForm(props) {
             </Button>
           )}
         </div>
+
         <div className="nsw-col-md-6">
           <Button as="primary" type="submit" style={{ float: 'right' }}>
             {loading ? (

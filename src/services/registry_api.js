@@ -47,6 +47,28 @@ function getWHModelsMetadata(payload) {
   });
 }
 
+function getRF2Brands() {
+  return RegistryApiBase({
+    url: `/refrigerated_cabinets/brands`,
+    method: 'GET',
+  });
+}
+
+function listRF2Models(brandName) {
+  return RegistryApiBase({
+    url: `/refrigerated_cabinets/brands/${brandName}/models`,
+    method: 'GET',
+  });
+}
+
+function getRF2ModelsMetadata(payload) {
+  return RegistryApiBase({
+    url: `/refrigerated_cabinets/metadata`,
+    method: 'POST',
+    data: payload,
+  });
+}
+
 const RegistryApi = {
   getCommercialHVACBrands,
   getCommercialWHBrands,
@@ -54,6 +76,9 @@ const RegistryApi = {
   getHvacModelsMetadata,
   listWHModels,
   getWHModelsMetadata,
+  getRF2Brands,
+  listRF2Models,
+  getRF2ModelsMetadata,
 };
 
 export default RegistryApi;

@@ -6,6 +6,10 @@ import ScheduleTile from './ScheduleTile';
 import Card, { CardCopy } from 'nsw-ds-react/card/card';
 import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
 
+import 'nsw-design-system/src/main.scss';
+import '@fontsource/public-sans';
+import '@fontsource/public-sans/600.css';
+
 export default function Homepage(props) {
   const { variables, schedules } = props;
 
@@ -14,24 +18,19 @@ export default function Homepage(props) {
       {/* Search section */}
       <br></br>
       <div className="nsw-layout">
-        <div className="nsw-row">
-          <figure
-            class="nsw-media"
-            style={{
-              position: 'relative',
-              height: '380px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              overflow: 'hidden',
-            }}
-          >
-            <img
-              style={{ minHeight: '100%', minWidth: '100%', objectFit: 'cover' }}
-              src="/LandingPageHero.jpg"
-              alt="Landing page hero"
-            />
-          </figure>
+        <div class="nsw-hero-banner nsw-hero-banner--dark">
+          <div class="nsw-hero-banner__container">
+            <div class="nsw-hero-banner__wrapper">
+              <div class="nsw-hero-banner__box">
+                <img
+                  class="nsw-hero-banner__image"
+                  src="/LandingPageHero.jpg"
+                  alt=""
+                  style={{ top: '50%' }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -39,27 +38,29 @@ export default function Homepage(props) {
         <div class="nsw-container">
           <div class="nsw-layout">
             <div class="nsw-layout__main">
-              <div className="nsw-grid nsw-grid--spaced">
+              <div className="nsw-grid nsw-grid--spaced" style={{ fontFamily: 'sans-serif' }}>
                 <div className="nsw-col nsw-col-md-12">
-                  <h2 className="nsw-content-block__title">
-                    Energy Savings Scheme and Peak Demand Reduction Scheme Certificate Estimator
-                  </h2>
+                  <h2 className="nsw-content-block__title">Safeguard Certificate Estimator</h2>
+                  <h5 className="nsw-content-block__copy">
+                    Energy Savings Scheme and Peak Demand Reduction Scheme
+                  </h5>
                   <br></br>
                   <p className="nsw-content-block__copy">
-                    Use our Safeguard Certificate Estimator to check eligibility and get an idea of
-                    how many Energy Savings Certificates (ESCs) and Peak Demand Reduction
-                    Certificates (PRCs) your activity may qualify for. Remember, results are an
-                    indication only and cannot be promoted or published.
+                    Use our Safeguard Certificate Estimator to get an idea of how many Energy
+                    Savings Certificates (ESCs) and Peak Demand Reduction Certificates (PRCs) your
+                    activity may qualify for. Remember, results are an indication only and cannot be
+                    promoted or published.
                   </p>
                   <p className="nsw-content-block__copy">
                     The Estimator is based on the latest Energy Savings Scheme rule and Peak Demand
                     Reduction Scheme rule. To complete the certificate estimation you may need
-                    product information from the IPART Product Registry, GEMS Registry or VEU
-                    Product Registry.
+                    product information from the IPART Product Registry or GEMS Registry.
                   </p>
                   <p className="nsw-content-block__copy">
-                    If you have any questions or feedback about this tool, please contact
-                    sustainability@environment.nsw.gov.au
+                    If you have any questions or feedback about this tool, please contact{' '}
+                    <a href={`mailto:sustainability@environment.nsw.gov.au`}>
+                      sustainability@environment.nsw.gov.au
+                    </a>
                   </p>
                 </div>
               </div>
@@ -80,7 +81,11 @@ export default function Homepage(props) {
               <h2 className="nsw-col nsw-content-block__title">Residential</h2>
               <div class="nsw-grid">
                 <div class="nsw-col nsw-col-md-6 nsw-col-lg-4">
-                  <Card headline="Air Conditioner" link="commercialac/" image="/ResidentialAC.jpg">
+                  <Card
+                    headline="Air Conditioner"
+                    link="residential-ac-estimator"
+                    image="/ResidentialAC.jpg"
+                  >
                     <CardCopy>
                       Install a new or replace an existing air conditioner with a high efficiency
                       air conditioner
@@ -119,7 +124,11 @@ export default function Homepage(props) {
               <h2 className="nsw-col nsw-content-block__title">Commercial</h2>
               <div className="nsw-grid">
                 <div className="nsw-col nsw-col-md-4">
-                  <Card headline="Air Conditioner" link="commercialac/" image="CommercialAC.jpeg">
+                  <Card
+                    headline="Air Conditioner"
+                    link="commercial-ac-estimator"
+                    image="CommercialAC.jpeg"
+                  >
                     <CardCopy>
                       Install a new or replace an existing air conditioner with a high efficiency
                       air conditioner
@@ -129,7 +138,7 @@ export default function Homepage(props) {
                 <div className="nsw-col nsw-col-md-4">
                   <Card
                     headline="Heat Pump Water Heater"
-                    link="commercialwh/"
+                    link="commercial-wh-estimator"
                     image="CommercialHeatPumpWaterHeater.jpeg"
                   >
                     <CardCopy>
@@ -141,7 +150,7 @@ export default function Homepage(props) {
                 <div className="nsw-col nsw-col-md-4">
                   <Card
                     headline="Refrigerated Cabinet"
-                    link="compare2activities"
+                    link="refrigerated-cabinet-estimator"
                     image="CommercialRefrigeratedCabinet.jpg"
                   >
                     <CardCopy>
@@ -167,9 +176,6 @@ export default function Homepage(props) {
           </div>
         </div>
       </section>
-      <br></br>
-      <br></br>
-      <br></br>
     </Fragment>
   );
 }
