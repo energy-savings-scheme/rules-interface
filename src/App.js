@@ -139,7 +139,7 @@ function App() {
           setVariables={setVariables}
           setLoading={setLoading} />} />
 
-        <Route exact path="/commercialac/certificate-estimator" element={<CertificateEstimatorHVAC entities={entities}
+        <Route exact path="/commercial-ac-estimator" element={<CertificateEstimatorHVAC entities={entities}
           variables={variables}
           hvacBrands={hvacBrands}
           loading={loading}
@@ -148,12 +148,38 @@ function App() {
           setLoading={setLoading}
           setHvacBrands={setHvacBrands} />} />
 
-        <Route exact path="/commercialwh/certificate-estimator" element={<CertificateEstimatorWH entities={entities}
+        <Route exact path="/commercial-wh-estimator" element={<CertificateEstimatorWH entities={entities}
           variables={variables}
           brands={whBrands}
           setEntities={setEntities}
           setVariables={setVariables}
           setLoading={setLoading} />} />
+          {/* <Route path="/residential-ac-estimator" exact>
+          <Breadcrumb />
+          <CertificateEstimatorResidentialAC
+            entities={entities}
+            variables={variables}
+            hvacBrands={hvacBrands}
+            loading={loading}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+            setHvacBrands={setHvacBrands}
+          />
+        </Route>
+        <Route path="/refrigerated-cabinet-estimator" exact>
+          <Breadcrumb />
+          <CertificateEstimatorRC
+            entities={entities}
+            variables={variables}
+            RF2Brands={RF2Brands}
+            loading={loading}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+            setRF2Brands={setRF2Brands}
+          />
+        </Route> */}
 
         <Route path="*">Not Found</Route>
       </Routes>

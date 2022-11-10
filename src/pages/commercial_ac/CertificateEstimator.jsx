@@ -1,14 +1,14 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
-import VariableSearchBar from 'pages/homepage/VariableSearchBar';
+// import VariableSearchBar from 'pages/homepage/VariableSearchBar';
 
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
-import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
+// import Card, { CardCopy } from 'nsw-ds-react/card/card';
+// import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
-import LoadClauses from './LoadClauses';
-import DropDownMenu from 'components/form_elements/DropDownMenu';
+// import LoadClauses from './LoadClauses';
+// import DropDownMenu from 'components/form_elements/DropDownMenu';
 import Button from 'nsw-ds-react/button/button';
-import { FormGroupSelect } from 'nsw-ds-react/forms';
+// import { FormGroupSelect } from 'nsw-ds-react/forms';
 import { FormGroup, TextInput, Select } from 'nsw-ds-react/forms';
 import RegistryApi from 'services/registry_api';
 import CertificateEstimatorLoadClauses from './CertificatEstimatorLoadClauses';
@@ -29,7 +29,7 @@ export default function CertificateEstimatorHVAC(props) {
     setLoading,
   } = props;
 
-  const [formValues, setFormValues] = useState([]);
+  // const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [dropdownOptionsModels, setDropdownOptionsModels] = useState([]);
