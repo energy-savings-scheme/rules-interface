@@ -26,9 +26,5 @@ ProgressIndicator.propTypes = {
 };
 
 export const ProgressIndicatorStep = ({ active }) => (
-  <div
-    className={` ${
-      active ? 'active' : ''
-    }`}
-  ></div>
+  <div className={` ${active ? 'active' : ''}`}></div>
 );

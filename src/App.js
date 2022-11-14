@@ -220,7 +220,7 @@ function App() {
             setLoading={setLoading}
             setHvacBrands={setHvacBrands}
           />
-           </Route>
+        </Route>
       </Switch>
 
       {/* <Footer /> */}
