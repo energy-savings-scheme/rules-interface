@@ -48,9 +48,9 @@ export const TextInput = ({
   as === 'textarea' ? (
     <textarea
       className={
-        `nsw-form-input ${className}` +
-        `${block ? ' nsw-form-input--block' : ''}` +
-        `${number ? ' nsw-form-input--number' : ''}`
+        `nsw-form__input ${className}` +
+        `${block ? ' nsw-form__input--block' : ''}` +
+        `${number ? ' nsw-form__input--number' : ''}`
       }
       aria-invalid={status === 'invalid' ? 'true' : ''}
       aria-describedby={status === 'invalid' ? `helper${htmlId} error${htmlId}` : `helper${htmlId}`}
@@ -60,9 +60,9 @@ export const TextInput = ({
   ) : (
     <input
       className={
-        `nsw-form-input ${className}` +
-        `${block ? ' nsw-form-input--block' : ''}` +
-        `${number ? ' nsw-form-input--number' : ''}`
+        `nsw-form__input ${className}` +
+        `${block ? ' nsw-form__input--block' : ''}` +
+        `${number ? ' nsw-form__input--number' : ''}`
       }
       aria-invalid={status === 'invalid' ? 'true' : ''}
       aria-describedby={status === 'invalid' ? `helper${htmlId} error${htmlId}` : `helper${htmlId}`}

@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // Import Pages
-import CalculatePage from 'pages/calculate/CalculatePage';
-import Homepage from 'pages/homepage/Homepage';
-import BaseEligibilityCommercialAC from 'pages/commercial_ac/BaseEligibilityCommercialAcPage';
-import BaseEligibilityCommercialWH from 'pages/commercial_wh/BaseEligibilityCommercialWhPage';
-import ActivityRequirementsCommercialAC from 'pages/commercial_ac/ActivityRequirementsAirCon';
+// import CalculatePage from 'pages/calculate/CalculatePage';
+// import Homepage from 'pages/homepage/Homepage';
+// import BaseEligibilityCommercialAC from 'pages/commercial_ac/BaseEligibilityCommercialAcPage';
+// import BaseEligibilityCommercialWH from 'pages/commercial_wh/BaseEligibilityCommercialWhPage';
+// import ActivityRequirementsCommercialAC from 'pages/commercial_ac/ActivityRequirementsAirCon';
 
 // Import components
 import Breadcrumb from 'components/layout/Breadcrumb';
-import Footer from 'components/layout/Footer';
-import Header from 'components/layout/Header';
+// import Footer from 'components/layout/Footer';
+// import Header from 'components/layout/Header';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 
 // Import services
@@ -23,13 +23,13 @@ import variable_tree from 'services/variable_tree.json';
 import 'nsw-design-system/src/main.scss';
 import '@fontsource/public-sans';
 import '@fontsource/public-sans/600.css';
-import CommercialAC from 'pages/commercial_ac/CommercialAcPage';
-import CommercialWH from 'pages/commercial_wh/CommercialWhPage';
+// import CommercialAC from 'pages/commercial_ac/CommercialAcPage';
+// import CommercialWH from 'pages/commercial_wh/CommercialWhPage';
 import RegistryApi from 'services/registry_api';
 import CertificateEstimatorHVAC from 'pages/commercial_ac/CertificateEstimator';
-import CertificateEstimatorWH from 'pages/commercial_wh/CertificateEstimatorWH';
-import CertificateEstimatorResidentialAC from 'pages/residential_ac/CertificateEstimatorResidentialAC';
-import CertificateEstimatorRC from 'pages/refrigerated_cabinets/CertificateEstimatorRC';
+// import CertificateEstimatorWH from 'pages/commercial_wh/CertificateEstimatorWH';
+// import CertificateEstimatorResidentialAC from 'pages/residential_ac/CertificateEstimatorResidentialAC';
+// import CertificateEstimatorRC from 'pages/refrigerated_cabinets/CertificateEstimatorRC';
 
 function App() {
   const [entities, setEntities] = useState([]);
@@ -103,16 +103,16 @@ function App() {
 
   return (
     <Router>
-      <Header variables={variables} />
+      {/* <Header variables={variables} /> */}
 
       {loading && <SpinnerFullscreen />}
 
       <Switch>
-        <Route path="/" exact>
+        {/* <Route path="/" exact>
           <Breadcrumb />
           <Homepage schedules={schedules} variables={variables} />
-        </Route>
-        <Route path="/calculate" exact>
+        </Route> */}
+        {/* <Route path="/calculate" exact>
           <Breadcrumb />
           <CalculatePage entities={entities} variables={variables} />
         </Route>
@@ -206,11 +206,24 @@ function App() {
             setLoading={setLoading}
             setRF2Brands={setRF2Brands}
           />
-        </Route>
-        <Route path="*">Not Found</Route>
+        </Route> */}
+        {/* <Route path="*">Not Found</Route> */}
+        <Route path="*">
+          <Breadcrumb />
+          <CertificateEstimatorHVAC
+            entities={entities}
+            variables={variables}
+            hvacBrands={hvacBrands}
+            loading={loading}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+            setHvacBrands={setHvacBrands}
+          />
+           </Route>
       </Switch>
 
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 }

@@ -27,7 +27,7 @@ const defHtmlId = nextId();
 export const FormHelper = ({ htmlId, children, className, error, ...attributeOptions }) => (
   <span
     id={`${error ? `error` : `helper`}${htmlId}`}
-    className={`nsw-form-helper ${error ? ` nsw-form-helper--error` : ''} ${className}`}
+    className={`nsw-form__helper ${error ? ` nsw-form__helper--error` : ''} ${className}`}
   >
     {children}
   </span>
@@ -47,7 +47,7 @@ FormHelper.defaultProps = {
  * @param  {object}  attributeOptions - Any other attribute options
  */
 export const FormLabel = ({ text, dark, inline, className, ...attributeOptions }) => (
-  <label className={`nsw-form-label ${className}`} {...attributeOptions}>
+  <label className={`nsw-form__label ${className}`} {...attributeOptions}>
     {text}
   </label>
 );
@@ -99,7 +99,7 @@ export const FormGroup = ({
   className,
   ...attributeOptions
 }) => (
-  <div className={`nsw-form-group ${className}`} {...attributeOptions}>
+  <div className={`nsw-form__group ${className}`} {...attributeOptions}>
     <FormLabel htmlFor={htmlId} text={label} />
     {helper ? <FormHelper htmlId={htmlId}>{helper}</FormHelper> : ''}
     {React.Children.map(children, (child) => {
