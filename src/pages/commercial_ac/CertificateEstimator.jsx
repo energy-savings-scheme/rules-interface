@@ -207,15 +207,14 @@ export default function CertificateEstimatorHVAC(props) {
   const styles = {
     option: (provided, state) => ({
       ...provided,
-      fontWeight: state.isSelected ? "bold" : "normal",
+      fontWeight: state.isSelected ? 'bold' : 'normal',
       color: state.data.color,
       backgroundColor: '#495054',
       fontColor: 'white',
       fontSize: state.selectProps.myFontSize,
-      border: '#495054'
-    })
+      border: '#495054',
+    }),
   };
-
 
   return (
     <Fragment>
@@ -336,24 +335,23 @@ export default function CertificateEstimatorHVAC(props) {
                     </FormGroup>
 
                     <FormGroup
-                    style={{ width: '50%', padding: '5px'}}
+                      style={{ width: '50%', padding: '5px' }}
                       label="Model"
                       helper="Select commercial air conditioner model" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
-
-                    <ReactSelect
-                            options={ dropdownOptionsModels}
-                            onChange={handleChange}
-                            value={selectedModel}
-                            isSearchable={true}
-                            styles={styles}
-                            minMenuHeight='100px'
-                            placeholder='Please select model'
-                            components={{
-                              IndicatorSeparator: () => null
-                            }}
-                          />
+                      <ReactSelect
+                        options={dropdownOptionsModels}
+                        onChange={handleChange}
+                        value={selectedModel}
+                        isSearchable={true}
+                        styles={styles}
+                        minMenuHeight="100px"
+                        placeholder="Please select model"
+                        components={{
+                          IndicatorSeparator: () => null,
+                        }}
+                      />
                       {/* <Select
                         style={{ maxWidth: '50%' }}
                         options={dropdownOptionsModels}
