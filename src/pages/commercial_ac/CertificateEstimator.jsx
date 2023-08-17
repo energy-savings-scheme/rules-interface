@@ -20,6 +20,7 @@ import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { compareAsc, format, previousSunday } from 'date-fns';
 import axios from 'axios';
+import ReactSelect from 'react-select';
 
 export default function CertificateEstimatorHVAC(props) {
   const {
@@ -135,8 +136,8 @@ export default function CertificateEstimatorHVAC(props) {
   };
 
   useEffect(() => {
-    setDropdownOptionsModels([{ value: '', text: 'Please select model' }]);
-    models.forEach((item) => populateModelDropDown({ text: item, value: item }));
+    setDropdownOptionsModels([{ value: '', label: 'Please select model' }]);
+    models.forEach((item) => populateModelDropDown({ label: item, value: item }));
   }, [models]);
 
   useEffect(() => {
@@ -145,7 +146,7 @@ export default function CertificateEstimatorHVAC(props) {
 
     var payload = {
       brand: selectedBrand,
-      model: selectedModel,
+      model: selectedModel.value,
     };
     RegistryApi.getHvacModelsMetadata(payload)
       .then((res) => {
@@ -197,6 +198,24 @@ export default function CertificateEstimatorHVAC(props) {
         console.log(err);
       });
   }, [postcode]);
+
+  const handleChange = (selectedOption) => {
+    console.log(selectedOption);
+    setSelectedModel(selectedOption);
+  };
+
+  const styles = {
+    option: (provided, state) => ({
+      ...provided,
+      fontWeight: state.isSelected ? "bold" : "normal",
+      color: state.data.color,
+      backgroundColor: '#495054',
+      fontColor: 'white',
+      fontSize: state.selectProps.myFontSize,
+      border: '#495054'
+    })
+  };
+
 
   return (
     <Fragment>
@@ -317,11 +336,25 @@ export default function CertificateEstimatorHVAC(props) {
                     </FormGroup>
 
                     <FormGroup
+                    style={{ width: '50%', padding: '5px'}}
                       label="Model"
                       helper="Select commercial air conditioner model" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
-                      <Select
+
+                    <ReactSelect
+                            options={ dropdownOptionsModels}
+                            onChange={handleChange}
+                            value={selectedModel}
+                            isSearchable={true}
+                            styles={styles}
+                            minMenuHeight='100px'
+                            placeholder='Please select model'
+                            components={{
+                              IndicatorSeparator: () => null
+                            }}
+                          />
+                      {/* <Select
                         style={{ maxWidth: '50%' }}
                         options={dropdownOptionsModels}
                         onChange={(e) => {
@@ -329,7 +362,7 @@ export default function CertificateEstimatorHVAC(props) {
                         }}
                         value={selectedModel}
                         required
-                      />
+                      /> */}
                     </FormGroup>
 
                     <p style={{ fontSize: '14px', marginBottom: '2%' }}>
@@ -373,7 +406,7 @@ export default function CertificateEstimatorHVAC(props) {
               formValues={formValues}
               setFormValues={setFormValues}
               selectedBrand={selectedBrand}
-              selectedModel={selectedModel}
+              selectedModel={selectedModel.value}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
@@ -403,7 +436,7 @@ export default function CertificateEstimatorHVAC(props) {
               formValues={formValues}
               setFormValues={setFormValues}
               selectedBrand={selectedBrand}
-              selectedModel={selectedModel}
+              selectedModel={selectedModel.value}
               flow={flow}
               setFlow={setFlow}
               persistFormValues={persistFormValues}
