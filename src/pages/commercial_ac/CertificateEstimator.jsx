@@ -21,6 +21,8 @@ import Alert from 'nsw-ds-react/alert/alert';
 import { compareAsc, format, previousSunday } from 'date-fns';
 import axios from 'axios';
 import ReactSelect from 'react-select';
+import { components, DropdownIndicatorProps } from 'react-select';
+
 
 export default function CertificateEstimatorHVAC(props) {
   const {
@@ -205,16 +207,54 @@ export default function CertificateEstimatorHVAC(props) {
   };
 
   const styles = {
+    control: base => ({
+      ...base,
+      border: '1px solid black',
+      paddingBottom: '1%',
+      backgroundColor: 'transparent',
+      // marginBottom: '1%',
+      // This line disable the blue border
+      // boxShadow: 'none'
+    }),
     option: (provided, state) => ({
       ...provided,
       fontWeight: state.isSelected ? 'bold' : 'normal',
-      color: state.data.color,
-      backgroundColor: '#495054',
-      fontColor: 'white',
       fontSize: state.selectProps.myFontSize,
       border: '#495054',
+      backgroundColor: state.isFocused ? 'rgba(0, 133, 179, 0.2)' : 'transparent',
+      color: 'black',
+      paddingBottom: '1%'
     }),
-  };
+    placeholder: (defaultStyles) => {
+      return {
+          ...defaultStyles,
+          color: '#22272b',
+          paddingTop: '12px',
+          paddingLeft: '5px'
+      }
+  },
+  dropdownIndicator: base => ({
+    ...base,
+    color: "black",
+  })
+}
+
+const DropdownIndicator = props => {
+  return (
+    <components.DropdownIndicator {...props}>
+          <span
+            className="material-icons nsw-material-icons"
+            focusable="false"
+            aria-hidden="true"
+            styles={{ height: '10px', color: 'black' }}
+          >
+            keyboard_arrow_down
+          </span>
+    </components.DropdownIndicator>
+  );
+};
+
+
 
   return (
     <Fragment>
@@ -335,12 +375,13 @@ export default function CertificateEstimatorHVAC(props) {
                     </FormGroup>
 
                     <FormGroup
-                      style={{ width: '50%', padding: '5px' }}
+                      style={{ paddingBottom: '15px', width: '50%'}}
                       label="Model"
                       helper="Select commercial air conditioner model" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <ReactSelect
+                        classNamePrefix='nsw-form__select'
                         options={dropdownOptionsModels}
                         onChange={handleChange}
                         value={selectedModel}
@@ -349,18 +390,10 @@ export default function CertificateEstimatorHVAC(props) {
                         minMenuHeight="100px"
                         placeholder="Please select model"
                         components={{
-                          IndicatorSeparator: () => null,
-                        }}
+                          IndicatorSeparator: () => null, DropdownIndicator: DropdownIndicator
+                                                }}
                       />
-                      {/* <Select
-                        style={{ maxWidth: '50%' }}
-                        options={dropdownOptionsModels}
-                        onChange={(e) => {
-                          setSelectedModel(models.find((item) => item === e.target.value));
-                        }}
-                        value={selectedModel}
-                        required
-                      /> */}
+
                     </FormGroup>
 
                     <p style={{ fontSize: '14px', marginBottom: '2%' }}>
@@ -476,3 +509,6 @@ export default function CertificateEstimatorHVAC(props) {
     </Fragment>
   );
 }
+
+
+
