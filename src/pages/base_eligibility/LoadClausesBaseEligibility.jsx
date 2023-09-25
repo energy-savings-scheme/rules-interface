@@ -99,7 +99,7 @@ export default function LoadClausesBaseEligibility(props) {
                 <br></br>
                 <div className="nsw-content-block">
                   <div className="nsw-content-block__content">
-                    <h3 className="nsw-content-block__title">
+                    {/* <h3 className="nsw-content-block__title">
                       What would you like to calculate savings for?
                     </h3>
 
@@ -126,13 +126,13 @@ export default function LoadClausesBaseEligibility(props) {
                         value={calculationDate}
                         onChange={(e) => setCalculationDate(e.target.value)}
                       />
-                    </FormGroup>
+                    </FormGroup> */}
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="nsw-row">
+            {/* <div className="nsw-row">
               <div className="nsw-col">
                 <Button
                   as="primary"
@@ -144,7 +144,7 @@ export default function LoadClausesBaseEligibility(props) {
                   Check Schemes Base Eligibility
                 </Button>
               </div>
-            </div>
+            </div> */}
           </Fragment>
         )}
 
@@ -291,6 +291,11 @@ export default function LoadClausesBaseEligibility(props) {
                     </div>
                   </div>
                 </div>
+                {/* <Card
+              headline="Choose an Activity"
+              link="/"
+              style="light">
+            </Card> */}
               </div>
             </div>
           </Fragment>

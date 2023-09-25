@@ -7,13 +7,15 @@ import moment from 'moment';
 import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
+import OpenFiscaAPI from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 
-export default function CertificateEstimatorResidentialACLoadClauses(props) {
+export default function CertificateEstimatorLoadClausesRC(props) {
   const {
     variableToLoad1,
     variableToLoad2,
     variables,
+    setVariables,
     entities,
     setStepNumber,
     stepNumber,
@@ -36,6 +38,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
     setFlow,
     persistFormValues,
     setPersistFormValues,
+    selectedProductClass,
   } = props;
 
   console.log(variableToLoad1);
@@ -53,22 +56,10 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
 
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
-  const [dateInvalid, setDateInvalid] = useState(false);
   const [dependencies, setDependencies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [variableData1, setVariableData1] = useState([]);
   const [variableData2, setVariableData2] = useState([]);
-
-  console.log(calculationResult);
-  console.log(calculationResult2);
-
-  if (calculationResult2 === null) {
-    setCalculationResult2('0');
-  }
-
-  if (calculationResult === null) {
-    setCalculationResult2('0');
-  }
 
   useEffect(() => {
     OpenFiscaApi.getVariable(variableToLoad1)
@@ -104,99 +95,102 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
   }
 
   useEffect(() => {
-    if (variables) {
-      const variable1 = variables.find((item) => item.name === variableToLoad1);
-      const variable2 = variables.find((item) => item.name === variableToLoad2);
-
-      const offsprings1 = variable1.metadata.input_offspring;
-      const offsprings2 = variable2.metadata.input_offspring;
-
-      const children1 = variables.filter((item) => offsprings1.includes(item.name));
-      const children2 = variables.filter((item) => offsprings2.includes(item.name));
-
-      console.log(children1);
-      console.log(children2);
-
-      // Define the original array (at a minimum include the Implementation Date)
-      var array1 = [];
-      var array2 = [];
-
-      children1.map((child) => {
-        array1.push({ ...child, form_value: '', invalid: false });
-      });
-
-      children2.map((child) => {
-        array2.push({ ...child, form_value: '', invalid: false });
-      });
-
-      array2.forEach((item) => addElement(array1, item));
-
-      console.log(array1);
-
-      array1.map((formItem) => {
-        if (formItem.name === 'HVAC1_rated_AEER_input') {
-          console.log(formItem.form_value);
-          formItem.form_value = metadata['Rated AEER'];
-        }
-
-        if (formItem.name === 'HVAC1_cooling_capacity_input') {
-          formItem.form_value = metadata['Cooling Capacity'];
-        }
-
-        if (formItem.name === 'HVAC1_residential_TCEC') {
-          formItem.form_value = metadata[`Residential tcec_${zone}`];
-        }
-
-        if (formItem.name === 'HVAC1_residential_THEC') {
-          formItem.form_value = metadata[`Residential thec_${zone}`];
-        }
-
-        if (formItem.name === 'HVAC1_heating_capacity_input') {
-          formItem.form_value = metadata['Heating Capacity'];
-        }
-
-        if (formItem.name === 'HVAC1_TCSPF_mixed') {
-          formItem.form_value = metadata['Residential TCSPF_mixed'];
-        }
-        if (formItem.name === 'HVAC1_HSPF_cold') {
-          formItem.form_value = metadata['Residential HSPF_cold'];
-        }
-        if (formItem.name === 'HVAC1_HSPF_mixed') {
-          formItem.form_value = metadata['Residential HSPF_mixed'];
-        }
-
-        if (formItem.name === 'HVAC1_input_power' && metadata['Input Power'] != '') {
-          formItem.form_value = metadata['Input Power'];
-        }
-
-        if (
-          formItem.name === 'HVAC1_rated_ACOP_input' &&
-          metadata['Rated ACOP'] != '' &&
-          metadata['Rated ACOP'] != '-'
-        ) {
-          formItem.form_value = metadata['Rated ACOP'];
-        }
-        if (formItem.name === 'HVAC1_PDRS__postcode') {
-          formItem.form_value = postcode;
-          formItem.read_only = true;
-        }
-      });
-
-      if (persistFormValues.length > 1 && flow === 'backward') {
-        array1.map((e) => {
-          let found = persistFormValues.find((f) => e.name === f.name);
-          if (found !== undefined) {
-            e['form_value'] = found['form_value'];
-          }
-          return e;
+    if (variables.length < 1) {
+      OpenFiscaAPI.listVariables()
+        .then((res) => {
+          setVariables(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
         });
+    }
+    console.log(variables);
+    const variable1 = variables.find((item) => item.name === variableToLoad1);
+    console.log(variable1);
+    const variable2 = variables.find((item) => item.name === variableToLoad2);
+    console.log(variable2);
+
+    const offsprings1 = variable1.metadata.input_offspring;
+    const offsprings2 = variable2.metadata.input_offspring;
+
+    const children1 = variables.filter((item) => offsprings1.includes(item.name));
+    const children2 = variables.filter((item) => offsprings2.includes(item.name));
+
+    console.log(children1);
+    console.log(children2);
+
+    // Define the original array (at a minimum include the Implementation Date)
+    var array1 = [];
+    var array2 = [];
+
+    children1.map((child) => {
+      array1.push({ ...child, form_value: '', invalid: false });
+    });
+
+    children2.map((child) => {
+      array2.push({ ...child, form_value: '', invalid: false });
+    });
+
+    array2.forEach((item) => addElement(array1, item));
+
+    console.log(array1);
+
+    console.log(metadata);
+
+    console.log(selectedProductClass);
+
+    array1.map((formItem) => {
+      if (formItem.name === 'RF2_product_EEI') {
+        console.log(formItem.form_value);
+        formItem.form_value = metadata['product_eei'];
       }
 
-      array1.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
+      if (formItem.name === 'RF2_product_class') {
+        console.log(formItem.form_value);
+        formItem.form_value = selectedProductClass;
+        console.log(formItem.form_value);
+        formItem.read_only = true;
+      }
 
-      setFormValues(array1);
+      if (formItem.name === 'RF2_total_display_area') {
+        formItem.form_value = metadata['total_display_area'];
+      }
+
+      if (formItem.name === 'RF2_total_energy_consumption') {
+        formItem.form_value = metadata['total_energy_consumption'];
+      }
+      if (formItem.name === 'RF2_PDRS__postcode') {
+        formItem.form_value = postcode;
+        formItem.read_only = true;
+      }
+
+      if (formItem.name === 'RF2_duty_class') {
+        formItem.possible_values = {
+          heavy_duty: 'Heavy Duty',
+          light_duty: 'Light Duty',
+          normal_duty: 'Normal duty',
+        };
+
+        if (!['Class 3', 'Class 4', 'Class 9', 'Class 10'].includes(selectedProductClass)) {
+          delete formItem.possible_values['heavy_duty'];
+        }
+      }
+    });
+
+    if (persistFormValues.length > 1 && flow === 'backward') {
+      array1.map((e) => {
+        let found = persistFormValues.find((f) => e.name === f.name);
+        if (found !== undefined) {
+          e['form_value'] = found['form_value'];
+        }
+        return e;
+      });
     }
-  }, [variableData1, variableData2]);
+
+    array1.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
+
+    setFormValues(array1);
+  }, [variableData1, variableData2, selectedProductClass]);
 
   if (!variable) return null;
 
@@ -295,7 +289,6 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                   </span>
                   {/* </h4> */}
                 </p>
-
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not
                   be generating enough energy savings to earn certificates, or the new installation
@@ -306,8 +299,8 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
           </Fragment>
         )}
 
-        {(stepNumber === 3 && calculationError) ||
-          (stepNumber === 3 && calculationError2 && (
+        {(stepNumber === 3 && calculationError === true) ||
+          (stepNumber === 3 && calculationError2 === true && (
             <Alert as="error" title="Sorry! An error has occurred.">
               <p>An error occurred during calculation. Try re-running the calculation</p>
             </Alert>
@@ -415,7 +408,10 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                     <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
                       <div class="nsw-card__content null">
                         <div class="nsw-card__title">
-                          <a href="/#residential-ac-activity-requirements" class="nsw-card__link">
+                          <a
+                            href="/#refrigerated-cabinet-activity-requirements"
+                            class="nsw-card__link"
+                          >
                             Review eligibility for this activity
                           </a>
                         </div>
