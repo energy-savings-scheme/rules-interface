@@ -38,6 +38,8 @@ export default function CertificateEstimatorRC(props) {
   const [showError, setShowError] = useState(false);
   const [showNoResponsePostcodeError, setShowNoResponsePostcodeError] = useState(false);
   const [lastModified, setLastModified] = useState('');
+  const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
+  const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -96,6 +98,34 @@ export default function CertificateEstimatorRC(props) {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (parseInt(calculationResult) === 0) {
+      setAnnualEnergySavingsNumber(0)
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [calculationResult]);
+
+  useEffect(() => {
+    if (parseInt(calculationResult2) === 0) {
+      setPeakDemandReductionSavingsNumber(0)
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [calculationResult2]);
+
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0)
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0)
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [peakDemandReductionSavingsNumber]);
 
   // For brands
   const populateDropDown = (newOption) => {
@@ -373,8 +403,7 @@ export default function CertificateEstimatorRC(props) {
                     </FormGroup>
                     <p style={{ fontSize: '14px', marginBottom: '2%' }}>
                       {' '}
-                      Updated from product registry:{' '}
-                      {lastModified}
+                      Updated from product registry: {lastModified}
                     </p>
                   </div>
                 </div>
@@ -426,6 +455,12 @@ export default function CertificateEstimatorRC(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              annualEnergySavings={'RF2_annual_energy_savings'}
+              peakDemandReductionSavings={'RF2_peak_demand_annual_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 
@@ -459,6 +494,12 @@ export default function CertificateEstimatorRC(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              annualEnergySavings={'RF2_annual_energy_savings'}
+              peakDemandReductionSavings={'RF2_peak_demand_annual_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 
