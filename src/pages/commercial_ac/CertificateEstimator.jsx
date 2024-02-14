@@ -46,7 +46,7 @@ export default function CertificateEstimatorHVAC(props) {
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const [lastModified, setLastModified] = useState('');
-  const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber ] = useState(0);
+  const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
 
   useEffect(() => {
@@ -97,8 +97,6 @@ export default function CertificateEstimatorHVAC(props) {
         });
     }
   }, []);
-
-  
 
   // For brands
   const populateDropDown = (newOption) => {
@@ -201,25 +199,25 @@ export default function CertificateEstimatorHVAC(props) {
 
   useEffect(() => {
     if (parseInt(calculationResult) === 0) {
-      setAnnualEnergySavingsNumber(0)
+      setAnnualEnergySavingsNumber(0);
     }
   }, [calculationResult]);
 
   useEffect(() => {
     if (parseInt(calculationResult2) === 0) {
-      setPeakDemandReductionSavingsNumber(0)
+      setPeakDemandReductionSavingsNumber(0);
     }
   }, [calculationResult2]);
 
   useEffect(() => {
     if (annualEnergySavingsNumber < 0) {
-      setAnnualEnergySavingsNumber(0)
+      setAnnualEnergySavingsNumber(0);
     }
   }, [annualEnergySavingsNumber]);
 
   useEffect(() => {
     if (peakDemandReductionSavingsNumber < 0) {
-      setPeakDemandReductionSavingsNumber(0)
+      setPeakDemandReductionSavingsNumber(0);
     }
   }, [peakDemandReductionSavingsNumber]);
 

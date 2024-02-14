@@ -37,10 +37,36 @@ export default function CertificateEstimatorWH(props) {
   const [showError, setShowError] = useState(false);
   const [showNoResponsePostcodeError, setShowNoResponsePostcodeError] = useState(false);
   const [lastModified, setLastModified] = useState('');
+  const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber ] = useState(0);
+  const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (parseInt(calculationResult) === 0) {
+      setAnnualEnergySavingsNumber(0)
+    }
+  }, [calculationResult]);
+
+  useEffect(() => {
+    if (parseInt(calculationResult2) === 0) {
+      setPeakDemandReductionSavingsNumber(0)
+    }
+  }, [calculationResult2]);
+
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0)
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0)
+    }
+  }, [peakDemandReductionSavingsNumber]);
 
   // For brands
   const populateDropDown = (newOption) => {
@@ -343,6 +369,8 @@ export default function CertificateEstimatorWH(props) {
             <CertificateEstimatorLoadClausesWH
               variableToLoad1={'WH1_PRC_calculation'}
               variableToLoad2={'WH1_ESC_calculation'}
+              annualEnergySavings={'WH1_annual_energy_savings'}
+              peakDemandReductionSavings={'WH1_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -370,6 +398,10 @@ export default function CertificateEstimatorWH(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
@@ -403,6 +435,8 @@ export default function CertificateEstimatorWH(props) {
             <CertificateEstimatorLoadClausesWH
               variableToLoad1={'WH1_PRC_calculation'}
               variableToLoad2={'WH1_ESC_calculation'}
+              annualEnergySavings={'WH1_annual_energy_savings'}
+              peakDemandReductionSavings={'WH1_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -426,6 +460,10 @@ export default function CertificateEstimatorWH(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 

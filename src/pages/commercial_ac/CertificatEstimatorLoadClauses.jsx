@@ -46,7 +46,7 @@ export default function CertificateEstimatorLoadClauses(props) {
     annualEnergySavingsNumber,
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
-    setPeakDemandReductionSavingsNumber
+    setPeakDemandReductionSavingsNumber,
   } = props;
 
   console.log(variableToLoad1);
@@ -299,13 +299,26 @@ export default function CertificateEstimatorLoadClauses(props) {
                   {/* </h4> */}
                 </p>
                 <p>
-                  Your estimated annual energy savings are { ' ' }
-                  <b><b>{Math.floor(calculationResult) === 0 ? 0 : Math.floor(annualEnergySavingsNumber) }</b> kWh </b>
+                  Your estimated annual energy savings are{' '}
+                  <b>
+                    <b>
+                      {Math.floor(calculationResult) === 0
+                        ? 0
+                        : Math.floor(annualEnergySavingsNumber)}
+                    </b>{' '}
+                    kWh{' '}
+                  </b>
                 </p>
                 <p>
-                  Your estimated annual peak demand reduction is { ' ' }
-                  <b><b>{Math.floor(calculationResult2) === 0 ? 0 : Math.floor(peakDemandReductionSavingsNumber) }</b> kWh </b>
-
+                  Your estimated annual peak demand reduction is{' '}
+                  <b>
+                    <b>
+                      {Math.floor(calculationResult2) === 0
+                        ? 0
+                        : Math.floor(peakDemandReductionSavingsNumber)}
+                    </b>{' '}
+                    kWh{' '}
+                  </b>
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not
