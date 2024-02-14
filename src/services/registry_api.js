@@ -132,7 +132,6 @@ function getResidentialSolarWaterHeaterLastModified() {
   });
 }
 
-
 function getResidentialSolarWaterHeaterModels(brandName) {
   return RegistryApiBase({
     url: `/residential_solar_water_heater/brands/${brandName}/models`,
@@ -161,7 +160,6 @@ function getResidentialSolarBatteryLastModified() {
     method: 'GET',
   });
 }
-
 
 function getResidentialSolarBatteryModels(brandName) {
   return RegistryApiBase({

@@ -46,6 +46,8 @@ export default function CertificateEstimatorHVAC(props) {
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const [lastModified, setLastModified] = useState('');
+  const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber ] = useState(0);
+  const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -95,6 +97,8 @@ export default function CertificateEstimatorHVAC(props) {
         });
     }
   }, []);
+
+  
 
   // For brands
   const populateDropDown = (newOption) => {
@@ -194,6 +198,30 @@ export default function CertificateEstimatorHVAC(props) {
         setRegistryData(false);
       });
   }, [selectedBrand]);
+
+  useEffect(() => {
+    if (parseInt(calculationResult) === 0) {
+      setAnnualEnergySavingsNumber(0)
+    }
+  }, [calculationResult]);
+
+  useEffect(() => {
+    if (parseInt(calculationResult2) === 0) {
+      setPeakDemandReductionSavingsNumber(0)
+    }
+  }, [calculationResult2]);
+
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0)
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0)
+    }
+  }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
     const payload = {
@@ -386,6 +414,8 @@ export default function CertificateEstimatorHVAC(props) {
             <CertificateEstimatorLoadClauses
               variableToLoad1={'HVAC2_PRC_calculation'}
               variableToLoad2={'HVAC2_ESC_calculation'}
+              annualEnergySavings={'HVAC2_annual_energy_savings'}
+              peakDemandReductionSavings={'HVAC2_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -416,6 +446,10 @@ export default function CertificateEstimatorHVAC(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 
@@ -423,6 +457,8 @@ export default function CertificateEstimatorHVAC(props) {
             <CertificateEstimatorLoadClauses
               variableToLoad1={'HVAC2_PRC_calculation'}
               variableToLoad2={'HVAC2_ESC_calculation'}
+              annualEnergySavings={'HVAC2_annual_energy_savings'}
+              peakDemandReductionSavings={'HVAC2_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -447,6 +483,10 @@ export default function CertificateEstimatorHVAC(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 
