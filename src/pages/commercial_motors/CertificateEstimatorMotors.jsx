@@ -36,6 +36,8 @@ export default function CertificateEstimatorMotors(props) {
   const [flow, setFlow] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber ] = useState(0);
+  const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -60,6 +62,30 @@ export default function CertificateEstimatorMotors(props) {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (parseInt(calculationResult) === 0) {
+      setAnnualEnergySavingsNumber(0)
+    }
+  }, [calculationResult]);
+
+  useEffect(() => {
+    if (parseInt(calculationResult2) === 0) {
+      setPeakDemandReductionSavingsNumber(0)
+    }
+  }, [calculationResult2]);
+
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0)
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0)
+    }
+  }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
     OpenFiscaAPI.getVariable('SYS1_PRC_calculation')
@@ -159,6 +185,12 @@ export default function CertificateEstimatorMotors(props) {
             <CertificateEstimatorLoadClausesMotors
               variableData1={variableData1}
               variableData2={variableData2}
+              annualEnergySavings={'SYS1_energy_savings'}
+              peakDemandReductionSavings={'SYS1_peak_demand_annual_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -192,6 +224,12 @@ export default function CertificateEstimatorMotors(props) {
             <CertificateEstimatorLoadClausesMotors
               variableData1={variableData1}
               variableData2={variableData2}
+              annualEnergySavings={'SYS1_energy_savings'}
+              peakDemandReductionSavings={'SYS1_peak_demand_annual_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               variables={variables}
               entities={entities}
               metadata={metadata}
