@@ -81,6 +81,7 @@ export default function CalculateForm(props) {
 
   console.log(variable);
   console.log(variable2);
+  console.log(postcode);
 
   const handleCalculate = (e) => {
     e.preventDefault();
@@ -246,6 +247,7 @@ export default function CalculateForm(props) {
         .finally(() => {});
     }
 
+    console.log("****************", postcode)
     if (stepNumber === 1 && workflow !== 'eligibility') {
       formValues.map((variable) => {
         if (variable.name === 'RF1_PDRS__postcode' || variable.name === 'SYS1_PDRS__postcode') {
@@ -254,7 +256,7 @@ export default function CalculateForm(props) {
             setStepNumber(stepNumber + 1);
             setShowPostcodeError(false);
           } else {
-            RegistryApi.getPostcodeValidation(postcode)
+            RegistryApi.getPostcodeValidation(variable.form_value)
               .then((res) => {
                 const persons = res.data;
                 console.log(res);
