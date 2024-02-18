@@ -24,6 +24,8 @@ export default function CertificateEstimatorRefrigerators(props) {
   const [flow, setFlow] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber ] = useState(0);
+  const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -48,6 +50,31 @@ export default function CertificateEstimatorRefrigerators(props) {
         });
     }
   }, []);
+
+
+  useEffect(() => {
+    if (parseInt(calculationResult) === 0) {
+      setAnnualEnergySavingsNumber(0)
+    }
+  }, [calculationResult]);
+
+  useEffect(() => {
+    if (parseInt(calculationResult2) === 0) {
+      setPeakDemandReductionSavingsNumber(0)
+    }
+  }, [calculationResult2]);
+
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0)
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0)
+    }
+  }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
     OpenFiscaAPI.getVariable('RF1_PRC_calculation')
@@ -178,6 +205,12 @@ export default function CertificateEstimatorRefrigerators(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              annualEnergySavings={'RF1_energy_savings'}
+              peakDemandReductionSavings={'RF1_peak_demand_annual_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 
@@ -206,6 +239,12 @@ export default function CertificateEstimatorRefrigerators(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              annualEnergySavings={'RF1_energy_savings'}
+              peakDemandReductionSavings={'RF1_peak_demand_annual_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 
