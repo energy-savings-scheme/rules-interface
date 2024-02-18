@@ -37,10 +37,36 @@ export default function CertificateEstimatorElectricHeatPump(props) {
   const [showError, setShowError] = useState(false);
   const [showNoResponsePostcodeError, setShowNoResponsePostcodeError] = useState(false);
   const [lastModified, setLastModified] = useState('');
+  const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber ] = useState(0);
+  const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (parseInt(calculationResult) === 0) {
+      setAnnualEnergySavingsNumber(0)
+    }
+  }, [calculationResult]);
+
+  useEffect(() => {
+    if (parseInt(calculationResult2) === 0) {
+      setPeakDemandReductionSavingsNumber(0)
+    }
+  }, [calculationResult2]);
+
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0)
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0)
+    }
+  }, [peakDemandReductionSavingsNumber]);
 
   // For brands
   const populateDropDown = (newOption) => {
@@ -341,6 +367,12 @@ export default function CertificateEstimatorElectricHeatPump(props) {
             <CertificateEstimatorLoadClausesD17
               variableToLoad1={'D17_ESC_calculation'}
               variableToLoad2={'D17_ESC_calculation'}
+              annualEnergySavings={'D17_annual_energy_savings'}
+              peakDemandReductionSavings={'D17_annual_energy_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -424,6 +456,12 @@ export default function CertificateEstimatorElectricHeatPump(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              annualEnergySavings={'D17_annual_energy_savings'}
+              peakDemandReductionSavings={'D17_annual_energy_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 

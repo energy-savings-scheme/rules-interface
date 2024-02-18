@@ -247,7 +247,7 @@ export default function CalculateForm(props) {
         .finally(() => {});
     }
 
-    console.log("****************", postcode)
+    console.log('****************', postcode);
     if (stepNumber === 1 && workflow !== 'eligibility') {
       formValues.map((variable) => {
         if (variable.name === 'RF1_PDRS__postcode' || variable.name === 'SYS1_PDRS__postcode') {

@@ -37,6 +37,12 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
     setLoading,
     showError,
     setShowError,
+    annualEnergySavings,
+    peakDemandReductionSavings,
+    annualEnergySavingsNumber,
+    setAnnualEnergySavingsNumber,
+    peakDemandReductionSavingsNumber,
+    setPeakDemandReductionSavingsNumber
   } = props;
 
   console.log(variableData1);
@@ -155,6 +161,12 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              annualEnergySavings={annualEnergySavings}
+              peakDemandReductionSavings={peakDemandReductionSavings}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           </Fragment>
         )}
@@ -172,6 +184,15 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
                     <b>{Math.floor(calculationResult)}</b>
                   </span>
+                </p>
+                <p>
+                  Your estimated annual energy savings are { ' ' }
+                  <b><b>{Math.floor(calculationResult) === 0 ? 0 : Math.floor(annualEnergySavingsNumber) }</b> kWh </b>
+                </p>
+                <p>
+                  Your estimated annual peak demand reduction is { ' ' }
+                  <b><b>{Math.floor(calculationResult2) === 0 ? 0 : Math.floor(peakDemandReductionSavingsNumber) }</b> kWh </b>
+
                 </p>
 
                 <p>
