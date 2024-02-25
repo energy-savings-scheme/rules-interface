@@ -8,7 +8,6 @@ import { Spinner } from 'react-bootstrap';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import axios from 'axios';
 import RegistryApi from 'services/registry_api';
-import { codepen } from 'react-code-blocks';
 
 export default function CalculateForm(props) {
   const {
