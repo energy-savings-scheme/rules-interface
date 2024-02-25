@@ -169,7 +169,8 @@ export default function CalculateForm(props) {
 
       OpenFiscaApi.postCalculate(payload_peak_demand)
         .then((res) => {
-          var result = res.data[entity.plural][`${entity.name}_1`][peakDemandReductionSavings][date];
+          var result =
+            res.data[entity.plural][`${entity.name}_1`][peakDemandReductionSavings][date];
           console.log(result);
           setPeakDemandReductionSavingsNumber(result);
           setShowError(false);
@@ -248,7 +249,6 @@ export default function CalculateForm(props) {
     }
 
     console.log('****************', postcode);
-
 
     if (stepNumber === 1 && workflow !== 'eligibility') {
       formValues.map((variable) => {

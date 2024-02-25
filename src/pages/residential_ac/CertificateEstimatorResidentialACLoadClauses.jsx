@@ -73,7 +73,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
 
   console.log(calculationResult);
   console.log(calculationResult2);
-  console.log("peak demand", peakDemandReductionSavingsNumber);
+  console.log('peak demand', peakDemandReductionSavingsNumber);
 
   if (calculationResult2 === null) {
     setCalculationResult2('0');
@@ -322,10 +322,9 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                   Your estimated annual energy savings are{' '}
                   <b>
                     <b>
-                      {annualEnergySavingsNumber}
                       {Math.floor(calculationResult2) === 0
                         ? 0
-                        :  Math.round(annualEnergySavingsNumber * 100)/100}
+                        : Math.round(annualEnergySavingsNumber * 100) / 100}
                     </b>{' '}
                     kWh{' '}
                   </b>
@@ -334,10 +333,9 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                   Your estimated annual peak demand reduction is{' '}
                   <b>
                     <b>
-                    {peakDemandReductionSavingsNumber}
                       {Math.floor(calculationResult) === 0
                         ? 0
-                        :  Math.round(peakDemandReductionSavingsNumber * 100)/100}
+                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
                     </b>{' '}
                     kWh{' '}
                   </b>
