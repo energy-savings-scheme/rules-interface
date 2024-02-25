@@ -314,7 +314,7 @@ export default function CertificateEstimatorLoadClausesRC(props) {
                     <b>
                       {Math.floor(calculationResult) === 0
                         ? 0
-                        : Math.floor(annualEnergySavingsNumber)}
+                        : Math.round(annualEnergySavingsNumber * 100) / 100}
                     </b>{' '}
                     kWh{' '}
                   </b>
@@ -325,7 +325,7 @@ export default function CertificateEstimatorLoadClausesRC(props) {
                     <b>
                       {Math.floor(calculationResult2) === 0
                         ? 0
-                        : Math.floor(peakDemandReductionSavingsNumber)}
+                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
                     </b>{' '}
                     kWh{' '}
                   </b>
