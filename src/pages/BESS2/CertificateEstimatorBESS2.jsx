@@ -38,6 +38,7 @@ export default function CertificateEstimatorBESS2(props) {
   const [showError, setShowError] = useState(false);
   const [showNoResponsePostcodeError, setShowNoResponsePostcodeError] = useState(false);
   const [lastModified, setLastModified] = useState('');
+  const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
 
   console.log(resSolarBatteryBrands);
 
@@ -55,6 +56,20 @@ export default function CertificateEstimatorBESS2(props) {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (parseInt(calculationResult) === 0) {
+      setPeakDemandReductionSavingsNumber(0)
+    }
+  }, [calculationResult]);
+
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0)
+    }
+  }, [peakDemandReductionSavingsNumber]);
+
 
   // For resSolarBatteryBrands
   const populateDropDown = (newOption) => {
@@ -341,6 +356,9 @@ export default function CertificateEstimatorBESS2(props) {
             <CertificateEstimatorLoadClausesD18
               variableToLoad1={'BESS2_PRC_calculation'}
               variableToLoad2={'BESS2_PRC_calculation'}
+              peakDemandReductionSavings={'BESS2_peak_demand_annual_savings'}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -408,6 +426,9 @@ export default function CertificateEstimatorBESS2(props) {
             <CertificateEstimatorLoadClausesD18
               variableToLoad1={'BESS2_PRC_calculation'}
               variableToLoad2={'BESS2_PRC_calculation'}
+              peakDemandReductionSavings={'BESS2_peak_demand_annual_savings'}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               variables={variables}
               entities={entities}
               metadata={metadata}
