@@ -170,7 +170,7 @@ export default function CalculateForm(props) {
         .then((res) => {
           var result =
             res.data[entity.plural][`${entity.name}_1`][peakDemandReductionSavings][date];
-          console.log(res.data);
+          console.log(result);
           setPeakDemandReductionSavingsNumber(result);
           setShowError(false);
         })
@@ -248,6 +248,7 @@ export default function CalculateForm(props) {
     }
 
     console.log('****************', postcode);
+
     if (stepNumber === 1 && workflow !== 'eligibility') {
       formValues.map((variable) => {
         if (variable.name === 'RF1_PDRS__postcode' || variable.name === 'SYS1_PDRS__postcode') {

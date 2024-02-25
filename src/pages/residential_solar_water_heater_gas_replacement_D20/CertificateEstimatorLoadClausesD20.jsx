@@ -45,7 +45,7 @@ export default function CertificateEstimatorLoadClausesD20(props) {
     annualEnergySavingsNumber,
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
-    setPeakDemandReductionSavingsNumber
+    setPeakDemandReductionSavingsNumber,
   } = props;
 
   console.log(variableToLoad1);
@@ -294,8 +294,15 @@ export default function CertificateEstimatorLoadClausesD20(props) {
                   </span>
                 </p>
                 <p>
-                  Your estimated annual energy savings are { ' ' }
-                  <b><b>{Math.floor(calculationResult) === 0 ? 0 : Math.floor(annualEnergySavingsNumber) }</b> kWh </b>
+                  Your estimated annual energy savings are{' '}
+                  <b>
+                    <b>
+                      {Math.floor(calculationResult) === 0
+                        ? 0
+                        : Math.floor(annualEnergySavingsNumber)}
+                    </b>{' '}
+                    kWh{' '}
+                  </b>
                 </p>
                 <p>
                   As this activity is only eligible for the Energy Savings Scheme, it generates
