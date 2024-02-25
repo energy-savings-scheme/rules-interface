@@ -8,6 +8,7 @@ import { Spinner } from 'react-bootstrap';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import axios from 'axios';
 import RegistryApi from 'services/registry_api';
+import { codepen } from 'react-code-blocks';
 
 export default function CalculateForm(props) {
   const {
@@ -168,9 +169,8 @@ export default function CalculateForm(props) {
 
       OpenFiscaApi.postCalculate(payload_peak_demand)
         .then((res) => {
-          var result =
-            res.data[entity.plural][`${entity.name}_1`][peakDemandReductionSavings][date];
-          console.log(res.data);
+          var result = res.data[entity.plural][`${entity.name}_1`][peakDemandReductionSavings][date];
+          console.log(result);
           setPeakDemandReductionSavingsNumber(result);
           setShowError(false);
         })
@@ -248,6 +248,8 @@ export default function CalculateForm(props) {
     }
 
     console.log('****************', postcode);
+
+
     if (stepNumber === 1 && workflow !== 'eligibility') {
       formValues.map((variable) => {
         if (variable.name === 'RF1_PDRS__postcode' || variable.name === 'SYS1_PDRS__postcode') {

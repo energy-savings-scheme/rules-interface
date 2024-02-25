@@ -81,16 +81,16 @@ export default function CertificateEstimatorResidentialAC(props) {
   }, []);
 
   useEffect(() => {
-    if (parseInt(calculationResult) === 0) {
+    if (parseInt(calculationResult2) === 0) {
       setAnnualEnergySavingsNumber(0);
     }
-  }, [calculationResult]);
+  }, [calculationResult2]);
 
   useEffect(() => {
-    if (parseInt(calculationResult2) === 0) {
+    if (parseInt(calculationResult) === 0) {
       setPeakDemandReductionSavingsNumber(0);
     }
-  }, [calculationResult2]);
+  }, [calculationResult]);
 
   useEffect(() => {
     if (annualEnergySavingsNumber < 0) {
