@@ -58,6 +58,7 @@ import SolarBatteryCertificatePage from 'pages/homepage/SolarBatteryCertificateP
 import CertificateEstimatorBESS1 from 'pages/BESS1/CertificateEstimatorBESS1';
 import ActivityRequirementsBESS2 from 'pages/BESS2/ActivityRequirementsBESS2';
 import CertificateEstimatorBESS2 from 'pages/BESS2/CertificateEstimatorBESS2';
+import CertificateEstimatorWH2_test from 'pages/WH2_test/CertificateEstimatorWH';
 
 function App() {
   const [entities, setEntities] = useState([]);
@@ -215,6 +216,19 @@ function App() {
             setLoading={setLoading}
           />
         </Route>
+
+        <Route path="/commercial-wh-test-estimator" exact>
+          <Breadcrumb />
+          <CertificateEstimatorWH2_test
+            entities={entities}
+            variables={variables}
+            brands={whBrands}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+          />
+        </Route>
+
         <Route path="/residential-ac-estimator" exact>
           <Breadcrumb />
           <CertificateEstimatorResidentialAC
