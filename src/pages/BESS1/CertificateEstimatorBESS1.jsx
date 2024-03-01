@@ -47,17 +47,15 @@ export default function CertificateEstimatorBESS1(props) {
 
   useEffect(() => {
     if (parseInt(calculationResult) === 0) {
-      setPeakDemandReductionSavingsNumber(0)
+      setPeakDemandReductionSavingsNumber(0);
     }
   }, [calculationResult]);
 
-
   useEffect(() => {
     if (peakDemandReductionSavingsNumber < 0) {
-      setPeakDemandReductionSavingsNumber(0)
+      setPeakDemandReductionSavingsNumber(0);
     }
   }, [peakDemandReductionSavingsNumber]);
-
 
   // For brands
   const populateDropDown = (newOption) => {

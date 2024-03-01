@@ -42,7 +42,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
     setShowError,
     peakDemandReductionSavings,
     peakDemandReductionSavingsNumber,
-    setPeakDemandReductionSavingsNumber
+    setPeakDemandReductionSavingsNumber,
   } = props;
 
   console.log(variableToLoad1);
@@ -272,9 +272,15 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
                 </p>
 
                 <p>
-                  Your estimated annual peak demand reduction is { ' ' }
-                  <b><b>{Math.floor(calculationResult) === 0 ? 0 : Math.round(peakDemandReductionSavingsNumber * 100) / 100}</b> kWh </b>
-
+                  Your estimated annual peak demand reduction is{' '}
+                  <b>
+                    <b>
+                      {Math.floor(calculationResult) === 0
+                        ? 0
+                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
+                    </b>{' '}
+                    kWh{' '}
+                  </b>
                 </p>
                 <p>
                   As this activity is only eligible for the Peak Demand Reduction Scheme, it

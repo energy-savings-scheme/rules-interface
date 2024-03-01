@@ -80,30 +80,6 @@ export default function CertificateEstimatorResidentialAC(props) {
     }
   }, []);
 
-  useEffect(() => {
-    if (parseInt(calculationResult2) === 0) {
-      setAnnualEnergySavingsNumber(0);
-    }
-  }, [calculationResult2]);
-
-  useEffect(() => {
-    if (parseInt(calculationResult) === 0) {
-      setPeakDemandReductionSavingsNumber(0);
-    }
-  }, [calculationResult]);
-
-  useEffect(() => {
-    if (annualEnergySavingsNumber < 0) {
-      setAnnualEnergySavingsNumber(0);
-    }
-  }, [annualEnergySavingsNumber]);
-
-  useEffect(() => {
-    if (peakDemandReductionSavingsNumber < 0) {
-      setPeakDemandReductionSavingsNumber(0);
-    }
-  }, [peakDemandReductionSavingsNumber]);
-
   // For brands
   const populateDropDown = (newOption) => {
     setDropdownOptions((prev) => {
