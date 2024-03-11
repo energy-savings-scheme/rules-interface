@@ -189,9 +189,7 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
                   Your estimated annual energy savings are{' '}
                   <b>
                     <b>
-                      {Math.floor(calculationResult) === 0
-                        ? 0
-                        : Math.round(annualEnergySavingsNumber * 100) / 100}
+                      { Math.round(annualEnergySavingsNumber * 100) / 100}
                     </b>{' '}
                     kWh{' '}
                   </b>
@@ -200,9 +198,7 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
                   Your estimated annual peak demand reduction is{' '}
                   <b>
                     <b>
-                      {Math.floor(calculationResult2) === 0
-                        ? 0
-                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
+                      { Math.round(peakDemandReductionSavingsNumber * 100) / 100}
                     </b>{' '}
                     kWh{' '}
                   </b>
