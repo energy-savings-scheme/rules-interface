@@ -275,9 +275,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
                   Your estimated annual peak demand reduction is{' '}
                   <b>
                     <b>
-                      {Math.floor(calculationResult) === 0
-                        ? 0
-                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
+                      { Math.round(peakDemandReductionSavingsNumber * 100) / 100}
                     </b>{' '}
                     kWh{' '}
                   </b>
