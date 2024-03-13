@@ -411,7 +411,7 @@ export default function CertificateEstimatorWH(props) {
             <CertificateEstimatorLoadClausesWH
               variableToLoad1={'WH1_PRC_calculation'}
               variableToLoad2={'WH1_ESC_calculation'}
-              annualEnergySavings={'WH1_annual_energy_savings'}
+              annualEnergySavings={'WH1_energy_savings'}
               peakDemandReductionSavings={'WH1_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}

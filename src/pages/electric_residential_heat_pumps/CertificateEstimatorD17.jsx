@@ -44,7 +44,6 @@ export default function CertificateEstimatorElectricHeatPump(props) {
     window.scrollTo(0, 0);
   }, []);
 
-
   // For brands
   const populateDropDown = (newOption) => {
     setDropdownOptions((prev) => {

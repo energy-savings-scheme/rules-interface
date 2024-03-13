@@ -63,7 +63,6 @@ export default function CertificateEstimatorMotors(props) {
     }
   }, []);
 
-
   useEffect(() => {
     OpenFiscaAPI.getVariable('SYS1_PRC_calculation')
       .then((res) => {
