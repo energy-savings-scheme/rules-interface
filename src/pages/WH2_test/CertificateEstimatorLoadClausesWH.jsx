@@ -300,19 +300,13 @@ export default function CertificateEstimatorLoadClausesWHtest(props) {
                 <p>
                   Your estimated annual energy savings are{' '}
                   <b>
-                    <b>
-                      { Math.round(annualEnergySavingsNumber * 100) / 100}
-                    </b>{' '}
-                    kWh{' '}
+                    <b>{Math.round(annualEnergySavingsNumber * 100) / 100}</b> kWh{' '}
                   </b>
                 </p>
                 <p>
                   Your estimated annual peak demand reduction is{' '}
                   <b>
-                    <b>
-                      {Math.round(peakDemandReductionSavingsNumber * 100) / 100}
-                    </b>{' '}
-                    kWh{' '}
+                    <b>{Math.round(peakDemandReductionSavingsNumber * 100) / 100}</b> kWh{' '}
                   </b>
                 </p>
                 <p>

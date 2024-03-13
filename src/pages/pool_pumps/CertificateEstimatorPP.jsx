@@ -108,7 +108,6 @@ export default function CertificateEstimatorPP(props) {
     });
   };
 
-
   useEffect(() => {
     if (postcode && postcode.length < 4) {
       setShowPostcodeError(false);

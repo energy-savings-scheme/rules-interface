@@ -554,11 +554,9 @@ export default function CalculateBlock(props) {
       formItem.name !== 'HVAC1_TCSPF_mixed' &&
       formItem.name !== 'HVAC1_HSPF_cold' &&
       formItem.name !== 'HVAC1_HSPF_mixed' &&
-      formItem.name !== 'HVAC1_input_power' &&
       formItem.name !== 'HVAC2_TCSPF_mixed' &&
       formItem.name !== 'HVAC2_HSPF_mixed' &&
-      formItem.name !== 'HVAC2_HSPF_cold' &&
-      formItem.name !== 'HVAC2_input_power'
+      formItem.name !== 'HVAC2_HSPF_cold'
     ) {
       if (formItem.value_type == 'Float') {
         return <FormTextInput formItem={formItem} setItemValue={setItemValue} />;
