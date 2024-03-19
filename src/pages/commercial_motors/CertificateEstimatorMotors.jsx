@@ -64,6 +64,18 @@ export default function CertificateEstimatorMotors(props) {
   }, []);
 
   useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [peakDemandReductionSavingsNumber]);
+
+  useEffect(() => {
     OpenFiscaAPI.getVariable('SYS1_PRC_calculation')
       .then((res) => {
         setVariableData1(res.data);

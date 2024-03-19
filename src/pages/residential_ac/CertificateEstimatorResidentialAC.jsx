@@ -42,6 +42,18 @@ export default function CertificateEstimatorResidentialAC(props) {
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
 
   useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [peakDemandReductionSavingsNumber]);
+  
+  useEffect(() => {
     window.scrollTo(0, 0);
 
     setDropdownOptions([{ value: '', text: 'Please select brand' }]);
