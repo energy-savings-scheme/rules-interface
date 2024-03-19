@@ -44,6 +44,18 @@ export default function CertificateEstimatorGasHeatPump(props) {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [peakDemandReductionSavingsNumber]);
+
   // For brands
   const populateDropDown = (newOption) => {
     setDropdownOptions((prev) => {

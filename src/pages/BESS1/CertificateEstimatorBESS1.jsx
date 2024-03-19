@@ -42,6 +42,12 @@ export default function CertificateEstimatorBESS1(props) {
   console.log(brands);
 
   useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [peakDemandReductionSavingsNumber]);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 

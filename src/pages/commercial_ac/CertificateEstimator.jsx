@@ -98,6 +98,18 @@ export default function CertificateEstimatorHVAC(props) {
     }
   }, []);
 
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [peakDemandReductionSavingsNumber]);
+
   // For brands
   const populateDropDown = (newOption) => {
     setDropdownOptions((prev) => {
