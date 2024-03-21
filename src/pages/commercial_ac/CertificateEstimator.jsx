@@ -287,7 +287,7 @@ export default function CertificateEstimatorHVAC(props) {
               <p className="nsw-content-block__copy">
                 Answer the following questions to estimate the energy savings certificates (ESCs)
                 and peak reduction certificates (PRCs) for the Residential and Small Business Air
-                Conditioner Activity (D16 in the{' '}
+                Conditioner Activity (F4 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
