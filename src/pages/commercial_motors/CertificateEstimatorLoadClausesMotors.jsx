@@ -194,17 +194,24 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
                 <p>
                   Your estimated annual energy savings are{' '}
                   <b>
-                    <b>{Math.floor(calculationResult2) === 0
+                    <b>
+                      {Math.floor(calculationResult2) === 0
                         ? 0
-                        : Math.round(annualEnergySavingsNumber * 100) / 100}</b> kWh{' '}
+                        : Math.round(annualEnergySavingsNumber * 100) / 100}
+                    </b>{' '}
+                    kWh{' '}
                   </b>
                 </p>
                 <p>
                   Your estimated annual peak demand reduction is{' '}
                   <b>
-                    <b>                      {Math.floor(calculationResult) === 0
+                    <b>
+                      {' '}
+                      {Math.floor(calculationResult) === 0
                         ? 0
-                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}</b> kWh{' '}
+                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
+                    </b>{' '}
+                    kWh{' '}
                   </b>
                 </p>
                 <p>
