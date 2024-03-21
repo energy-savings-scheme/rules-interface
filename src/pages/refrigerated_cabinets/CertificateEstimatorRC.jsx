@@ -41,7 +41,6 @@ export default function CertificateEstimatorRC(props) {
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
 
-
   useEffect(() => {
     if (annualEnergySavingsNumber < 0) {
       setAnnualEnergySavingsNumber(0);
@@ -53,7 +52,7 @@ export default function CertificateEstimatorRC(props) {
       setPeakDemandReductionSavingsNumber(0);
     }
   }, [peakDemandReductionSavingsNumber]);
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
 

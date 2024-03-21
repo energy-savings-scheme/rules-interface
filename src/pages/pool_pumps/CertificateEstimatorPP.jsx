@@ -66,7 +66,7 @@ export default function CertificateEstimatorPP(props) {
       setPeakDemandReductionSavingsNumber(0);
     }
   }, [peakDemandReductionSavingsNumber]);
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
