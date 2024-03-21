@@ -42,7 +42,6 @@ export default function CertificateEstimatorBESS2(props) {
 
   console.log(resSolarBatteryBrands);
 
-
   useEffect(() => {
     if (peakDemandReductionSavingsNumber < 0) {
       setPeakDemandReductionSavingsNumber(0);

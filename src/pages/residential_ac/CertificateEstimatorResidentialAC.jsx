@@ -52,7 +52,7 @@ export default function CertificateEstimatorResidentialAC(props) {
       setPeakDemandReductionSavingsNumber(0);
     }
   }, [peakDemandReductionSavingsNumber]);
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
 

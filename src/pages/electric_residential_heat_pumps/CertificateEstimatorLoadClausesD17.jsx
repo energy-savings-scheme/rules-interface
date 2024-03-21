@@ -298,7 +298,9 @@ export default function CertificateEstimatorLoadClausesD17(props) {
                 <p>
                   Your estimated annual energy savings are{' '}
                   <b>
-                    <b>{Math.round(annualEnergySavingsNumber * 100) / 100}</b> kWh{' '}
+                    <b>                      {Math.floor(calculationResult2) === 0
+                        ? 0
+                        : Math.round(annualEnergySavingsNumber * 100) / 100}</b> kWh{' '}
                   </b>
                 </p>
                 <p>
