@@ -33,12 +33,23 @@ export default function CalculateForm(props) {
     setFormValues,
     persistFormValues,
     setPersistFormValues,
+    loading,
+    setLoading,
+    showError,
+    setShowError,
+    postcode,
+    annualEnergySavings,
+    peakDemandReductionSavings,
+    annualEnergySavingsNumber,
+    setAnnualEnergySavingsNumber,
+    peakDemandReductionSavingsNumber,
+    setPeakDemandReductionSavingsNumber,
   } = props;
 
   var { formValues } = props;
 
-  const [loading, setLoading] = useState(false);
   const [showPostcodeError, setShowPostcodeError] = useState(false);
+  const [showNoResponsePostcodeError, setShowNoResponsePostcodeError] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -70,6 +81,7 @@ export default function CalculateForm(props) {
 
   console.log(variable);
   console.log(variable2);
+  console.log(postcode);
 
   const handleCalculate = (e) => {
     e.preventDefault();
@@ -122,14 +134,51 @@ export default function CalculateForm(props) {
         setCalculationResult(result);
         setCalculationError(false);
         setLoading(true);
+        setShowError(false);
       })
       .catch((err) => {
         setCalculationResult(null);
         setCalculationError(true);
+        setShowError(true);
       })
       .finally(() => {
         setLoading(false);
       });
+
+    if (workflow !== 'eligibility') {
+      console.log(peakDemandReductionSavings);
+      var payload_peak_demand = {
+        persons: { person1: {} },
+        [entity.plural]: {
+          [`${entity.name}_1`]: { [peakDemandReductionSavings]: { [date]: null } },
+        },
+      };
+
+      formValues.map((variable) => {
+        const variable_entity = entities.find((item) => item.name === variable.entity);
+
+        payload_peak_demand[variable_entity.plural][`${variable_entity.name}_1`][
+          `${variable.name}`
+        ] = {
+          [date]: validateDataType(variable).form_value,
+        };
+      });
+
+      console.log('peak demand payload', payload_peak_demand);
+
+      OpenFiscaApi.postCalculate(payload_peak_demand)
+        .then((res) => {
+          var result =
+            res.data[entity.plural][`${entity.name}_1`][peakDemandReductionSavings][date];
+          console.log(result);
+          setPeakDemandReductionSavingsNumber(result);
+          setShowError(false);
+        })
+        .catch((err) => {
+          setShowError(true);
+        })
+        .finally(() => {});
+    }
 
     if (variable2) {
       const entity2 = entities.find((item) => item.name === variable2.entity);
@@ -154,16 +203,51 @@ export default function CalculateForm(props) {
           console.log(res.data);
           setCalculationResult2(result);
           setCalculationError2(false);
+          setLoading(true);
+          setShowError(false);
         })
         .catch((err) => {
           setCalculationResult2(null);
           setCalculationError2(true);
           console.log(err);
+          setShowError(true);
         })
         .finally(() => {
           setLoading(false);
         });
+
+      // ANNUAL ENERGY SAVINGS API
+      var annual_energy_savings = {
+        persons: { person1: {} },
+        [entity.plural]: { [`${entity.name}_1`]: { [annualEnergySavings]: { [date]: null } } },
+      };
+
+      formValues.map((variable) => {
+        const variable_entity = entities.find((item) => item.name === variable.entity);
+
+        annual_energy_savings[variable_entity.plural][`${variable_entity.name}_1`][
+          `${variable.name}`
+        ] = {
+          [date]: validateDataType(variable).form_value,
+        };
+      });
+
+      console.log('annual energy savings', annual_energy_savings);
+
+      OpenFiscaApi.postCalculate(annual_energy_savings)
+        .then((res) => {
+          var result = res.data[entity.plural][`${entity.name}_1`][annualEnergySavings][date];
+          console.log(res.data);
+          setAnnualEnergySavingsNumber(result);
+          setShowError(false);
+        })
+        .catch((err) => {
+          setShowError(true);
+        })
+        .finally(() => {});
     }
+
+    console.log('****************', postcode);
 
     if (stepNumber === 1 && workflow !== 'eligibility') {
       formValues.map((variable) => {
@@ -178,20 +262,30 @@ export default function CalculateForm(props) {
                 const persons = res.data;
                 console.log(res);
                 if (
-                  (persons.status === '200') &
-                  (persons.data.postcode === variable.form_value) &
-                  (persons.data.state === 'NSW')
+                  persons.status === '200' &&
+                  persons.code === '200' &&
+                  persons.data.postcode &&
+                  persons.data.postcode === variable.form_value
                 ) {
-                  setFlow(null);
-                  setStepNumber(stepNumber + 1);
-                  setShowPostcodeError(false);
-                } else {
+                  if (persons.data['state'] === 'NSW') {
+                    setShowPostcodeError(false);
+                    setFlow(null);
+                    setStepNumber(stepNumber + 1);
+                  } else {
+                    setShowPostcodeError(true);
+                    setShowNoResponsePostcodeError(false);
+                  }
+                } else if (persons.status === '200' && persons.code === '404') {
                   setShowPostcodeError(true);
+                  setShowNoResponsePostcodeError(false);
+                } else if (persons.status !== '200') {
+                  setShowPostcodeError(false);
+                  setShowNoResponsePostcodeError(true);
                 }
               })
               .catch((err) => {
                 console.log(err);
-                setShowPostcodeError(true);
+                setShowNoResponsePostcodeError(true);
               });
           }
         }
@@ -227,6 +321,15 @@ export default function CalculateForm(props) {
       {stepNumber === 1 && showPostcodeError && (
         <Alert as="error" title="The postcode is not valid in NSW">
           <p>Please check your postcode and try again.</p>
+        </Alert>
+      )}
+
+      {stepNumber === 1 && showNoResponsePostcodeError && (
+        <Alert as="error" title="Sorry!">
+          <p>
+            We are experiencing technical difficulties validating the postcode, please try again
+            later.
+          </p>
         </Alert>
       )}
 

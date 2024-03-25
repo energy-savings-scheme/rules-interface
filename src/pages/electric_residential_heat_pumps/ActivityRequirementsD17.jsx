@@ -21,6 +21,7 @@ export default function ActivityRequirementsD17(props) {
     'D17_replacement_final_activity_eligibility',
   );
   const [clausesForm, setClausesForm] = useState([]);
+  const [showError, setShowError] = useState(false);
 
   console.log(variables);
 
@@ -211,6 +212,8 @@ export default function ActivityRequirementsD17(props) {
               setFormValues={setFormValues}
               clausesForm={clausesForm}
               setClausesForm={setClausesForm}
+              showError={showError}
+              setShowError={setShowError}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}

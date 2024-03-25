@@ -22,16 +22,7 @@ import { compareAsc, format, previousSunday } from 'date-fns';
 import axios from 'axios';
 
 export default function CertificateEstimatorHVAC(props) {
-  const {
-    entities,
-    variables,
-    hvacBrands,
-    setVariables,
-    setEntities,
-    setHvacBrands,
-    loading,
-    setLoading,
-  } = props;
+  const { entities, variables, hvacBrands, setVariables, setEntities, setHvacBrands } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
@@ -51,6 +42,12 @@ export default function CertificateEstimatorHVAC(props) {
   const [flow, setFlow] = useState(null);
   const [persistFormValues, setPersistFormValues] = useState([]);
   const [showPostcodeError, setShowPostcodeError] = useState(false);
+  const [showNoResponsePostcodeError, setShowNoResponsePostcodeError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [lastModified, setLastModified] = useState('');
+  const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
+  const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -77,6 +74,16 @@ export default function CertificateEstimatorHVAC(props) {
         });
     }
 
+    if (lastModified.length == 0) {
+      RegistryApi.getCommercialHVACLastModified('commercial_hvac')
+        .then((res) => {
+          setLastModified(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
     if (hvacBrands.length < 1) {
       RegistryApi.getCommercialHVACBrands()
         .then((res) => {
@@ -90,6 +97,18 @@ export default function CertificateEstimatorHVAC(props) {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [peakDemandReductionSavingsNumber]);
 
   // For brands
   const populateDropDown = (newOption) => {
@@ -122,20 +141,30 @@ export default function CertificateEstimatorHVAC(props) {
           const persons = res.data;
           console.log(res);
           if (
-            (persons.status === '200') &
-            (persons.data.postcode === postcode) &
-            (persons.data.state === 'NSW')
+            persons.status === '200' &&
+            persons.code === '200' &&
+            persons.data.postcode &&
+            persons.data.postcode === postcode
           ) {
-            setFlow(null);
-            setStepNumber(stepNumber + 1);
-            setShowPostcodeError(false);
-          } else {
+            if (persons.data['state'] === 'NSW') {
+              setShowPostcodeError(false);
+              setFlow(null);
+              setStepNumber(stepNumber + 1);
+            } else {
+              setShowPostcodeError(true);
+              setShowNoResponsePostcodeError(false);
+            }
+          } else if (persons.status === '200' && persons.code === '404') {
             setShowPostcodeError(true);
+            setShowNoResponsePostcodeError(false);
+          } else if (persons.status !== '200') {
+            setShowPostcodeError(false);
+            setShowNoResponsePostcodeError(true);
           }
         })
         .catch((err) => {
           console.log(err);
-          setShowPostcodeError(true);
+          setShowNoResponsePostcodeError(true);
         });
     }
   };
@@ -181,6 +210,30 @@ export default function CertificateEstimatorHVAC(props) {
   }, [selectedBrand]);
 
   useEffect(() => {
+    if (parseInt(calculationResult) === 0) {
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [calculationResult]);
+
+  useEffect(() => {
+    if (parseInt(calculationResult2) === 0) {
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [calculationResult2]);
+
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [peakDemandReductionSavingsNumber]);
+
+  useEffect(() => {
     const payload = {
       buildings: {
         building_1: {
@@ -203,6 +256,9 @@ export default function CertificateEstimatorHVAC(props) {
         console.log(err);
       });
   }, [postcode]);
+
+  console.log('loading....', loading);
+  console.log('error...', showError);
 
   return (
     <Fragment>
@@ -231,7 +287,7 @@ export default function CertificateEstimatorHVAC(props) {
               <p className="nsw-content-block__copy">
                 Answer the following questions to estimate the energy savings certificates (ESCs)
                 and peak reduction certificates (PRCs) for the Residential and Small Business Air
-                Conditioner Activity (D16 in the{' '}
+                Conditioner Activity (F4 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
@@ -276,7 +332,15 @@ export default function CertificateEstimatorHVAC(props) {
 
         <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%' }} />
 
+        {stepNumber === 3 && loading && !showError && <SpinnerFullscreen />}
+
         <Fragment>
+          {stepNumber === 3 && calculationError && calculationError2 && showError && (
+            <Alert as="error" title="Sorry!" style={{ width: '80%' }}>
+              <p>We are experiencing technical difficulties right now, please try again later.</p>
+            </Alert>
+          )}
+
           {stepNumber === 1 && (
             <div className="nsw-row">
               <div className="nsw-col" style={{ padding: 'inherit' }}>
@@ -340,8 +404,7 @@ export default function CertificateEstimatorHVAC(props) {
 
                     <p style={{ fontSize: '14px', marginBottom: '2%' }}>
                       {' '}
-                      Updated from product registry:{' '}
-                      {format(previousSunday(new Date()), 'MMMM d, Y')}
+                      Updated from product registry: {lastModified}
                     </p>
                   </div>
                 </div>
@@ -361,6 +424,8 @@ export default function CertificateEstimatorHVAC(props) {
             <CertificateEstimatorLoadClauses
               variableToLoad1={'HVAC2_PRC_calculation'}
               variableToLoad2={'HVAC2_ESC_calculation'}
+              annualEnergySavings={'HVAC2_annual_energy_savings'}
+              peakDemandReductionSavings={'HVAC2_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -387,6 +452,14 @@ export default function CertificateEstimatorHVAC(props) {
               setFlow={setFlow}
               persistFormValues={persistFormValues}
               setPersistFormValues={setPersistFormValues}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 
@@ -394,6 +467,8 @@ export default function CertificateEstimatorHVAC(props) {
             <CertificateEstimatorLoadClauses
               variableToLoad1={'HVAC2_PRC_calculation'}
               variableToLoad2={'HVAC2_ESC_calculation'}
+              annualEnergySavings={'HVAC2_annual_energy_savings'}
+              peakDemandReductionSavings={'HVAC2_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -414,14 +489,31 @@ export default function CertificateEstimatorHVAC(props) {
               setFlow={setFlow}
               persistFormValues={persistFormValues}
               setPersistFormValues={setPersistFormValues}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 
-          {stepNumber === 3 && calculationError && calculationError2 && <SpinnerFullscreen />}
+          {/* {stepNumber === 3 && calculationError && calculationError2 && <SpinnerFullscreen />} */}
 
           {stepNumber === 1 && showPostcodeError && postcode.length >= 4 && (
             <Alert as="error" title="The postcode is not valid in NSW">
               <p>Please check your postcode and try again.</p>
+            </Alert>
+          )}
+
+          {stepNumber === 1 && showNoResponsePostcodeError && postcode.length >= 4 && (
+            <Alert as="error" title="Sorry!">
+              <p>
+                We are experiencing technical difficulties validating the postcode, please try again
+                later.
+              </p>
             </Alert>
           )}
 

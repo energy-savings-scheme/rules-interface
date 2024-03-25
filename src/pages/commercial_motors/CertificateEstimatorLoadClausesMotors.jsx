@@ -32,6 +32,16 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
     setPersistFormValues,
     formValues,
     setFormValues,
+    loading,
+    setLoading,
+    showError,
+    setShowError,
+    annualEnergySavings,
+    peakDemandReductionSavings,
+    annualEnergySavingsNumber,
+    setAnnualEnergySavingsNumber,
+    peakDemandReductionSavingsNumber,
+    setPeakDemandReductionSavingsNumber,
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -39,7 +49,6 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
   const [dependencies, setDependencies] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -154,6 +163,16 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
               setFlow={setFlow}
               persistFormValues={persistFormValues}
               setPersistFormValues={setPersistFormValues}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
+              annualEnergySavings={annualEnergySavings}
+              peakDemandReductionSavings={peakDemandReductionSavings}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           </Fragment>
         )}
@@ -171,6 +190,29 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
                     <b>{Math.floor(calculationResult)}</b>
                   </span>
+                </p>
+                <p>
+                  Your estimated annual energy savings are{' '}
+                  <b>
+                    <b>
+                      {Math.floor(calculationResult2) === 0
+                        ? 0
+                        : Math.round(annualEnergySavingsNumber * 100) / 100}
+                    </b>{' '}
+                    kWh{' '}
+                  </b>
+                </p>
+                <p>
+                  Your estimated annual peak demand reduction is{' '}
+                  <b>
+                    <b>
+                      {' '}
+                      {Math.floor(calculationResult) === 0
+                        ? 0
+                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
+                    </b>{' '}
+                    kWh{' '}
+                  </b>
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not

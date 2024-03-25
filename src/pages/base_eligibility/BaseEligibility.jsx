@@ -16,6 +16,7 @@ export default function BaseEligibility(props) {
   const [persistFormValues, setPersistFormValues] = useState([]);
   const [clausesForm, setClausesForm] = useState([]);
   const [secDep, setSecDep] = useState([]);
+  const [showError, setShowError] = useState(false);
 
   if (formValues.length === 0) {
     setLoading(true);
@@ -171,7 +172,8 @@ export default function BaseEligibility(props) {
                   target="_blank"
                 >
                   Peak Demand Reduction Scheme
-                </a>.{' '}
+                </a>
+                .{' '}
               </p>
               <p className="nsw-content-block__copy">
                 Answer the questions and check your eligibility. If ineligible, you will be shown
@@ -212,6 +214,8 @@ export default function BaseEligibility(props) {
               setClausesForm={setClausesForm}
               secDep={secDep}
               setSecDep={setSecDep}
+              showError={showError}
+              setShowError={setShowError}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}

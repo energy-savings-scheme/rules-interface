@@ -9,7 +9,7 @@ import LoadClauses from './LoadClausesActReq';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
-import LoadClausesD17 from './LoadClausesActReq';
+import LoadClausesD18 from './LoadClausesActReq';
 
 export default function ActivityRequirementsD18(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -21,6 +21,7 @@ export default function ActivityRequirementsD18(props) {
     'D18_replacement_final_activity_eligibility',
   );
   const [clausesForm, setClausesForm] = useState([]);
+  const [showError, setShowError] = useState(false);
 
   console.log(variables);
 
@@ -199,7 +200,7 @@ export default function ActivityRequirementsD18(props) {
         <Fragment>
           {loading && <SpinnerFullscreen />}
           {!loading && (
-            <LoadClausesD17
+            <LoadClausesD18
               variableToLoad={variableToLoad}
               variables={variables}
               entities={entities}
@@ -210,6 +211,8 @@ export default function ActivityRequirementsD18(props) {
               setFormValues={setFormValues}
               clausesForm={clausesForm}
               setClausesForm={setClausesForm}
+              showError={showError}
+              setShowError={setShowError}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}

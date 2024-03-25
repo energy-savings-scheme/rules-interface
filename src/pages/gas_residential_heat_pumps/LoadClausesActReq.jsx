@@ -26,6 +26,8 @@ export default function LoadClausesD19(props) {
     dependencies,
     clausesForm,
     setClausesForm,
+    showError,
+    setShowError,
   } = props;
 
   console.log(variableToLoad);
@@ -84,6 +86,15 @@ export default function LoadClausesD19(props) {
 
   return (
     <div className style={{ marginBottom: '7%' }}>
+      <br></br>
+      {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
+
+      {stepNumber === 2 && calculationError && showError && (
+        <Alert as="error" title="Sorry!" style={{ width: '80%' }}>
+          <p>We are experiencing technical difficulties right now, please try again later.</p>
+        </Alert>
+      )}
+      <div></div>
       <div>
         {stepNumber === 1 && (
           <Fragment>
@@ -117,6 +128,10 @@ export default function LoadClausesD19(props) {
               }}
               dependencies={dependencies}
               workflow={'eligibility'}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
             />
           </Fragment>
         )}
@@ -163,14 +178,6 @@ export default function LoadClausesD19(props) {
             }
           </Fragment>
         )}
-
-        {stepNumber === 2 && loading && <SpinnerFullscreen />}
-
-        {/* {stepNumber === 2 && calculationError && (
-          <Alert as="error" title="Sorry! An error has occurred.">
-            <p>An error occurred during calculation. Please try again.</p>
-          </Alert>
-        )} */}
 
         {stepNumber === 2 && (
           <Fragment>

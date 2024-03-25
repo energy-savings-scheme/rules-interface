@@ -12,7 +12,7 @@ import { format, previousSunday } from 'date-fns';
 import axios from 'axios';
 
 export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
-  const { entities, variables, brands, loading, setLoading } = props;
+  const { entities, variables, brands } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
@@ -33,10 +33,40 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
   const [persistFormValues, setPersistFormValues] = useState([]);
   const [flow, setFlow] = useState(null);
   const [showPostcodeError, setShowPostcodeError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [showNoResponsePostcodeError, setShowNoResponsePostcodeError] = useState(false);
+  const [lastModified, setLastModified] = useState('');
+  const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
+  const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // useEffect(() => {
+  //   if (parseInt(calculationResult) === 0) {
+  //     setAnnualEnergySavingsNumber(0);
+  //   }
+  // }, [calculationResult]);
+
+  // useEffect(() => {
+  //   if (parseInt(calculationResult2) === 0) {
+  //     setPeakDemandReductionSavingsNumber(0);
+  //   }
+  // }, [calculationResult2]);
+
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [peakDemandReductionSavingsNumber]);
 
   // For brands
   const populateDropDown = (newOption) => {
@@ -58,6 +88,16 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
     }
   }, [postcode]);
 
+  if (lastModified.length == 0) {
+    RegistryApi.getResidentialSolarWaterHeaterLastModified()
+      .then((res) => {
+        setLastModified(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   const validatePostcode = (postcode) => {
     if (['2817', '2818', '2819'].includes(postcode)) {
       setFlow(null);
@@ -69,20 +109,30 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
           const persons = res.data;
           console.log(res);
           if (
-            (persons.status === '200') &
-            (persons.data.postcode === postcode) &
-            (persons.data.state === 'NSW')
+            persons.status === '200' &&
+            persons.code === '200' &&
+            persons.data.postcode &&
+            persons.data.postcode === postcode
           ) {
-            setFlow(null);
-            setStepNumber(stepNumber + 1);
-            setShowPostcodeError(false);
-          } else {
+            if (persons.data['state'] === 'NSW') {
+              setShowPostcodeError(false);
+              setFlow(null);
+              setStepNumber(stepNumber + 1);
+            } else {
+              setShowPostcodeError(true);
+              setShowNoResponsePostcodeError(false);
+            }
+          } else if (persons.status === '200' && persons.code === '404') {
             setShowPostcodeError(true);
+            setShowNoResponsePostcodeError(false);
+          } else if (persons.status !== '200') {
+            setShowPostcodeError(false);
+            setShowNoResponsePostcodeError(true);
           }
         })
         .catch((err) => {
           console.log(err);
-          setShowPostcodeError(true);
+          setShowNoResponsePostcodeError(true);
         });
     }
   };
@@ -231,7 +281,14 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
 
         <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%' }} />
 
+        {stepNumber === 3 && loading && !showError && <SpinnerFullscreen />}
+
         <Fragment>
+          {stepNumber === 3 && calculationError && calculationError2 && showError && (
+            <Alert as="error" title="Sorry!" style={{ width: '80%' }}>
+              <p>We are experiencing technical difficulties right now, please try again later.</p>
+            </Alert>
+          )}
           {stepNumber === 1 && (
             <div className="nsw-row">
               <div className="nsw-col" style={{ padding: 'inherit' }}>
@@ -294,8 +351,7 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
 
                     <p style={{ fontSize: '14px', marginBottom: '2%' }}>
                       {' '}
-                      Updated from product registry:{' '}
-                      {format(previousSunday(new Date()), 'MMMM d, Y')}
+                      Updated from product registry: {lastModified}
                     </p>
                   </div>
                 </div>
@@ -307,6 +363,12 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
             <CertificateEstimatorLoadClausesD18
               variableToLoad1={'D18_ESC_calculation'}
               variableToLoad2={'D18_ESC_calculation'}
+              annualEnergySavings={'D18_annual_energy_savings'}
+              peakDemandReductionSavings={'D18_annual_energy_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -330,6 +392,10 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
               setFlow={setFlow}
               selectedBrand={selectedBrand}
               selectedModel={selectedModel}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
@@ -350,10 +416,25 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
             </Alert>
           )}
 
+          {stepNumber === 1 && showNoResponsePostcodeError && postcode.length >= 4 && (
+            <Alert as="error" title="Sorry!">
+              <p>
+                We are experiencing technical difficulties validating the postcode, please try again
+                later.
+              </p>
+            </Alert>
+          )}
+
           {stepNumber === 3 && (
             <CertificateEstimatorLoadClausesD18
               variableToLoad1={'WH1_PRC_calculation'}
               variableToLoad2={'WH1_ESC_calculation'}
+              annualEnergySavings={'D18_annual_energy_savings'}
+              peakDemandReductionSavings={'D18_annual_energy_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -373,6 +454,10 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
               selectedModel={selectedModel}
               flow={flow}
               setFlow={setFlow}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
             />
           )}
 

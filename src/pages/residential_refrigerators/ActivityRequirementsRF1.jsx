@@ -18,6 +18,7 @@ export default function ActivityRequirementsRF1(props) {
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState('RF1_removal_activity_eligibility');
   const [clausesForm, setClausesForm] = useState([]);
+  const [showError, setShowError] = useState(false);
 
   console.log(variables);
 
@@ -199,6 +200,8 @@ export default function ActivityRequirementsRF1(props) {
               setFormValues={setFormValues}
               clausesForm={clausesForm}
               setClausesForm={setClausesForm}
+              showError={showError}
+              setShowError={setShowError}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}

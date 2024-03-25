@@ -52,6 +52,13 @@ import ActivityRequirementsD18 from 'pages/residential_solar_water_heater_D18/Ac
 import CertificateEstimatorResidentialSolarWaterHeater from 'pages/residential_solar_water_heater_D18/CertificateEstimatorD18';
 import ActivityRequirementsD20 from 'pages/residential_solar_water_heater_gas_replacement_D20/ActivityRequirementsD20';
 import CertificateEstimatorResidentialGasReplacementSolarWaterHeater from 'pages/residential_solar_water_heater_gas_replacement_D20/CertificateEstimatorD20';
+import ActivityRequirementsBESS1 from 'pages/BESS1/ActivityRequirementsBESS1';
+import SolarBatteryEligibilityPage from 'pages/homepage/SolarBatteryEligibility';
+import SolarBatteryCertificatePage from 'pages/homepage/SolarBatteryCertificatePage';
+import CertificateEstimatorBESS1 from 'pages/BESS1/CertificateEstimatorBESS1';
+import ActivityRequirementsBESS2 from 'pages/BESS2/ActivityRequirementsBESS2';
+import CertificateEstimatorBESS2 from 'pages/BESS2/CertificateEstimatorBESS2';
+import CertificateEstimatorWH2_test from 'pages/WH2_test/CertificateEstimatorWH';
 
 function App() {
   const [entities, setEntities] = useState([]);
@@ -65,6 +72,7 @@ function App() {
   const [PoolPumpBrands, setPoolPumpBrands] = useState([]);
   const [resHPBrands, setresHPBrands] = useState([]);
   const [resSolarWaterHeaterBrands, setResSolarWaterHeaterBrands] = useState([]);
+  const [resSolarBatteryBrands, setResSolarBatteryBrands] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -142,6 +150,15 @@ function App() {
         console.log(err);
       });
 
+    RegistryApi.getResidentialSolarBatteryBrands()
+      .then((res) => {
+        setResSolarBatteryBrands(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     RegistryApi.getRF2Brands()
       .then((res) => {
         setRF2Brands(res.data);
@@ -199,6 +216,19 @@ function App() {
             setLoading={setLoading}
           />
         </Route>
+
+        <Route path="/commercial-wh-test-estimator" exact>
+          <Breadcrumb />
+          <CertificateEstimatorWH2_test
+            entities={entities}
+            variables={variables}
+            brands={whBrands}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+          />
+        </Route>
+
         <Route path="/residential-ac-estimator" exact>
           <Breadcrumb />
           <CertificateEstimatorResidentialAC
@@ -309,6 +339,31 @@ function App() {
           />
         </Route>
 
+        <Route path="/residential-solar-battery-certificates" exact>
+          <Breadcrumb />
+          <CertificateEstimatorBESS1
+            entities={entities}
+            variables={variables}
+            brands={resSolarBatteryBrands}
+            loading={loading}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+          />
+        </Route>
+        <Route path="/residential-solar-battery-demand-response-certificates" exact>
+          <Breadcrumb />
+          <CertificateEstimatorBESS2
+            entities={entities}
+            variables={variables}
+            resSolarBatteryBrands={resSolarBatteryBrands}
+            setResSolarBatteryBrands={setResSolarBatteryBrands}
+            loading={loading}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+          />
+        </Route>
         <Route path="/core-eligibility" exact>
           <Breadcrumb />
           <BaseEligibility
@@ -334,6 +389,28 @@ function App() {
         <Route path="/hot-water-heater-certificate" exact>
           <Breadcrumb />
           <HotWaterCertificatePage
+            entities={entities}
+            variables={variables}
+            loading={loading}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+          />
+        </Route>
+        <Route path="/solar-battery-eligibility" exact>
+          <Breadcrumb />
+          <SolarBatteryEligibilityPage
+            entities={entities}
+            variables={variables}
+            loading={loading}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+          />
+        </Route>
+        <Route path="/solar-battery-certificates" exact>
+          <Breadcrumb />
+          <SolarBatteryCertificatePage
             entities={entities}
             variables={variables}
             loading={loading}
@@ -455,6 +532,29 @@ function App() {
         <Route path="/residential-solar-gas-water-heater-activity-requirements" exact>
           <Breadcrumb />
           <ActivityRequirementsD20
+            entities={entities}
+            variables={variables}
+            loading={loading}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+          />
+        </Route>
+        <Route path="/residential-solar-battery-eligibility" exact>
+          <Breadcrumb />
+          <ActivityRequirementsBESS1
+            entities={entities}
+            variables={variables}
+            loading={loading}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+          />
+        </Route>
+
+        <Route path="/residential-solar-battery-demand-response-eligibility" exact>
+          <Breadcrumb />
+          <ActivityRequirementsBESS2
             entities={entities}
             variables={variables}
             loading={loading}

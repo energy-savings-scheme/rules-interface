@@ -16,9 +16,10 @@ import OpenFiscaApi from 'services/openfisca_api';
 import Notification from 'nsw-ds-react/notification/notification';
 import CertificateEstimatorLoadClausesMotors from './CertificateEstimatorLoadClausesMotors';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
+import Alert from 'nsw-ds-react/alert/alert';
 
 export default function CertificateEstimatorMotors(props) {
-  const { entities, variables, setVariables, setEntities, loading, setLoading } = props;
+  const { entities, variables, setVariables, setEntities } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
@@ -33,6 +34,10 @@ export default function CertificateEstimatorMotors(props) {
   const [variableData2, setVariableData2] = useState([]);
   const [persistFormValues, setPersistFormValues] = useState([]);
   const [flow, setFlow] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
+  const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -57,6 +62,18 @@ export default function CertificateEstimatorMotors(props) {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
     OpenFiscaAPI.getVariable('SYS1_PRC_calculation')
@@ -141,13 +158,27 @@ export default function CertificateEstimatorMotors(props) {
 
         <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
 
+        {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
+
         <Fragment>
+          {stepNumber === 2 && calculationError && calculationError2 && showError && (
+            <Alert as="error" title="Sorry!" style={{ width: '80%' }}>
+              <p>We are experiencing technical difficulties right now, please try again later.</p>
+            </Alert>
+          )}
+
           {stepNumber === 1 && loading && <SpinnerFullscreen />}
 
           {stepNumber === 1 && (
             <CertificateEstimatorLoadClausesMotors
               variableData1={variableData1}
               variableData2={variableData2}
+              annualEnergySavings={'SYS1_energy_savings'}
+              peakDemandReductionSavings={'SYS1_peak_demand_annual_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -167,6 +198,10 @@ export default function CertificateEstimatorMotors(props) {
               setFormValues={setFormValues}
               flow={flow}
               setFlow={setFlow}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
@@ -177,6 +212,12 @@ export default function CertificateEstimatorMotors(props) {
             <CertificateEstimatorLoadClausesMotors
               variableData1={variableData1}
               variableData2={variableData2}
+              annualEnergySavings={'SYS1_energy_savings'}
+              peakDemandReductionSavings={'SYS1_peak_demand_annual_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -194,10 +235,12 @@ export default function CertificateEstimatorMotors(props) {
               setPersistFormValues={setPersistFormValues}
               flow={flow}
               setFlow={setFlow}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
             />
           )}
-
-          {stepNumber === 2 && calculationError && calculationError2 && <SpinnerFullscreen />}
 
           {stepNumber === 1 && registryData && postcode && postcode.length === 4 && (
             <div className="nsw-row" style={{ paddingTop: '30px' }}>

@@ -5,9 +5,10 @@ import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import CertificateEstimatorLoadClausesRefrigerators from './CertificateEstimatorLoadClausesRefrigerators';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
+import Alert from 'nsw-ds-react/alert/alert';
 
 export default function CertificateEstimatorRefrigerators(props) {
-  const { entities, variables, setVariables, setEntities, loading, setLoading } = props;
+  const { entities, variables, setVariables, setEntities } = props;
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
   const [metadata, setMetadata] = useState(null);
@@ -21,6 +22,10 @@ export default function CertificateEstimatorRefrigerators(props) {
   const [variableData2, setVariableData2] = useState([]);
   const [persistFormValues, setPersistFormValues] = useState([]);
   const [flow, setFlow] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
+  const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -45,6 +50,30 @@ export default function CertificateEstimatorRefrigerators(props) {
         });
     }
   }, []);
+
+  // useEffect(() => {
+  //   if (parseInt(calculationResult) === 0) {
+  //     setAnnualEnergySavingsNumber(0);
+  //   }
+  // }, [calculationResult]);
+
+  // useEffect(() => {
+  //   if (parseInt(calculationResult2) === 0) {
+  //     setPeakDemandReductionSavingsNumber(0);
+  //   }
+  // }, [calculationResult2]);
+
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
     OpenFiscaAPI.getVariable('RF1_PRC_calculation')
@@ -72,7 +101,6 @@ export default function CertificateEstimatorRefrigerators(props) {
 
   return (
     <Fragment>
-      {/* Search section */}
       <br></br>
       <HeroBanner
         wide
@@ -135,8 +163,16 @@ export default function CertificateEstimatorRefrigerators(props) {
 
         <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
 
+        {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
+
         <Fragment>
           {stepNumber === 1 && loading && <SpinnerFullscreen />}
+
+          {stepNumber === 2 && calculationError && calculationError2 && showError && (
+            <Alert as="error" title="Sorry!" style={{ width: '80%' }}>
+              <p>We are experiencing technical difficulties right now, please try again later.</p>
+            </Alert>
+          )}
 
           {stepNumber === 1 && (
             <CertificateEstimatorLoadClausesRefrigerators
@@ -164,6 +200,16 @@ export default function CertificateEstimatorRefrigerators(props) {
               setFormValues={setFormValues}
               flow={flow}
               setFlow={setFlow}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
+              annualEnergySavings={'RF1_energy_savings'}
+              peakDemandReductionSavings={'RF1_peak_demand_annual_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 
@@ -188,10 +234,18 @@ export default function CertificateEstimatorRefrigerators(props) {
               setPersistFormValues={setPersistFormValues}
               flow={flow}
               setFlow={setFlow}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
+              annualEnergySavings={'RF1_energy_savings'}
+              peakDemandReductionSavings={'RF1_peak_demand_annual_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
-
-          {stepNumber === 2 && calculationError && calculationError2 && <SpinnerFullscreen />}
 
           {stepNumber === 1 && registryData && postcode && postcode.length === 4 && (
             <div className="nsw-row" style={{ paddingTop: '30px' }}>

@@ -28,8 +28,6 @@ export default function CertificateEstimatorPP(props) {
     setEntities,
     setPoolPumpBrands,
     PoolPumpBrands,
-    loading,
-    setLoading,
   } = props;
 
   const [formValues, setFormValues] = useState([]);
@@ -50,6 +48,24 @@ export default function CertificateEstimatorPP(props) {
   const [flow, setFlow] = useState(null);
   const [persistFormValues, setPersistFormValues] = useState([]);
   const [showPostcodeError, setShowPostcodeError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [showNoResponsePostcodeError, setShowNoResponsePostcodeError] = useState(false);
+  const [lastModified, setLastModified] = useState('');
+  const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
+  const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
+
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -110,6 +126,16 @@ export default function CertificateEstimatorPP(props) {
     }
   }, [postcode]);
 
+  if (lastModified.length == 0) {
+    RegistryApi.getPoolPumpLastModified('pool_pumps')
+      .then((res) => {
+        setLastModified(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   const validatePostcode = (postcode) => {
     if (['2817', '2818', '2819'].includes(postcode)) {
       setFlow(null);
@@ -121,20 +147,30 @@ export default function CertificateEstimatorPP(props) {
           const persons = res.data;
           console.log(res);
           if (
-            (persons.status === '200') &
-            (persons.data.postcode === postcode) &
-            (persons.data.state === 'NSW')
+            persons.status === '200' &&
+            persons.code === '200' &&
+            persons.data.postcode &&
+            persons.data.postcode === postcode
           ) {
-            setFlow(null);
-            setStepNumber(stepNumber + 1);
-            setShowPostcodeError(false);
-          } else {
+            if (persons.data['state'] === 'NSW') {
+              setShowPostcodeError(false);
+              setFlow(null);
+              setStepNumber(stepNumber + 1);
+            } else {
+              setShowPostcodeError(true);
+              setShowNoResponsePostcodeError(false);
+            }
+          } else if (persons.status === '200' && persons.code === '404') {
             setShowPostcodeError(true);
+            setShowNoResponsePostcodeError(false);
+          } else if (persons.status !== '200') {
+            setShowPostcodeError(false);
+            setShowNoResponsePostcodeError(true);
           }
         })
         .catch((err) => {
           console.log(err);
-          setShowPostcodeError(true);
+          setShowNoResponsePostcodeError(true);
         });
     }
   };
@@ -250,7 +286,15 @@ export default function CertificateEstimatorPP(props) {
 
         <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%' }} />
 
+        {stepNumber === 3 && loading && !showError && <SpinnerFullscreen />}
+
         <Fragment>
+          {stepNumber === 3 && calculationError && calculationError2 && showError && (
+            <Alert as="error" title="Sorry!" style={{ width: '80%' }}>
+              <p>We are experiencing technical difficulties right now, please try again later.</p>
+            </Alert>
+          )}
+
           {stepNumber === 1 && (
             <div className="nsw-row">
               <div className="nsw-col" style={{ padding: 'inherit' }}>
@@ -314,8 +358,7 @@ export default function CertificateEstimatorPP(props) {
 
                     <p style={{ fontSize: '14px', marginBottom: '2%' }}>
                       {' '}
-                      Updated from product registry:{' '}
-                      {format(previousSunday(new Date()), 'MMMM d, Y')}
+                      Updated from product registry: {lastModified}
                     </p>
                   </div>
                 </div>
@@ -361,6 +404,16 @@ export default function CertificateEstimatorPP(props) {
               setFlow={setFlow}
               persistFormValues={persistFormValues}
               setPersistFormValues={setPersistFormValues}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
+              annualEnergySavings={'SYS2_energy_savings'}
+              peakDemandReductionSavings={'SYS2_peak_demand_annual_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 
@@ -388,14 +441,33 @@ export default function CertificateEstimatorPP(props) {
               setFlow={setFlow}
               persistFormValues={persistFormValues}
               setPersistFormValues={setPersistFormValues}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
+              annualEnergySavings={'SYS2_energy_savings'}
+              peakDemandReductionSavings={'SYS2_peak_demand_annual_savings'}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 
-          {stepNumber === 3 && calculationError && calculationError2 && <SpinnerFullscreen />}
+          {/* {stepNumber === 3 && calculationError && calculationError2 && <SpinnerFullscreen />} */}
 
           {stepNumber === 1 && showPostcodeError && postcode.length >= 4 && (
             <Alert as="error" title="The postcode is not valid in NSW">
               <p>Please check your postcode and try again.</p>
+            </Alert>
+          )}
+
+          {stepNumber === 1 && showNoResponsePostcodeError && postcode.length >= 4 && (
+            <Alert as="error" title="Sorry!">
+              <p>
+                We are experiencing technical difficulties validating the postcode, please try again
+                later.
+              </p>
             </Alert>
           )}
 

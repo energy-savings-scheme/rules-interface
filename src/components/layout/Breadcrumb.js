@@ -128,7 +128,10 @@ export default function Breadcrumb() {
     location.pathname === '/gas-residential-heat-pump-activity-requirements' ||
     location.pathname === '/hot-water-heater-eligibility' ||
     location.pathname === '/residential-solar-water-heater-activity-requirements' ||
-    location.pathname === '/residential-solar-gas-water-heater-activity-requirements'
+    location.pathname === '/residential-solar-gas-water-heater-activity-requirements' ||
+    location.pathname === '/residential-solar-battery-eligibility' ||
+    location.pathname === '/solar-battery-eligibility' ||
+    location.pathname === '/residential-solar-battery-demand-response-eligibility'
   ) {
     return (
       <div className="nsw-container" style={{ marginBottom: 20 }}>
@@ -172,7 +175,10 @@ export default function Breadcrumb() {
     location.pathname === '/gas-heat-pumps-estimator' ||
     location.pathname === '/hot-water-heater-certificate' ||
     location.pathname === '/residential-solar-water-heater-estimator' ||
-    location.pathname === '/residential-gas-replacement-solar-water-heater-estimator'
+    location.pathname === '/residential-gas-replacement-solar-water-heater-estimator' ||
+    location.pathname === '/solar-battery-certificates' ||
+    location.pathname === '/residential-solar-battery-certificates' ||
+    location.pathname === '/residential-solar-battery-demand-response-certificates'
   ) {
     return (
       <div className="nsw-container" style={{ marginBottom: 20 }}>

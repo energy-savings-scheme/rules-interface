@@ -14,16 +14,7 @@ import { compareAsc, format, previousSunday } from 'date-fns';
 import axios from 'axios';
 
 export default function CertificateEstimatorResidentialAC(props) {
-  const {
-    entities,
-    variables,
-    hvacBrands,
-    setVariables,
-    setEntities,
-    setHvacBrands,
-    loading,
-    setLoading,
-  } = props;
+  const { entities, variables, hvacBrands, setVariables, setEntities, setHvacBrands } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
@@ -43,6 +34,24 @@ export default function CertificateEstimatorResidentialAC(props) {
   const [flow, setFlow] = useState(null);
   const [persistFormValues, setPersistFormValues] = useState([]);
   const [showPostcodeError, setShowPostcodeError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [showNoResponsePostcodeError, setShowNoResponsePostcodeError] = useState(false);
+  const [lastModified, setLastModified] = useState('');
+  const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
+  const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
+
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -103,6 +112,16 @@ export default function CertificateEstimatorResidentialAC(props) {
     }
   }, [postcode]);
 
+  if (lastModified.length == 0) {
+    RegistryApi.getCommercialHVACLastModified()
+      .then((res) => {
+        setLastModified(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   const validatePostcode = (postcode) => {
     if (['2817', '2818', '2819'].includes(postcode)) {
       setFlow(null);
@@ -114,20 +133,30 @@ export default function CertificateEstimatorResidentialAC(props) {
           const persons = res.data;
           console.log(res);
           if (
-            (persons.status === '200') &
-            (persons.data.postcode === postcode) &
-            (persons.data.state === 'NSW')
+            persons.status === '200' &&
+            persons.code === '200' &&
+            persons.data.postcode &&
+            persons.data.postcode === postcode
           ) {
-            setFlow(null);
-            setStepNumber(stepNumber + 1);
-            setShowPostcodeError(false);
-          } else {
+            if (persons.data['state'] === 'NSW') {
+              setShowPostcodeError(false);
+              setFlow(null);
+              setStepNumber(stepNumber + 1);
+            } else {
+              setShowPostcodeError(true);
+              setShowNoResponsePostcodeError(false);
+            }
+          } else if (persons.status === '200' && persons.code === '404') {
             setShowPostcodeError(true);
+            setShowNoResponsePostcodeError(false);
+          } else if (persons.status !== '200') {
+            setShowPostcodeError(false);
+            setShowNoResponsePostcodeError(true);
           }
         })
         .catch((err) => {
           console.log(err);
-          setShowPostcodeError(true);
+          setShowNoResponsePostcodeError(true);
         });
     }
   };
@@ -274,7 +303,14 @@ export default function CertificateEstimatorResidentialAC(props) {
 
         <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%' }} />
 
+        {stepNumber === 3 && loading && !showError && <SpinnerFullscreen />}
+
         <Fragment>
+          {stepNumber === 3 && calculationError && calculationError2 && showError && (
+            <Alert as="error" title="Sorry!" style={{ width: '80%' }}>
+              <p>We are experiencing technical difficulties right now, please try again later.</p>
+            </Alert>
+          )}
           {stepNumber === 1 && (
             <div className="nsw-row">
               <div className="nsw-col" style={{ padding: 'inherit' }}>
@@ -337,8 +373,7 @@ export default function CertificateEstimatorResidentialAC(props) {
                     </FormGroup>
                     <p style={{ fontSize: '14px', marginBottom: '2%' }}>
                       {' '}
-                      Updated from product registry:{' '}
-                      {format(previousSunday(new Date()), 'MMMM d, Y')}
+                      Updated from product registry: {lastModified}
                     </p>
                   </div>
                 </div>
@@ -358,6 +393,8 @@ export default function CertificateEstimatorResidentialAC(props) {
             <CertificateEstimatorResidentialACLoadClauses
               variableToLoad1={'HVAC1_PRC_calculation'}
               variableToLoad2={'HVAC1_ESC_calculation'}
+              annualEnergySavings={'HVAC1_annual_energy_savings'}
+              peakDemandReductionSavings={'HVAC1_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -384,10 +421,18 @@ export default function CertificateEstimatorResidentialAC(props) {
               setFlow={setFlow}
               persistFormValues={persistFormValues}
               setPersistFormValues={setPersistFormValues}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 
-          {stepNumber === 3 && calculationError && calculationError2 && <SpinnerFullscreen />}
+          {/* {stepNumber === 3 && calculationError && calculationError2 && <SpinnerFullscreen />} */}
 
           {stepNumber === 1 && showPostcodeError && postcode.length >= 4 && (
             <Alert as="error" title="The postcode is not valid in NSW">
@@ -395,10 +440,21 @@ export default function CertificateEstimatorResidentialAC(props) {
             </Alert>
           )}
 
+          {stepNumber === 1 && showNoResponsePostcodeError && postcode.length >= 4 && (
+            <Alert as="error" title="Sorry!">
+              <p>
+                We are experiencing technical difficulties validating the postcode, please try again
+                later.
+              </p>
+            </Alert>
+          )}
+
           {stepNumber === 3 && (
             <CertificateEstimatorResidentialACLoadClauses
               variableToLoad1={'HVAC1_PRC_calculation'}
               variableToLoad2={'HVAC1_ESC_calculation'}
+              annualEnergySavings={'HVAC1_annual_energy_savings'}
+              peakDemandReductionSavings={'HVAC1_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -419,6 +475,14 @@ export default function CertificateEstimatorResidentialAC(props) {
               setFlow={setFlow}
               persistFormValues={persistFormValues}
               setPersistFormValues={setPersistFormValues}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           )}
 

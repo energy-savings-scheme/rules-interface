@@ -33,6 +33,16 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
     setPersistFormValues,
     formValues,
     setFormValues,
+    loading,
+    setLoading,
+    showError,
+    setShowError,
+    annualEnergySavings,
+    peakDemandReductionSavings,
+    annualEnergySavingsNumber,
+    setAnnualEnergySavingsNumber,
+    peakDemandReductionSavingsNumber,
+    setPeakDemandReductionSavingsNumber,
   } = props;
 
   console.log(variableData1);
@@ -49,7 +59,7 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
   const [dependencies, setDependencies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   function addElement(arr, obj) {
     const { length } = arr;
@@ -147,6 +157,16 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
               setFlow={setFlow}
               persistFormValues={persistFormValues}
               setPersistFormValues={setPersistFormValues}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
+              annualEnergySavings={annualEnergySavings}
+              peakDemandReductionSavings={peakDemandReductionSavings}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           </Fragment>
         )}
@@ -164,6 +184,28 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
                     <b>{Math.floor(calculationResult)}</b>
                   </span>
+                </p>
+                <p>
+                  Your estimated annual energy savings are{' '}
+                  <b>
+                    <b>
+                      {Math.floor(calculationResult2) === 0
+                        ? 0
+                        : Math.round(annualEnergySavingsNumber * 100) / 100}
+                    </b>{' '}
+                    kWh{' '}
+                  </b>
+                </p>
+                <p>
+                  Your estimated annual peak demand reduction is{' '}
+                  <b>
+                    <b>
+                      {Math.floor(calculationResult) === 0
+                        ? 0
+                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
+                    </b>{' '}
+                    kWh{' '}
+                  </b>
                 </p>
 
                 <p>

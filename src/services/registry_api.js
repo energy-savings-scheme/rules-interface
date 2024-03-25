@@ -10,6 +10,13 @@ function getCommercialHVACBrands() {
   });
 }
 
+function getCommercialHVACLastModified() {
+  return RegistryApiBase({
+    url: `/commercial_hvac/last_modified`,
+    method: 'GET',
+  });
+}
+
 function listHvacModels(brandName) {
   return RegistryApiBase({
     url: `/commercial_hvac/brands/${brandName}/models`,
@@ -28,6 +35,13 @@ function getHvacModelsMetadata(payload) {
 function getCommercialWHBrands() {
   return RegistryApiBase({
     url: `/commercial_wh/brands`,
+    method: 'GET',
+  });
+}
+
+function getCommercialWHLastModified() {
+  return RegistryApiBase({
+    url: `/commercial_wh/last_modified`,
     method: 'GET',
   });
 }
@@ -54,6 +68,13 @@ function getRF2Brands() {
   });
 }
 
+function getRF2LastModified() {
+  return RegistryApiBase({
+    url: `/refrigerated_cabinets/last_modified`,
+    method: 'GET',
+  });
+}
+
 function listRF2Models(brandName) {
   return RegistryApiBase({
     url: `/refrigerated_cabinets/brands/${brandName}/models`,
@@ -72,6 +93,13 @@ function getRF2ModelsMetadata(payload) {
 function getResidentialHeatPumpBrands() {
   return RegistryApiBase({
     url: `/residential_heat_pumps/brands`,
+    method: 'GET',
+  });
+}
+
+function getResidentialHeatPumpLastModified() {
+  return RegistryApiBase({
+    url: `/residential_heat_pumps/last_modified`,
     method: 'GET',
   });
 }
@@ -97,6 +125,13 @@ function getResidentialSolarWaterHeaterBrands() {
   });
 }
 
+function getResidentialSolarWaterHeaterLastModified() {
+  return RegistryApiBase({
+    url: `/residential_solar_water_heater/last_modified`,
+    method: 'GET',
+  });
+}
+
 function getResidentialSolarWaterHeaterModels(brandName) {
   return RegistryApiBase({
     url: `/residential_solar_water_heater/brands/${brandName}/models`,
@@ -112,9 +147,45 @@ function getResidentialSolarWaterHeaterMetadata(payload) {
   });
 }
 
+function getResidentialSolarBatteryBrands() {
+  return RegistryApiBase({
+    url: `/residential_solar_battery/brands`,
+    method: 'GET',
+  });
+}
+
+function getResidentialSolarBatteryLastModified() {
+  return RegistryApiBase({
+    url: `/residential_solar_battery/last_modified`,
+    method: 'GET',
+  });
+}
+
+function getResidentialSolarBatteryModels(brandName) {
+  return RegistryApiBase({
+    url: `/residential_solar_battery/brands/${brandName}/models`,
+    method: 'GET',
+  });
+}
+
+function getResidentialSolarBatteryMetadata(payload) {
+  return RegistryApiBase({
+    url: `/residential_solar_battery/metadata`,
+    method: 'POST',
+    data: payload,
+  });
+}
+
 function getPoolPumpBrands() {
   return RegistryApiBase({
     url: `/pool_pumps/brands`,
+    method: 'GET',
+  });
+}
+
+function getPoolPumpLastModified() {
+  return RegistryApiBase({
+    url: `/pool_pumps/last_modified`,
     method: 'GET',
   });
 }
@@ -143,24 +214,34 @@ function getPostcodeValidation(postcode) {
 
 const RegistryApi = {
   getCommercialHVACBrands,
+  getCommercialHVACLastModified,
   getCommercialWHBrands,
+  getCommercialWHLastModified,
   listHvacModels,
   getHvacModelsMetadata,
   listWHModels,
   getWHModelsMetadata,
+  getRF2LastModified,
   getRF2Brands,
   listRF2Models,
   getRF2ModelsMetadata,
   getPoolPumpBrands,
+  getPoolPumpLastModified,
   listPoolPumpModels,
   getPoolPumpMetadata,
   getPostcodeValidation,
+  getResidentialHeatPumpLastModified,
   getResidentialHeatPumpBrands,
   getResidentialHeatPumpModels,
   getResidentialHeatPumpModelsMetadata,
+  getResidentialSolarWaterHeaterLastModified,
   getResidentialSolarWaterHeaterBrands,
   getResidentialSolarWaterHeaterModels,
   getResidentialSolarWaterHeaterMetadata,
+  getResidentialSolarBatteryLastModified,
+  getResidentialSolarBatteryBrands,
+  getResidentialSolarBatteryModels,
+  getResidentialSolarBatteryMetadata,
 };
 
 export default RegistryApi;

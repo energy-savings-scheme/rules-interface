@@ -36,6 +36,16 @@ export default function CertificateEstimatorLoadClausesD20(props) {
     setFlow,
     persistFormValues,
     setPersistFormValues,
+    loading,
+    setLoading,
+    showError,
+    setShowError,
+    annualEnergySavings,
+    peakDemandReductionSavings,
+    annualEnergySavingsNumber,
+    setAnnualEnergySavingsNumber,
+    peakDemandReductionSavingsNumber,
+    setPeakDemandReductionSavingsNumber,
   } = props;
 
   console.log(variableToLoad1);
@@ -53,9 +63,6 @@ export default function CertificateEstimatorLoadClausesD20(props) {
 
   // const [formValues, setFormValues] = useState([]);
   const [dependencies, setDependencies] = useState([]);
-
-  const [loading, setLoading] = useState(true);
-
   const [variableData1, setVariableData1] = useState([]);
   const [variableData2, setVariableData2] = useState([]);
 
@@ -239,6 +246,16 @@ export default function CertificateEstimatorLoadClausesD20(props) {
               setFlow={setFlow}
               persistFormValues={persistFormValues}
               setPersistFormValues={setPersistFormValues}
+              loading={loading}
+              setLoading={setLoading}
+              showError={showError}
+              setShowError={setShowError}
+              annualEnergySavings={annualEnergySavings}
+              peakDemandReductionSavings={peakDemandReductionSavings}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
+              peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
+              setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
             />
           </Fragment>
         )}
@@ -275,6 +292,17 @@ export default function CertificateEstimatorLoadClausesD20(props) {
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
                     <b>{Math.floor(calculationResult2)}</b>
                   </span>
+                </p>
+                <p>
+                  Your estimated annual energy savings are{' '}
+                  <b>
+                    <b>
+                      {Math.floor(calculationResult2) === 0
+                        ? 0
+                        : Math.round(annualEnergySavingsNumber * 100) / 100}
+                    </b>{' '}
+                    kWh{' '}
+                  </b>
                 </p>
                 <p>
                   As this activity is only eligible for the Energy Savings Scheme, it generates
