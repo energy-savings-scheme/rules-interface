@@ -19696,7 +19696,10 @@
                                   ' ',
                                   Object(v.jsxs)('b', {
                                     children: [
-                                      Object(v.jsx)('b', { children: Math.round(100 * M) / 100 }),
+                                      Object(v.jsx)('b', {
+                                        children:
+                                          0 === Math.floor(g) ? 0 : Math.round(100 * M) / 100,
+                                      }),
                                       ' kWh',
                                       ' ',
                                     ],
@@ -19709,7 +19712,10 @@
                                   ' ',
                                   Object(v.jsxs)('b', {
                                     children: [
-                                      Object(v.jsx)('b', { children: Math.round(100 * z) / 100 }),
+                                      Object(v.jsx)('b', {
+                                        children:
+                                          0 === Math.floor(h) ? 0 : Math.round(100 * z) / 100,
+                                      }),
                                       ' kWh',
                                       ' ',
                                     ],
@@ -20440,7 +20446,7 @@
   },
   [[62, 1, 2]],
 ]);
-//# sourceMappingURL=main.597d92a4.chunk.js.map
+//# sourceMappingURL=main.31c7a710.chunk.js.map
 !(function (e) {
   function r(r) {
     for (var n, p, i = r[0], l = r[1], f = r[2], c = 0, s = []; c < i.length; c++)
