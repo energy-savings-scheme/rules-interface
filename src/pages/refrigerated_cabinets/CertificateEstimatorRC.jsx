@@ -507,7 +507,8 @@ export default function CertificateEstimatorRC(props) {
             postcode &&
             postcode.length === 4 &&
             selectedBrand &&
-            selectedModel && (
+            selectedModel && 
+            selectedProductClass && (
               <div className="nsw-row" style={{ paddingTop: '30px', width: '80%' }}>
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
