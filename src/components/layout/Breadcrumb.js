@@ -131,7 +131,8 @@ export default function Breadcrumb() {
     location.pathname === '/residential-solar-gas-water-heater-activity-requirements' ||
     location.pathname === '/residential-solar-battery-eligibility' ||
     location.pathname === '/solar-battery-eligibility' ||
-    location.pathname === '/residential-solar-battery-demand-response-eligibility'
+    location.pathname === '/residential-solar-battery-demand-response-eligibility' ||
+    location.pathname === '/commercial-water-heater-f17-activity-requirements'
   ) {
     return (
       <div className="nsw-container" style={{ marginBottom: 20 }}>
