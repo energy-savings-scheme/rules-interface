@@ -159,13 +159,16 @@ export default function ActivityRequirementsF17(props) {
               </h2> */}
               <br></br>
               <p className="nsw-content-block__copy">
-              Answer the following questions to check if you meet the eligibility requirements for the Commercial heat pump water heater activity  (F17 in the{' '}
+                Answer the following questions to check if you meet the eligibility requirements for
+                the Commercial heat pump water heater activity (F17 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
                 >
                   Energy Savings Scheme
-                </a>){' '}. This activity is for the installation of a new (air source) heat pump water heater.
+                </a>
+                ) . This activity is for the installation of a new (air source) heat pump water
+                heater.
               </p>
               <p className="nsw-content-block__copy">
                 If ineligible, you will be shown the ineligible answers and their corresponding rule
@@ -178,7 +181,7 @@ export default function ActivityRequirementsF17(props) {
             </div>
           </div>
         )}
-{/* 
+        {/* 
         {stepNumber === 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
