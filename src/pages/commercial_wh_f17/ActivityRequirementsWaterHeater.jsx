@@ -89,7 +89,7 @@ export default function ActivityRequirementsF17(props) {
 
       console.log(array);
 
-      const names = ['WH1_installation', 'WH1_certified'];
+      const names = ['F17_certified'];
 
       dep_arr = array.filter((item) => names.includes(item.name));
 

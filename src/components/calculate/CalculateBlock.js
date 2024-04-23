@@ -535,6 +535,16 @@ export default function CalculateBlock(props) {
         }
       }
 
+      if (formItem.name === 'F17_storage_volume') {
+        console.log(e.target.value);
+        if (e.target.value === 'less_than_or_equal_to_700_L') {
+          console.log('print here');
+          formValues.find((v) => v.name === 'F17_certified').hide = false;
+        } else {
+          formValues.find((v) => v.name === 'F17_certified').hide = true;
+        }
+      }
+
       let abc = [...formValues].map((item) => {
         if (item.name === formItem.name) {
           if (formItem.value_type === 'Boolean') {
