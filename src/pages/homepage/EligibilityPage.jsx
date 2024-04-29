@@ -236,13 +236,12 @@ export default function EligibilityPage(props) {
                 </div>
                 <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
-                    copy="Replace one or more existing hot water boilers or water heaters with one or
-          more air source heat pump water heater systems"
+                    copy="Install or replace an existing hot water boiler or heater with an air source heat pump water heater system"
                     headline="Heat pump water heater"
                     image="CommercialHeatPumpWaterHeater.jpeg"
                     links={[
                       {
-                        href: '#commercial-water-heater-activity-requirements',
+                        href: '#commercial-heat-pump-water-heater-eligibility',
                         title: 'Check Activity Eligibility',
                       },
                     ]}
