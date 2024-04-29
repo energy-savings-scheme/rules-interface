@@ -60,6 +60,8 @@ import ActivityRequirementsBESS2 from 'pages/BESS2/ActivityRequirementsBESS2';
 import CertificateEstimatorBESS2 from 'pages/BESS2/CertificateEstimatorBESS2';
 import CertificateEstimatorWH2_test from 'pages/WH2_test/CertificateEstimatorWH';
 import ActivityRequirementsF17 from 'pages/commercial_wh_f17/ActivityRequirementsWaterHeater';
+import CommercialHotWaterHeaterEligibilityPage from 'pages/homepage/CommercialHotWaterHeaterEligibility';
+import CommercialHotWaterHeaterCertificateEstimation from 'pages/homepage/CommercialHotWaterHeaterCertificatePage';
 
 function App() {
   const [entities, setEntities] = useState([]);
@@ -206,7 +208,7 @@ function App() {
           />
         </Route>
 
-        <Route path="/commercial-wh-estimator" exact>
+        <Route path="/commercial-electric-to-heat-pump-water-heater-certificates" exact>
           <Breadcrumb />
           <CertificateEstimatorWH
             entities={entities}
@@ -486,7 +488,29 @@ function App() {
             setLoading={setLoading}
           />
         </Route>
-        <Route path="/commercial-water-heater-activity-requirements" exact>
+        <Route path="/commercial-heat-pump-water-heater-eligibility" exact>
+          <Breadcrumb />
+          <CommercialHotWaterHeaterEligibilityPage
+            entities={entities}
+            variables={variables}
+            loading={loading}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+          />
+        </Route>
+        <Route path="/commercial-heat-pump-water-heater-certificates" exact>
+          <Breadcrumb />
+          <CommercialHotWaterHeaterCertificateEstimation
+            entities={entities}
+            variables={variables}
+            loading={loading}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+          />
+        </Route>
+        <Route path="/commercial-electric-to-heat-pump-water-heater-eligibility" exact>
           <Breadcrumb />
           <ActivityRequirementsWH1
             entities={entities}
@@ -497,7 +521,7 @@ function App() {
             setLoading={setLoading}
           />
         </Route>
-        <Route path="/commercial-water-heater-f17-activity-requirements" exact>
+        <Route path="/commercial-heat-pump-water-heater-new-air-source-eligibility" exact>
           <Breadcrumb />
           <ActivityRequirementsF17
             entities={entities}

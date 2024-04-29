@@ -439,7 +439,7 @@ export default function CertificateEstimatorLoadClausesWH(props) {
                       <div class="nsw-card__content null">
                         <div class="nsw-card__title">
                           <a
-                            href="/#commercial-water-heater-activity-requirements"
+                            href="/#commercial-electric-to-heat-pump-water-heater-eligibility"
                             class="nsw-card__link"
                           >
                             Review eligibility for this activity
