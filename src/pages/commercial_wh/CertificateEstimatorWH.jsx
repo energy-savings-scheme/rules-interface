@@ -207,10 +207,10 @@ export default function CertificateEstimatorWH(props) {
         style="dark"
         image={{
           alt: 'commercial wh',
-          src: '/commercial_wh/WH1_Activity_Page_Hero.jpeg',
+          src: 'WH1.jpg',
         }}
         intro="Commercial"
-        title="Heat pump - certificates"
+        title="Electric water heater replacement with an air source heat pump - certificates"
       />
 
       <div className="nsw-container">
@@ -220,10 +220,6 @@ export default function CertificateEstimatorWH(props) {
         {stepNumber !== 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
-              <h2 className="nsw-content-block__title">
-                Commercial Heat Pump Water Heater certificate estimator
-              </h2>
-              <br></br>
               <p className="nsw-content-block__copy">
                 Answer the following questions to estimate the energy savings certificates (ESCs)
                 and peak reduction certificates (PRCs) for the Commercial Heat Pump Water Heater
@@ -258,16 +254,6 @@ export default function CertificateEstimatorWH(props) {
                 Please keep in mind that the results are a guide only and cannot be promoted or
                 published.
               </p>
-            </div>
-          </div>
-        )}
-
-        {stepNumber === 3 && (
-          <div className="nsw-grid nsw-grid--spaced">
-            <div className="nsw-col nsw-col-md-10">
-              <h2 className="nsw-content-block__title">
-                Commercial Heat Pump Water Heater certificate estimator
-              </h2>
             </div>
           </div>
         )}

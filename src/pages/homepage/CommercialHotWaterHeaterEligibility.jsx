@@ -43,7 +43,10 @@ export default function CommercialHotWaterHeaterEligibilityPage(props) {
                     The Safeguard certificate estimator reviews eligibility for:
                     <ul>
                       <li>the new installation of an air source heat pump or </li>
-                      <li>the replacement of one or more electric or gas hot water boilers or water heaters with one or more air source heat pump water heater systems</li>
+                      <li>
+                        the replacement of one or more electric or gas hot water boilers or water
+                        heaters with one or more air source heat pump water heater systems
+                      </li>
                     </ul>
                   </p>
                 </div>
@@ -68,11 +71,11 @@ export default function CommercialHotWaterHeaterEligibilityPage(props) {
                   <ContentBlock
                     copy="Replace an existing electric water heater with an air source heat pump water heater"
                     headline="Replace an electric water heater with a heat pump"
-                    image="D17cropped,optimised).jpg"
+                    image="WH1.jpg"
                     highlight
                     links={[
                       {
-                        href: '/#commercial-electric-to-heat-pump-water-heater-eligibility',
+                        href: '#commercial-electric-to-heat-pump-water-heater-certificates',
                         title: 'Check eligibility',
                       },
                     ]}
@@ -82,11 +85,11 @@ export default function CommercialHotWaterHeaterEligibilityPage(props) {
                   <ContentBlock
                     copy="Replace an existing gas water heater with an air source heat pump water heater"
                     headline="Replace a gas water heater with a heat pump"
-                    image="D19(optimised).jpg"
+                    image="F16.jpg"
                     highlight
                     links={[
                       {
-                        href: '#gas-residential-heat-pump-activity-requirements',
+                        href: '#commercial-gas-to-heat-pump-water-heater-eligibility',
                         title: 'Check eligibility',
                       },
                     ]}
@@ -96,11 +99,11 @@ export default function CommercialHotWaterHeaterEligibilityPage(props) {
                   <ContentBlock
                     headline="Install a new air source heat pump water heater system"
                     copy="Install one or more air source heat pump water heater systems"
-                    image="iStock-1373843137(optimised).jpg"
+                    image="F17.jpg"
                     highlight
                     links={[
                       {
-                        href: '#commercial-heat-pump-water-heater-new-air-source-eligibility',
+                        href: '#commercial-new-heat-pump-water-heater-eligibility',
                         title: 'Check eligibility',
                       },
                     ]}
@@ -162,7 +165,10 @@ export default function CommercialHotWaterHeaterEligibilityPage(props) {
                   <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
                     <div class="nsw-card__content null">
                       <div class="nsw-card__title">
-                        <a href="/#commercial-heat-pump-water-heater-certificates" class="nsw-card__link">
+                        <a
+                          href="/#commercial-heat-pump-water-heater-certificates"
+                          class="nsw-card__link"
+                        >
                           Estimate certificates for this activity
                         </a>
                       </div>

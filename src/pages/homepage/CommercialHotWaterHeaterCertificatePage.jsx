@@ -40,10 +40,13 @@ export default function CommercialHotWaterHeaterCertificateEstimation(props) {
               <div className="nsw-grid nsw-grid--spaced">
                 <div className="nsw-col nsw-col-md-12">
                   <p className="nsw-content-block__copy">
-                  The Safeguard certificate estimator calculates certificates for:
+                    The Safeguard certificate estimator calculates certificates for:
                     <ul>
                       <li>the new installation of an air source heat pump or </li>
-                      <li>the replacement of one or more electric or gas hot water boilers or water heaters with one or more air source heat pump water heater systems</li>
+                      <li>
+                        the replacement of one or more electric or gas hot water boilers or water
+                        heaters with one or more air source heat pump water heater systems
+                      </li>
                     </ul>
                   </p>
                 </div>
@@ -68,11 +71,11 @@ export default function CommercialHotWaterHeaterCertificateEstimation(props) {
                   <ContentBlock
                     copy="Replace one or more existing electric hot water boilers or water heaters with one or more air source heat pump water heater systems"
                     headline="Replace an electric water heater with a heat pump"
-                    image="D17cropped,optimised).jpg"
+                    image="WH1.jpg"
                     highlight
                     links={[
                       {
-                        href: '/#commercial-electric-to-heat-pump-water-heater-certificates',
+                        href: '#commercial-electric-to-heat-pump-water-heater-certificates',
                         title: 'Estimate Scheme Certificates',
                       },
                     ]}
@@ -82,11 +85,11 @@ export default function CommercialHotWaterHeaterCertificateEstimation(props) {
                   <ContentBlock
                     copy="Replace one or more existing gas hot water boilers or water heaters with one or more air source heat pump water heater systems"
                     headline="Replace a gas water heater with a heat pump"
-                    image="D19(optimised).jpg"
+                    image="F16.jpg"
                     highlight
                     links={[
                       {
-                        href: '#gas-heat-pumps-estimator',
+                        href: '#commercial-gas-to-heat-pump-water-heater-certificates',
                         title: 'Estimate Scheme Certificates',
                       },
                     ]}
@@ -96,11 +99,11 @@ export default function CommercialHotWaterHeaterCertificateEstimation(props) {
                   <ContentBlock
                     headline="Install a new air source heat pump water heater system"
                     copy="Install one or more air source heat pump water heater systems"
-                    image="iStock-1373843137(optimised).jpg"
+                    image="F17.jpg"
                     highlight
                     links={[
                       {
-                        href: '#residential-solar-water-heater-estimator',
+                        href: '#commercial-new-heat-pump-water-heater-certificates',
                         title: 'Estimate Scheme Certificates',
                       },
                     ]}
@@ -162,7 +165,10 @@ export default function CommercialHotWaterHeaterCertificateEstimation(props) {
                   <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
                     <div class="nsw-card__content null">
                       <div class="nsw-card__title">
-                        <a href="/#commercial-heat-pump-water-heater-eligibility" class="nsw-card__link">
+                        <a
+                          href="/#commercial-heat-pump-water-heater-eligibility"
+                          class="nsw-card__link"
+                        >
                           Review eligibility for this activity
                         </a>
                       </div>
