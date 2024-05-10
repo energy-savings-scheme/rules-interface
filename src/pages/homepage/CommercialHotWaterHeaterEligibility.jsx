@@ -75,7 +75,7 @@ export default function CommercialHotWaterHeaterEligibilityPage(props) {
                     highlight
                     links={[
                       {
-                        href: '#commercial-electric-to-heat-pump-water-heater-certificates',
+                        href: '#commercial-electric-to-heat-pump-water-heater-eligibility',
                         title: 'Check eligibility',
                       },
                     ]}
