@@ -138,7 +138,7 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
         // if (formItem.name === 'WH1_annual_energy_savings') {
         //   formItem.form_value = metadata[`annual_energy_savings_${zone}`];
         // }
-        if (formItem.name === "F16_gas_com_peak_load") {
+        if (formItem.name === 'F16_gas_com_peak_load') {
           formItem.form_value = metadata[`ComPkLoad_zone_${zone}`];
         }
 
@@ -146,13 +146,13 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
           formItem.form_value = metadata['WHCap'];
         }
 
-        if (formItem.name === "F16_gas_HP_capacity_factor") {
+        if (formItem.name === 'F16_gas_HP_capacity_factor') {
           formItem.form_value = metadata['HPCap'];
         }
         // if (formItem.name === 'WH1_HP_capacity_factor') {
         //   formItem.form_value = metadata['HPCap'];
         // }
-        if (formItem.name === "F16_gas_HP_elec") {
+        if (formItem.name === 'F16_gas_HP_elec') {
           formItem.form_value = metadata[`HPElec_zone_${zone}`];
         }
         if (formItem.name === 'F16_gas_HP_gas') {
@@ -162,7 +162,7 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
         // if (formItem.name === 'WH1_WH_capacity_factor') {
         //   formItem.form_value = metadata['WHCap'];
         // }
-        if (formItem.name === "F16_gas_PDRS__postcode") {
+        if (formItem.name === 'F16_gas_PDRS__postcode') {
           formItem.form_value = postcode;
           formItem.read_only = true;
         }

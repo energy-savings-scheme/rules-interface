@@ -138,7 +138,7 @@ export default function CertificateEstimatorLoadClausesF17(props) {
         // if (formItem.name === 'WH1_annual_energy_savings') {
         //   formItem.form_value = metadata[`annual_energy_savings_${zone}`];
         // }
-        if (formItem.name === "F17_com_peak_load") {
+        if (formItem.name === 'F17_com_peak_load') {
           formItem.form_value = metadata[`ComPkLoad_zone_${zone}`];
         }
         // if (formItem.name === 'WH1_HP_capacity_factor') {

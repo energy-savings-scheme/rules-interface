@@ -219,16 +219,20 @@ export default function CertificateEstimatorF16_gas(props) {
             <div className="nsw-col nsw-col-md-10">
               <br></br>
               <p className="nsw-content-block__copy">
-              Answer the following questions to check if you meet the eligibility requirements for the Commercial heat pump water heater activity (F16 in{' '}
+                Answer the following questions to check if you meet the eligibility requirements for
+                the Commercial heat pump water heater activity (F16 in{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
                 >
                   Energy Savings Scheme
-                </a>){' '}. Note that a replacement activity will not generate ESCs or PRCs.
+                </a>
+                ) . Note that a replacement activity will not generate ESCs or PRCs.
               </p>
               <p className="nsw-content-block__copy">
-              Note that this activity is only eligible for the Energy Savings Scheme, and is not eligible for the Peak Demand Reduction scheme. As this is a new installation activity, replacement to a heat pump will not generate certificates.
+                Note that this activity is only eligible for the Energy Savings Scheme, and is not
+                eligible for the Peak Demand Reduction scheme. As this is a new installation
+                activity, replacement to a heat pump will not generate certificates.
               </p>
               <p className="nsw-content-block__copy">
                 Where possible, commercial heat pump water heater specifications are automatically
@@ -408,10 +412,10 @@ export default function CertificateEstimatorF16_gas(props) {
 
           {stepNumber === 3 && (
             <CertificateEstimatorLoadClausesF16_gas
-            variableToLoad1={'F16_gas_ESC_calculation'}
-            variableToLoad2={'F16_gas_ESC_calculation'}
-            annualEnergySavings={'F16_gas_energy_savings'}
-            peakDemandReductionSavings={'F16_gas_energy_savings'}
+              variableToLoad1={'F16_gas_ESC_calculation'}
+              variableToLoad2={'F16_gas_ESC_calculation'}
+              annualEnergySavings={'F16_gas_energy_savings'}
+              peakDemandReductionSavings={'F16_gas_energy_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}

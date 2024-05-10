@@ -168,7 +168,8 @@ export default function ActivityRequirementsF16_gas(props) {
                 >
                   Energy Savings Scheme
                 </a>
-                ). This activity is for replacement of an existing gas water heater with an (air source) heat pump water heater.
+                ). This activity is for replacement of an existing gas water heater with an (air
+                source) heat pump water heater.
               </p>
               <p className="nsw-content-block__copy">
                 If ineligible, you will be shown the ineligible answers and their corresponding rule

@@ -262,7 +262,7 @@ export default function CertificateEstimatorHVAC(props) {
 
   return (
     <Fragment>
-      {/* <br></br>
+      <br></br>
       <HeroBanner
         wide
         style="dark"
@@ -272,10 +272,10 @@ export default function CertificateEstimatorHVAC(props) {
         }}
         intro="Commercial"
         title="Air conditioner - certificates"
-      /> */}
+      />
 
       <div className="nsw-container">
-        {/* <br></br>
+        <br></br>
         <br></br>
         {stepNumber !== 3 && (
           <div className="nsw-grid nsw-grid--spaced">
@@ -328,7 +328,7 @@ export default function CertificateEstimatorHVAC(props) {
               </h2>
             </div>
           </div>
-        )} */}
+        )}
 
         <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%' }} />
 
