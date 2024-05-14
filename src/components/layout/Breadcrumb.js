@@ -131,7 +131,13 @@ export default function Breadcrumb() {
     location.pathname === '/residential-solar-gas-water-heater-activity-requirements' ||
     location.pathname === '/residential-solar-battery-eligibility' ||
     location.pathname === '/solar-battery-eligibility' ||
-    location.pathname === '/residential-solar-battery-demand-response-eligibility'
+    location.pathname === '/residential-solar-battery-demand-response-eligibility' ||
+    location.pathname === '/commercial-water-heater-f17-activity-requirements' ||
+    location.pathname === '/commercial-heat-pump-water-heater-eligibility' ||
+    location.pathname === '/commercial-heat-pump-water-heater-new-air-source-eligibility' ||
+    location.pathname === '/commercial-gas-to-heat-pump-water-heater-eligibility' ||
+    location.pathname === '/commercial-new-heat-pump-water-heater-eligibility' ||
+    location.pathname === '/commercial-electric-to-heat-pump-water-heater-eligibility'
   ) {
     return (
       <div className="nsw-container" style={{ marginBottom: 20 }}>
@@ -178,7 +184,11 @@ export default function Breadcrumb() {
     location.pathname === '/residential-gas-replacement-solar-water-heater-estimator' ||
     location.pathname === '/solar-battery-certificates' ||
     location.pathname === '/residential-solar-battery-certificates' ||
-    location.pathname === '/residential-solar-battery-demand-response-certificates'
+    location.pathname === '/residential-solar-battery-demand-response-certificates' ||
+    location.pathname === '/commercial-heat-pump-water-heater-certificates' ||
+    location.pathname === '/commercial-electric-to-heat-pump-water-heater-certificates' ||
+    location.pathname === '/commercial-new-heat-pump-water-heater-certificates' ||
+    location.pathname === '/commercial-gas-to-heat-pump-water-heater-certificates'
   ) {
     return (
       <div className="nsw-container" style={{ marginBottom: 20 }}>

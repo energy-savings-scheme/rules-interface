@@ -142,10 +142,10 @@ export default function ActivityRequirementsWH1(props) {
         style="dark"
         image={{
           alt: 'commercial ac',
-          src: 'base_elig_hero.jpg',
+          src: 'WH1.jpg',
         }}
         intro="Commercial"
-        title="Heat pump - eligibility"
+        title="Electric water heater replacement with an air source heat pump - eligibility"
       />
 
       <div className="nsw-container" style={{ marginBottom: '10%' }}>
@@ -154,10 +154,6 @@ export default function ActivityRequirementsWH1(props) {
         {stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
-              <h2 className="nsw-content-block__title">
-                Commercial Heat Pump Water Heater activity eligibility check
-              </h2>
-              <br></br>
               <p className="nsw-content-block__copy">
                 Answer the following questions to check if you meet the eligibility requirements for
                 the Commercial Heat Pump Water Heater Activity (F16 in the{' '}
@@ -188,7 +184,7 @@ export default function ActivityRequirementsWH1(props) {
           </div>
         )}
 
-        {stepNumber === 2 && (
+        {/* {stepNumber === 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
               <h2 className="nsw-content-block__title">
@@ -196,7 +192,7 @@ export default function ActivityRequirementsWH1(props) {
               </h2>
             </div>
           </div>
-        )}
+        )} */}
 
         <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
 

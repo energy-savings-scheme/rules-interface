@@ -173,13 +173,12 @@ export default function CertificateEstimationPage(props) {
                 </div>
                 <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
-                    copy="Replace one or more existing hot water boilers or water heaters with one or
-          more air source heat pump water heater systems"
+                    copy="Replace one or more existing hot water boilers or water heaters with one or more air source heat pump water heater systems"
                     headline="Heat pump water heater"
                     image="CommercialHeatPumpWaterHeater.jpeg"
                     links={[
                       {
-                        href: '#commercial-wh-estimator',
+                        href: '#commercial-heat-pump-water-heater-certificates',
                         title: 'Estimate Scheme Certificates',
                       },
                     ]}
