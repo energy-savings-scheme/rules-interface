@@ -199,7 +199,9 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
     OpenFiscaApi.postCalculate(payload)
       .then((res) => {
         var result =
-          res.data.buildings.building_1['D20_ESSJun24_get_HP_zone_by_BCA_climate_zone']['2023-01-01'];
+          res.data.buildings.building_1['D20_ESSJun24_get_HP_zone_by_BCA_climate_zone'][
+            '2023-01-01'
+          ];
         setZone(result);
         console.log(result);
       })
