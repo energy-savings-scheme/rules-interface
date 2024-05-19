@@ -18,7 +18,7 @@ export default function ActivityRequirementsD20(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    'D20_replacement_final_activity_eligibility',
+    'D20_ESSJun24_replacement_final_activity_eligibility',
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
