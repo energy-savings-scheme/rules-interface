@@ -282,7 +282,7 @@ export default function CertificateEstimatorLoadClausesF17(props) {
         {stepNumber === 3 && !calculationError && !calculationError2 && (
           <Fragment>
             {
-              <Alert as="info" title="ESCs and PRCs" style={{ width: '80%' }}>
+              <Alert as="info" title="ESCs" style={{ width: '80%' }}>
                 <p>
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   Based on the information provided, your ESCs are

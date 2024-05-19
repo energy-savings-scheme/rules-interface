@@ -174,8 +174,8 @@ export default function CertificateEstimatorElectricHeatPump(props) {
     const payload = {
       buildings: {
         building_1: {
-          D17_PDRS__postcode: { '2023-01-01': postcode },
-          D17_get_HP_zone_by_BCA_climate_zone: { '2023-01-01': null },
+          D17_ESSJun24_PDRS__postcode: { '2023-01-01': postcode },
+          D17_ESSJun24_get_HP_zone_by_BCA_climate_zone: { '2023-01-01': null },
         },
       },
       persons: {
@@ -186,7 +186,7 @@ export default function CertificateEstimatorElectricHeatPump(props) {
     OpenFiscaApi.postCalculate(payload)
       .then((res) => {
         var result =
-          res.data.buildings.building_1['D17_get_HP_zone_by_BCA_climate_zone']['2023-01-01'];
+          res.data.buildings.building_1['D17_ESSJun24_get_HP_zone_by_BCA_climate_zone']['2023-01-01'];
         setZone(result);
         console.log(result);
       })
@@ -353,10 +353,10 @@ export default function CertificateEstimatorElectricHeatPump(props) {
 
           {stepNumber === 2 && (
             <CertificateEstimatorLoadClausesD17
-              variableToLoad1={'D17_ESC_calculation'}
-              variableToLoad2={'D17_ESC_calculation'}
-              annualEnergySavings={'D17_annual_energy_savings'}
-              peakDemandReductionSavings={'D17_annual_energy_savings'}
+              variableToLoad1={'D17_ESSJun24_ESC_calculation'}
+              variableToLoad2={'D17_ESSJun24_ESC_calculation'}
+              annualEnergySavings={'D17_ESSJun24_annual_energy_savings'}
+              peakDemandReductionSavings={'D17_ESSJun24_annual_energy_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
@@ -444,8 +444,8 @@ export default function CertificateEstimatorElectricHeatPump(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
-              annualEnergySavings={'D17_annual_energy_savings'}
-              peakDemandReductionSavings={'D17_annual_energy_savings'}
+              annualEnergySavings={'D17_ESSJun24_annual_energy_savings'}
+              peakDemandReductionSavings={'D17_ESSJun24_annual_energy_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
