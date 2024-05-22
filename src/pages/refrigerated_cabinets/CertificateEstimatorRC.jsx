@@ -405,8 +405,8 @@ export default function CertificateEstimatorRC(props) {
 
           {stepNumber === 2 && (
             <CertificateEstimatorLoadClausesRC
-              variableToLoad1={'RF2_PRC_calculation'}
-              variableToLoad2={'RF2_ESC_calculation'}
+              variableToLoad1={'RF2_F1_2_ESSJun24_PRC_calculation'}
+              variableToLoad2={'RF2_F1_2_ESSJun24_ESC_calculation'}
               variables={variables}
               setVariables={setVariables}
               entities={entities}
@@ -439,8 +439,8 @@ export default function CertificateEstimatorRC(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
-              annualEnergySavings={'RF2_annual_energy_savings'}
-              peakDemandReductionSavings={'RF2_peak_demand_annual_savings'}
+              annualEnergySavings={'RF2_F1_2_ESSJun24_annual_energy_savings'}
+              peakDemandReductionSavings={'RF2_F1_2_ESSJun24_peak_demand_annual_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
@@ -450,8 +450,8 @@ export default function CertificateEstimatorRC(props) {
 
           {stepNumber === 3 && (
             <CertificateEstimatorLoadClausesRC
-              variableToLoad1={'RF2_PRC_calculation'}
-              variableToLoad2={'RF2_ESC_calculation'}
+            variableToLoad1={'RF2_F1_2_ESSJun24_PRC_calculation'}
+            variableToLoad2={'RF2_F1_2_ESSJun24_ESC_calculation'}
               variables={variables}
               setVariables={setVariables}
               entities={entities}
@@ -478,8 +478,8 @@ export default function CertificateEstimatorRC(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
-              annualEnergySavings={'RF2_annual_energy_savings'}
-              peakDemandReductionSavings={'RF2_peak_demand_annual_savings'}
+              annualEnergySavings={'RF2_F1_2_ESSJun24_annual_energy_savings'}
+              peakDemandReductionSavings={'RF2_F1_2_ESSJun24_peak_demand_annual_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
