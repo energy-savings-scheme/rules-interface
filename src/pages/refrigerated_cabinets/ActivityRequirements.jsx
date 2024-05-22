@@ -17,7 +17,7 @@ export default function ActivityRequirementsRF2(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    'RF2_installation_replacement_final_activity_eligibility',
+    'RF2_F1_2_ESSJun24_installation_replacement_final_activity_eligibility',
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);

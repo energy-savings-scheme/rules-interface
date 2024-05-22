@@ -450,8 +450,8 @@ export default function CertificateEstimatorRC(props) {
 
           {stepNumber === 3 && (
             <CertificateEstimatorLoadClausesRC
-            variableToLoad1={'RF2_F1_2_ESSJun24_PRC_calculation'}
-            variableToLoad2={'RF2_F1_2_ESSJun24_ESC_calculation'}
+              variableToLoad1={'RF2_F1_2_ESSJun24_PRC_calculation'}
+              variableToLoad2={'RF2_F1_2_ESSJun24_ESC_calculation'}
               variables={variables}
               setVariables={setVariables}
               entities={entities}

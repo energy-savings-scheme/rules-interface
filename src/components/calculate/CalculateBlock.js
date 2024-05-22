@@ -576,11 +576,17 @@ export default function CalculateBlock(props) {
         return <DateInput formItem={formItem} setItemValue={setItemValue} />;
       } else if (formItem.value_type == 'String' && formItem.name === 'RF2_product_class') {
         return <FormTextInput formItem={formItem} setItemValue={setItemValue} />;
-      } else if (formItem.value_type == 'String' && formItem.name === 'RF2_F1_2_ESSJun24_product_class') {
+      } else if (
+        formItem.value_type == 'String' &&
+        formItem.name === 'RF2_F1_2_ESSJun24_product_class'
+      ) {
         return <FormTextInput formItem={formItem} setItemValue={setItemValue} />;
       } else if (formItem.value_type == 'String' && formItem.name !== 'RF2_product_class') {
         return <DropDownMenu formItem={formItem} setItemValue={setItemValue} />;
-      } else if (formItem.value_type == 'String' && formItem.name !== 'RF2_F1_2_ESSJun24_product_class') {
+      } else if (
+        formItem.value_type == 'String' &&
+        formItem.name !== 'RF2_F1_2_ESSJun24_product_class'
+      ) {
         return <DropDownMenu formItem={formItem} setItemValue={setItemValue} />;
       } else if (
         formItem.value_type == 'Boolean' &&
