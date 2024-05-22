@@ -165,7 +165,7 @@ export default function CertificateEstimatorLoadClausesRC(props) {
       //   formItem.form_value = metadata['total_display_area'];
       // }
 
-      if (formItem.name === "RF2_F1_2_ESSJun24_total_energy_consumption") {
+      if (formItem.name === 'RF2_F1_2_ESSJun24_total_energy_consumption') {
         formItem.form_value = metadata['total_energy_consumption'];
       }
       if (formItem.name === 'RF2_F1_2_ESSJun24_PDRS__postcode') {
@@ -173,7 +173,7 @@ export default function CertificateEstimatorLoadClausesRC(props) {
         formItem.read_only = true;
       }
 
-      if (formItem.name === "RF2_F1_2_ESSJun24_duty_class") {
+      if (formItem.name === 'RF2_F1_2_ESSJun24_duty_class') {
         formItem.possible_values = {
           heavy_duty: 'Heavy Duty',
           light_duty: 'Light Duty',

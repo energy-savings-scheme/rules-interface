@@ -17,7 +17,7 @@ export default function ActivityRequirementsWH1(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    'WH1_installation_replacement_final_activity_eligibility',
+    'WH1_F16_electric_ESSJun24__installation_replacement_final_activity_eligibility',
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
