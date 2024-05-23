@@ -142,7 +142,7 @@ export default function ActivityRequirementsWH1(props) {
         style="dark"
         image={{
           alt: 'commercial ac',
-          src: 'WH1.jpg',
+          src: 'WH1(optimised).jpg',
         }}
         intro="Commercial"
         title="Electric water heater replacement with an air source heat pump - eligibility"

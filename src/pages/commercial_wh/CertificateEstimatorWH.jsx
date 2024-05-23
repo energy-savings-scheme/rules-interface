@@ -207,7 +207,7 @@ export default function CertificateEstimatorWH(props) {
         style="dark"
         image={{
           alt: 'commercial wh',
-          src: 'WH1.jpg',
+          src: 'WH1(optimised).jpg',
         }}
         intro="Commercial"
         title="Electric water heater replacement with an air source heat pump - certificates"
