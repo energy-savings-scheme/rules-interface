@@ -71,7 +71,7 @@ export default function CommercialHotWaterHeaterEligibilityPage(props) {
                   <ContentBlock
                     copy="Replace an existing electric water heater with an air source heat pump water heater"
                     headline="Replace an electric water heater with a heat pump"
-                    image="WH1.jpg"
+                    image="WH1(optimised).jpg"
                     highlight
                     links={[
                       {
@@ -85,7 +85,7 @@ export default function CommercialHotWaterHeaterEligibilityPage(props) {
                   <ContentBlock
                     copy="Replace an existing gas water heater with an air source heat pump water heater"
                     headline="Replace a gas water heater with a heat pump"
-                    image="F16.jpg"
+                    image="F16(optimised).jpg"
                     highlight
                     links={[
                       {
@@ -99,7 +99,7 @@ export default function CommercialHotWaterHeaterEligibilityPage(props) {
                   <ContentBlock
                     headline="Install a new air source heat pump water heater system"
                     copy="Install one or more air source heat pump water heater systems"
-                    image="F17.jpg"
+                    image="F17(optimised).jpg"
                     highlight
                     links={[
                       {

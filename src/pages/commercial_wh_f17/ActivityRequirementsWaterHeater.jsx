@@ -142,7 +142,7 @@ export default function ActivityRequirementsF17(props) {
         style="dark"
         image={{
           alt: 'commercial ac',
-          src: '/F17.jpg',
+          src: '/F17(optimised).jpg',
         }}
         intro="Commercial"
         title="Install a new air source heat pump - eligibility"

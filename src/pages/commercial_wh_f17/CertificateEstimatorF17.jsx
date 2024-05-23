@@ -207,7 +207,7 @@ export default function CertificateEstimatorF17(props) {
         style="dark"
         image={{
           alt: 'commercial wh',
-          src: '/F17.jpg',
+          src: '/F17(optimised).jpg',
         }}
         intro="Commercial"
         title="Install a new air source heat pump - certificates"

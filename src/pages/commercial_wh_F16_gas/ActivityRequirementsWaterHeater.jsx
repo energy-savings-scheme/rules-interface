@@ -143,7 +143,7 @@ export default function ActivityRequirementsF16_gas(props) {
         style="dark"
         image={{
           alt: 'commercial ac',
-          src: '/F16.jpg',
+          src: '/F16(optimised).jpg',
         }}
         intro="Commercial"
         title="Gas water heater replacement with an air source heat pump - eligibility"
