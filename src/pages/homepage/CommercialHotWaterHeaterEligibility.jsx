@@ -69,7 +69,7 @@ export default function CommercialHotWaterHeaterEligibilityPage(props) {
               <div class="nsw-grid">
                 <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
-                    copy="Replace an existing electric water heater with an air source heat pump water heater"
+                    copy="Replace one or more existing electric hot water boilers or water heaters with one or more air source heat pump water heater systems"
                     headline="Replace an electric water heater with a heat pump"
                     image="WH1(optimised).jpg"
                     highlight
@@ -83,7 +83,7 @@ export default function CommercialHotWaterHeaterEligibilityPage(props) {
                 </div>
                 <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
-                    copy="Replace an existing gas water heater with an air source heat pump water heater"
+                    copy="Replace one or more existing gas hot water boilers or water heaters with one or more air source heat pump water heater systems"
                     headline="Replace a gas water heater with a heat pump"
                     image="F16(optimised).jpg"
                     highlight

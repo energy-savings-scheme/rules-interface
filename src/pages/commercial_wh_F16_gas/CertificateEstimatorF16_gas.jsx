@@ -219,35 +219,26 @@ export default function CertificateEstimatorF16_gas(props) {
             <div className="nsw-col nsw-col-md-10">
               <br></br>
               <p className="nsw-content-block__copy">
-                Answer the following questions to check if you meet the eligibility requirements for
-                the Commercial heat pump water heater activity (F16 in{' '}
+              Estimate the energy savings certificates (ESCs) for the commercial heat pump water heater activity (F16 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
                 >
                   Energy Savings Scheme
                 </a>
-                ) . Note that a replacement activity will not generate ESCs or PRCs.
+                )  by answering the following questions. Note that this activity is only eligible for the Energy Savings Scheme, and is not eligible for the Peak Demand Reduction Scheme. Because this is a replacement activity, installation of a new heat pump will not generate certificates.
               </p>
               <p className="nsw-content-block__copy">
-                Note that this activity is only eligible for the Energy Savings Scheme, and is not
-                eligible for the Peak Demand Reduction scheme. As this is a new installation
-                activity, replacement to a heat pump will not generate certificates.
-              </p>
-              <p className="nsw-content-block__copy">
-                Where possible, commercial heat pump water heater specifications are automatically
-                updated at the end of each week from the{' '}
+              At the end of each week, commercial heat pump water heater specifications are automatically updated from the{' '}
                 <a
                   href="https://tessa.energysustainabilityschemes.nsw.gov.au/ipart?id=accepted_products"
                   target="_blank"
                 >
                   Independent Pricing and Regulatory Tribunal (IPART) Product Registry
                 </a>{' '}
-                based on brand and model, but you may also enter your own values.
-              </p>
+                based on brand and model. You can also enter your own values.              </p>
               <p className="nsw-content-block__copy">
-                Please keep in mind that the results are a guide only and cannot be promoted or
-                published.
+              Please keep in mind that the results are indicative only and cannot be promoted or published.
               </p>
             </div>
           </div>
