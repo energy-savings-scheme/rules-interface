@@ -254,9 +254,7 @@ export default function CertificateEstimatorRC(props) {
               </h2>
               <br></br>
               <p className="nsw-content-block__copy">
-                Answer the following questions to estimate the energy savings certificates (ESCs)
-                and peak reduction certificates (PRCs) for the Commercial Refrigerated Cabinet
-                Activity (F1.1 and F1.2 in the{' '}
+              Estimate the energy savings certificates (ESCs) and peak reduction certificates (PRCs) for the Commercial refrigerated cabinet activity (F1.2 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"

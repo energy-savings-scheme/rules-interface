@@ -163,8 +163,7 @@ export default function ActivityRequirementsRF2(props) {
               </h2>
               <br></br>
               <p className="nsw-content-block__copy">
-                Answer the following questions to check if you meet the eligibility requirements for
-                the Refrigerated Cabinet Activity (F1.1 and F1.2 the{' '}
+              The following questions assess the eligibility requirements for the Refrigerated cabinet activity (F1.2 in the {' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"

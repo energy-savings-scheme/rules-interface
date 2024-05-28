@@ -171,8 +171,7 @@ export default function ActivityRequirementsF17(props) {
                 heater.
               </p>
               <p className="nsw-content-block__copy">
-                If ineligible, you will be shown the ineligible answers and their corresponding rule
-                clauses.
+              If you’re ineligible, we’ll show you why and give you the corresponding rule clauses.
               </p>
               <p className="nsw-content-block__copy">
                 Please keep in mind that the results are a guide only and cannot be promoted or
