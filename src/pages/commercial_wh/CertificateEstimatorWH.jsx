@@ -221,7 +221,8 @@ export default function CertificateEstimatorWH(props) {
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <p className="nsw-content-block__copy">
-              Estimate the energy savings certificates (ESCs) and peak reduction certificates (PRCs) for the commercial heat pump water heater activity (F16 in the{' '}
+                Estimate the energy savings certificates (ESCs) and peak reduction certificates
+                (PRCs) for the commercial heat pump water heater activity (F16 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
@@ -235,10 +236,12 @@ export default function CertificateEstimatorWH(props) {
                 >
                   Peak Demand Reduction Scheme
                 </a>
-                ) by answering the following questions. Note that a new installation activity will not generate ESCs or PRCs.
+                ) by answering the following questions. Note that a new installation activity will
+                not generate ESCs or PRCs.
               </p>
               <p className="nsw-content-block__copy">
-              At the end of each week, commercial heat pump water heater specifications are automatically updated from the{' '}
+                At the end of each week, commercial heat pump water heater specifications are
+                automatically updated from the{' '}
                 <a
                   href="https://tessa.energysustainabilityschemes.nsw.gov.au/ipart?id=accepted_products"
                   target="_blank"
@@ -246,9 +249,10 @@ export default function CertificateEstimatorWH(props) {
                   Independent Pricing and Regulatory Tribunal (IPART) Product Registry
                 </a>{' '}
                 based on brand and model. You can also enter your own values.
-                              </p>
+              </p>
               <p className="nsw-content-block__copy">
-              Please keep in mind that the results are indicative only and cannot be promoted or published.
+                Please keep in mind that the results are indicative only and cannot be promoted or
+                published.
               </p>
             </div>
           </div>
