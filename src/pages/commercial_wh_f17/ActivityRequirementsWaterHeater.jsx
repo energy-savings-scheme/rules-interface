@@ -160,7 +160,7 @@ export default function ActivityRequirementsF17(props) {
               <br></br>
               <p className="nsw-content-block__copy">
                 Answer the following questions to check if you meet the eligibility requirements for
-                the Commercial heat pump water heater activity (F17 in the{' '}
+                the commercial heat pump water heater activity (F17 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
@@ -171,7 +171,7 @@ export default function ActivityRequirementsF17(props) {
                 heater.
               </p>
               <p className="nsw-content-block__copy">
-              If you’re ineligible, we’ll show you why and give you the corresponding rule clauses.
+              If you're ineligible, we'll show you why and give you the corresponding rule clauses.
               </p>
               <p className="nsw-content-block__copy">
                 Please keep in mind that the results are a guide only and cannot be promoted or

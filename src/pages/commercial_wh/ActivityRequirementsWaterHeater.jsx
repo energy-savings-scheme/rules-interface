@@ -155,7 +155,8 @@ export default function ActivityRequirementsWH1(props) {
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
               <p className="nsw-content-block__copy">
-              Answer the following questions to check if you meet the eligibility requirements for the commercial heat pump water heater activity (F16 in the{' '}
+                Answer the following questions to check if you meet the eligibility requirements for
+                the commercial heat pump water heater activity (F16 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
@@ -169,13 +170,16 @@ export default function ActivityRequirementsWH1(props) {
                 >
                   Peak Demand Reduction Scheme
                 </a>
-                ). This activity is for replacement of an existing electric water heater with an (air source) heat pump water heater.
+                ). This activity is for replacement of an existing electric water heater with an
+                (air source) heat pump water heater.
               </p>
               <p className="nsw-content-block__copy">
-              If you're ineligible, we'll show you why and give you the corresponding rule clauses.
+                If you're ineligible, we'll show you why and give you the corresponding rule
+                clauses.
               </p>
               <p className="nsw-content-block__copy">
-              Please keep in mind that the results are a guide only and cannot be promoted or published.
+                Please keep in mind that the results are a guide only and cannot be promoted or
+                published.
               </p>
             </div>
           </div>
