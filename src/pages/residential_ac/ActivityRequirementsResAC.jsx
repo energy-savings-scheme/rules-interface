@@ -17,7 +17,7 @@ export default function ActivityRequirementsResAC(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    'HVAC1_installation_replacement_final_activity_eligibility',
+    'HVAC1_ESSJun24_installation_replacement_final_activity_eligibility',
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
@@ -91,11 +91,11 @@ export default function ActivityRequirementsResAC(props) {
 
       const names = [
         'HVAC1_equipment_replaced',
-        'HVAC1_AEER_greater_than_minimum',
-        'HVAC1_TCPSF_greater_than_minimum',
-        'HVAC1_HSPF_mixed_eligible',
-        'HVAC1_HSPF_cold_eligible',
-        'HVAC1_ACOP_eligible',
+        'HVAC1_ESSJun24_AEER_greater_than_minimum',
+        'HVAC1_ESSJun24_TCPSF_greater_than_minimum',
+        'HVAC1_ESSJun24_HSPF_mixed_eligible',
+        'HVAC1_ESSJun24_HSPF_cold_eligible',
+        'HVAC1_ESSJun24_ACOP_eligible',
       ];
 
       dep_arr = array.filter((item) => names.includes(item.name));
