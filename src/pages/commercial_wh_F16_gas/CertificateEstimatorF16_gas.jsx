@@ -227,15 +227,16 @@ export default function CertificateEstimatorF16_gas(props) {
                 >
                   Energy Savings Scheme
                 </a>
-                ) by answering the following questions. 
-                </p>
-                <p className="nsw-content-block__copy">
-                Note that this activity is only eligible for
-                the Energy Savings Scheme, and is not eligible for the Peak Demand Reduction Scheme.
-                As this is a replacement activity, installation of a new heat pump will not generate certificates.
-                </p>
+                ) by answering the following questions.
+              </p>
               <p className="nsw-content-block__copy">
-              At the end of each week, commercial heat pump water heater specifications are automatically updated from the{' '}
+                Note that this activity is only eligible for the Energy Savings Scheme, and is not
+                eligible for the Peak Demand Reduction Scheme. As this is a replacement activity,
+                installation of a new heat pump will not generate certificates.
+              </p>
+              <p className="nsw-content-block__copy">
+                At the end of each week, commercial heat pump water heater specifications are
+                automatically updated from the{' '}
                 <a
                   href="https://tessa.energysustainabilityschemes.nsw.gov.au/ipart?id=accepted_products"
                   target="_blank"
@@ -245,7 +246,8 @@ export default function CertificateEstimatorF16_gas(props) {
                 based on brand and model. You can also enter your own values.{' '}
               </p>
               <p className="nsw-content-block__copy">
-              Please keep in mind that the results are a guide only and cannot be promoted or published.
+                Please keep in mind that the results are a guide only and cannot be promoted or
+                published.
               </p>
             </div>
           </div>
