@@ -231,10 +231,13 @@ export default function CertificateEstimatorF17(props) {
                 generate ESCs or PRCs.
               </p>
               <p className="nsw-content-block__copy">
-              Note that this activity is only eligible for the Energy Savings Scheme, and is not eligible for the Peak Demand Reduction scheme. As this is a new installation activity, replacement to a heat pump will not generate certificates.
+                Note that this activity is only eligible for the Energy Savings Scheme, and is not
+                eligible for the Peak Demand Reduction scheme. As this is a new installation
+                activity, replacement to a heat pump will not generate certificates.
               </p>
               <p className="nsw-content-block__copy">
-              Where possible, commercial heat pump water heater specifications are automatically pulled in at the end of each week from the {' '}
+                Where possible, commercial heat pump water heater specifications are automatically
+                pulled in at the end of each week from the{' '}
                 <a
                   href="https://tessa.energysustainabilityschemes.nsw.gov.au/ipart?id=accepted_products"
                   target="_blank"
@@ -244,7 +247,8 @@ export default function CertificateEstimatorF17(props) {
                 based on brand and model, but you may also enter your own values.
               </p>
               <p className="nsw-content-block__copy">
-              Please keep in mind that the results are a guide only and cannot be promoted or published.
+                Please keep in mind that the results are a guide only and cannot be promoted or
+                published.
               </p>
             </div>
           </div>

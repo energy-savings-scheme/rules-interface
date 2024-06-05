@@ -163,7 +163,8 @@ export default function ActivityRequirementsRF2(props) {
               </h2>
               <br></br>
               <p className="nsw-content-block__copy">
-              Answer the following questions to check if you meet the eligibility requirements for the Refrigerated cabinet activity (F1.2 in the{' '}
+                Answer the following questions to check if you meet the eligibility requirements for
+                the Refrigerated cabinet activity (F1.2 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
@@ -180,10 +181,12 @@ export default function ActivityRequirementsRF2(props) {
                 ). This activity is for the replacement of an existing refrigerated display cabinet.
               </p>
               <p className="nsw-content-block__copy">
-              If you're ineligible, we'll show you why and give you the corresponding rule clauses. 
+                If you're ineligible, we'll show you why and give you the corresponding rule
+                clauses.
               </p>
               <p className="nsw-content-block__copy">
-              Please keep in mind that the results are a guide only and cannot be promoted or published.
+                Please keep in mind that the results are a guide only and cannot be promoted or
+                published.
               </p>
             </div>
           </div>
