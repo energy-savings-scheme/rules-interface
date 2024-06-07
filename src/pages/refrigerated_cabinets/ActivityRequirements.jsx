@@ -132,7 +132,6 @@ export default function ActivityRequirementsRF2(props) {
         )
           new_arr.push(child);
           else if (child.form_value !== child.default_value && child.value_type === 'String'){
-            console.log("here")
             new_arr.push(child);
           }
       });
