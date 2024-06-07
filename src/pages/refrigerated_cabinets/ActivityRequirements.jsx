@@ -131,6 +131,10 @@ export default function ActivityRequirementsRF2(props) {
           child.value_type === 'Boolean'
         )
           new_arr.push(child);
+          else if (child.form_value !== child.default_value && child.value_type === 'String'){
+            console.log("here")
+            new_arr.push(child);
+          }
       });
     setClausesForm(new_arr);
 
