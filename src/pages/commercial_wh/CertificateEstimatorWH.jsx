@@ -174,8 +174,8 @@ export default function CertificateEstimatorWH(props) {
     const payload = {
       buildings: {
         building_1: {
-          WH1_PDRS__postcode: { '2023-01-01': postcode },
-          WH1_get_HP_zone_by_BCA_climate_zone: { '2023-01-01': null },
+          WH1_F16_electric_PDRSAug24_PDRS__postcode: { '2023-01-01': postcode },
+          WH1_F16_electric_PDRSAug24_get_HP_zone_by_BCA_climate_zone: { '2023-01-01': null },
         },
       },
       persons: {
@@ -186,7 +186,7 @@ export default function CertificateEstimatorWH(props) {
     OpenFiscaApi.postCalculate(payload)
       .then((res) => {
         var result =
-          res.data.buildings.building_1['WH1_get_HP_zone_by_BCA_climate_zone']['2023-01-01'];
+          res.data.buildings.building_1['WH1_F16_electric_PDRSAug24_get_HP_zone_by_BCA_climate_zone']['2023-01-01'];
         setZone(result);
         console.log(result);
       })
@@ -341,10 +341,10 @@ export default function CertificateEstimatorWH(props) {
 
           {stepNumber === 2 && (
             <CertificateEstimatorLoadClausesWH
-              variableToLoad1={'WH1_PRC_calculation'}
-              variableToLoad2={'WH1_ESC_calculation'}
-              annualEnergySavings={'WH1_energy_savings'}
-              peakDemandReductionSavings={'WH1_peak_demand_annual_savings'}
+              variableToLoad1={'WH1_F16_electric_PDRSAug24_PRC_calculation'}
+              variableToLoad2={'WH1_F16_electric_PDRSAug24_ESC_calculation'}
+              annualEnergySavings={'WH1_F16_electric_PDRSAug24_energy_savings'}
+              peakDemandReductionSavings={'WH1_F16_electric_PDRSAug24_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -407,10 +407,10 @@ export default function CertificateEstimatorWH(props) {
 
           {stepNumber === 3 && (
             <CertificateEstimatorLoadClausesWH
-              variableToLoad1={'WH1_PRC_calculation'}
-              variableToLoad2={'WH1_ESC_calculation'}
-              annualEnergySavings={'WH1_energy_savings'}
-              peakDemandReductionSavings={'WH1_peak_demand_annual_savings'}
+            variableToLoad1={'WH1_F16_electric_PDRSAug24_PRC_calculation'}
+            variableToLoad2={'WH1_F16_electric_PDRSAug24_ESC_calculation'}
+            annualEnergySavings={'WH1_F16_electric_PDRSAug24_energy_savings'}
+            peakDemandReductionSavings={'WH1_F16_electric_PDRSAug24_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}
