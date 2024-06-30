@@ -212,8 +212,8 @@ export default function CertificateEstimatorResidentialAC(props) {
     const payload = {
       buildings: {
         building_1: {
-          HVAC1_PDRS__postcode: { '2021-01-01': postcode },
-          HVAC1_get_climate_zone_by_postcode: { '2021-01-01': null },
+          HVAC1_PDRSAug24_PDRS__postcode: { '2021-01-01': postcode },
+          HVAC1_PDRSAug24_get_climate_zone_by_postcode: { '2021-01-01': null },
         },
       },
       persons: {
@@ -224,7 +224,7 @@ export default function CertificateEstimatorResidentialAC(props) {
     OpenFiscaApi.postCalculate(payload)
       .then((res) => {
         var result =
-          res.data.buildings.building_1['HVAC1_get_climate_zone_by_postcode']['2021-01-01'];
+          res.data.buildings.building_1['HVAC1_PDRSAug24_get_climate_zone_by_postcode']['2021-01-01'];
         setZone(result);
         console.log(result);
       })
@@ -391,10 +391,10 @@ export default function CertificateEstimatorResidentialAC(props) {
 
           {stepNumber === 2 && (
             <CertificateEstimatorResidentialACLoadClauses
-              variableToLoad1={'HVAC1_PRC_calculation'}
-              variableToLoad2={'HVAC1_ESC_calculation'}
-              annualEnergySavings={'HVAC1_annual_energy_savings'}
-              peakDemandReductionSavings={'HVAC1_peak_demand_annual_savings'}
+              variableToLoad1={'HVAC1_PDRSAug24_PRC_calculation'}
+              variableToLoad2={'HVAC1_PDRSAug24_ESC_calculation'}
+              annualEnergySavings={'HVAC1_PDRSAug24_annual_energy_savings'}
+              peakDemandReductionSavings={'HVAC1_PDRSAug24_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -451,10 +451,10 @@ export default function CertificateEstimatorResidentialAC(props) {
 
           {stepNumber === 3 && (
             <CertificateEstimatorResidentialACLoadClauses
-              variableToLoad1={'HVAC1_PRC_calculation'}
-              variableToLoad2={'HVAC1_ESC_calculation'}
-              annualEnergySavings={'HVAC1_annual_energy_savings'}
-              peakDemandReductionSavings={'HVAC1_peak_demand_annual_savings'}
+            variableToLoad1={'HVAC1_PDRSAug24_PRC_calculation'}
+            variableToLoad2={'HVAC1_PDRSAug24_ESC_calculation'}
+            annualEnergySavings={'HVAC1_PDRSAug24_annual_energy_savings'}
+            peakDemandReductionSavings={'HVAC1_PDRSAug24_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}
