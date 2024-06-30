@@ -110,20 +110,6 @@ export default function CalculateBlock(props) {
       formValues.find((v) => v.name === 'Base_replacement_water_heater_certificates').hide = true;
     }
 
-    // if (
-    //   formItem.name === 'Base_removing_or_replacing' &&
-    //   (formItem.form_value === true || formItem.default_value === true)
-    // ) {
-    //   formValues.find((v) => v.name === 'Base_resold_reused_or_refurbished').hide = false;
-    //   formValues.find((v) => v.name === 'Base_disposal_of_equipment').hide = false;
-    // } else if (
-    //   formItem.name === 'Base_removing_or_replacing' &&
-    //   (formItem.form_value === false || formItem.default_value === false)
-    // ) {
-    //   formValues.find((v) => v.name === 'Base_resold_reused_or_refurbished').hide = true;
-    //   formValues.find((v) => v.name === 'Base_disposal_of_equipment').hide = true;
-    // }
-
     if (formItem.name === 'SYS1_replacement_activity') {
       if (formItem.default_value === true || formItem.form_value === true) {
         if (
@@ -167,18 +153,6 @@ export default function CalculateBlock(props) {
       formValues.find((v) => v.name === 'RF2_installation').hide = true;
       formValues.find((v) => v.name === 'RF2_legal_disposal').hide = false;
     }
-
-    // if (
-    //   formItem.name === 'Base_registered_ACP' &&
-    //   (formItem.form_value === false || formItem.default_value === false)
-    // ) {
-    //   formValues.find((v) => v.name === 'Base_engaged_ACP').hide = false;
-    // } else if (
-    //   formItem.name === 'Base_registered_ACP' &&
-    //   (formItem.form_value === true || formItem.default_value === true)
-    // ) {
-    //   formValues.find((v) => v.name === 'Base_engaged_ACP').hide = true;
-    // }
 
     if (
       formItem.name === 'HVAC2_new_equipment_cooling_capacity' &&
@@ -225,16 +199,12 @@ export default function CalculateBlock(props) {
     }
 
     const setItemValue = (e) => {
-      // Helper function which sets the value for formItem when the HTML input element's
-      // onChange event is triggered
-
       if (formItem.name === 'SYS2_multiple_speed') {
         if (e.target.value === 'true') {
           formValues.find((v) => v.name === 'SYS2_single_speed_input_power').hide = true;
           formValues.find((v) => v.name === 'SYS2_multiple_speeds_input_power').hide = false;
           setFormValues(formValues);
         } else if (e.target.value === 'false') {
-          console.log('i am here');
           formValues.find((v) => v.name === 'SYS2_single_speed_input_power').hide = false;
           formValues.find((v) => v.name === 'SYS2_multiple_speeds_input_power').hide = true;
           setFormValues(formValues);
@@ -309,7 +279,6 @@ export default function CalculateBlock(props) {
           formValues.find(
             (v) => v.name === 'Base_replacement_solar_water_heater_certificates',
           ).hide = true;
-          console.log(formValues);
         }
       }
 
@@ -323,7 +292,6 @@ export default function CalculateBlock(props) {
             (v) => v.name === 'Base_replacement_solar_water_heater_certificates',
           ).hide = false;
           setFormValues(formValues);
-          console.log(formValues);
         }
       }
 
@@ -332,7 +300,6 @@ export default function CalculateBlock(props) {
           formValues.find((v) => v.name === 'Base_basix_affected_development').hide = false;
         } else {
           formValues.find((v) => v.name === 'Base_basix_affected_development').hide = true;
-          console.log(formValues);
         }
       }
 
@@ -393,13 +360,11 @@ export default function CalculateBlock(props) {
         const heating_capacity = formValues.find(
           (o) => o.name === 'HVAC2_new_equipment_heating_capacity',
         ).form_value;
-        console.log(heating_capacity);
 
         if (
           (e.target.value === 'hot_zone' || e.target.value === 'average_zone') &&
           heating_capacity === true
         ) {
-          console.log('hot zone true');
           formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = false;
           formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
           formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
@@ -409,7 +374,6 @@ export default function CalculateBlock(props) {
           (e.target.value === 'hot_zone' || e.target.value === 'average_zone') &&
           heating_capacity === false
         ) {
-          console.log('hot zone true');
           formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
           formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
           formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = false;
@@ -432,13 +396,11 @@ export default function CalculateBlock(props) {
         const heating_capacity = formValues.find(
           (o) => o.name === 'HVAC1_new_equipment_heating_capacity',
         ).form_value;
-        console.log(heating_capacity);
 
         if (
           (e.target.value === 'hot_zone' || e.target.value === 'average_zone') &&
           heating_capacity === true
         ) {
-          console.log('hot zone true');
           formValues.find((v) => v.name === 'HVAC1_HSPF_mixed_eligible').hide = false;
           formValues.find((v) => v.name === 'HVAC1_HSPF_cold_eligible').hide = true;
           formValues.find((v) => v.name === 'HVAC1_ACOP_eligible').hide = true;
@@ -448,7 +410,6 @@ export default function CalculateBlock(props) {
           (e.target.value === 'hot_zone' || e.target.value === 'average_zone') &&
           heating_capacity === false
         ) {
-          console.log('hot zone true');
           formValues.find((v) => v.name === 'HVAC1_HSPF_mixed_eligible').hide = true;
           formValues.find((v) => v.name === 'HVAC1_HSPF_cold_eligible').hide = true;
           formValues.find((v) => v.name === 'HVAC1_ACOP_eligible').hide = false;
@@ -526,9 +487,7 @@ export default function CalculateBlock(props) {
       }
 
       if (formItem.name === 'WH1_storage_volume') {
-        console.log(e.target.value);
         if (e.target.value === 'less_than_or_equal_to_700_L') {
-          console.log('print here');
           formValues.find((v) => v.name === 'WH1_certified').hide = false;
         } else {
           formValues.find((v) => v.name === 'WH1_certified').hide = true;
@@ -536,9 +495,7 @@ export default function CalculateBlock(props) {
       }
 
       if (formItem.name === 'F17_storage_volume') {
-        console.log(e.target.value);
         if (e.target.value === 'less_than_or_equal_to_700_L') {
-          console.log('print here');
           formValues.find((v) => v.name === 'F17_certified').hide = false;
         } else {
           formValues.find((v) => v.name === 'F17_certified').hide = true;
@@ -569,39 +526,88 @@ export default function CalculateBlock(props) {
       formItem.name !== 'HVAC2_HSPF_cold'
     ) {
       if (formItem.value_type == 'Float') {
-        return <FormTextInput formItem={formItem} setItemValue={setItemValue} />;
+        return (
+          <div key={formItem.name}>
+            <FormTextInput formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
       } else if (formItem.value_type == 'Int') {
-        return <FormTextInput formItem={formItem} setItemValue={setItemValue} />;
+        return (
+          <div key={formItem.name}>
+            <FormTextInput formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
       } else if (formItem.value_type == 'Date') {
-        return <DateInput formItem={formItem} setItemValue={setItemValue} />;
-      } else if (formItem.value_type == 'String' && formItem.name === 'RF2_product_class') {
-        return <FormTextInput formItem={formItem} setItemValue={setItemValue} />;
-      } else if (
+        return (
+          <div key={formItem.name}>
+            <DateInput formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      }
+      else if (formItem.value_type == 'String' && formItem.name === 'RF2_product_class') {
+        return (
+          <div key={formItem.name}>
+            <FormTextInput formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      }
+      else if (formItem.value_type == 'String' && formItem.name === "HVAC1_PDRSAug24_BCA_Climate_Zone") {
+        return (
+          <div key={formItem.name}>
+            <DropDownMenu formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      }
+      else if (
         formItem.value_type == 'String' &&
         formItem.name === 'RF2_F1_2_ESSJun24_product_class'
       ) {
-        return <FormTextInput formItem={formItem} setItemValue={setItemValue} />;
+        return (
+          <div key={formItem.name}>
+            <FormTextInput formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
       } else if (formItem.value_type == 'String' && formItem.name !== 'RF2_product_class') {
-        return <DropDownMenu formItem={formItem} setItemValue={setItemValue} />;
+        return (
+          <div key={formItem.name}>
+            <DropDownMenu formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
       } else if (
         formItem.value_type == 'String' &&
         formItem.name !== 'RF2_F1_2_ESSJun24_product_class'
       ) {
-        return <DropDownMenu formItem={formItem} setItemValue={setItemValue} />;
+        return (
+          <div key={formItem.name}>
+            <DropDownMenu formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
       } else if (
         formItem.value_type == 'Boolean' &&
         workflow === 'eligibility' &&
         formItem.hide === false
       ) {
-        return <RadioButton formItem={formItem} setItemValue={setItemValue} />;
+        return (
+          <div key={formItem.name}>
+            <RadioButton formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
       } else if (
         formItem.value_type == 'Boolean' &&
         workflow === 'activity' &&
         formItem.hide === false
       ) {
-        return <RadioButton formItem={formItem} setItemValue={setItemValue} />;
+        return (
+          <div key={formItem.name}>
+            <RadioButton formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
       } else if (formItem.value_type == 'Boolean' && workflow === 'certificates') {
-        return <RadioButton formItem={formItem} setItemValue={setItemValue} />;
+        return (
+          <div key={formItem.name}>
+            <RadioButton formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
       }
     }
   };

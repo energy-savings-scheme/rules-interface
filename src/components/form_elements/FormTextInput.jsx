@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { FormGroup, TextInput } from 'nsw-ds-react/forms';
 
 export default function FormTextInput(props) {
@@ -7,7 +6,7 @@ export default function FormTextInput(props) {
 
   return (
     <FormGroup
-      helper={formItem.metadata.display_question} // primary label
+      helper={<span dangerouslySetInnerHTML={{ __html: formItem.metadata.display_question }} />} // primary label with URL
       label={formItem.metadata.label} // helper text (secondary label)
       error="Invalid value!" // error text if invalid
       status={formItem.invalid && 'invalid'} // if `true` renders invalid formatting
