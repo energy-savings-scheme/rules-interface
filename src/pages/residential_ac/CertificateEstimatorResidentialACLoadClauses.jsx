@@ -46,6 +46,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
+    selectedClimateZone
   } = props;
 
   console.log(variableToLoad1);
@@ -191,6 +192,10 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
         }
         if (formItem.name === 'HVAC1_PDRSAug24_PDRS__postcode') {
           formItem.form_value = postcode;
+          formItem.read_only = true;
+        }
+        if (formItem.name === "HVAC1_PDRSAug24_BCA_Climate_Zone") {
+          formItem.form_value = selectedClimateZone;
           formItem.read_only = true;
         }
       });
