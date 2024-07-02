@@ -543,22 +543,31 @@ export default function CalculateBlock(props) {
             <DateInput formItem={formItem} setItemValue={setItemValue} />
           </div>
         );
-      }
-      else if (formItem.value_type == 'String' && formItem.name === 'RF2_product_class') {
+      } else if (formItem.value_type == 'String' && formItem.name === 'RF2_product_class') {
         return (
           <div key={formItem.name}>
             <FormTextInput formItem={formItem} setItemValue={setItemValue} />
           </div>
         );
-      }
-      else if (formItem.value_type == 'String' && formItem.name === "HVAC1_PDRSAug24_BCA_Climate_Zone") {
+      } else if (
+        formItem.value_type == 'String' &&
+        formItem.name === 'HVAC1_PDRSAug24_BCA_Climate_Zone'
+      ) {
+        return (
+          <div key={formItem.name}>
+            <FormTextInput formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      } else if (
+        formItem.value_type == 'String' &&
+        formItem.name === 'HVAC1_PDRSAug24_BCA_Climate_Zone'
+      ) {
         return (
           <div key={formItem.name}>
             <DropDownMenu formItem={formItem} setItemValue={setItemValue} />
           </div>
         );
-      }
-      else if (
+      } else if (
         formItem.value_type == 'String' &&
         formItem.name === 'RF2_F1_2_ESSJun24_product_class'
       ) {
