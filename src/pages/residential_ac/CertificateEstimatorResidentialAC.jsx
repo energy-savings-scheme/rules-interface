@@ -401,21 +401,30 @@ export default function CertificateEstimatorResidentialAC(props) {
                       />
                     </FormGroup>
 
-                    {postcode && postcode.length === 4 &&<FormGroup
-                      label="BCA Climate Zone"
-                      helper={<span dangerouslySetInnerHTML={{ __html: 'Certain postcodes can belong to multiple climate zones, check your <a href="https://www.abcb.gov.au/resources/climate-zone-map" target="_blank">BCA Climate Zone on the map</a>' }} />} // primary question text
-                      errorText="Invalid value!" // error text if invalid
-                    >
-                      <Select
-                        style={{ maxWidth: '50%' }}
-                        options={dropdownOptionsClimateZone}
-                        onChange={(e) => {
-                          setSelectedClimateZone(e.target.value);
-                        }}
-                        value={selectedClimateZone}
-                        required
-                      />
-                    </FormGroup>}
+                    {postcode && postcode.length === 4 && (
+                      <FormGroup
+                        label="BCA Climate Zone"
+                        helper={
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                'Certain postcodes can belong to multiple climate zones, check your <a href="https://www.abcb.gov.au/resources/climate-zone-map" target="_blank">BCA Climate Zone on the map</a>',
+                            }}
+                          />
+                        } // primary question text
+                        errorText="Invalid value!" // error text if invalid
+                      >
+                        <Select
+                          style={{ maxWidth: '50%' }}
+                          options={dropdownOptionsClimateZone}
+                          onChange={(e) => {
+                            setSelectedClimateZone(e.target.value);
+                          }}
+                          value={selectedClimateZone}
+                          required
+                        />
+                      </FormGroup>
+                    )}
                     <FormGroup
                       label="Brand"
                       helper="Select residential air conditioner brand" // primary question text
