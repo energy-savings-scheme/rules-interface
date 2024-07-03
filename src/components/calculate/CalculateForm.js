@@ -50,9 +50,21 @@ export default function CalculateForm(props) {
 
   const [showPostcodeError, setShowPostcodeError] = useState(false);
   const [showNoResponsePostcodeError, setShowNoResponsePostcodeError] = useState(false);
+  const [dropdownOptionsClimateZone, setDropdownOptionsClimateZone] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    setDropdownOptionsClimateZone([
+      { text: 'BCA Climate Zone 1', value: 'BCA_Climate_Zone_1' },
+      { text: 'BCA Climate Zone 2', value: 'BCA_Climate_Zone_2' },
+      { text: 'BCA Climate Zone 3', value: 'BCA_Climate_Zone_3' },
+      { text: 'BCA Climate Zone 4', value: 'BCA_Climate_Zone_4' },
+      { text: 'BCA Climate Zone 5', value: 'BCA_Climate_Zone_5' },
+      { text: 'BCA Climate Zone 6', value: 'BCA_Climate_Zone_6' },
+      { text: 'BCA Climate Zone 7', value: 'BCA_Climate_Zone_7' },
+      { text: 'BCA Climate Zone 8', value: 'BCA_Climate_Zone_8' },
+    ]);
   }, []);
 
   useEffect(() => {
@@ -98,6 +110,16 @@ export default function CalculateForm(props) {
     // Set implementation date from DateInput component - and pop item from formValues
     const date = calculationDate;
     formValues = formValues.filter((item) => item.name !== 'Implementation Date');
+
+    formValues = formValues.map((variable) => {
+      if (variable.name === 'HVAC1_PDRSAug24_BCA_Climate_Zone') {
+        const option = dropdownOptionsClimateZone.find(option => option.text === variable.form_value);
+        if (option) {
+          return { ...variable, form_value: option.value };
+        }
+      }
+      return variable;
+    });
 
     var payload = {
       persons: { person1: {} },
