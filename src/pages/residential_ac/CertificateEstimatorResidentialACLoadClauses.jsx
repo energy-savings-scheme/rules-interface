@@ -49,6 +49,17 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
     selectedClimateZone,
   } = props;
 
+  const bca_mapping = {
+    'BCA_Climate_Zone_1': 'BCA Climate Zone 1',
+    'BCA_Climate_Zone_2': 'BCA Climate Zone 2',
+    'BCA_Climate_Zone_3': 'BCA Climate Zone 3',
+    'BCA_Climate_Zone_4': 'BCA Climate Zone 4',
+    'BCA_Climate_Zone_5': 'BCA Climate Zone 5',
+    'BCA_Climate_Zone_6': 'BCA Climate Zone 6',
+    'BCA_Climate_Zone_7': 'BCA Climate Zone 7',
+    'BCA_Climate_Zone_8': 'BCA Climate Zone 8',
+  };
+
   console.log(variableToLoad1);
   console.log(variableToLoad2);
   console.log(metadata);
@@ -195,7 +206,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
           formItem.read_only = true;
         }
         if (formItem.name === 'HVAC1_PDRSAug24_BCA_Climate_Zone') {
-          formItem.form_value = selectedClimateZone;
+          formItem.form_value = bca_mapping[selectedClimateZone]
           formItem.read_only = true;
         }
       });
