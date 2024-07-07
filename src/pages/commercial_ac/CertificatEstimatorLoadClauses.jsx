@@ -47,7 +47,19 @@ export default function CertificateEstimatorLoadClauses(props) {
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
+    selectedClimateZone,
   } = props;
+  
+  const bca_mapping = {
+    BCA_Climate_Zone_1: 'BCA Climate Zone 1',
+    BCA_Climate_Zone_2: 'BCA Climate Zone 2',
+    BCA_Climate_Zone_3: 'BCA Climate Zone 3',
+    BCA_Climate_Zone_4: 'BCA Climate Zone 4',
+    BCA_Climate_Zone_5: 'BCA Climate Zone 5',
+    BCA_Climate_Zone_6: 'BCA Climate Zone 6',
+    BCA_Climate_Zone_7: 'BCA Climate Zone 7',
+    BCA_Climate_Zone_8: 'BCA Climate Zone 8',
+  };
 
   console.log(variableToLoad1);
   console.log(variableToLoad2);
@@ -133,55 +145,58 @@ export default function CertificateEstimatorLoadClauses(props) {
       console.log(array1);
 
       array1.map((formItem) => {
-        if (formItem.name === 'HVAC2_rated_AEER_input') {
+        if (formItem.name === 'HVAC2_PDRSAug24_rated_AEER_input') {
           console.log(formItem.form_value);
           formItem.form_value = metadata['Rated AEER'];
         }
 
-        if (formItem.name === 'HVAC2_cooling_capacity_input') {
+        if (formItem.name === 'HVAC2_PDRSAug24_cooling_capacity_input') {
           formItem.form_value = metadata['Cooling Capacity'];
         }
 
-        if (formItem.name === 'HVAC2_heating_capacity_input') {
+        if (formItem.name === 'HVAC2_PDRSAug24_residential_TCEC') {
+          formItem.form_value = metadata[`Residential tcec_${zone}`];
+        }
+
+        if (formItem.name === 'HVAC2_PDRSAug24_residential_THEC') {
+          formItem.form_value = metadata[`Residential thec_${zone}`];
+        }
+
+        if (formItem.name === 'HVAC2_PDRSAug24_heating_capacity_input') {
           formItem.form_value = metadata['Heating Capacity'];
         }
 
-        if (formItem.name === 'HVAC2_commercial_TCEC') {
-          formItem.form_value = metadata[`Commercial tcec_${zone}`];
+        if (formItem.name === 'HVAC2_PDRSAug24_TCSPF_mixed') {
+          formItem.form_value = metadata['Residential TCSPF_mixed'];
+        }
+        if (formItem.name === 'HVAC2_PDRSAug24_HSPF_cold') {
+          formItem.form_value = metadata['Residential HSPF_cold'];
+        }
+        if (formItem.name === 'HVAC2_PDRSAug24_HSPF_mixed') {
+          formItem.form_value = metadata['Residential HSPF_mixed'];
         }
 
-        if (formItem.name === 'HVAC2_commercial_THEC') {
-          formItem.form_value = metadata[`Commercial thec_${zone}`];
-        }
-
-        if (formItem.name === 'HVAC2_TCSPF_mixed') {
-          formItem.form_value = metadata['Commercial TCSPF_mixed'];
-        }
-
-        if (formItem.name === 'HVAC2_HSPF_cold') {
-          formItem.form_value = metadata['Commercial HSPF_cold'];
-        }
-
-        if (formItem.name === 'HVAC2_HSPF_mixed') {
-          formItem.form_value = metadata['Commercial HSPF_mixed'];
-        }
-
-        if (formItem.name === 'HVAC2_input_power' && metadata['Input Power'] != '') {
+        if (formItem.name === 'HVAC2_PDRSAug24_input_power' && metadata['Input Power'] != '') {
           formItem.form_value = metadata['Input Power'];
         }
 
         if (
-          formItem.name === 'HVAC2_rated_ACOP_input' &&
+          formItem.name === 'HVAC2_PDRSAug24_rated_ACOP_input' &&
           metadata['Rated ACOP'] != '' &&
           metadata['Rated ACOP'] != '-'
         ) {
           formItem.form_value = metadata['Rated ACOP'];
         }
-        if (formItem.name === 'HVAC2_PDRS__postcode') {
+        if (formItem.name === 'HVAC2_PDRSAug24_PDRS__postcode') {
           formItem.form_value = postcode;
           formItem.read_only = true;
         }
+        if (formItem.name === 'HVAC2_PDRSAug24_BCA_Climate_Zone') {
+          formItem.form_value = bca_mapping[selectedClimateZone];
+          formItem.read_only = true;
+        }
       });
+
 
       if (persistFormValues.length > 1 && flow === 'backward') {
         array1.map((e) => {
