@@ -44,9 +44,8 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
     setPeakDemandReductionSavingsNumber,
   } = props;
 
-  console.log(variableData1)
-  console.log(variableData2)
-
+  console.log(variableData1);
+  console.log(variableData2);
 
   const [variable, setVariable] = useState({}); // all info about variable
 
@@ -54,7 +53,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
   const [dependencies, setDependencies] = useState([]);
 
-  console.log(stepNumber)
+  console.log(stepNumber);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -247,7 +246,6 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
                   Estimate certificates again
                 </Button>
               </div>
-
             </div>
             <div
               className="nsw-row"

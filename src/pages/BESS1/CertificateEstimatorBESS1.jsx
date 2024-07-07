@@ -121,23 +121,31 @@ export default function CertificateEstimatorBESS1(props) {
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <p className="nsw-content-block__copy">
-              Answer the following questions to estimate the peak reduction certificates (PRCs) for the residential solar battery activity (BESS1 in the
+                Answer the following questions to estimate the peak reduction certificates (PRCs)
+                for the residential solar battery activity (BESS1 in the
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
                 >
                   Peak Demand Reduction Scheme
                 </a>{' '}
-                ) This activity is for the installation of a new ‘behind the meter’ solar battery at a residential address. A key requirement of this activity is that there is already a solar PV system installed at the address.
+                ) This activity is for the installation of a new ‘behind the meter’ solar battery at
+                a residential address. A key requirement of this activity is that there is already a
+                solar PV system installed at the address.
                 <p className="nsw-content-block__copy">
-                Note that this activity is only eligible for the Peak Demand Reduction scheme, and is not eligible for the Energy Savings Scheme. As this is a new installation activity, a replacement activity will not generate certificates.
+                  Note that this activity is only eligible for the Peak Demand Reduction scheme, and
+                  is not eligible for the Energy Savings Scheme. As this is a new installation
+                  activity, a replacement activity will not generate certificates.
                 </p>
               </p>
               <p className="nsw-content-block__copy">
-              A battery register for this activity is currently under development. Once the registry is implemented, battery specifications will be automatically updated at the end of each week based on brand and model.
+                A battery register for this activity is currently under development. Once the
+                registry is implemented, battery specifications will be automatically updated at the
+                end of each week based on brand and model.
               </p>
               <p className="nsw-content-block__copy">
-              Please keep in mind that the results are a guide only and cannot be promoted or published.
+                Please keep in mind that the results are a guide only and cannot be promoted or
+                published.
               </p>
             </div>
           </div>
