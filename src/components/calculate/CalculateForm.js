@@ -113,7 +113,9 @@ export default function CalculateForm(props) {
 
     formValues = formValues.map((variable) => {
       if (variable.name === 'HVAC1_PDRSAug24_BCA_Climate_Zone') {
-        const option = dropdownOptionsClimateZone.find(option => option.text === variable.form_value);
+        const option = dropdownOptionsClimateZone.find(
+          (option) => option.text === variable.form_value,
+        );
         if (option) {
           return { ...variable, form_value: option.value };
         }
@@ -271,7 +273,7 @@ export default function CalculateForm(props) {
 
     if (stepNumber === 1 && workflow !== 'eligibility') {
       formValues.map((variable) => {
-        if (variable.name === 'RF1_PDRS__postcode' || variable.name === 'SYS1_PDRS__postcode') {
+        if (variable.name === 'RF1_PDRS__postcode' || variable.name === 'SYS1_PDRS__postcode' || variable.name === 'BESS1_PDRSAug24_PDRS__postcode' || variable.name === "BESS2_PDRSAug24_PDRS__postcode") {
           if (['2817', '2818', '2819'].includes(variable.form_value)) {
             setFlow(null);
             setStepNumber(stepNumber + 1);
@@ -311,6 +313,7 @@ export default function CalculateForm(props) {
         }
       });
     } else {
+      console.log("here......")
       setStepNumber(stepNumber + 1);
     }
 
