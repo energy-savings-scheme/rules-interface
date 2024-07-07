@@ -6,13 +6,13 @@ import moment from 'moment';
 // Import components
 import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
-import OpenFiscaApi from 'services/openfisca_api';
+import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
 
 export default function CertificateEstimatorLoadClausesBESS2(props) {
   const {
-    variableToLoad1,
-    variableToLoad2,
+    variableData1,
+    variableData2,
     variables,
     entities,
     setStepNumber,
@@ -26,72 +26,38 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
     setCalculationResult,
     calculationResult2,
     setCalculationResult2,
-    zone,
-    postcode,
-    formValues,
-    setFormValues,
-    selectedBrand,
-    selectedModel,
     flow,
     setFlow,
     persistFormValues,
     setPersistFormValues,
-    brands,
+    formValues,
+    setFormValues,
     loading,
     setLoading,
     showError,
     setShowError,
+    annualEnergySavings,
     peakDemandReductionSavings,
+    annualEnergySavingsNumber,
+    setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
   } = props;
 
-  console.log(variableToLoad1);
-  console.log(variableToLoad2);
-  console.log(metadata);
-  console.log('**********');
-  console.log(zone);
-  console.log(stepNumber);
+  console.log(variableData1);
+  console.log(variableData2);
 
   const [variable, setVariable] = useState({}); // all info about variable
 
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
-  const [dateInvalid, setDateInvalid] = useState(false);
-
-  // const [formValues, setFormValues] = useState([]);
   const [dependencies, setDependencies] = useState([]);
-  const [variableData1, setVariableData1] = useState([]);
-  const [variableData2, setVariableData2] = useState([]);
+
+  console.log(stepNumber);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  useEffect(() => {
-    OpenFiscaApi.getVariable(variableToLoad1)
-      .then((res) => {
-        setVariableData1(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [variableToLoad1]);
-
-  useEffect(() => {
-    OpenFiscaApi.getVariable(variableToLoad2)
-      .then((res) => {
-        setVariableData2(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [variableToLoad2]);
-
-  console.log(variableData1);
-  console.log(variableData2);
 
   function addElement(arr, obj) {
     const { length } = arr;
@@ -102,102 +68,79 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
   }
 
   useEffect(() => {
-    if (variables) {
-      const variable1 = variables.find((item) => item.name === variableToLoad1);
-      const variable2 = variables.find((item) => item.name === variableToLoad2);
+    if (variableData1.length == 0) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+      if (variables.length == 0) {
+        setLoading(true);
+      } else {
+        setLoading(false);
+        console.log(variables);
+        const variable1 = variables.find((item) => item.name === 'BESS2_PDRSAug24_PRC_calculation');
+        const variable2 = variables.find((item) => item.name === 'BESS2_PDRSAug24_PRC_calculation');
 
-      const offsprings1 = variable1.metadata.input_offspring;
-      const offsprings2 = variable2.metadata.input_offspring;
+        const offsprings1 = variable1.metadata.input_offspring;
+        const offsprings2 = variable2.metadata.input_offspring;
 
-      const children1 = variables.filter((item) => offsprings1.includes(item.name));
-      const children2 = variables.filter((item) => offsprings2.includes(item.name));
+        const children1 = variables.filter((item) => offsprings1.includes(item.name));
+        const children2 = variables.filter((item) => offsprings2.includes(item.name));
 
-      console.log(children1);
-      console.log(children2);
+        console.log(children1);
+        console.log(children2);
 
-      // Define the original array (at a minimum include the Implementation Date)
-      var array1 = [];
-      var array2 = [];
+        // Define the original array (at a minimum include the Implementation Date)
+        var array1 = [];
+        var array2 = [];
 
-      children1.map((child) => {
-        array1.push({ ...child, form_value: '', invalid: false });
-      });
-
-      children2.map((child) => {
-        array2.push({ ...child, form_value: '', invalid: false });
-      });
-
-      array2.forEach((item) => addElement(array1, item));
-
-      console.log(array1);
-
-      array1.map((formItem) => {
-        console.log(metadata);
-
-        if (formItem.name === 'BESS2_usable_battery_capacity') {
-          formItem.form_value = metadata[`Usable Battery Capacity`];
-        }
-
-        if (formItem.name === 'BESS2_PDRS__postcode') {
-          formItem.form_value = postcode;
-          formItem.read_only = true;
-        }
-      });
-
-      if (persistFormValues.length > 1 && flow === 'backward') {
-        array1.map((e) => {
-          let found = persistFormValues.find((f) => e.name === f.name);
-          if (found !== undefined) {
-            e['form_value'] = found['form_value'];
-          }
-          return e;
+        children1.map((child) => {
+          array1.push({ ...child, form_value: '', invalid: false });
         });
+
+        children2.map((child) => {
+          array2.push({ ...child, form_value: '', invalid: false });
+        });
+
+        array2.forEach((item) => addElement(array1, item));
+
+        console.log(array1);
+
+        console.log(persistFormValues);
+
+        if (persistFormValues.length > 1 && flow === 'backward') {
+          array1.map((e) => {
+            let found = persistFormValues.find((f) => e.name === f.name);
+            if (found !== undefined) {
+              e['form_value'] = found['form_value'];
+            }
+            return e;
+          });
+        }
+
+        array1.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
+
+        setFormValues(array1);
+
+        const names = [
+          'SYS1_existing_equipment_rated_output',
+          'SYS1_existing_equipment_no_of_poles',
+          'SYS1_existing_equipment_motor_frequency',
+        ];
+        array2 = array1.filter((item) => names.includes(item.name));
+        console.log(array2);
+        setDependencies(array2);
       }
-
-      array1.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
-
-      setFormValues(array1);
     }
   }, [variableData1, variableData2]);
 
-  const formatResultString = (result) => {
-    if (typeof result === 'boolean') {
-      return JSON.stringify(result);
-    }
-
-    return JSON.stringify(result) + ' kW';
-  };
-
   if (!variable) return null;
-
-  console.log('******', selectedModel);
 
   return (
     <div className>
       <div style={{ marginTop: 70, marginBottom: 70 }}>
-        {stepNumber === 2 && (
+        {stepNumber === 1 && (
           <Fragment>
-            <div
-              class="nsw-global-alert nsw-global-alert--light js-global-alert"
-              role="alert"
-              style={{ width: '80%', marginBottom: '7%' }}
-            >
-              <div class="nsw-global-alert__wrapper">
-                <div class="nsw-global-alert__content">
-                  {/* <div class="nsw-global-alert__title"></div> */}
-                  <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
-                  </p>
-                  <p>
-                    {' '}
-                    <b>Model: </b> {selectedModel}
-                  </p>
-                </div>
-              </div>
-            </div>
             <CalculateBlock
-              zone={zone}
               calculationDate={calculationDate}
               variable={variableData1}
               variable2={variableData2}
@@ -221,8 +164,6 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
               dependencies={dependencies}
               metadata={metadata}
               workflow={'certificates'}
-              selectedBrand={selectedBrand}
-              selectedModel={selectedModel}
               flow={flow}
               setFlow={setFlow}
               persistFormValues={persistFormValues}
@@ -231,63 +172,37 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              annualEnergySavings={annualEnergySavings}
+              peakDemandReductionSavings={peakDemandReductionSavings}
+              annualEnergySavingsNumber={annualEnergySavingsNumber}
+              setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
-              peakDemandReductionSavings={peakDemandReductionSavings}
             />
           </Fragment>
         )}
 
-        {stepNumber === 3 && (
-          <div
-            class="nsw-global-alert nsw-global-alert--light js-global-alert"
-            role="alert"
-            style={{ width: '80%', marginBottom: '7%' }}
-          >
-            <div class="nsw-global-alert__wrapper">
-              <div class="nsw-global-alert__content">
-                {/* <div class="nsw-global-alert__title"></div> */}
-                <p>
-                  {' '}
-                  <b>Brand: </b> {selectedBrand}{' '}
-                </p>
-                <p>
-                  {' '}
-                  <b>Model: </b> {selectedModel}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {stepNumber === 3 && !calculationError && !calculationError2 && (
+        {stepNumber === 2 && !calculationError && !calculationError2 && (
           <Fragment>
             {
               <Alert as="info" title="PRCs" style={{ width: '80%' }}>
                 <p>
-                  {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   Based on the information provided, your PRCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{Math.floor(calculationResult2)}</b>
+                    <b>{Math.floor(calculationResult)}</b>
                   </span>
                 </p>
-
                 <p>
                   Your estimated annual peak demand reduction is{' '}
                   <b>
                     <b>
                       {' '}
-                      {Math.floor(calculationResult2) === 0
+                      {Math.floor(calculationResult) === 0
                         ? 0
                         : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
                     </b>{' '}
                     kWh{' '}
                   </b>
-                </p>
-                <p>
-                  As this activity is only eligible for the Peak Demand Reduction Scheme, it
-                  generates Peak Reduction Certificates (PRCs) only and does not generate Energy
-                  Savings Certificates (ESCs).
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not
@@ -299,14 +214,16 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
           </Fragment>
         )}
 
-        {(stepNumber === 3 && calculationError) ||
-          (stepNumber === 3 && calculationError2 && (
+        {stepNumber === 1 && loading && <SpinnerFullscreen />}
+
+        {(stepNumber === 2 && calculationError === true) ||
+          (stepNumber === 2 && calculationError2 === true && (
             <Alert as="error" title="Sorry! An error has occurred.">
               <p>An error occurred during calculation. Try re-running the calculation</p>
             </Alert>
           ))}
 
-        {stepNumber === 3 && (
+        {stepNumber === 2 && (
           <Fragment>
             <div
               className="nsw-row"
@@ -323,14 +240,13 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
                   as="dark-outline-solid"
                   onClick={(e) => {
                     setFlow('backward');
-                    setStepNumber(stepNumber - 2);
+                    setStepNumber(stepNumber - 1);
                   }}
                 >
                   Estimate certificates again
                 </Button>
               </div>
             </div>
-
             <div
               className="nsw-row"
               style={{
@@ -396,7 +312,7 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
                       <div class="nsw-card__content null">
                         <div class="nsw-card__title">
                           <a
-                            href="/#residential-solar-battery-demand-response-eligibility"
+                            href="/#commercial-motors-activity-requirements"
                             class="nsw-card__link"
                           >
                             Review eligibility for this activity
