@@ -69,7 +69,6 @@ export default function CertificateEstimatorHVAC(props) {
       { text: 'BCA Climate Zone 8', value: 'BCA_Climate_Zone_8' },
     ]);
 
-
     if (variables.length < 1) {
       OpenFiscaAPI.listEntities()
         .then((res) => {
@@ -305,6 +304,7 @@ export default function CertificateEstimatorHVAC(props) {
       },
     };
 
+    if (postcode.length === 4) {
     OpenFiscaApi.postCalculate(payload_bca)
       .then((res) => {
         var result =
@@ -320,7 +320,10 @@ export default function CertificateEstimatorHVAC(props) {
       });
 
     console.log(BCAzone);
+    setSelectedClimateZone(BCAzone)
+    }
   }, [postcode]);
+
 
   return (
     <Fragment>
@@ -509,11 +512,11 @@ export default function CertificateEstimatorHVAC(props) {
 
           {stepNumber === 2 && (
             <CertificateEstimatorLoadClauses
-            variableToLoad1={'HVAC2_PDRSAug24_PRC_calculation'}
-            variableToLoad2={'HVAC2_PDRSAug24_ESC_calculation'}
-            annualEnergySavings={'HVAC2_PDRSAug24_annual_energy_savings'}
-            peakDemandReductionSavings={'HVAC2_PDRSAug24_peak_demand_annual_savings'}
-            variables={variables}
+              variableToLoad1={'HVAC2_PDRSAug24_PRC_calculation'}
+              variableToLoad2={'HVAC2_PDRSAug24_ESC_calculation'}
+              annualEnergySavings={'HVAC2_PDRSAug24_annual_energy_savings'}
+              peakDemandReductionSavings={'HVAC2_PDRSAug24_peak_demand_annual_savings'}
+              variables={variables}
               entities={entities}
               metadata={metadata}
               calculationResult={calculationResult}
@@ -547,16 +550,17 @@ export default function CertificateEstimatorHVAC(props) {
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              selectedClimateZone={selectedClimateZone}
             />
           )}
 
           {stepNumber === 3 && (
             <CertificateEstimatorLoadClauses
-            variableToLoad1={'HVAC2_PDRSAug24_PRC_calculation'}
-            variableToLoad2={'HVAC2_PDRSAug24_ESC_calculation'}
-            annualEnergySavings={'HVAC2_PDRSAug24_annual_energy_savings'}
-            peakDemandReductionSavings={'HVAC2_PDRSAug24_peak_demand_annual_savings'}
-           variables={variables}
+              variableToLoad1={'HVAC2_PDRSAug24_PRC_calculation'}
+              variableToLoad2={'HVAC2_PDRSAug24_ESC_calculation'}
+              annualEnergySavings={'HVAC2_PDRSAug24_annual_energy_savings'}
+              peakDemandReductionSavings={'HVAC2_PDRSAug24_peak_demand_annual_savings'}
+              variables={variables}
               entities={entities}
               metadata={metadata}
               calculationResult={calculationResult}
@@ -584,6 +588,7 @@ export default function CertificateEstimatorHVAC(props) {
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              selectedClimateZone={selectedClimateZone}
             />
           )}
 

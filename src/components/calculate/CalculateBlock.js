@@ -558,6 +558,16 @@ export default function CalculateBlock(props) {
             <FormTextInput formItem={formItem} setItemValue={setItemValue} />
           </div>
         );
+      }
+        else if (
+          formItem.value_type == 'String' &&
+          formItem.name === 'HVAC2_PDRSAug24_BCA_Climate_Zone'
+        ) {
+          return (
+            <div key={formItem.name}>
+              <FormTextInput formItem={formItem} setItemValue={setItemValue} />
+            </div>
+          );
       } else if (
         formItem.value_type == 'String' &&
         formItem.name === 'RF2_F1_2_ESSJun24_product_class'

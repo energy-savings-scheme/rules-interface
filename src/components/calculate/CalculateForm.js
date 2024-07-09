@@ -123,6 +123,18 @@ export default function CalculateForm(props) {
       return variable;
     });
 
+    formValues = formValues.map((variable) => {
+      if (variable.name === 'HVAC2_PDRSAug24_BCA_Climate_Zone') {
+        const option = dropdownOptionsClimateZone.find(
+          (option) => option.text === variable.form_value,
+        );
+        if (option) {
+          return { ...variable, form_value: option.value };
+        }
+      }
+      return variable;
+    });
+
     var payload = {
       persons: { person1: {} },
       [entity.plural]: { [`${entity.name}_1`]: { [variable.name]: { [date]: null } } },
