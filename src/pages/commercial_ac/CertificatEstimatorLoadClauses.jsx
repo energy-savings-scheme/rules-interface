@@ -49,7 +49,7 @@ export default function CertificateEstimatorLoadClauses(props) {
     setPeakDemandReductionSavingsNumber,
     selectedClimateZone,
   } = props;
-  
+
   const bca_mapping = {
     BCA_Climate_Zone_1: 'BCA Climate Zone 1',
     BCA_Climate_Zone_2: 'BCA Climate Zone 2',
@@ -196,7 +196,6 @@ export default function CertificateEstimatorLoadClauses(props) {
           formItem.read_only = true;
         }
       });
-
 
       if (persistFormValues.length > 1 && flow === 'backward') {
         array1.map((e) => {
