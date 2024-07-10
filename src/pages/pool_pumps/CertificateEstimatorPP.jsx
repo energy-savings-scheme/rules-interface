@@ -376,8 +376,8 @@ export default function CertificateEstimatorPP(props) {
 
           {stepNumber === 2 && (
             <CertificateEstimatorLoadClausesPP
-              variableToLoad1={'SYS2_PRC_calculation'}
-              variableToLoad2={'SYS2_ESC_calculation'}
+              variableToLoad1={'SYS2_PDRSAug24_PRC_calculation'}
+              variableToLoad2={'SYS2_PDRSAug24_ESC_calculation'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -408,8 +408,8 @@ export default function CertificateEstimatorPP(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
-              annualEnergySavings={'SYS2_energy_savings'}
-              peakDemandReductionSavings={'SYS2_peak_demand_annual_savings'}
+              annualEnergySavings={'SYS2_PDRSAug24_energy_savings'}
+              peakDemandReductionSavings={'SYS2_PDRSAug24_peak_demand_annual_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
@@ -419,8 +419,8 @@ export default function CertificateEstimatorPP(props) {
 
           {stepNumber === 3 && (
             <CertificateEstimatorLoadClausesPP
-              variableToLoad1={'SYS2_PRC_calculation'}
-              variableToLoad2={'SYS2_ESC_calculation'}
+              variableToLoad1={'SYS2_PDRSAug24_PRC_calculation'}
+              variableToLoad2={'SYS2_PDRSAug24_ESC_calculation'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -445,8 +445,8 @@ export default function CertificateEstimatorPP(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
-              annualEnergySavings={'SYS2_energy_savings'}
-              peakDemandReductionSavings={'SYS2_peak_demand_annual_savings'}
+              annualEnergySavings={'SYS2_PDRSAug24_energy_savings'}
+              peakDemandReductionSavings={'SYS2_PDRSAug24_peak_demand_annual_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}

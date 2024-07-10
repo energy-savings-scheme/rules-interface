@@ -305,25 +305,24 @@ export default function CertificateEstimatorHVAC(props) {
     };
 
     if (postcode.length === 4) {
-    OpenFiscaApi.postCalculate(payload_bca)
-      .then((res) => {
-        var result =
-          res.data.buildings.building_1['HVAC2_PDRSAug24_BCA_climate_zone_by_postcode'][
-            '2021-01-01'
-          ];
-        setBCAZone(result);
-        setSelectedClimateZone(getClimateZoneText(result));
-        console.log(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      OpenFiscaApi.postCalculate(payload_bca)
+        .then((res) => {
+          var result =
+            res.data.buildings.building_1['HVAC2_PDRSAug24_BCA_climate_zone_by_postcode'][
+              '2021-01-01'
+            ];
+          setBCAZone(result);
+          setSelectedClimateZone(getClimateZoneText(result));
+          console.log(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-    console.log(BCAzone);
-    setSelectedClimateZone(BCAzone)
+      console.log(BCAzone);
+      setSelectedClimateZone(BCAzone);
     }
   }, [postcode]);
-
 
   return (
     <Fragment>

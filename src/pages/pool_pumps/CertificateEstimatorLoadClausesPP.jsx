@@ -167,11 +167,19 @@ export default function CertificateEstimatorLoadClausesPP(props) {
           formItem.form_value = dic[metadata['star_rating']];
         }
 
-        if (formItem.name === 'SYS2_input_power') {
+        if (formItem.name === "SYS2_PDRSAug24_nameplate_input_power") {
           formItem.form_value = metadata['input_power'];
         }
 
-        if (formItem.name === 'SYS2_PDRS__postcode') {
+        if (formItem.name === "SYS2_PDRSAug24_daily_run_time") {
+          formItem.form_value = metadata['daily_run_time'];
+        }
+
+        if (formItem.name === "SYS2_PDRSAug24_projected_annual_energy_consumption") {
+          formItem.form_value = metadata['labelled_energy_consumption'];
+        }
+
+        if (formItem.name === 'SYS2_PDRSAug24_PDRS__postcode') {
           formItem.form_value = postcode;
           formItem.read_only = true;
         }
