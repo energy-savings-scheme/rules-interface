@@ -308,7 +308,7 @@ export default function LoadClausesSYS2(props) {
                     <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
                       <div class="nsw-card__content null">
                         <div class="nsw-card__title">
-                          <a href="/#pool-pumps-estimator" class="nsw-card__link">
+                          <a href="/#residential-pool-pump-certificates" class="nsw-card__link">
                             Estimate certificates for this activity
                           </a>
                         </div>

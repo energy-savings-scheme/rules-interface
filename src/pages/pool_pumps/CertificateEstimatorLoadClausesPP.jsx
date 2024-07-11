@@ -167,15 +167,15 @@ export default function CertificateEstimatorLoadClausesPP(props) {
           formItem.form_value = dic[metadata['star_rating']];
         }
 
-        if (formItem.name === "SYS2_PDRSAug24_nameplate_input_power") {
+        if (formItem.name === 'SYS2_PDRSAug24_nameplate_input_power') {
           formItem.form_value = metadata['input_power'];
         }
 
-        if (formItem.name === "SYS2_PDRSAug24_daily_run_time") {
+        if (formItem.name === 'SYS2_PDRSAug24_daily_run_time') {
           formItem.form_value = metadata['daily_run_time'];
         }
 
-        if (formItem.name === "SYS2_PDRSAug24_projected_annual_energy_consumption") {
+        if (formItem.name === 'SYS2_PDRSAug24_projected_annual_energy_consumption') {
           formItem.form_value = metadata['labelled_energy_consumption'];
         }
 
@@ -437,7 +437,7 @@ export default function CertificateEstimatorLoadClausesPP(props) {
                     <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
                       <div class="nsw-card__content null">
                         <div class="nsw-card__title">
-                          <a href="/#pool-pumps-activity-requirements" class="nsw-card__link">
+                          <a href="/#residential-pool-pump-eligibility" class="nsw-card__link">
                             Review eligibility for this activity
                           </a>
                         </div>

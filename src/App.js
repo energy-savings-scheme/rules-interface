@@ -261,7 +261,7 @@ function App() {
             setRF2Brands={setRF2Brands}
           />
         </Route>
-        <Route path="/pool-pumps-estimator" exact>
+        <Route path="/residential-pool-pump-certificates" exact>
           <Breadcrumb />
           <CertificateEstimatorPP
             entities={entities}
@@ -458,7 +458,7 @@ function App() {
             setLoading={setLoading}
           />
         </Route>
-        <Route path="/pool-pumps-activity-requirements" exact>
+        <Route path="/residential-pool-pump-eligibility" exact>
           <Breadcrumb />
           <ActivityRequirementsSYS2
             entities={entities}
