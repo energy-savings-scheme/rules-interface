@@ -518,12 +518,12 @@ export default function CalculateBlock(props) {
     };
 
     if (
-      formItem.name !== 'HVAC1_TCSPF_mixed' &&
-      formItem.name !== 'HVAC1_HSPF_cold' &&
-      formItem.name !== 'HVAC1_HSPF_mixed' &&
-      formItem.name !== 'HVAC2_TCSPF_mixed' &&
-      formItem.name !== 'HVAC2_HSPF_mixed' &&
-      formItem.name !== 'HVAC2_HSPF_cold'
+      formItem.name !== 'HVAC1_PDRSAug24_TCSPF_mixed' &&
+      formItem.name !== 'HVAC1_PDRSAug24_HSPF_cold' &&
+      formItem.name !== 'HVAC1_PDRSAug24_HSPF_mixed' &&
+      formItem.name !== 'HVAC2_PDRSAug24_TCSPF_mixed' &&
+      formItem.name !== 'HVAC2_PDRSAug24_HSPF_mixed' &&
+      formItem.name !== 'HVAC2_PDRSAug24_HSPF_cold'
     ) {
       if (formItem.value_type == 'Float') {
         return (
