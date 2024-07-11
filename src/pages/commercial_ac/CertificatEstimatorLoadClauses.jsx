@@ -155,11 +155,11 @@ export default function CertificateEstimatorLoadClauses(props) {
         }
 
         if (formItem.name === 'HVAC2_PDRSAug24_residential_TCEC') {
-          formItem.form_value = metadata[`Residential tcec_${zone}`];
+          formItem.form_value = metadata[`Commercial tcec_${zone}`];
         }
 
         if (formItem.name === 'HVAC2_PDRSAug24_residential_THEC') {
-          formItem.form_value = metadata[`Residential thec_${zone}`];
+          formItem.form_value = metadata[`Commercial thec_${zone}`];
         }
 
         if (formItem.name === 'HVAC2_PDRSAug24_heating_capacity_input') {
@@ -167,13 +167,13 @@ export default function CertificateEstimatorLoadClauses(props) {
         }
 
         if (formItem.name === 'HVAC2_PDRSAug24_TCSPF_mixed') {
-          formItem.form_value = metadata['Residential TCSPF_mixed'];
+          formItem.form_value = metadata['Commercial TCSPF_mixed'];
         }
         if (formItem.name === 'HVAC2_PDRSAug24_HSPF_cold') {
-          formItem.form_value = metadata['Residential HSPF_cold'];
+          formItem.form_value = metadata['Commercial HSPF_cold'];
         }
         if (formItem.name === 'HVAC2_PDRSAug24_HSPF_mixed') {
-          formItem.form_value = metadata['Residential HSPF_mixed'];
+          formItem.form_value = metadata['Commercial HSPF_mixed'];
         }
 
         if (formItem.name === 'HVAC2_PDRSAug24_input_power' && metadata['Input Power'] != '') {

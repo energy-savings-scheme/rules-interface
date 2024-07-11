@@ -120,7 +120,7 @@ export default function Breadcrumb() {
     location.pathname === '/commercial-ac-activity-requirements' ||
     location.pathname === '/residential-ac-activity-requirements' ||
     location.pathname === '/commercial-motors-activity-requirements' ||
-    location.pathname === '/pool-pumps-activity-requirements' ||
+    location.pathname === '/residential-pool-pump-eligibility' ||
     location.pathname === '/residential-refrigeration-activity-requirements' ||
     location.pathname === '/refrigerated-cabinet-activity-requirements' ||
     location.pathname === '/commercial-water-heater-activity-requirements' ||
@@ -173,7 +173,7 @@ export default function Breadcrumb() {
     location.pathname === '/residential-ac-estimator' ||
     location.pathname === '/commercial-ac-estimator' ||
     location.pathname === '/refrigerated-cabinet-estimator' ||
-    location.pathname === '/pool-pumps-estimator' ||
+    location.pathname === '/residential-pool-pump-certificates' ||
     location.pathname === '/commercial-motors-estimator' ||
     location.pathname === '/residential-refrigerators-estimator' ||
     location.pathname === '/commercial-wh-estimator' ||

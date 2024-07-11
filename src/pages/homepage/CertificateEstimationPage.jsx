@@ -96,7 +96,7 @@ export default function CertificateEstimationPage(props) {
                     image="/ResidentialPoolPumps.jpg"
                     links={[
                       {
-                        href: '#pool-pumps-estimator',
+                        href: '#residential-pool-pump-certificates',
                         title: 'Estimate Scheme Certificates',
                       },
                     ]}
