@@ -122,20 +122,25 @@ export default function CertificateEstimatorMotors(props) {
               <h2 className="nsw-content-block__title">Commercial Motors certificate estimator</h2>
               <br></br>
               <p className="nsw-content-block__copy">
-              Estimate the energy savings certificates (ESCs) for the Commercial motors activity (F7 in the{' '}
+                Estimate the energy savings certificates (ESCs) for the Commercial motors activity
+                (F7 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
                 >
                   Energy Savings Scheme
-                </a>){' '}by answering the following questions. This activity is for the new installation or replacement of a high efficiency motor.
+                </a>
+                ) by answering the following questions. This activity is for the new installation or
+                replacement of a high efficiency motor.
               </p>
               <p className="nsw-content-block__copy">
-              Note that this activity is only eligible for the Energy Savings Scheme, and is not eligible for the Peak Demand Reduction scheme.
+                Note that this activity is only eligible for the Energy Savings Scheme, and is not
+                eligible for the Peak Demand Reduction scheme.
               </p>
               <p className="nsw-content-block__copy">
-              Please keep in mind that the results are a guide only and cannot be promoted or published.
-</p>
+                Please keep in mind that the results are a guide only and cannot be promoted or
+                published.
+              </p>
             </div>
           </div>
         )}

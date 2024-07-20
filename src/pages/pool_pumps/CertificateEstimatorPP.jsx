@@ -240,9 +240,8 @@ export default function CertificateEstimatorPP(props) {
               </h2>
               <br></br>
               <p className="nsw-content-block__copy">
-                Answer the following questions to estimate the energy savings certificates (ESCs)
-                and peak reduction certificates (PRCs) for the Residential and Small Business Pool
-                Pumps Activity (D5 in the{' '}
+                Estimate the energy savings certificates (ESCs) and peak reduction certificates
+                (PRCs) for the Residential and small business pool pumps activity (D5 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
@@ -256,7 +255,8 @@ export default function CertificateEstimatorPP(props) {
                 >
                   Peak Demand Reduction Scheme
                 </a>
-                ).
+                ). by answering the following questions. This activity is for the the new
+                installation or replacement of a high efficiency pool pump.
               </p>
               <p className="nsw-content-block__copy">
                 Where possible, residential and small business pool pumps specifications are

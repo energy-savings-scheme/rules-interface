@@ -183,7 +183,7 @@ export default function ActivityRequirementsSYS2(props) {
               <br></br>
               <p className="nsw-content-block__copy">
                 Answer the following questions to check if you meet the eligibility requirements for
-                the Residential Pool Pumps Activity (D5 in the{' '}
+                the Residential and small business pool pumps activity (D5 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
@@ -197,10 +197,11 @@ export default function ActivityRequirementsSYS2(props) {
                 >
                   Peak Demand Reduction Scheme
                 </a>
-                ).
+                ). This activity is for the the new installation or replacement of a high efficiency
+                pool pump.
               </p>
               <p className="nsw-content-block__copy">
-                If ineligible, you will be shown the ineligible answers and their corresponding rule
+                If you're ineligible, we'll show you why and give you the corresponding rule
                 clauses.
               </p>
               <p className="nsw-content-block__copy">

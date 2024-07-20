@@ -69,10 +69,11 @@ export default function CalculateForm(props) {
 
   useEffect(() => {
     formValues.map((variable) => {
-      if (variable.name === 'C1_PDRSAug24_PDRS__postcode' || variable.name === 'SYS1_PDRS__postcode') {
-        console.log('i ah here');
+      if (
+        variable.name === 'C1_PDRSAug24_PDRS__postcode' ||
+        variable.name === 'F7_PDRSAug24_PDRS__postcode'
+      ) {
         if (variable.form_value.length < 4) {
-          console.log('i am here in length');
           setShowPostcodeError(false);
         }
       }
