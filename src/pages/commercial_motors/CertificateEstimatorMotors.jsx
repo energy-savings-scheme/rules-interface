@@ -76,7 +76,7 @@ export default function CertificateEstimatorMotors(props) {
   }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
-    OpenFiscaAPI.getVariable('SYS1_PRC_calculation')
+    OpenFiscaAPI.getVariable('F7_PDRSAug24_ESC_calculation')
       .then((res) => {
         setVariableData1(res.data);
         console.log(res.data);
@@ -87,7 +87,7 @@ export default function CertificateEstimatorMotors(props) {
         console.log(err);
       });
 
-    OpenFiscaAPI.getVariable('SYS1_ESC_calculation')
+    OpenFiscaAPI.getVariable('F7_PDRSAug24_ESC_calculation')
       .then((res) => {
         setVariableData2(res.data);
         console.log(res.data);
@@ -122,28 +122,20 @@ export default function CertificateEstimatorMotors(props) {
               <h2 className="nsw-content-block__title">Commercial Motors certificate estimator</h2>
               <br></br>
               <p className="nsw-content-block__copy">
-                Answer the following questions to estimate the energy savings certificates (ESCs)
-                and peak reduction certificates (PRCs) for the Commercial Motors (Refrigeration or
-                Ventilation) Activity (F7 in the{' '}
+              Estimate the energy savings certificates (ESCs) for the Commercial motors activity (F7 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
                 >
                   Energy Savings Scheme
-                </a>{' '}
-                and SYS1 in the{' '}
-                <a
-                  href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
-                  target="_blank"
-                >
-                  Peak Demand Reduction Scheme
-                </a>
-                ).
+                </a>){' '}by answering the following questions. This activity is for the new installation or replacement of a high efficiency motor.
               </p>
               <p className="nsw-content-block__copy">
-                Please keep in mind that the results are a guide only and cannot be promoted or
-                published.
+              Note that this activity is only eligible for the Energy Savings Scheme, and is not eligible for the Peak Demand Reduction scheme.
               </p>
+              <p className="nsw-content-block__copy">
+              Please keep in mind that the results are a guide only and cannot be promoted or published.
+</p>
             </div>
           </div>
         )}
@@ -173,8 +165,8 @@ export default function CertificateEstimatorMotors(props) {
             <CertificateEstimatorLoadClausesMotors
               variableData1={variableData1}
               variableData2={variableData2}
-              annualEnergySavings={'SYS1_energy_savings'}
-              peakDemandReductionSavings={'SYS1_peak_demand_annual_savings'}
+              annualEnergySavings={'F7_PDRSAug24_energy_savings'}
+              peakDemandReductionSavings={'F7_PDRSAug24_energy_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
@@ -212,8 +204,8 @@ export default function CertificateEstimatorMotors(props) {
             <CertificateEstimatorLoadClausesMotors
               variableData1={variableData1}
               variableData2={variableData2}
-              annualEnergySavings={'SYS1_energy_savings'}
-              peakDemandReductionSavings={'SYS1_peak_demand_annual_savings'}
+              annualEnergySavings={'F7_PDRSAug24_energy_savings'}
+              peakDemandReductionSavings={'F7_PDRSAug24_energy_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}

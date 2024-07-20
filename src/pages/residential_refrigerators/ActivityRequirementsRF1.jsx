@@ -16,7 +16,7 @@ export default function ActivityRequirementsRF1(props) {
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
-  const [variableToLoad, setVariableToLoad] = useState('RF1_removal_activity_eligibility');
+  const [variableToLoad, setVariableToLoad] = useState('C1_PDRSAug24_removal_activity_eligibility');
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
 
@@ -144,31 +144,20 @@ export default function ActivityRequirementsRF1(props) {
               </h2>
               <br></br>
               <p className="nsw-content-block__copy">
-                Answer the following questions to check if you meet the eligibility requirements for
-                the Residential and Small Business Spare Refrigerator or Freezer removal Activity
-                (C1 in the{' '}
+              Answer the following questions to check if you meet the eligibility requirements for the Residential and small business spare refrigerator or freezer removal activity (C1 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
                 >
                   Energy Savings Scheme
-                </a>{' '}
-                and RF1 in the{' '}
-                <a
-                  href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
-                  target="_blank"
-                >
-                  Peak Demand Reduction Scheme
-                </a>
-                ).
+                </a>){' '}.
+                This activity is for the removal of a spare non-primary refrigerator or freezer.
               </p>
               <p className="nsw-content-block__copy">
-                If ineligible, you will be shown the ineligible answers and their corresponding rule
-                clauses.
+              If you're ineligible, we'll show you why and give you the corresponding rule clauses.
               </p>
               <p className="nsw-content-block__copy">
-                Please keep in mind that the results are a guide only and cannot be promoted or
-                published.
+              Please keep in mind that the results are a guide only and cannot be promoted or published.
               </p>
             </div>
           </div>

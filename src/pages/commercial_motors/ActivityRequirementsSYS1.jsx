@@ -17,7 +17,7 @@ export default function ActivityRequirementsSYS1(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    'SYS1_installation_final_activity_eligibility',
+    'F7_PDRSAug24_installation_final_activity_eligibility',
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
@@ -87,31 +87,6 @@ export default function ActivityRequirementsSYS1(props) {
 
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
 
-      console.log(array);
-
-      //   const names = [
-      //     'HVAC2_installed_by_qualified_person',
-      //     'HVAC2_equipment_replaced',
-      //     'HVAC2_equipment_removed',
-      //     'HVAC2_installed_centralised_system_common_area_BCA_Class2_building',
-      //     'HVAC2_AEER_greater_than_minimum',
-      //     'HVAC2_TCPSF_greater_than_minimum',
-      //     'HVAC2_HSPF_mixed_eligible',
-      //     'HVAC2_HSPF_cold_eligible',
-      //     'HVAC2_ACOP_eligible',
-      //   ];
-
-      //   dep_arr = array.filter((item) => names.includes(item.name));
-      //   array.find((item) => {
-      //     if (names.includes(item.name)) {
-      //       item.hide = true;
-      //     }
-      //   });
-
-      //   dep_arr = dep_arr.map((obj, i) => ({ ...obj, hide: true }));
-
-      //   console.log(dep_arr);
-
       setFormValues(array);
       setDependencies(dep_arr);
       setLoading(false);
@@ -165,30 +140,20 @@ export default function ActivityRequirementsSYS1(props) {
               </h2>
               <br></br>
               <p className="nsw-content-block__copy">
-                Answer the following questions to check if you meet the eligibility requirements for
-                the Commercial Motors Activity for refrigeration or ventilation (F7 in the{' '}
+              Answer the following questions to check if you meet the eligibility requirements for the Commercial motors activity (F7 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
                 >
                   Energy Savings Scheme
-                </a>{' '}
-                and SYS1 in the{' '}
-                <a
-                  href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
-                  target="_blank"
-                >
-                  Peak Demand Reduction Scheme
-                </a>
-                ).
+                </a>).{' '}
+                This activity is for the new installation or replacement of a high efficiency motor.
               </p>
               <p className="nsw-content-block__copy">
-                If ineligible, you will be shown the ineligible answers and their corresponding rule
-                clauses.
+              If you're ineligible, we'll show you why and give you the corresponding rule clauses.
               </p>
               <p className="nsw-content-block__copy">
-                Please keep in mind that the results are a guide only and cannot be promoted or
-                published.
+              Please keep in mind that the results are a guide only and cannot be promoted or published.
               </p>
             </div>
           </div>

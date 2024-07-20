@@ -69,7 +69,7 @@ export default function CalculateForm(props) {
 
   useEffect(() => {
     formValues.map((variable) => {
-      if (variable.name === 'RF1_PDRS__postcode' || variable.name === 'SYS1_PDRS__postcode') {
+      if (variable.name === 'C1_PDRSAug24_PDRS__postcode' || variable.name === 'SYS1_PDRS__postcode') {
         console.log('i ah here');
         if (variable.form_value.length < 4) {
           console.log('i am here in length');
@@ -286,8 +286,8 @@ export default function CalculateForm(props) {
     if (stepNumber === 1 && workflow !== 'eligibility') {
       formValues.map((variable) => {
         if (
-          variable.name === 'RF1_PDRS__postcode' ||
-          variable.name === 'SYS1_PDRS__postcode' ||
+          variable.name === 'C1_PDRSAug24_PDRS__postcode' ||
+          variable.name === 'F7_PDRSAug24_PDRS__postcode' ||
           variable.name === 'BESS1_PDRSAug24_PDRS__postcode' ||
           variable.name === 'BESS2_PDRSAug24_PDRS__postcode'
         ) {

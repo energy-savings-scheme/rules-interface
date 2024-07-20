@@ -78,8 +78,8 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
         setLoading(true);
       } else {
         setLoading(false);
-        const variable1 = variables.find((item) => item.name === 'RF1_ESC_calculation');
-        const variable2 = variables.find((item) => item.name === 'RF1_PRC_calculation');
+        const variable1 = variables.find((item) => item.name === 'C1_PDRSAug24_ESC_calculation');
+        const variable2 = variables.find((item) => item.name === 'C1_PDRSAug24_ESC_calculation');
 
         const offsprings1 = variable1.metadata.input_offspring;
         const offsprings2 = variable2.metadata.input_offspring;
@@ -174,15 +174,11 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
         {stepNumber === 2 && !calculationError && !calculationError2 && (
           <Fragment>
             {
-              <Alert as="info" title="ESCs and PRCs" style={{ width: '80%' }}>
+              <Alert as="info" title="ESCs" style={{ width: '80%' }}>
                 <p>
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
                     <b>{Math.floor(calculationResult2)}</b>
-                  </span>
-                  and your PRCs are
-                  <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{Math.floor(calculationResult)}</b>
                   </span>
                 </p>
                 <p>
@@ -196,18 +192,6 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
                     kWh{' '}
                   </b>
                 </p>
-                <p>
-                  Your estimated annual peak demand reduction is{' '}
-                  <b>
-                    <b>
-                      {Math.floor(calculationResult) === 0
-                        ? 0
-                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
-                    </b>{' '}
-                    kWh{' '}
-                  </b>
-                </p>
-
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not
                   be generating enough energy savings to earn certificates, or the new installation

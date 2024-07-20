@@ -72,8 +72,8 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
       } else {
         setLoading(false);
         console.log(variables);
-        const variable1 = variables.find((item) => item.name === 'SYS1_ESC_calculation');
-        const variable2 = variables.find((item) => item.name === 'SYS1_PRC_calculation');
+        const variable1 = variables.find((item) => item.name === 'F7_PDRSAug24_ESC_calculation');
+        const variable2 = variables.find((item) => item.name === 'F7_PDRSAug24_ESC_calculation');
 
         const offsprings1 = variable1.metadata.input_offspring;
         const offsprings2 = variable2.metadata.input_offspring;
@@ -117,9 +117,9 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
         setFormValues(array1);
 
         const names = [
-          'SYS1_existing_equipment_rated_output',
-          'SYS1_existing_equipment_no_of_poles',
-          'SYS1_existing_equipment_motor_frequency',
+          'F7_PDRSAug24_new_equipment_rated_output',
+          'F7_PDRSAug24_new_equipment_no_of_poles',
+          'F7_PDRSAug24_new_equipment_motor_frequency',
         ];
         array2 = array1.filter((item) => names.includes(item.name));
         console.log(array2);
@@ -186,10 +186,6 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
                     <b>{Math.floor(calculationResult2)}</b>
                   </span>
-                  and your PRCs are
-                  <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{Math.floor(calculationResult)}</b>
-                  </span>
                 </p>
                 <p>
                   Your estimated annual energy savings are{' '}
@@ -198,18 +194,6 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
                       {Math.floor(calculationResult2) === 0
                         ? 0
                         : Math.round(annualEnergySavingsNumber * 100) / 100}
-                    </b>{' '}
-                    kWh{' '}
-                  </b>
-                </p>
-                <p>
-                  Your estimated annual peak demand reduction is{' '}
-                  <b>
-                    <b>
-                      {' '}
-                      {Math.floor(calculationResult) === 0
-                        ? 0
-                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
                     </b>{' '}
                     kWh{' '}
                   </b>

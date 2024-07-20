@@ -347,11 +347,19 @@ export default function CalculateBlock(props) {
 
       if (formItem.name === 'HVAC1_PDRSAug24_new_equipment_cooling_capacity') {
         if (e.target.value === 'true') {
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_TCPSF_greater_than_minimum').hide = false;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_AEER_greater_than_minimum').hide = true;
+          formValues.find(
+            (v) => v.name === 'HVAC1_PDRSAug24_TCPSF_greater_than_minimum',
+          ).hide = false;
+          formValues.find(
+            (v) => v.name === 'HVAC1_PDRSAug24_AEER_greater_than_minimum',
+          ).hide = true;
         } else {
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_AEER_greater_than_minimum').hide = false;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_TCPSF_greater_than_minimum').hide = true;
+          formValues.find(
+            (v) => v.name === 'HVAC1_PDRSAug24_AEER_greater_than_minimum',
+          ).hide = false;
+          formValues.find(
+            (v) => v.name === 'HVAC1_PDRSAug24_TCPSF_greater_than_minimum',
+          ).hide = true;
         }
       }
 
@@ -454,7 +462,8 @@ export default function CalculateBlock(props) {
       }
 
       if (formItem.name === 'HVAC1_PDRSAug24_new_equipment_heating_capacity') {
-        const climateZone = formValues.find((o) => o.name === 'HVAC1_PDRSAug24_climate_zone').form_value;
+        const climateZone = formValues.find((o) => o.name === 'HVAC1_PDRSAug24_climate_zone')
+          .form_value;
         if (e.target.value === 'true' && climateZone === 'hot_zone') {
           formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = false;
           formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
