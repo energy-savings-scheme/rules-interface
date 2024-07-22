@@ -72,7 +72,7 @@ export default function CalculateBlock(props) {
     arr = formValues.map((x) => ({ ...x }));
 
     console.log(dependencies);
-    console.log(formValues)
+    console.log(formValues);
 
     if (
       formItem.name === 'Base_meets_mandatory_requirement' &&

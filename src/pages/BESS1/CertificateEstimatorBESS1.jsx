@@ -122,14 +122,14 @@ export default function CertificateEstimatorBESS1(props) {
             <div className="nsw-col nsw-col-md-10">
               <p className="nsw-content-block__copy">
                 Answer the following questions to estimate the peak reduction certificates (PRCs)
-                for the residential solar battery activity (BESS1 in the
+                for the residential solar battery activity (BESS1 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
                 >
                   Peak Demand Reduction Scheme
-                </a>{' '}
-                ) This activity is for the installation of a new ‘behind the meter’ solar battery at
+                </a>
+                ). This activity is for the installation of a new 'behind the meter' solar battery at
                 a residential address. A key requirement of this activity is that there is already a
                 solar PV system installed at the address.
                 <p className="nsw-content-block__copy">

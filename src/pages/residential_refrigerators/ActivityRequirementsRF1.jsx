@@ -153,7 +153,7 @@ export default function ActivityRequirementsRF1(props) {
                 >
                   Energy Savings Scheme
                 </a>
-                ) . This activity is for the removal of a spare non-primary refrigerator or freezer.
+                ). This activity is for the removal of a spare non-primary refrigerator or freezer.
               </p>
               <p className="nsw-content-block__copy">
                 If you're ineligible, we'll show you why and give you the corresponding rule
@@ -202,43 +202,6 @@ export default function ActivityRequirementsRF1(props) {
           )}
         </Fragment>
       </div>
-      <section class="nsw-section nsw-section--off-white" style={{ backgroundColor: '#F5F5F5' }}>
-        <div class="nsw-container" style={{ paddingBottom: '4rem' }}>
-          <div class="nsw-layout">
-            <div class="nsw-layout__main">
-              <br></br>
-              <br></br>
-              <h2 className="nsw-col nsw-content-block__title">
-                Check your eligibility and estimate certificates
-              </h2>
-              <br></br>
-              <div class="nsw-grid">
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Review schemes base eligibility, activity requirements and estimate certificates"
-                    link="base_eligibility_commercialac/"
-                    image="/commercialac/navigation_row/full_flow_card.jpeg"
-                  ></Card>
-                </div>
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Check activity requirements and estimate certificates"
-                    link="activity-requirements/"
-                    image="/commercialac/navigation_row/activity_certificates.png"
-                  ></Card>
-                </div>
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Estimate certificates only"
-                    link="compare2activities"
-                    image="/commercialac/navigation_row/certificates_only.jpg"
-                  ></Card>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </Fragment>
   );
 }

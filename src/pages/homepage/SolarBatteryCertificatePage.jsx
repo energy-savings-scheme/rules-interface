@@ -40,10 +40,10 @@ export default function SolarBatteryCertificatePage(props) {
               <div className="nsw-grid nsw-grid--spaced">
                 <div className="nsw-col nsw-col-md-12">
                   <p className="nsw-content-block__copy">
-                    The Safeguard certificate estimator estimates certificates for:
+                  The Safeguard certificate estimator estimates certificates for:
                     <ul>
                       <li>installation of a new residential solar battery or</li>
-                      <li>sign up of a solar battery to a demand response contract</li>
+                      <li>sign up of a solar battery to a demand response contract, often called a virtual power plant (VPP)</li>
                     </ul>
                   </p>
                   <p className="nsw-content-block__copy">
