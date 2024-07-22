@@ -79,7 +79,7 @@ export default function LoadClausesWH1(props) {
   const storageVolumeMapping = {
     less_than_425_L: 'Less than 425 litres',
     equal_425_L_to_700_L: '425 - 700 litres',
-    more_than_700_L: 'More than 700 litres'
+    more_than_700_L: 'More than 700 litres',
   };
 
   const formatStorageVolume = (value) => {
@@ -90,9 +90,12 @@ export default function LoadClausesWH1(props) {
     return value ? 'Yes' : 'No';
   };
 
-  const filteredClausesForm = clausesForm.filter(item => 
-    !(item.name === "WH1_F16_electric_PDRSAug24__storage_volume" && 
-      (item.form_value === "more_than_700_L" || item.form_value === "equal_425_L_to_700_L"))
+  const filteredClausesForm = clausesForm.filter(
+    (item) =>
+      !(
+        item.name === 'WH1_F16_electric_PDRSAug24__storage_volume' &&
+        (item.form_value === 'more_than_700_L' || item.form_value === 'equal_425_L_to_700_L')
+      ),
   );
 
   if (!variable) return null;
@@ -211,25 +214,25 @@ export default function LoadClausesWH1(props) {
                     style={{ width: '80%' }}
                   >
                     <p>
-                    {filteredClausesForm.length > 0 &&
-        filteredClausesForm.map((item, i) => (
-          <React.Fragment key={i}>
-            <br />
-            <br />
-            <div className="nsw-global-alert__title">
-              {item.metadata.display_question}:{' '}
-              {item.name === "WH1_F16_electric_PDRSAug24__storage_volume"
-                ? formatStorageVolume(item.form_value)
-                : item.value_type === 'Boolean'
-                ? formatBooleanToString(item.form_value)
-                : item.form_value}
-            </div>
-            <p style={{ whiteSpace: 'pre-line' }}>
-              {item.metadata.eligibility_clause &&
-                item.metadata.eligibility_clause.split('<br />').join('\n')}
-            </p>
-            <br />
-          </React.Fragment>
+                      {filteredClausesForm.length > 0 &&
+                        filteredClausesForm.map((item, i) => (
+                          <React.Fragment key={i}>
+                            <br />
+                            <br />
+                            <div className="nsw-global-alert__title">
+                              {item.metadata.display_question}:{' '}
+                              {item.name === 'WH1_F16_electric_PDRSAug24__storage_volume'
+                                ? formatStorageVolume(item.form_value)
+                                : item.value_type === 'Boolean'
+                                ? formatBooleanToString(item.form_value)
+                                : item.form_value}
+                            </div>
+                            <p style={{ whiteSpace: 'pre-line' }}>
+                              {item.metadata.eligibility_clause &&
+                                item.metadata.eligibility_clause.split('<br />').join('\n')}
+                            </p>
+                            <br />
+                          </React.Fragment>
                         ))}
                     </p>
                   </Alert>

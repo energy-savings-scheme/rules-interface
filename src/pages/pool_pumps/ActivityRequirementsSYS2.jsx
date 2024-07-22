@@ -89,14 +89,11 @@ export default function ActivityRequirementsSYS2(props) {
 
       console.log(array);
 
-      const names = ['SYS2_voluntary_labelling_scheme', 'SYS2_single_speed_input_power'];
+      const names = ['SYS2_PDRSAug24_existing_equipment_removed'];
 
       dep_arr = array.filter((item) => names.includes(item.name));
       array.find((item) => {
-        if (item.name === 'SYS2_voluntary_labelling_scheme') {
-          item.hide = true;
-        }
-        if (item.name === 'SYS2_single_speed_input_power') {
+        if (item.name === 'SYS2_PDRSAug24_existing_equipment_removed') {
           item.hide = true;
         }
       });

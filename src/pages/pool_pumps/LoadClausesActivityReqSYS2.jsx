@@ -86,6 +86,13 @@ export default function LoadClausesSYS2(props) {
     }
   };
 
+  const filteredClausesForm = clausesForm.filter(
+    (item) =>
+      !(
+        item.name === "SYS2_PDRSAug24_new_installation_or_replacement"
+      ),
+  );
+
   if (!variable) return null;
 
   return (
@@ -210,8 +217,8 @@ export default function LoadClausesSYS2(props) {
                     style={{ width: '80%' }}
                   >
                     <p>
-                      {clausesForm.length > 0 &&
-                        clausesForm.map((item, i) => (
+                      {filteredClausesForm.length > 0 &&
+                        filteredClausesForm.map((item, i) => (
                           <React.Fragment>
                             <br></br>
                             <br></br>
