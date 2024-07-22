@@ -344,11 +344,13 @@ export default function CalculateForm(props) {
     <form onSubmit={handleCalculate}>
       <div className="nsw-content-block">
         <div className="nsw-content-block__content">
-          {workflow === 'certificates' && variable.name === 'C1_PDRSAug24_ESC_calculation' ? (
+          {workflow === 'certificates' && (variable.name === 'C1_PDRSAug24_ESC_calculation' || variable.name === 'F7_PDRSAug24_ESC_calculation') ? (
             <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your ESCs</b>
             </h5>
-          ) : workflow === 'certificates' && (variable.name  === 'BESS1_PDRSAug24_PRC_calculation' || variable.name  === 'BESS2_PDRSAug24_PRC_calculation') ? (
+          ) : workflow === 'certificates' &&
+            (variable.name === 'BESS1_PDRSAug24_PRC_calculation' ||
+              variable.name === 'BESS2_PDRSAug24_PRC_calculation') ? (
             <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your PRCs</b>
             </h5>
