@@ -213,36 +213,18 @@ export default function CalculateBlock(props) {
         }
       }
 
-      if (formItem.name === 'SYS1_replacement_activity') {
-        if (e.target.value === 'true') {
-          if (
-            formValues.find((o) => o.name === 'SYS1_existing_equipment_rated_output') === undefined
-          ) {
-            formValues.push(
-              dependencies.find((o) => o.name === 'SYS1_existing_equipment_rated_output'),
-            );
-          }
-          if (
-            formValues.find((o) => o.name === 'SYS1_existing_equipment_motor_frequency') ===
-            undefined
-          ) {
-            formValues.push(
-              dependencies.find((o) => o.name === 'SYS1_existing_equipment_motor_frequency'),
-            );
-          }
-          if (
-            formValues.find((o) => o.name === 'SYS1_existing_equipment_no_of_poles') === undefined
-          ) {
-            formValues.push(
-              dependencies.find((o) => o.name === 'SYS1_existing_equipment_no_of_poles'),
-            );
-          }
-        } else if (e.target.value === 'false') {
-          removeItem(formValues, 'SYS1_existing_equipment_rated_output');
-          removeItem(formValues, 'SYS1_existing_equipment_motor_frequency');
-          removeItem(formValues, 'SYS1_existing_equipment_no_of_poles');
+      if (formItem.name === 'SYS2_PDRSAug24_new_installation_or_replacement') {
+        if (e.target.value === 'replacement_activity') {
+          formValues.find(
+            (v) => v.name === 'SYS2_PDRSAug24_existing_equipment_removed',
+          ).hide = false;
+        } else {
+          formValues.find(
+            (v) => v.name === 'SYS2_PDRSAug24_existing_equipment_removed',
+          ).hide = true;
         }
       }
+         
 
       if (formItem.name === 'HVAC2_residential_building') {
         if (e.target.value === 'true') {
