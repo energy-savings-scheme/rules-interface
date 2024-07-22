@@ -129,9 +129,9 @@ export default function CertificateEstimatorBESS1(props) {
                 >
                   Peak Demand Reduction Scheme
                 </a>
-                ). This activity is for the installation of a new 'behind the meter' solar battery at
-                a residential address. A key requirement of this activity is that there is already a
-                solar PV system installed at the address.
+                ). This activity is for the installation of a new 'behind the meter' solar battery
+                at a residential address. A key requirement of this activity is that there is
+                already a solar PV system installed at the address.
                 <p className="nsw-content-block__copy">
                   Note that this activity is only eligible for the Peak Demand Reduction scheme, and
                   is not eligible for the Energy Savings Scheme. As this is a new installation
