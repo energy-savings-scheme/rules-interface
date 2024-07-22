@@ -90,6 +90,11 @@ export default function LoadClausesWH1(props) {
     return value ? 'Yes' : 'No';
   };
 
+  const filteredClausesForm = clausesForm.filter(item => 
+    !(item.name === "WH1_F16_electric_PDRSAug24__storage_volume" && 
+      (item.form_value === "more_than_700_L" || item.form_value === "equal_425_L_to_700_L"))
+  );
+
   if (!variable) return null;
 
   return (
@@ -206,8 +211,8 @@ export default function LoadClausesWH1(props) {
                     style={{ width: '80%' }}
                   >
                     <p>
-                    {clausesForm.length > 0 &&
-        clausesForm.map((item, i) => (
+                    {filteredClausesForm.length > 0 &&
+        filteredClausesForm.map((item, i) => (
           <React.Fragment key={i}>
             <br />
             <br />

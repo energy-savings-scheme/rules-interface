@@ -123,9 +123,10 @@ export default function ActivityRequirementsWH1(props) {
       .filter((x) => x.hide === false)
       .map((child) => {
         if (
-          child.form_value !== child.default_value &&
-          new_arr.find((o) => o.name === child.name) === undefined &&
-          child.value_type === 'Boolean' || child.value_type === 'String'
+          (child.form_value !== child.default_value &&
+            new_arr.find((o) => o.name === child.name) === undefined &&
+            child.value_type === 'Boolean') ||
+          child.value_type === 'String'
         )
           new_arr.push(child);
       });
