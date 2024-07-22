@@ -123,35 +123,15 @@ export default function ActivityRequirementsSYS2(props) {
     formValues
       .filter((x) => x.hide === false)
       .map((child) => {
+        console.log(child)
         if (
           child.form_value !== child.default_value &&
           new_arr.find((o) => o.name === child.name) === undefined &&
-          child.value_type === 'Boolean'
+          child.value_type === 'Boolean' || child.value_type === 'String'
         ) {
           new_arr.push(child);
         }
       });
-
-    // var multiple_speed_var = formValues.find((item) => item.name === 'SYS2_multiple_speed');
-    // var single_speed_input_power_var = formValues.find(
-    //   (item) => item.name === 'SYS2_input_power_dropdown',
-    // );
-
-    // if (
-    //   multiple_speed_var !== undefined &&
-    //   multiple_speed_var.form_value === true &&
-    //   single_speed_input_power_var.form_value === 'single_speed'
-    // ) {
-    //   new_arr.push(single_speed_input_power_var);
-    // }
-
-    // if (
-    //   single_speed_input_power_var !== undefined &&
-    //   multiple_speed_var.form_value === false &&
-    //   single_speed_input_power_var.form_value === 'multiple_speed'
-    // ) {
-    //   new_arr.push(single_speed_input_power_var);
-    // }
 
     setClausesForm(new_arr);
   }, [stepNumber]);
