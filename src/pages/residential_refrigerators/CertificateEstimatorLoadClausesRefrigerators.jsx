@@ -193,6 +193,9 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
                   </b>
                 </p>
                 <p>
+                As this activity is only eligible for the Energy Savings Scheme, it generates Energy Savings Certificates (ESCs) only and does not generate Peak Reduction Certificates (PRCs).
+                </p>
+                <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not
                   be generating enough energy savings to earn certificates, or the new installation
                   or replacement activity you have chosen may be ineligible.

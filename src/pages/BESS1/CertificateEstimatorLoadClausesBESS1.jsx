@@ -193,7 +193,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
                   </span>
                 </p>
                 <p>
-                  Your estimated annual peak demand reduction is{' '}
+                Your estimated annual contribution to reducing peak summer energy demand is{' '}
                   <b>
                     <b>
                       {' '}
@@ -205,9 +205,10 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
                   </b>
                 </p>
                 <p>
-                  If you are receiving an estimation of 0 certificates, the brand and model may not
-                  be generating enough energy savings to earn certificates, or the new installation
-                  or replacement activity you have chosen may be ineligible.
+                As this activity is only eligible for the Peak Demand Reduction Scheme, it generates Peak Reduction Certificates (PRCs) only and does not generate Energy Savings Certificates (ESCs).
+                </p>
+                <p>
+                If you are receiving an estimation of 0 certificates, the brand and model may not be generating enough energy savings to earn certificates, or the new installation or replacement activity you have chosen may be ineligible.
                 </p>
               </Alert>
             }

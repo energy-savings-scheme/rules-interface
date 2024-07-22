@@ -123,11 +123,12 @@ export default function ActivityRequirementsSYS2(props) {
     formValues
       .filter((x) => x.hide === false)
       .map((child) => {
-        console.log(child)
+        console.log(child);
         if (
-          child.form_value !== child.default_value &&
-          new_arr.find((o) => o.name === child.name) === undefined &&
-          child.value_type === 'Boolean' || child.value_type === 'String'
+          (child.form_value !== child.default_value &&
+            new_arr.find((o) => o.name === child.name) === undefined &&
+            child.value_type === 'Boolean') ||
+          child.value_type === 'String'
         ) {
           new_arr.push(child);
         }

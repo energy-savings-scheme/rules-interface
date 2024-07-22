@@ -255,7 +255,7 @@ export default function CertificateEstimatorPP(props) {
                 >
                   Peak Demand Reduction Scheme
                 </a>
-                ). by answering the following questions. This activity is for the the new
+                ) by answering the following questions. This activity is for the the new
                 installation or replacement of a high efficiency pool pump.
               </p>
               <p className="nsw-content-block__copy">
