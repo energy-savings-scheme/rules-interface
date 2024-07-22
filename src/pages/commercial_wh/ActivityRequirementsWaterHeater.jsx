@@ -89,7 +89,7 @@ export default function ActivityRequirementsWH1(props) {
 
       console.log(array);
 
-      const names = ['WH1_installation', 'WH1_certified'];
+      const names = ['WH1_F16_electric_PDRSAug24__certified'];
 
       dep_arr = array.filter((item) => names.includes(item.name));
 
@@ -109,6 +109,7 @@ export default function ActivityRequirementsWH1(props) {
       setFormValues(array);
       setDependencies(dep_arr);
       setLoading(false);
+      console.log(dependencies);
     }
   }, [variables, variableToLoad, stepNumber]);
 

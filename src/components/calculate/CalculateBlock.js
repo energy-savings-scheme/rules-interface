@@ -72,6 +72,8 @@ export default function CalculateBlock(props) {
     arr = formValues.map((x) => ({ ...x }));
 
     console.log(dependencies);
+    console.log(formValues)
+
     if (
       formItem.name === 'Base_meets_mandatory_requirement' &&
       (formItem.form_value === true || formItem.default_value === true)
@@ -494,11 +496,11 @@ export default function CalculateBlock(props) {
         }
       }
 
-      if (formItem.name === 'WH1_storage_volume') {
-        if (e.target.value === 'less_than_or_equal_to_700_L') {
-          formValues.find((v) => v.name === 'WH1_certified').hide = false;
+      if (formItem.name === 'WH1_F16_electric_PDRSAug24__storage_volume') {
+        if (e.target.value === 'less_than_425_L' || e.target.value === 'equal_425_L_to_700_L') {
+          formValues.find((v) => v.name === 'WH1_F16_electric_PDRSAug24__certified').hide = false;
         } else {
-          formValues.find((v) => v.name === 'WH1_certified').hide = true;
+          formValues.find((v) => v.name === 'WH1_F16_electric_PDRSAug24__certified').hide = true;
         }
       }
 
