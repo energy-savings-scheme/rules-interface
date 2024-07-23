@@ -117,9 +117,9 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
         setFormValues(array1);
 
         const names = [
-          'F7_PDRSAug24_new_equipment_rated_output',
-          'F7_PDRSAug24_new_equipment_no_of_poles',
-          'F7_PDRSAug24_new_equipment_motor_frequency',
+          'F7_PDRSAug24_existing_equipment_rated_output',
+          'F7_PDRSAug24_existing_equipment_no_of_poles',
+          'F7_PDRSAug24_existing_equipment_motor_frequency',
         ];
         array2 = array1.filter((item) => names.includes(item.name));
         console.log(array2);
@@ -180,7 +180,7 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
         {stepNumber === 2 && !calculationError && !calculationError2 && (
           <Fragment>
             {
-              <Alert as="info" title="ESCs and PRCs" style={{ width: '80%' }}>
+              <Alert as="info" title="ESCs" style={{ width: '80%' }}>
                 <p>
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
