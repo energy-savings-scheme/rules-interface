@@ -93,8 +93,7 @@ export default function LoadClausesWH1(props) {
   const filteredClausesForm = clausesForm.filter(
     (item) =>
       !(
-        item.name === 'WH1_F16_electric_PDRSAug24__storage_volume' &&
-        (item.form_value === 'more_than_700_L' || item.form_value === 'equal_425_L_to_700_L')
+        item.name === 'WH1_F16_electric_PDRSAug24__storage_volume'
       ),
   );
 
@@ -268,73 +267,6 @@ export default function LoadClausesWH1(props) {
                     height: '1.5px',
                   }}
                 />
-              </div>
-
-              <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                <h4>More options</h4>
-                <br></br>
-
-                <div class="nsw-grid nsw-grid--spaced">
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="#" class="nsw-card__link">
-                            Back to estimator homepage
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="/#core-eligibility" class="nsw-card__link">
-                            Check core eligibility
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a
-                            href="/#commercial-electric-to-heat-pump-water-heater-certificates"
-                            class="nsw-card__link"
-                          >
-                            Estimate certificates for this activity
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </Fragment>
