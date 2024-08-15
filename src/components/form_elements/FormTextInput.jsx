@@ -5,7 +5,7 @@ export default function FormTextInput(props) {
   const { formItem, setItemValue } = props;
 
   // Set the step for float values. Modify '0.01' to the desired decimal precision.
-  const stepValue = formItem.value_type === 'Float' ? '0.01' : '1';
+  // const stepValue = formItem.value_type === 'Float' ? '0.01' : '1';
 
   return (
     <FormGroup
@@ -24,8 +24,7 @@ export default function FormTextInput(props) {
         onChange={setItemValue}
         required
         readOnly={formItem.read_only ? true : false}
-        min={['Float', 'Integer'].includes(formItem.value_type) ? '0' : undefined} // Set min to 0 for Float and Integer types
-        step={stepValue} // Set step value for Float and Integer
+        min={['Float', 'Integer'].includes(formItem.value_type) ? '0' : '0'} // Set min to 0 for Float and Integer types
       />
     </FormGroup>
   );
