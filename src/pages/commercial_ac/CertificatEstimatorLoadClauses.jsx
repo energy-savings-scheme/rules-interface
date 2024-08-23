@@ -154,11 +154,11 @@ export default function CertificateEstimatorLoadClauses(props) {
           formItem.form_value = metadata['Cooling Capacity'];
         }
 
-        if (formItem.name === 'HVAC2_PDRSAug24_residential_TCEC') {
+        if (formItem.name === 'HVAC2_PDRSAug24_commercial_TCEC') {
           formItem.form_value = metadata[`Commercial tcec_${zone}`];
         }
 
-        if (formItem.name === 'HVAC2_PDRSAug24_residential_THEC') {
+        if (formItem.name === 'HVAC2_PDRSAug24_commercial_THEC') {
           formItem.form_value = metadata[`Commercial thec_${zone}`];
         }
 
