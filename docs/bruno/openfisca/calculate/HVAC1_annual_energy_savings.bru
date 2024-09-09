@@ -1,0 +1,65 @@
+meta {
+  name: HVAC1_annual_energy_savings
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{OPENFISCA_API_HOST}}/calculate
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "persons": {
+          "person1": {}
+      },
+      "buildings": {
+          "building_1": {
+              "HVAC1_annual_energy_savings": {
+                  "2024-08-28": null
+              },
+              "HVAC1_PDRS__postcode": {
+                  "2024-08-28": "2877"
+              },
+              "HVAC1_Activity": {
+                  "2024-08-28": "new_installation_activity"
+              },
+              "HVAC1_Air_Conditioner_type": {
+                  "2024-08-28": "ducted_split_system"
+              },
+              "HVAC1_cooling_capacity_input": {
+                  "2024-08-28": 33.5
+              },
+              "HVAC1_residential_TCEC": {
+                  "2024-08-28": 3413
+              },
+              "HVAC1_rated_AEER_input": {
+                  "2024-08-28": 3.0817
+              },
+              "HVAC1_TCSPF_mixed": {
+                  "2024-08-28": 3.954
+              },
+              "HVAC1_input_power": {
+                  "2024-08-28": 10.66
+              },
+              "HVAC1_HSPF_cold": {
+                  "2024-08-28": 2.75
+              },
+              "HVAC1_HSPF_mixed": {
+                  "2024-08-28": 3.316
+              },
+              "HVAC1_heating_capacity_input": {
+                  "2024-08-28": 33.5
+              },
+              "HVAC1_residential_THEC": {
+                  "2024-08-28": 5652
+              },
+              "HVAC1_rated_ACOP_input": {
+                  "2024-08-28": 3.8815
+              }
+          }
+      }
+  }
+}

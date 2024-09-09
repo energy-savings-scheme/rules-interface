@@ -1,0 +1,35 @@
+meta {
+  name: BESS1_V5Nov24_PRC_calculation
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{OPENFISCA_API_HOST}}/calculate
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "persons": {
+      "person1": {}
+    },
+    "buildings": {
+      "building_1": {
+        "BESS1_V5Nov24_PRC_calculation": {
+          "2024-09-09": null
+        },
+        "BESS1_PDRSAug24_PDRS__postcode": {
+          "2024-09-09": "2000"
+        },
+        "BESS1_PDRSAug24_installation_activity": {
+          "2024-09-09": true
+        },
+        "BESS1_PDRSAug24_usable_battery_capacity": {
+          "2024-09-09": 1000
+        }
+      }
+    }
+  }
+}
