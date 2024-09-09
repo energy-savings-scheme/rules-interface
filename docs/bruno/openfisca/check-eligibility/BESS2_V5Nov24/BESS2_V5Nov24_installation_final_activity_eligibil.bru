@@ -1,0 +1,62 @@
+meta {
+  name: BESS2_V5Nov24_installation_final_activity_eligibil
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{OPENFISCA_API_HOST}}/calculate
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "persons": {
+      "person1": {}
+    },
+    "buildings": {
+      "building_1": {
+        "BESS2_V5Nov24_installation_final_activity_eligibility": {
+          "2024-09-09": null
+        },
+        "BESS2_V5Nov24_demand_response_contract": {
+          "2024-09-09": true
+        },
+        "BESS2_V5Nov24_existing_solar_battery": {
+          "2024-09-09": true
+        },
+        "BESS2_V5Nov24_solar_panels_existing_address": {
+          "2024-09-09": true
+        },
+        "BESS2_V5Nov24_life_support_equipment": {
+          "2024-09-09": true
+        },
+        "BESS2_V5Nov24_engaged_ACP": {
+          "2024-09-09": true
+        },
+        "BESS2_V5Nov24_battery_capacity": {
+          "2024-09-09": true
+        },
+        "BESS2_V5Nov24_length_battery_warranty": {
+          "2024-09-09": true
+        },
+        "BESS2_V5Nov24_temperature_range_warranty": {
+          "2024-09-09": true
+        },
+        "BESS2_V5Nov24_minimum_throughput_warranty_before_April_2026": {
+          "2024-09-09": true
+        },
+        "BESS2_V5Nov24_internet_connectable": {
+          "2024-09-09": true
+        },
+        "BESS2_V5Nov24_battery_controllable_third_party": {
+          "2024-09-09": true
+        },
+        "BESS2_V5Nov24_approved_battery_list": {
+          "2024-09-09": true
+        }
+      }
+    }
+  }
+}

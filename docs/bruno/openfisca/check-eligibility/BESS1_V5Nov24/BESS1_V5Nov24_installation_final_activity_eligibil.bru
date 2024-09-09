@@ -1,0 +1,77 @@
+meta {
+  name: BESS1_V5Nov24_installation_final_activity_eligibil
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{OPENFISCA_API_HOST}}/calculate
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "persons": {
+      "person1": {}
+    },
+    "buildings": {
+      "building_1": {
+        "BESS1_V5Nov24_installation_final_activity_eligibility": {
+          "2024-09-09": null
+        },
+        "BESS1_V5Nov24_new_installation": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_new_solar_battery": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_solar_panels": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_engaged_ACP": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_minimum_payment": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_battery_capacity": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_length_battery_warranty": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_retainable_battery_capacity_warranty": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_temperature_range_warranty": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_minimum_throughput_warranty_before_April_2026": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_installation_location_eligible": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_installed_indoors_has_smoke_alarm": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_battery_internet_connectable": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_battery_controllable_third_party": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_approved_product_list": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_approved_installer": {
+          "2024-09-09": true
+        },
+        "BESS1_V5Nov24_DER_register": {
+          "2024-09-09": true
+        }
+      }
+    }
+  }
+}
