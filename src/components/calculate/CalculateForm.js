@@ -8,19 +8,19 @@ import { Spinner } from 'react-bootstrap';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import axios from 'axios';
 import RegistryApi from 'services/registry_api';
-import { 
-  BESS1_V5Nov24_PDRS__postcode, 
-  BESS1_V5Nov24_PRC_calculation, 
-  BESS2_PDRSAug24_PDRS__postcode, 
-  BESS2_PDRSAug24_PRC_calculation, 
-  C1_PDRSAug24_ESC_calculation, 
-  C1_PDRSAug24_PDRS__postcode, 
-  F7_PDRSAug24_ESC_calculation, 
-  F7_PDRSAug24_PDRS__postcode, 
-  HVAC1_PDRSAug24_BCA_Climate_Zone
-} from 'types/openfisca_variables'
+import {
+  BESS1_V5Nov24_PDRS__postcode,
+  BESS1_V5Nov24_PRC_calculation,
+  BESS2_PDRSAug24_PDRS__postcode,
+  BESS2_PDRSAug24_PRC_calculation,
+  C1_PDRSAug24_ESC_calculation,
+  C1_PDRSAug24_PDRS__postcode,
+  F7_PDRSAug24_ESC_calculation,
+  F7_PDRSAug24_PDRS__postcode,
+  HVAC1_PDRSAug24_BCA_Climate_Zone,
+} from 'types/openfisca_variables';
 
-import { Float } from 'types/value_type'
+import { Float } from 'types/value_type';
 
 export default function CalculateForm(props) {
   const {
@@ -67,9 +67,8 @@ export default function CalculateForm(props) {
 
   const Workflow = {
     ELIGIBILITY: 'eligibility',
-    CERTIFICATES: 'certificates'
-
-  }
+    CERTIFICATES: 'certificates',
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -344,7 +343,7 @@ export default function CalculateForm(props) {
       <div className="nsw-content-block">
         <div className="nsw-content-block__content">
           {workflow === Workflow.CERTIFICATES &&
-          (variable.name ===  C1_PDRSAug24_ESC_calculation ||
+          (variable.name === C1_PDRSAug24_ESC_calculation ||
             variable.name === F7_PDRSAug24_ESC_calculation) ? (
             <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your ESCs</b>

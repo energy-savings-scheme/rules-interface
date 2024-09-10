@@ -10,16 +10,16 @@ import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesBESS1 from './LoadClausesActReq';
-import { 
-  BESS1_V5Nov24_installation_final_activity_eligibility, 
-  HVAC2_ACOP_eligible, 
-  HVAC2_AEER_greater_than_minimum, 
+import {
+  BESS1_V5Nov24_installation_final_activity_eligibility,
+  HVAC2_ACOP_eligible,
+  HVAC2_AEER_greater_than_minimum,
   HVAC2_equipment_replaced,
   HVAC2_HSPF_cold_eligible,
   HVAC2_HSPF_mixed_eligible,
   HVAC2_installed_centralised_system_common_area_BCA_Class2_building,
-  HVAC2_TCPSF_greater_than_minimum
-} from 'types/openfisca_variables'
+  HVAC2_TCPSF_greater_than_minimum,
+} from 'types/openfisca_variables';
 
 export default function ActivityRequirementsBESS1(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;

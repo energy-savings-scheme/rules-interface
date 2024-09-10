@@ -1,1 +1,1 @@
-export const Float = 'Float'
+export const Float = 'Float';
