@@ -8,6 +8,19 @@ import { Spinner } from 'react-bootstrap';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import axios from 'axios';
 import RegistryApi from 'services/registry_api';
+import { 
+  BESS1_V5Nov24_PDRS__postcode, 
+  BESS1_V5Nov24_PRC_calculation, 
+  BESS2_PDRSAug24_PDRS__postcode, 
+  BESS2_PDRSAug24_PRC_calculation, 
+  C1_PDRSAug24_ESC_calculation, 
+  C1_PDRSAug24_PDRS__postcode, 
+  F7_PDRSAug24_ESC_calculation, 
+  F7_PDRSAug24_PDRS__postcode, 
+  HVAC1_PDRSAug24_BCA_Climate_Zone
+} from 'types/openfisca_variables'
+
+import { Float } from 'types/value_type'
 
 export default function CalculateForm(props) {
   const {
@@ -52,6 +65,12 @@ export default function CalculateForm(props) {
   const [showNoResponsePostcodeError, setShowNoResponsePostcodeError] = useState(false);
   const [dropdownOptionsClimateZone, setDropdownOptionsClimateZone] = useState([]);
 
+  const Workflow = {
+    ELIGIBILITY: 'eligibility',
+    CERTIFICATES: 'certificates'
+
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -70,8 +89,8 @@ export default function CalculateForm(props) {
   useEffect(() => {
     formValues.map((variable) => {
       if (
-        variable.name === 'C1_PDRSAug24_PDRS__postcode' ||
-        variable.name === 'F7_PDRSAug24_PDRS__postcode'
+        variable.name === C1_PDRSAug24_PDRS__postcode ||
+        variable.name === F7_PDRSAug24_PDRS__postcode
       ) {
         if (variable.form_value.length < 4) {
           setShowPostcodeError(false);
@@ -85,16 +104,12 @@ export default function CalculateForm(props) {
     // eg. a Float value cannot be 'stringified'.
     // So in this function we check the value_type attribute, and
     // parse the input value accordingly.
-    if (item.value_type === 'Float') {
+    if (item.value_type === Float) {
       item.form_value = parseFloat(item.form_value);
     }
 
     return item;
   };
-
-  console.log(variable);
-  console.log(variable2);
-  console.log(postcode);
 
   const handleCalculate = (e) => {
     e.preventDefault();
@@ -113,7 +128,7 @@ export default function CalculateForm(props) {
     formValues = formValues.filter((item) => item.name !== 'Implementation Date');
 
     formValues = formValues.map((variable) => {
-      if (variable.name === 'HVAC1_PDRSAug24_BCA_Climate_Zone') {
+      if (variable.name === HVAC1_PDRSAug24_BCA_Climate_Zone) {
         const option = dropdownOptionsClimateZone.find(
           (option) => option.text === variable.form_value,
         );
@@ -125,7 +140,7 @@ export default function CalculateForm(props) {
     });
 
     formValues = formValues.map((variable) => {
-      if (variable.name === 'HVAC2_PDRSAug24_BCA_Climate_Zone') {
+      if (variable.name === HVAC1_PDRSAug24_BCA_Climate_Zone) {
         const option = dropdownOptionsClimateZone.find(
           (option) => option.text === variable.form_value,
         );
@@ -141,7 +156,7 @@ export default function CalculateForm(props) {
       [entity.plural]: { [`${entity.name}_1`]: { [variable.name]: { [date]: null } } },
     };
 
-    if (workflow === 'eligibility') {
+    if (workflow === Workflow.ELIGIBILITY) {
       formValues
         .filter((x) => x.hide === false)
         .map((variable) => {
@@ -161,13 +176,9 @@ export default function CalculateForm(props) {
       });
     }
 
-    console.log('payload', payload);
-
-    console.log(loading);
     OpenFiscaApi.postCalculate(payload)
       .then((res) => {
         var result = res.data[entity.plural][`${entity.name}_1`][variable.name][date];
-        console.log(res.data);
         setCalculationResult(result);
         setCalculationError(false);
         setLoading(true);
@@ -182,8 +193,7 @@ export default function CalculateForm(props) {
         setLoading(false);
       });
 
-    if (workflow !== 'eligibility') {
-      console.log(peakDemandReductionSavings);
+    if (workflow !== Workflow.ELIGIBILITY) {
       var payload_peak_demand = {
         persons: { person1: {} },
         [entity.plural]: {
@@ -201,13 +211,10 @@ export default function CalculateForm(props) {
         };
       });
 
-      console.log('peak demand payload', payload_peak_demand);
-
       OpenFiscaApi.postCalculate(payload_peak_demand)
         .then((res) => {
           var result =
             res.data[entity.plural][`${entity.name}_1`][peakDemandReductionSavings][date];
-          console.log(result);
           setPeakDemandReductionSavingsNumber(result);
           setShowError(false);
         })
@@ -232,12 +239,9 @@ export default function CalculateForm(props) {
         };
       });
 
-      console.log(payload2);
-
       OpenFiscaApi.postCalculate(payload2)
         .then((res) => {
           var result = res.data[entity2.plural][`${entity2.name}_1`][variable2.name][date];
-          console.log(res.data);
           setCalculationResult2(result);
           setCalculationError2(false);
           setLoading(true);
@@ -269,12 +273,9 @@ export default function CalculateForm(props) {
         };
       });
 
-      console.log('annual energy savings', annual_energy_savings);
-
       OpenFiscaApi.postCalculate(annual_energy_savings)
         .then((res) => {
           var result = res.data[entity.plural][`${entity.name}_1`][annualEnergySavings][date];
-          console.log(res.data);
           setAnnualEnergySavingsNumber(result);
           setShowError(false);
         })
@@ -284,13 +285,13 @@ export default function CalculateForm(props) {
         .finally(() => {});
     }
 
-    if (stepNumber === 1 && workflow !== 'eligibility') {
+    if (stepNumber === 1 && workflow !== Workflow.ELIGIBILITY) {
       formValues.map((variable) => {
         if (
-          variable.name === 'C1_PDRSAug24_PDRS__postcode' ||
-          variable.name === 'F7_PDRSAug24_PDRS__postcode' ||
-          variable.name === 'BESS1_PDRSAug24_PDRS__postcode' ||
-          variable.name === 'BESS2_PDRSAug24_PDRS__postcode'
+          variable.name === C1_PDRSAug24_PDRS__postcode ||
+          variable.name === F7_PDRSAug24_PDRS__postcode ||
+          variable.name === BESS1_V5Nov24_PDRS__postcode ||
+          variable.name === BESS2_PDRSAug24_PDRS__postcode
         ) {
           if (['2817', '2818', '2819'].includes(variable.form_value)) {
             setFlow(null);
@@ -300,7 +301,6 @@ export default function CalculateForm(props) {
             RegistryApi.getPostcodeValidation(variable.form_value)
               .then((res) => {
                 const persons = res.data;
-                console.log(res);
                 if (
                   persons.status === '200' &&
                   persons.code === '200' &&
@@ -331,11 +331,10 @@ export default function CalculateForm(props) {
         }
       });
     } else {
-      console.log('here......');
       setStepNumber(stepNumber + 1);
     }
 
-    if (workflow !== 'eligibility') {
+    if (workflow !== Workflow.ELIGIBILITY) {
       setPersistFormValues(formValues);
     }
   };
@@ -344,19 +343,19 @@ export default function CalculateForm(props) {
     <form onSubmit={handleCalculate}>
       <div className="nsw-content-block">
         <div className="nsw-content-block__content">
-          {workflow === 'certificates' &&
-          (variable.name === 'C1_PDRSAug24_ESC_calculation' ||
-            variable.name === 'F7_PDRSAug24_ESC_calculation') ? (
+          {workflow === Workflow.CERTIFICATES &&
+          (variable.name ===  C1_PDRSAug24_ESC_calculation ||
+            variable.name === F7_PDRSAug24_ESC_calculation) ? (
             <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your ESCs</b>
             </h5>
-          ) : workflow === 'certificates' &&
-            (variable.name === 'BESS1_PDRSAug24_PRC_calculation' ||
-              variable.name === 'BESS2_PDRSAug24_PRC_calculation') ? (
+          ) : workflow === Workflow.CERTIFICATES &&
+            (variable.name === BESS1_V5Nov24_PRC_calculation ||
+              variable.name === BESS2_PDRSAug24_PRC_calculation) ? (
             <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your PRCs</b>
             </h5>
-          ) : workflow === 'certificates' ? (
+          ) : workflow === Workflow.CERTIFICATES ? (
             <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your ESCs and PRCs</b>
             </h5>
@@ -408,7 +407,7 @@ export default function CalculateForm(props) {
                 <Spinner animation="border" role="status" size="lg">
                   <span className="sr-only">Loading...</span>
                 </Spinner>
-              ) : workflow === 'eligibility' ? (
+              ) : workflow === Workflow.ELIGIBILITY ? (
                 'Check eligibility'
               ) : (
                 'Calculate certificates'
@@ -426,7 +425,7 @@ export default function CalculateForm(props) {
                 <Spinner animation="border" role="status" size="lg">
                   <span className="sr-only">Loading...</span>
                 </Spinner>
-              ) : workflow === 'eligibility' ? (
+              ) : workflow === Workflow.ELIGIBILITY ? (
                 'Check eligibility'
               ) : (
                 'Calculate certificates'
