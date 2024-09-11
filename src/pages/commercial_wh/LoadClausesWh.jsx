@@ -91,10 +91,7 @@ export default function LoadClausesWH1(props) {
   };
 
   const filteredClausesForm = clausesForm.filter(
-    (item) =>
-      !(
-        item.name === 'WH1_F16_electric_PDRSAug24__storage_volume'
-      ),
+    (item) => !(item.name === 'WH1_F16_electric_PDRSAug24__storage_volume'),
   );
 
   if (!variable) return null;

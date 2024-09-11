@@ -112,27 +112,30 @@ export default function CalculateBlock(props) {
       formValues.find((v) => v.name === 'Base_replacement_water_heater_certificates').hide = true;
     }
 
-    if (formItem.name === "F7_PDRSAug24_replacement_activity") {
+    if (formItem.name === 'F7_PDRSAug24_replacement_activity') {
       if (formItem.default_value === true || formItem.form_value === true) {
         if (
-          formValues.find((o) => o.name === "F7_PDRSAug24_existing_equipment_rated_output") === undefined
+          formValues.find((o) => o.name === 'F7_PDRSAug24_existing_equipment_rated_output') ===
+          undefined
         ) {
           formValues.push(
-            dependencies.find((o) => o.name === "F7_PDRSAug24_existing_equipment_rated_output"),
+            dependencies.find((o) => o.name === 'F7_PDRSAug24_existing_equipment_rated_output'),
           );
         }
         if (
-          formValues.find((o) => o.name === "F7_PDRSAug24_existing_equipment_motor_frequency") === undefined
+          formValues.find((o) => o.name === 'F7_PDRSAug24_existing_equipment_motor_frequency') ===
+          undefined
         ) {
           formValues.push(
-            dependencies.find((o) => o.name === "F7_PDRSAug24_existing_equipment_motor_frequency"),
+            dependencies.find((o) => o.name === 'F7_PDRSAug24_existing_equipment_motor_frequency'),
           );
         }
         if (
-          formValues.find((o) => o.name === "F7_PDRSAug24_existing_equipment_no_of_poles") === undefined
+          formValues.find((o) => o.name === 'F7_PDRSAug24_existing_equipment_no_of_poles') ===
+          undefined
         ) {
           formValues.push(
-            dependencies.find((o) => o.name === "F7_PDRSAug24_existing_equipment_no_of_poles"),
+            dependencies.find((o) => o.name === 'F7_PDRSAug24_existing_equipment_no_of_poles'),
           );
         }
       } else if (formItem.default_value === false || formItem.form_value === false) {
@@ -485,27 +488,32 @@ export default function CalculateBlock(props) {
         }
       }
 
-      if (formItem.name === "F7_PDRSAug24_replacement_activity") {
+      if (formItem.name === 'F7_PDRSAug24_replacement_activity') {
         if (e.target.value === 'true') {
           if (
-            formValues.find((o) => o.name === "F7_PDRSAug24_existing_equipment_rated_output") === undefined
+            formValues.find((o) => o.name === 'F7_PDRSAug24_existing_equipment_rated_output') ===
+            undefined
           ) {
             formValues.push(
-              dependencies.find((o) => o.name === "F7_PDRSAug24_existing_equipment_rated_output"),
+              dependencies.find((o) => o.name === 'F7_PDRSAug24_existing_equipment_rated_output'),
             );
           }
           if (
-            formValues.find((o) => o.name === "F7_PDRSAug24_existing_equipment_motor_frequency") === undefined
+            formValues.find((o) => o.name === 'F7_PDRSAug24_existing_equipment_motor_frequency') ===
+            undefined
           ) {
             formValues.push(
-              dependencies.find((o) => o.name === "F7_PDRSAug24_existing_equipment_motor_frequency"),
+              dependencies.find(
+                (o) => o.name === 'F7_PDRSAug24_existing_equipment_motor_frequency',
+              ),
             );
           }
           if (
-            formValues.find((o) => o.name === "F7_PDRSAug24_existing_equipment_no_of_poles") === undefined
+            formValues.find((o) => o.name === 'F7_PDRSAug24_existing_equipment_no_of_poles') ===
+            undefined
           ) {
             formValues.push(
-              dependencies.find((o) => o.name === "F7_PDRSAug24_existing_equipment_no_of_poles"),
+              dependencies.find((o) => o.name === 'F7_PDRSAug24_existing_equipment_no_of_poles'),
             );
           }
         } else {
@@ -513,7 +521,7 @@ export default function CalculateBlock(props) {
           removeItem(formValues, 'F7_PDRSAug24_existing_equipment_motor_frequency');
           removeItem(formValues, 'F7_PDRSAug24_existing_equipment_no_of_poles');
         }
-      } 
+      }
 
       if (formItem.name === 'F17_storage_volume') {
         if (e.target.value === 'less_than_or_equal_to_700_L') {
