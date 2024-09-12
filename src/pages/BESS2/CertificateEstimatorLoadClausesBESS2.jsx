@@ -8,7 +8,7 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
-import { BESS2_V5Nov24_PRC_calculation } from 'types/openfisca_variables'
+import { BESS2_V5Nov24_PRC_calculation } from 'types/openfisca_variables';
 
 export default function CertificateEstimatorLoadClausesBESS2(props) {
   const {

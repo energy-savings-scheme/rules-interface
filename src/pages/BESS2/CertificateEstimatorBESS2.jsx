@@ -19,10 +19,10 @@ import Notification from 'nsw-ds-react/notification/notification';
 import CertificateEstimatorLoadClausesBESS2 from './CertificateEstimatorLoadClausesBESS2';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
-import { 
-  BESS2_V5Nov24_peak_demand_annual_savings, 
-  BESS2_V5Nov24_PRC_calculation 
-} from 'types/openfisca_variables'
+import {
+  BESS2_V5Nov24_peak_demand_annual_savings,
+  BESS2_V5Nov24_PRC_calculation,
+} from 'types/openfisca_variables';
 
 export default function CertificateEstimatorBESS2(props) {
   const { entities, variables, setVariables, setEntities } = props;

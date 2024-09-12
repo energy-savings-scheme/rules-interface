@@ -10,16 +10,16 @@ import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesBESS2 from './LoadClausesActReq';
-import { 
-  BESS2_V5Nov24_installation_final_activity_eligibility, 
-  HVAC2_ACOP_eligible, 
-  HVAC2_AEER_greater_than_minimum, 
-  HVAC2_equipment_replaced, 
-  HVAC2_HSPF_cold_eligible, 
-  HVAC2_HSPF_mixed_eligible, 
-  HVAC2_installed_centralised_system_common_area_BCA_Class2_building, 
-  HVAC2_TCPSF_greater_than_minimum 
-} from 'types/openfisca_variables'
+import {
+  BESS2_V5Nov24_installation_final_activity_eligibility,
+  HVAC2_ACOP_eligible,
+  HVAC2_AEER_greater_than_minimum,
+  HVAC2_equipment_replaced,
+  HVAC2_HSPF_cold_eligible,
+  HVAC2_HSPF_mixed_eligible,
+  HVAC2_installed_centralised_system_common_area_BCA_Class2_building,
+  HVAC2_TCPSF_greater_than_minimum,
+} from 'types/openfisca_variables';
 
 export default function ActivityRequirementsBESS2(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -28,7 +28,7 @@ export default function ActivityRequirementsBESS2(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    BESS2_V5Nov24_installation_final_activity_eligibility
+    BESS2_V5Nov24_installation_final_activity_eligibility,
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
