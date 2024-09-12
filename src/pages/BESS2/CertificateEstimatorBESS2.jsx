@@ -19,6 +19,10 @@ import Notification from 'nsw-ds-react/notification/notification';
 import CertificateEstimatorLoadClausesBESS2 from './CertificateEstimatorLoadClausesBESS2';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
+import { 
+  BESS2_V5Nov24_peak_demand_annual_savings, 
+  BESS2_V5Nov24_PRC_calculation 
+} from 'types/openfisca_variables'
 
 export default function CertificateEstimatorBESS2(props) {
   const { entities, variables, setVariables, setEntities } = props;
@@ -78,22 +82,18 @@ export default function CertificateEstimatorBESS2(props) {
   }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
-    OpenFiscaAPI.getVariable('BESS2_PDRSAug24_PRC_calculation')
+    OpenFiscaAPI.getVariable(BESS2_V5Nov24_PRC_calculation)
       .then((res) => {
         setVariableData1(res.data);
-        console.log(res.data);
-        console.log('here!!');
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
 
-    OpenFiscaAPI.getVariable('BESS2_PDRSAug24_PRC_calculation')
+    OpenFiscaAPI.getVariable(BESS2_V5Nov24_PRC_calculation)
       .then((res) => {
         setVariableData2(res.data);
-        console.log(res.data);
-
         setLoading(false);
       })
       .catch((err) => {
@@ -169,8 +169,8 @@ export default function CertificateEstimatorBESS2(props) {
             <CertificateEstimatorLoadClausesBESS2
               variableData1={variableData1}
               variableData2={variableData2}
-              annualEnergySavings={'BESS2_PDRSAug24_peak_demand_annual_savings'}
-              peakDemandReductionSavings={'BESS2_PDRSAug24_peak_demand_annual_savings'}
+              annualEnergySavings={BESS2_V5Nov24_peak_demand_annual_savings}
+              peakDemandReductionSavings={BESS2_V5Nov24_peak_demand_annual_savings}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
@@ -208,8 +208,8 @@ export default function CertificateEstimatorBESS2(props) {
             <CertificateEstimatorLoadClausesBESS2
               variableData1={variableData1}
               variableData2={variableData2}
-              annualEnergySavings={'BESS2_PDRSAug24_peak_demand_annual_savings'}
-              peakDemandReductionSavings={'BESS2_PDRSAug24_peak_demand_annual_savings'}
+              annualEnergySavings={BESS2_V5Nov24_peak_demand_annual_savings}
+              peakDemandReductionSavings={BESS2_V5Nov24_peak_demand_annual_savings}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
