@@ -11,8 +11,8 @@ import RegistryApi from 'services/registry_api';
 import {
   BESS1_V5Nov24_PDRS__postcode,
   BESS1_V5Nov24_PRC_calculation,
-  BESS2_PDRSAug24_PDRS__postcode,
-  BESS2_PDRSAug24_PRC_calculation,
+  BESS2_V5Nov24_PDRS__postcode,
+  BESS2_V5Nov24_PRC_calculation,
   C1_PDRSAug24_ESC_calculation,
   C1_PDRSAug24_PDRS__postcode,
   F7_PDRSAug24_ESC_calculation,
@@ -290,7 +290,7 @@ export default function CalculateForm(props) {
           variable.name === C1_PDRSAug24_PDRS__postcode ||
           variable.name === F7_PDRSAug24_PDRS__postcode ||
           variable.name === BESS1_V5Nov24_PDRS__postcode ||
-          variable.name === BESS2_PDRSAug24_PDRS__postcode
+          variable.name === BESS2_V5Nov24_PDRS__postcode
         ) {
           if (['2817', '2818', '2819'].includes(variable.form_value)) {
             setFlow(null);
@@ -350,7 +350,7 @@ export default function CalculateForm(props) {
             </h5>
           ) : workflow === Workflow.CERTIFICATES &&
             (variable.name === BESS1_V5Nov24_PRC_calculation ||
-              variable.name === BESS2_PDRSAug24_PRC_calculation) ? (
+              variable.name === BESS2_V5Nov24_PRC_calculation) ? (
             <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your PRCs</b>
             </h5>

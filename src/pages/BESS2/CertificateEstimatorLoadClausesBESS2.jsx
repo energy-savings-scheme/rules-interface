@@ -8,6 +8,7 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
+import { BESS2_V5Nov24_PRC_calculation } from 'types/openfisca_variables';
 
 export default function CertificateEstimatorLoadClausesBESS2(props) {
   const {
@@ -44,16 +45,11 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
     setPeakDemandReductionSavingsNumber,
   } = props;
 
-  console.log(variableData1);
-  console.log(variableData2);
-
   const [variable, setVariable] = useState({}); // all info about variable
 
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
   const [dependencies, setDependencies] = useState([]);
-
-  console.log(stepNumber);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -76,18 +72,14 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
         setLoading(true);
       } else {
         setLoading(false);
-        console.log(variables);
-        const variable1 = variables.find((item) => item.name === 'BESS2_PDRSAug24_PRC_calculation');
-        const variable2 = variables.find((item) => item.name === 'BESS2_PDRSAug24_PRC_calculation');
+        const variable1 = variables.find((item) => item.name === BESS2_V5Nov24_PRC_calculation);
+        const variable2 = variables.find((item) => item.name === BESS2_V5Nov24_PRC_calculation);
 
         const offsprings1 = variable1.metadata.input_offspring;
         const offsprings2 = variable2.metadata.input_offspring;
 
         const children1 = variables.filter((item) => offsprings1.includes(item.name));
         const children2 = variables.filter((item) => offsprings2.includes(item.name));
-
-        console.log(children1);
-        console.log(children2);
 
         // Define the original array (at a minimum include the Implementation Date)
         var array1 = [];
@@ -102,10 +94,6 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
         });
 
         array2.forEach((item) => addElement(array1, item));
-
-        console.log(array1);
-
-        console.log(persistFormValues);
 
         if (persistFormValues.length > 1 && flow === 'backward') {
           array1.map((e) => {
@@ -127,7 +115,6 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
           'SYS1_existing_equipment_motor_frequency',
         ];
         array2 = array1.filter((item) => names.includes(item.name));
-        console.log(array2);
         setDependencies(array2);
       }
     }
