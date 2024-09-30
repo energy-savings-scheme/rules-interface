@@ -32,3 +32,4 @@ export const HVAC2_HSPF_cold_eligible = 'HVAC2_HSPF_cold_eligible';
 export const HVAC2_ACOP_eligible = 'HVAC2_ACOP_eligible';
 
 export const BESS1_V5Nov24_usable_battery_capacity = 'BESS1_V5Nov24_usable_battery_capacity';
+export const BESS2_V5Nov24_usable_battery_capacity = 'BESS2_V5Nov24_usable_battery_capacity';
