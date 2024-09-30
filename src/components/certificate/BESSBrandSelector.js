@@ -1,12 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 import Button from 'nsw-ds-react/button/button';
 import Alert from 'nsw-ds-react/alert/alert';
 import RegistryApi from 'services/registry_api';
 
 export default function BESSBrandSelector(props) {
-  const { brands, usableBatteryCapacityName, setStepNumber, setPersistFormValues, persistFormValues } = props
-  const [registryDataLoaded, setRegistryDataLoaded] = useState(true)
+  const {
+    brands,
+    usableBatteryCapacityName,
+    setStepNumber,
+    setPersistFormValues,
+    persistFormValues,
+  } = props;
+  const [registryDataLoaded, setRegistryDataLoaded] = useState(true);
   const [brandOptions, setBrandOptions] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedModel, setSelectedModel] = useState(null);
@@ -14,68 +20,81 @@ export default function BESSBrandSelector(props) {
   const [lastModified, setLastModified] = useState(null);
 
   useEffect(() => {
-    setBrandOptions([{text: 'Please select brand', value: ''}])
+    setBrandOptions([{ text: 'Please select brand', value: '' }]);
 
     if (!lastModified) {
       RegistryApi.getResidentialSolarBatteryLastModified()
         .then((res) => {
-          setRegistryDataLoaded(true)
+          setRegistryDataLoaded(true);
           setLastModified(res.data);
         })
         .catch((err) => {
-          setRegistryDataLoaded(false)
+          setRegistryDataLoaded(false);
           console.log(err);
         });
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (brands.length > 0) {
-      brands.forEach((brand) => setBrandOptions((options) => { return [...options, {text: brand, value: brand}]}))
+      brands.forEach((brand) =>
+        setBrandOptions((options) => {
+          return [...options, { text: brand, value: brand }];
+        }),
+      );
     }
   }, [brands]);
 
   useEffect(() => {
-    if (!selectedBrand) return
+    if (!selectedBrand) return;
 
-    setModelOptions([{text: 'Please select model', value: ''}])
-    setSelectedModel(null)
+    setModelOptions([{ text: 'Please select model', value: '' }]);
+    setSelectedModel(null);
 
     RegistryApi.getResidentialSolarBatteryModels(selectedBrand)
-    .then((res) => {
-      setRegistryDataLoaded(true)
-      if (res.data.length) {
-        res.data.forEach((model) => setModelOptions((options) => { return [...options, {text: model, value: model}]}))
-      }
-    })
-    .catch((err) => {
-      setRegistryDataLoaded(false)
-      console.log(err)
-    })
-  }, [selectedBrand])
+      .then((res) => {
+        setRegistryDataLoaded(true);
+        if (res.data.length) {
+          res.data.forEach((model) =>
+            setModelOptions((options) => {
+              return [...options, { text: model, value: model }];
+            }),
+          );
+        }
+      })
+      .catch((err) => {
+        setRegistryDataLoaded(false);
+        console.log(err);
+      });
+  }, [selectedBrand]);
 
   useEffect(() => {
-    if (!selectedBrand || !selectedModel) return
+    if (!selectedBrand || !selectedModel) return;
 
     // delete existing BESS1_V5Nov24_usable_battery_capacity form values first
-    const filteredFormValues = persistFormValues.filter(item => item.name !== usableBatteryCapacityName)
-    setPersistFormValues(filteredFormValues)
+    const filteredFormValues = persistFormValues.filter(
+      (item) => item.name !== usableBatteryCapacityName,
+    );
+    setPersistFormValues(filteredFormValues);
 
     const payload = {
       brand: selectedBrand,
-      model: selectedModel
-    }
+      model: selectedModel,
+    };
 
     RegistryApi.getResidentialSolarBatteryMetadata(payload)
-    .then((res) => {
-      setRegistryDataLoaded(true)
-      setPersistFormValues([...filteredFormValues, {name: usableBatteryCapacityName, form_value: res.data.usableBatteryCapacity}])
-    })
-    .catch((err) => {
-      setRegistryDataLoaded(false)
-      console.log(err)
-    })
-  }, [selectedModel])
+      .then((res) => {
+        setRegistryDataLoaded(true);
+        setPersistFormValues([
+          ...filteredFormValues,
+          { name: usableBatteryCapacityName, form_value: res.data.usableBatteryCapacity },
+        ]);
+      })
+      .catch((err) => {
+        setRegistryDataLoaded(false);
+        console.log(err);
+      });
+  }, [selectedModel]);
 
   return (
     <div>
@@ -152,5 +171,5 @@ export default function BESSBrandSelector(props) {
         </div>
       )}
     </div>
-  )
+  );
 }

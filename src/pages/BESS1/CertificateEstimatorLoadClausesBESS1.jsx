@@ -95,7 +95,6 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
 
         array2.forEach((item) => addElement(array1, item));
 
-
         if (persistFormValues.length > 0) {
           array1.map((e) => {
             let found = persistFormValues.find((f) => e.name === f.name);
@@ -126,7 +125,6 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
   return (
     <div className>
       <div style={{ marginTop: 70, marginBottom: 70 }}>
-
         {stepNumber === 2 && (
           <Fragment>
             <CalculateBlock
