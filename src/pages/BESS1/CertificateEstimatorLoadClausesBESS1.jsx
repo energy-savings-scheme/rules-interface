@@ -95,7 +95,8 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
 
         array2.forEach((item) => addElement(array1, item));
 
-        if (persistFormValues.length > 1 && flow === 'backward') {
+
+        if (persistFormValues.length > 0) {
           array1.map((e) => {
             let found = persistFormValues.find((f) => e.name === f.name);
             if (found !== undefined) {
@@ -125,7 +126,8 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
   return (
     <div className>
       <div style={{ marginTop: 70, marginBottom: 70 }}>
-        {stepNumber === 1 && (
+
+        {stepNumber === 2 && (
           <Fragment>
             <CalculateBlock
               calculationDate={calculationDate}
@@ -169,7 +171,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
           </Fragment>
         )}
 
-        {stepNumber === 2 && !calculationError && !calculationError2 && (
+        {stepNumber === 3 && !calculationError && !calculationError2 && (
           <Fragment>
             {
               <Alert as="info" title="PRCs" style={{ width: '80%' }}>
@@ -215,7 +217,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
             </Alert>
           ))}
 
-        {stepNumber === 2 && (
+        {stepNumber === 3 && (
           <Fragment>
             <div
               className="nsw-row"
@@ -232,7 +234,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
                   as="dark-outline-solid"
                   onClick={(e) => {
                     setFlow('backward');
-                    setStepNumber(stepNumber - 1);
+                    setStepNumber(1);
                   }}
                 >
                   Estimate certificates again
