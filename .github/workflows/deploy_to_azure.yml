@@ -6,9 +6,9 @@ on:
     branches: master
 
 env:
-  REACT_APP_OPENFISCA_BASE_URL: "${{ secrets.REACT_APP_OPENFISCA_BASE_URL_PROD }}"
-  REACT_APP_API_BASE_URL: "${{ secrets.REACT_APP_API_BASE_URL_PROD }}"
-  REACT_APP_REGISTRY_API_BASE_URL: "${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_PROD }}"
+  REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_PROD }}'
+  REACT_APP_API_BASE_URL: '${{ secrets.REACT_APP_API_BASE_URL_PROD }}'
+  REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_PROD }}'
 
 jobs:
   build-and-deploy:
@@ -42,7 +42,7 @@ jobs:
           npm run build-dist
           # Build the react pages
           npm run build
-          
+
           export BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
 
           # Prepare dist files to versioned directory
