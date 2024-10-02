@@ -39,7 +39,7 @@ jobs:
           npm install
 
           # Build all the JS files for the Drupal
-          npm run build-dist
+          npm run dist-build
           # Build the react pages
           npm run build
 
