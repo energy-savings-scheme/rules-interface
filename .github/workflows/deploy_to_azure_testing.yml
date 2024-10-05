@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - nonprod
-    - feature/*
+      - nonprod
+      - feature/*
 
 env:
   REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_DEV }}'
