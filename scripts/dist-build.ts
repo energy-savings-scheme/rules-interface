@@ -21,7 +21,7 @@ const build = () => {
   const appOriginalPath = `${srcFolder}/${appFilename}`;
   const envOriginalPath = './.env';
   const envTempPath = `${tempFolder}/.env`;
-  const buildCmd = 'npm run build';
+  const buildCmd = 'yarn run build';
 
   const fileContent: string = readFileSync(appOriginalPath, { encoding: 'utf8' });
   const routes = getAllRoutes(fileContent);

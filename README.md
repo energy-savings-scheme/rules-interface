@@ -33,9 +33,12 @@ cp .env.example .env
 
 # Use NVM if available, otherwise make sure npm is version 14
 nvm use
-npm i
+# Do not attempt to use npm, there is issue with the incompatibility packages
+# That requires specific on node 14 + yarn
+npm i -g yarn
+yarn install
 
-npm run start
+yarn run start
 
 # Open the http://localhost:3000
 ```
