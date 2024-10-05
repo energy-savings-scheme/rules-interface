@@ -71,7 +71,8 @@ const build = () => {
     writeFileSync(appOriginalPath, routeFileContent);
 
     console.log(`Executing command "${buildCmd}"`);
-    child.execSync(buildCmd, { stdio: ['pipe', 'ignore'] });
+    const err = child.spawnSync(buildCmd).stderr;
+    console.log(err.toString());
     writeRouteFile(filesFolder, buildFolder, pathRoute?.replace('/', ''));
     console.log(`Building route ${pathRoute} done.\n`);
   }
