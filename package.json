@@ -10,7 +10,9 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^1.4.0",
+    "babel-preset-react-app": "^10.0.0",
     "bootstrap": "^5.2.2",
+    "caniuse-lite": "^1.0.30001632",
     "cors": "^2.8.5",
     "date-fns": "^2.29.3",
     "moment": "^2.29.1",
@@ -54,7 +56,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.25.7",
     "husky": "^3.1.0",
     "prettier": "2.2.1",
     "pretty-quick": "^3.1.0",
