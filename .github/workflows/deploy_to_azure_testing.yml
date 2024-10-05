@@ -3,7 +3,9 @@ name: Deploy website to Azure testing
 on:
   workflow_dispatch:
   push:
-    branches: nonprod
+    branches:
+    - nonprod
+    - feature/*
 
 env:
   REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_DEV }}'
@@ -21,7 +23,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 16.x
+          node-version: 14.x
 
       - name: Install tools
         run: |
