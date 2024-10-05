@@ -50,6 +50,7 @@ jobs:
           echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> ./.env
           cat ./.env
 
+          yarn run build
           # Build all the JS files for the Drupal
           yarn run dist-build
           # Build the react pages
