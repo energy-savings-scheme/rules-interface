@@ -20,8 +20,8 @@ jobs:
 
       - name: Build website
         run: |
-          yarn install
-          CI="" yarn run build
+          npm ci
+          CI="" npm run build
       - name: Deploy to Azure
         uses: TravisSpomer/deploy-to-azure-storage@v1.4.0
         with:
