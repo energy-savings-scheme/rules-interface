@@ -25,6 +25,9 @@ jobs:
         with:
           node-version: 14.x
 
+      - name: Install Yarn
+        run: npm install -g yarn
+
       - name: Install tools
         run: |
           if ! command -v azcopy &> /dev/null
@@ -38,7 +41,7 @@ jobs:
       - name: Build website
         run: |
           # Install all npm packages
-          npm install
+          yarn install
 
           # Create .env file
           touch ./.env
@@ -47,10 +50,11 @@ jobs:
           echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> ./.env
           cat ./.env
 
+          yarn run build
           # Build all the JS files for the Drupal
-          npm run dist-build
+          yarn run dist-build
           # Build the react pages
-          npm run build
+          yarn run build
 
           export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
 
