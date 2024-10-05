@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - nonprod
-      - feature/*
 
 env:
   REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_DEV }}'
@@ -48,7 +47,6 @@ jobs:
           echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> ./.env
           echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> ./.env
           echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> ./.env
-          cat ./.env
 
           # Build all the JS files for the Drupal
           yarn run dist-build

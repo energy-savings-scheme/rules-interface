@@ -3,7 +3,8 @@ name: Deploy website to Azure
 on:
   workflow_dispatch:
   push:
-    branches: master
+    branches:
+      - master
 
 env:
   REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_PROD }}'
@@ -21,7 +22,10 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 16.x
+          node-version: 14.x
+
+      - name: Install Yarn
+        run: npm install -g yarn
 
       - name: Install tools
         run: |
@@ -36,19 +40,18 @@ jobs:
       - name: Build website
         run: |
           # Install all npm packages
-          npm ci
+          yarn install
 
           # Create .env file
           touch ./.env
           echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> ./.env
           echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> ./.env
           echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> ./.env
-          cat ./.env
 
           # Build all the JS files for the Drupal
-          npm run dist-build
+          yarn run dist-build
           # Build the react pages
-          npm run build
+          yarn run build
 
           export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
 
