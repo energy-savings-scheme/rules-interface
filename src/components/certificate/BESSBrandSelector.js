@@ -44,7 +44,7 @@ export default function BESSBrandSelector(props) {
 
   useEffect(() => {
     if (postcode && postcode.length <= 4) {
-      // delete existing BESS1_V5Nov24_usable_battery_capacity form values first
+      // delete existing postcode form values first
       const filteredFormValues = persistFormValues.filter((item) => item.name !== postcodeName);
 
       setPersistFormValues([...filteredFormValues, { name: postcodeName, form_value: postcode }]);

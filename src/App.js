@@ -363,8 +363,7 @@ function App() {
           <CertificateEstimatorBESS2
             entities={entities}
             variables={variables}
-            resSolarBatteryBrands={resSolarBatteryBrands}
-            setResSolarBatteryBrands={setResSolarBatteryBrands}
+            brands={resSolarBatteryBrands}
             loading={loading}
             setEntities={setEntities}
             setVariables={setVariables}

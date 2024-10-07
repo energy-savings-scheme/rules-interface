@@ -8,7 +8,10 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
-import { BESS2_V5Nov24_PRC_calculation } from 'types/openfisca_variables';
+import {
+  BESS2_V5Nov24_PDRS__postcode,
+  BESS2_V5Nov24_PRC_calculation,
+} from 'types/openfisca_variables';
 
 export default function CertificateEstimatorLoadClausesBESS2(props) {
   const {
@@ -27,6 +30,9 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
     setCalculationResult,
     calculationResult2,
     setCalculationResult2,
+    selectedBrand,
+    selectedModel,
+    postcode,
     flow,
     setFlow,
     persistFormValues,
@@ -95,7 +101,14 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
 
         array2.forEach((item) => addElement(array1, item));
 
-        if (persistFormValues.length > 1 && flow === 'backward') {
+        array1.forEach((formItem) => {
+          if (formItem.name === BESS2_V5Nov24_PDRS__postcode) {
+            formItem.form_value = postcode;
+            formItem.read_only = true;
+          }
+        });
+
+        if (persistFormValues.length) {
           array1.map((e) => {
             let found = persistFormValues.find((f) => e.name === f.name);
             if (found !== undefined) {
@@ -125,8 +138,28 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
   return (
     <div className>
       <div style={{ marginTop: 70, marginBottom: 70 }}>
-        {stepNumber === 1 && (
+        {stepNumber === 2 && (
           <Fragment>
+            <div
+              class="nsw-global-alert nsw-global-alert--light js-global-alert"
+              role="alert"
+              style={{ width: '80%', marginBottom: '7%' }}
+            >
+              <div class="nsw-global-alert__wrapper">
+                <div class="nsw-global-alert__content">
+                  {/* <div class="nsw-global-alert__title"></div> */}
+                  <p>
+                    {' '}
+                    <b>Brand: </b> {selectedBrand}{' '}
+                  </p>
+                  <p>
+                    {' '}
+                    <b>Model: </b> {selectedModel}
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <CalculateBlock
               calculationDate={calculationDate}
               variable={variableData1}
@@ -169,7 +202,7 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
           </Fragment>
         )}
 
-        {stepNumber === 2 && !calculationError && !calculationError2 && (
+        {stepNumber === 3 && !calculationError && !calculationError2 && (
           <Fragment>
             {
               <Alert as="info" title="PRCs" style={{ width: '80%' }}>
@@ -206,16 +239,16 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
           </Fragment>
         )}
 
-        {stepNumber === 1 && loading && <SpinnerFullscreen />}
+        {stepNumber === 2 && loading && <SpinnerFullscreen />}
 
-        {(stepNumber === 2 && calculationError === true) ||
-          (stepNumber === 2 && calculationError2 === true && (
+        {(stepNumber === 3 && calculationError === true) ||
+          (stepNumber === 3 && calculationError2 === true && (
             <Alert as="error" title="Sorry! An error has occurred.">
               <p>An error occurred during calculation. Try re-running the calculation</p>
             </Alert>
           ))}
 
-        {stepNumber === 2 && (
+        {stepNumber === 3 && (
           <Fragment>
             <div
               className="nsw-row"
@@ -232,7 +265,7 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
                   as="dark-outline-solid"
                   onClick={(e) => {
                     setFlow('backward');
-                    setStepNumber(stepNumber - 1);
+                    setStepNumber(1);
                   }}
                 >
                   Estimate certificates again
