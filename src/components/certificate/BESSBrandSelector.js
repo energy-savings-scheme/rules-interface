@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FormGroup, Select } from 'nsw-ds-react/forms';
+import { FormGroup, Select, TextInput } from 'nsw-ds-react/forms';
 import Button from 'nsw-ds-react/button/button';
 import Alert from 'nsw-ds-react/alert/alert';
 import RegistryApi from 'services/registry_api';
@@ -8,16 +8,23 @@ export default function BESSBrandSelector(props) {
   const {
     brands,
     usableBatteryCapacityName,
+    postcodeName,
     setStepNumber,
     setPersistFormValues,
     persistFormValues,
+    selectedBrand,
+    setSelectedBrand,
+    selectedModel,
+    setSelectedModel,
+    postcode,
+    setPostcode,
   } = props;
   const [registryDataLoaded, setRegistryDataLoaded] = useState(true);
   const [brandOptions, setBrandOptions] = useState([]);
-  const [selectedBrand, setSelectedBrand] = useState(null);
-  const [selectedModel, setSelectedModel] = useState(null);
   const [modelOptions, setModelOptions] = useState([]);
   const [lastModified, setLastModified] = useState(null);
+  const [showPostcodeError, setShowPostcodeError] = useState(false);
+  const [showNoResponsePostcodeError, setShowNoResponsePostcodeError] = useState(false);
 
   useEffect(() => {
     setBrandOptions([{ text: 'Please select brand', value: '' }]);
@@ -34,6 +41,59 @@ export default function BESSBrandSelector(props) {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (postcode && postcode.length <= 4) {
+      // delete existing BESS1_V5Nov24_usable_battery_capacity form values first
+      const filteredFormValues = persistFormValues.filter((item) => item.name !== postcodeName);
+
+      setPersistFormValues([...filteredFormValues, { name: postcodeName, form_value: postcode }]);
+
+      setShowPostcodeError(false);
+    }
+  }, [postcode]);
+
+  const validatePostcode = (postcode) => {
+    // Reset
+    setShowNoResponsePostcodeError(false);
+    setShowPostcodeError(false);
+
+    setPostcode(postcode);
+
+    if (['2817', '2818', '2819'].includes(postcode)) {
+      setStepNumber(2);
+      setShowPostcodeError(false);
+    } else {
+      RegistryApi.getPostcodeValidation(postcode)
+        .then((res) => {
+          const persons = res.data;
+          if (
+            persons.status === '200' &&
+            persons.code === '200' &&
+            persons.data.postcode &&
+            persons.data.postcode === postcode
+          ) {
+            if (persons.data['state'] === 'NSW') {
+              setShowPostcodeError(false);
+              setStepNumber(2);
+            } else {
+              setShowPostcodeError(true);
+              setShowNoResponsePostcodeError(false);
+            }
+          } else if (persons.status === '200' && persons.code === '404') {
+            setShowPostcodeError(true);
+            setShowNoResponsePostcodeError(false);
+          } else if (persons.status !== '200') {
+            setShowPostcodeError(false);
+            setShowNoResponsePostcodeError(true);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setShowNoResponsePostcodeError(true);
+        });
+    }
+  };
 
   useEffect(() => {
     if (brands.length > 0) {
@@ -110,6 +170,24 @@ export default function BESSBrandSelector(props) {
               </h5>
 
               <FormGroup
+                label="Postcode"
+                helper="Postcode where the installation has taken place" // primary question text
+                errorText="Invalid value!" // error text if invalid
+              >
+                <TextInput
+                  style={{ maxWidth: '50%' }}
+                  as="input"
+                  type="number"
+                  placeholder="Enter postcode"
+                  value={postcode}
+                  onChange={(e) => {
+                    setPostcode(e.target.value);
+                  }}
+                  required
+                />
+              </FormGroup>
+
+              <FormGroup
                 label="Brand"
                 helper="Select solar battery brand" // primary question text
                 errorText="Invalid value!" // error text if invalid
@@ -150,6 +228,21 @@ export default function BESSBrandSelector(props) {
         </div>
       </div>
 
+      {showPostcodeError && postcode.length >= 4 && (
+        <Alert as="error" title="The postcode is not valid in NSW">
+          <p>Please check your postcode and try again.</p>
+        </Alert>
+      )}
+
+      {showNoResponsePostcodeError && postcode.length >= 4 && (
+        <Alert as="error" title="Sorry!">
+          <p>
+            We are experiencing technical difficulties validating the postcode, please try again
+            later.
+          </p>
+        </Alert>
+      )}
+
       {!registryDataLoaded && (
         <Alert as="error" title="Sorry! An error has occurred.">
           <p>Unable to load data from the product registry. Please try again later.</p>
@@ -162,7 +255,7 @@ export default function BESSBrandSelector(props) {
             <Button
               as="dark"
               onClick={(e) => {
-                setStepNumber(2);
+                validatePostcode(postcode);
               }}
             >
               Next

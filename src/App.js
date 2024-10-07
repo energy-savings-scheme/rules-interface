@@ -80,6 +80,7 @@ function App() {
   const [resSolarWaterHeaterBrands, setResSolarWaterHeaterBrands] = useState([]);
   const [resSolarBatteryBrands, setResSolarBatteryBrands] = useState([]);
 
+  console.log(`Loading version "${process.env.REACT_APP_BUILD_VERSION}".`);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

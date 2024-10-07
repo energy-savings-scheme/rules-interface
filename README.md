@@ -27,10 +27,18 @@ Installation process may differ on Windows/Mac/Linux. If unsure, Google the step
 
 In the project directory, you can run:
 
-### `yarn start`
+```bash
+# Copy the .env.example, and set the variable correctly
+cp .env.example .env
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Use NVM if available, otherwise make sure npm is version 14
+nvm use
+# Do not attempt to use npm, there is issue with the incompatibility packages
+# That requires specific on node 14 + yarn
+npm i -g yarn
+yarn install
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+yarn run start
+
+# Open the http://localhost:3000
+```

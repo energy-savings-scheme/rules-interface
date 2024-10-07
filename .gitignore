@@ -36,4 +36,3 @@ src/fullList.json
 .vscode
 .idea
 yarn.lock
-package-lock.json

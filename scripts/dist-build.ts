@@ -21,6 +21,7 @@ const build = () => {
   const appOriginalPath = `${srcFolder}/${appFilename}`;
   const envOriginalPath = './.env';
   const envTempPath = `${tempFolder}/.env`;
+  const buildCmd = 'yarn run build';
 
   const fileContent: string = readFileSync(appOriginalPath, { encoding: 'utf8' });
   const routes = getAllRoutes(fileContent);
@@ -69,8 +70,8 @@ const build = () => {
     );
     writeFileSync(appOriginalPath, routeFileContent);
 
-    console.log(`Executing command "npm run build"`);
-    child.execSync('npm run build', { stdio: ['pipe', 'ignore'] });
+    console.log(`Executing command "${buildCmd}"`);
+    child.execSync(buildCmd, { stdio: ['pipe', 'ignore'] });
     writeRouteFile(filesFolder, buildFolder, pathRoute?.replace('/', ''));
     console.log(`Building route ${pathRoute} done.\n`);
   }
