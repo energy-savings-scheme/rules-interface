@@ -9,6 +9,7 @@ import CertificateEstimatorLoadClausesBESS2 from './CertificateEstimatorLoadClau
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import {
+  BESS2_V5Nov24_PDRS__postcode,
   BESS2_V5Nov24_peak_demand_annual_savings,
   BESS2_V5Nov24_PRC_calculation,
   BESS2_V5Nov24_usable_battery_capacity,
@@ -33,6 +34,9 @@ export default function CertificateEstimatorBESS2(props) {
   const [showError, setShowError] = useState(false);
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedModel, setSelectedModel] = useState(null);
+  const [postcode, setPostcode] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -159,10 +163,17 @@ export default function CertificateEstimatorBESS2(props) {
             <BESSBrandSelector
               brands={brands}
               usableBatteryCapacityName={BESS2_V5Nov24_usable_battery_capacity}
+              postcodeName={BESS2_V5Nov24_PDRS__postcode}
               persistFormValues={persistFormValues}
               setPersistFormValues={setPersistFormValues}
               formValues={formValues}
               setStepNumber={setStepNumber}
+              setSelectedBrand={setSelectedBrand}
+              selectedBrand={selectedBrand}
+              setSelectedModel={setSelectedModel}
+              selectedModel={selectedModel}
+              postcode={postcode}
+              setPostcode={setPostcode}
             />
           )}
 
@@ -195,6 +206,9 @@ export default function CertificateEstimatorBESS2(props) {
               setPersistFormValues={setPersistFormValues}
               formValues={formValues}
               setFormValues={setFormValues}
+              selectedBrand={selectedBrand}
+              selectedModel={selectedModel}
+              postcode={postcode}
               flow={flow}
               setFlow={setFlow}
               loading={loading}
