@@ -6,6 +6,7 @@ import {
   existsSync,
   rmSync,
   readdirSync,
+  appendFileSync,
 } from 'fs';
 
 import * as child from 'child_process';
@@ -113,13 +114,15 @@ const createFolder = (folder: string): void => {
 };
 
 const overrideEnv = () => {
-  if (!existsSync('./.env.prod')) {
-    return;
+  if (existsSync('./.env.prod')) {
+    // Only applied if there is .env.prod file
+    console.log('Overriding .env ...');
+    copyFileSync('./.env.prod', './.env');
+    console.log('Overriding done.\n');
   }
 
-  console.log('Overriding .env ...');
-  copyFileSync('./.env.prod', './.env');
-  console.log('Overriding done.\n');
+  // Add flag for building form only, for Drupal
+  appendFileSync('./.env', '\nREACT_APP_IS_DRUPAL_PAGES=true');
 };
 
 const writeRouteFile = (

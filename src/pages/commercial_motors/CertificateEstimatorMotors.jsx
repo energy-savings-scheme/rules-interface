@@ -17,6 +17,7 @@ import Notification from 'nsw-ds-react/notification/notification';
 import CertificateEstimatorLoadClausesMotors from './CertificateEstimatorLoadClausesMotors';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorMotors(props) {
   const { entities, variables, setVariables, setEntities } = props;
@@ -102,21 +103,23 @@ export default function CertificateEstimatorMotors(props) {
   return (
     <Fragment>
       <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial motors',
-          src: 'CommercialVentilationRefrigeration.jpeg',
-        }}
-        intro="Commercial"
-        title="Motors - certificates"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <HeroBanner
+          wide
+          style="dark"
+          image={{
+            alt: 'commercial motors',
+            src: 'CommercialVentilationRefrigeration.jpeg',
+          }}
+          intro="Commercial"
+          title="Motors - certificates"
+        />
+      )}
 
       <div className="nsw-container">
         <br></br>
         <br></br>
-        {stepNumber !== 2 && (
+        {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <h2 className="nsw-content-block__title">Commercial Motors certificate estimator</h2>
@@ -145,7 +148,7 @@ export default function CertificateEstimatorMotors(props) {
           </div>
         )}
 
-        {stepNumber === 2 && (
+        {!IS_DRUPAL_PAGES && stepNumber === 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <h2 className="nsw-content-block__title">Commercial Motors certificate estimator</h2>
