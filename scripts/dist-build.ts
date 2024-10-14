@@ -145,8 +145,10 @@ const writeRouteFile = (
 
   if (jsFiles.length > 0) {
     console.log(`Writing ${routeFilename} ...`);
-    const jsContent = readFileSync(`${jsFolder}/${jsFiles[0]}`, { encoding: 'utf-8' });
-    writeFileSync(routePath, jsContent);
+    let jsContents = jsFiles.map((jsFile) =>
+      readFileSync(`${jsFolder}/${jsFile}`, { encoding: 'utf-8' }),
+    );
+    writeFileSync(routePath, jsContents.join('\n'));
     console.log(`Writing ${routeFilename} done.`);
   }
 };
