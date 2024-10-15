@@ -47,8 +47,6 @@ jobs:
 
           # Build all the JS files for the Drupal
           yarn run dist-build
-          # Build the react pages
-          yarn run build
 
           export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
 
