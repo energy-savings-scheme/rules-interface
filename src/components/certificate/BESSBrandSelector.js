@@ -28,6 +28,7 @@ export default function BESSBrandSelector(props) {
 
   useEffect(() => {
     setBrandOptions([{ text: 'Please select brand', value: '' }]);
+    setModelOptions([{ text: 'Please select model', value: '' }]);
 
     if (!lastModified) {
       RegistryApi.getResidentialSolarBatteryLastModified()
