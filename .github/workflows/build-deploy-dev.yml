@@ -1,4 +1,4 @@
-name: Deploy website to Azure testing
+name: Build and Deploy to DEV
 
 on:
   workflow_dispatch:
@@ -57,11 +57,11 @@ jobs:
 
           # Prepare dist files to versioned directory
           mkdir -p ./build/dist/$REACT_APP_BUILD_VERSION
-          cp -R ./dist/ ./build/dist/$REACT_APP_BUILD_VERSION/
+          cp -R ./dist/* ./build/dist/$REACT_APP_BUILD_VERSION/
 
           # Prepare dist files to latest directory
           mkdir -p ./build/dist/latest
-          cp -R ./dist/ ./build/dist/latest/
+          cp -R ./dist/* ./build/dist/latest/
 
       - name: Deploy to Azure
         uses: TravisSpomer/deploy-to-azure-storage@v1.4.0

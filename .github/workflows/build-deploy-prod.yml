@@ -1,10 +1,7 @@
-name: Deploy website to Azure
+name: Build and Deploy to PROD
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
 
 env:
   REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_PROD }}'
@@ -57,15 +54,16 @@ jobs:
 
           # Prepare dist files to versioned directory
           mkdir -p ./build/dist/$REACT_APP_BUILD_VERSION
-          cp -R ./dist/ ./build/dist/$REACT_APP_BUILD_VERSION/
+          cp -R ./dist/* ./build/dist/$REACT_APP_BUILD_VERSION/
 
           # Prepare dist files to latest directory
           mkdir -p ./build/dist/latest
-          cp -R ./dist/ ./build/dist/latest/
+          cp -R ./dist/* ./build/dist/latest/
 
       - name: Deploy to Azure
         uses: TravisSpomer/deploy-to-azure-storage@v1.4.0
         with:
           source-path: build
           cleanup: false
-          sas-url: ${{ secrets.DEPLOY_SAS_URL }}
+          container: ${{ secrets.DEPLOY_SAS_CONTAINER_PROD }}
+          sas-url: ${{ secrets.DEPLOY_SAS_URL_PROD }}
