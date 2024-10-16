@@ -187,8 +187,8 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
     const payload = {
       buildings: {
         building_1: {
-          D20_PDRS__postcode: { '2023-01-01': postcode },
-          D20_get_HP_zone_by_BCA_climate_zone: { '2023-01-01': null },
+          D20_ESSJun24_PDRS__postcode: { '2023-01-01': postcode },
+          D20_ESSJun24_get_HP_zone_by_BCA_climate_zone: { '2023-01-01': null },
         },
       },
       persons: {
@@ -199,7 +199,9 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
     OpenFiscaApi.postCalculate(payload)
       .then((res) => {
         var result =
-          res.data.buildings.building_1['D20_get_HP_zone_by_BCA_climate_zone']['2023-01-01'];
+          res.data.buildings.building_1['D20_ESSJun24_get_HP_zone_by_BCA_climate_zone'][
+            '2023-01-01'
+          ];
         setZone(result);
         console.log(result);
       })
@@ -361,10 +363,10 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
 
           {stepNumber === 2 && (
             <CertificateEstimatorLoadClausesD20
-              variableToLoad1={'D20_ESC_calculation'}
-              variableToLoad2={'D20_ESC_calculation'}
-              annualEnergySavings={'D20_annual_energy_savings'}
-              peakDemandReductionSavings={'D20_annual_energy_savings'}
+              variableToLoad1={'D20_ESSJun24_ESC_calculation'}
+              variableToLoad2={'D20_ESSJun24_ESC_calculation'}
+              annualEnergySavings={'D20_ESSJun24_annual_energy_savings'}
+              peakDemandReductionSavings={'D20_ESSJun24_annual_energy_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
@@ -429,8 +431,8 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
             <CertificateEstimatorLoadClausesD20
               variableToLoad1={'WH1_PRC_calculation'}
               variableToLoad2={'WH1_ESC_calculation'}
-              annualEnergySavings={'D20_annual_energy_savings'}
-              peakDemandReductionSavings={'D20_annual_energy_savings'}
+              annualEnergySavings={'D20_ESSJun24_annual_energy_savings'}
+              peakDemandReductionSavings={'D20_ESSJun24_annual_energy_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}

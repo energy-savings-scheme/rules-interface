@@ -6,6 +6,7 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import CertificateEstimatorLoadClausesRefrigerators from './CertificateEstimatorLoadClausesRefrigerators';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorRefrigerators(props) {
   const { entities, variables, setVariables, setEntities } = props;
@@ -76,7 +77,7 @@ export default function CertificateEstimatorRefrigerators(props) {
   }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
-    OpenFiscaAPI.getVariable('RF1_PRC_calculation')
+    OpenFiscaAPI.getVariable('C1_PDRSAug24_ESC_calculation')
       .then((res) => {
         setVariableData1(res.data);
         console.log(res.data);
@@ -87,7 +88,7 @@ export default function CertificateEstimatorRefrigerators(props) {
         console.log(err);
       });
 
-    OpenFiscaAPI.getVariable('RF1_ESC_calculation')
+    OpenFiscaAPI.getVariable('C1_PDRSAug24_ESC_calculation')
       .then((res) => {
         setVariableData2(res.data);
         console.log(res.data);
@@ -102,22 +103,24 @@ export default function CertificateEstimatorRefrigerators(props) {
   return (
     <Fragment>
       <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'res ref',
-          src: 'ResidentialFridgeFreezerRemoval.jpeg',
-        }}
-        intro="Residential and small business"
-        title="Spare refrigerator or freezer - certificates"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <HeroBanner
+          wide
+          style="dark"
+          image={{
+            alt: 'res ref',
+            src: 'ResidentialFridgeFreezerRemoval.jpeg',
+          }}
+          intro="Residential and small business"
+          title="Spare refrigerator or freezer - certificates"
+        />
+      )}
 
       <div className="nsw-container">
         <br></br>
         <br></br>
 
-        {stepNumber !== 2 && (
+        {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <h2 className="nsw-content-block__title">
@@ -125,23 +128,20 @@ export default function CertificateEstimatorRefrigerators(props) {
               </h2>
               <br></br>
               <p className="nsw-content-block__copy">
-                Answer the following questions to estimate the energy savings certificates (ESCs)
-                and peak reduction certificates (PRCs) the Residential and Small Business Spare
-                Refrigerator or Freezer removal Activity (C1 in the{' '}
+                Estimate the energy savings certificates (ESCs) for the Residential and small
+                business spare refrigerator or freezer removal activity (C1 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
                 >
                   Energy Savings Scheme
-                </a>{' '}
-                and RF1 in the{' '}
-                <a
-                  href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
-                  target="_blank"
-                >
-                  Peak Demand Reduction Scheme
                 </a>
-                ).
+                ) by answering the following questions. This activity is for the removal of a spare
+                non-primary refrigerator or freezer.
+              </p>
+              <p className="nsw-content-block__copy">
+                Note that this activity is only eligible for the Energy Savings Scheme, and is not
+                eligible for the Peak Demand Reduction scheme.
               </p>
               <p className="nsw-content-block__copy">
                 Please keep in mind that the results are a guide only and cannot be promoted or
@@ -204,8 +204,8 @@ export default function CertificateEstimatorRefrigerators(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
-              annualEnergySavings={'RF1_energy_savings'}
-              peakDemandReductionSavings={'RF1_peak_demand_annual_savings'}
+              annualEnergySavings={'C1_PDRSAug24_energy_savings'}
+              peakDemandReductionSavings={'C1_PDRSAug24_energy_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
@@ -238,8 +238,8 @@ export default function CertificateEstimatorRefrigerators(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
-              annualEnergySavings={'RF1_energy_savings'}
-              peakDemandReductionSavings={'RF1_peak_demand_annual_savings'}
+              annualEnergySavings={'C1_PDRSAug24_energy_savings'}
+              peakDemandReductionSavings={'C1_PDRSAug24_energy_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}

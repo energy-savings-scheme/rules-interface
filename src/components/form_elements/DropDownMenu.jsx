@@ -14,7 +14,7 @@ export default function DropDownMenu(props) {
 
   return (
     <FormGroup
-      helper={formItem.metadata.display_question} // primary label
+      helper={<span dangerouslySetInnerHTML={{ __html: formItem.metadata.display_question }} />} // primary label
       label={formItem.metadata.label} // primary question text
       error="Invalid value!" // error text if invalid
       status={formItem.invalid && 'invalid'} // if `true` renders invalid formatting

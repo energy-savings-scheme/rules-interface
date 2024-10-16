@@ -149,28 +149,28 @@ function getResidentialSolarWaterHeaterMetadata(payload) {
 
 function getResidentialSolarBatteryBrands() {
   return RegistryApiBase({
-    url: `/residential_solar_battery/brands`,
+    url: `/bess/brands`,
     method: 'GET',
   });
 }
 
 function getResidentialSolarBatteryLastModified() {
   return RegistryApiBase({
-    url: `/residential_solar_battery/last_modified`,
+    url: `/bess/last_modified`,
     method: 'GET',
   });
 }
 
 function getResidentialSolarBatteryModels(brandName) {
   return RegistryApiBase({
-    url: `/residential_solar_battery/brands/${brandName}/models`,
+    url: `/bess/brands/${brandName}/models`,
     method: 'GET',
   });
 }
 
 function getResidentialSolarBatteryMetadata(payload) {
   return RegistryApiBase({
-    url: `/residential_solar_battery/metadata`,
+    url: `/bess/metadata`,
     method: 'POST',
     data: payload,
   });

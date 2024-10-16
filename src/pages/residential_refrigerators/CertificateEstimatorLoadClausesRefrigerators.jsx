@@ -9,6 +9,7 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorLoadClausesRefrigerators(props) {
   const {
@@ -78,8 +79,8 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
         setLoading(true);
       } else {
         setLoading(false);
-        const variable1 = variables.find((item) => item.name === 'RF1_ESC_calculation');
-        const variable2 = variables.find((item) => item.name === 'RF1_PRC_calculation');
+        const variable1 = variables.find((item) => item.name === 'C1_PDRSAug24_ESC_calculation');
+        const variable2 = variables.find((item) => item.name === 'C1_PDRSAug24_ESC_calculation');
 
         const offsprings1 = variable1.metadata.input_offspring;
         const offsprings2 = variable2.metadata.input_offspring;
@@ -174,15 +175,11 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
         {stepNumber === 2 && !calculationError && !calculationError2 && (
           <Fragment>
             {
-              <Alert as="info" title="ESCs and PRCs" style={{ width: '80%' }}>
+              <Alert as="info" title="ESCs" style={{ width: '80%' }}>
                 <p>
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
                     <b>{Math.floor(calculationResult2)}</b>
-                  </span>
-                  and your PRCs are
-                  <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{Math.floor(calculationResult)}</b>
                   </span>
                 </p>
                 <p>
@@ -197,17 +194,10 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
                   </b>
                 </p>
                 <p>
-                  Your estimated annual peak demand reduction is{' '}
-                  <b>
-                    <b>
-                      {Math.floor(calculationResult) === 0
-                        ? 0
-                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
-                    </b>{' '}
-                    kWh{' '}
-                  </b>
+                  As this activity is only eligible for the Energy Savings Scheme, it generates
+                  Energy Savings Certificates (ESCs) only and does not generate Peak Reduction
+                  Certificates (PRCs).
                 </p>
-
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not
                   be generating enough energy savings to earn certificates, or the new installation
@@ -269,72 +259,74 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
                 />
               </div>
 
-              <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                <h4>More options</h4>
-                <br></br>
+              {!IS_DRUPAL_PAGES && (
+                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
+                  <h4>More options</h4>
+                  <br></br>
 
-                <div class="nsw-grid nsw-grid--spaced">
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="#" class="nsw-card__link">
-                            Back to estimator homepage
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="/#core-eligibility" class="nsw-card__link">
-                            Check core eligibility
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a
-                            href="/#residential-refrigeration-activity-requirements"
-                            class="nsw-card__link"
+                  <div class="nsw-grid nsw-grid--spaced">
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a href="#" class="nsw-card__link">
+                              Back to estimator homepage
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
                           >
-                            Review eligibility for this activity
-                          </a>
+                            east
+                          </span>
                         </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
+                      </div>
+                    </div>
+
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a href="/#core-eligibility" class="nsw-card__link">
+                              Check core eligibility
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                            east
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a
+                              href="/#residential-refrigeration-activity-requirements"
+                              class="nsw-card__link"
+                            >
+                              Review eligibility for this activity
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                            east
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </Fragment>
         )}

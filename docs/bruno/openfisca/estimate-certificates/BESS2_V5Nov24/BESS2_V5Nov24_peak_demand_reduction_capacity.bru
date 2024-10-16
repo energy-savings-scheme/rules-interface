@@ -1,0 +1,35 @@
+meta {
+  name: BESS2_V5Nov24_peak_demand_reduction_capacity
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{OPENFISCA_API_HOST}}/calculate
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "persons": {
+      "person1": {}
+    },
+    "buildings": {
+      "building_1": {
+        "BESS2_V5Nov24_peak_demand_reduction_capacity": {
+          "2024-09-09": null
+        },
+        "BESS2_V5Nov24_PDRS__postcode": {
+          "2024-09-09": "2113"
+        },
+        "BESS2_V5Nov24_installation_activity": {
+          "2024-09-09": true
+        },
+        "BESS2_V5Nov24_usable_battery_capacity": {
+          "2024-09-09": 2000
+        }
+      }
+    }
+  }
+}

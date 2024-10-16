@@ -11,12 +11,16 @@
 # production
 /build
 
+# auto build
+/dist
+
 # misc
 .DS_Store
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env.prod
 
 .env
 
@@ -32,4 +36,3 @@ src/fullList.json
 .vscode
 .idea
 yarn.lock
-package-lock.json

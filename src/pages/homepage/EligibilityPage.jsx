@@ -160,7 +160,7 @@ export default function EligibilityPage(props) {
                     image="/ResidentialPoolPumps.jpg"
                     links={[
                       {
-                        href: '#pool-pumps-activity-requirements',
+                        href: '#residential-pool-pump-eligibility',
                         title: 'Check Activity Eligibility',
                       },
                     ]}

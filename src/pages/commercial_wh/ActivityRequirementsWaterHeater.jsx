@@ -17,7 +17,7 @@ export default function ActivityRequirementsWH1(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    'WH1_installation_replacement_final_activity_eligibility',
+    'WH1_F16_electric_PDRSAug24__installation_replacement_final_activity_eligibility',
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
@@ -89,7 +89,7 @@ export default function ActivityRequirementsWH1(props) {
 
       console.log(array);
 
-      const names = ['WH1_installation', 'WH1_certified'];
+      const names = ['WH1_F16_electric_PDRSAug24__certified'];
 
       dep_arr = array.filter((item) => names.includes(item.name));
 
@@ -109,6 +109,7 @@ export default function ActivityRequirementsWH1(props) {
       setFormValues(array);
       setDependencies(dep_arr);
       setLoading(false);
+      console.log(dependencies);
     }
   }, [variables, variableToLoad, stepNumber]);
 
@@ -122,9 +123,10 @@ export default function ActivityRequirementsWH1(props) {
       .filter((x) => x.hide === false)
       .map((child) => {
         if (
-          child.form_value !== child.default_value &&
-          new_arr.find((o) => o.name === child.name) === undefined &&
-          child.value_type === 'Boolean'
+          (child.form_value !== child.default_value &&
+            new_arr.find((o) => o.name === child.name) === undefined &&
+            child.value_type === 'Boolean') ||
+          child.value_type === 'String'
         )
           new_arr.push(child);
       });
@@ -142,7 +144,7 @@ export default function ActivityRequirementsWH1(props) {
         style="dark"
         image={{
           alt: 'commercial ac',
-          src: 'WH1.jpg',
+          src: 'WH1(optimised).jpg',
         }}
         intro="Commercial"
         title="Electric water heater replacement with an air source heat pump - eligibility"
@@ -156,7 +158,7 @@ export default function ActivityRequirementsWH1(props) {
             <div className="nsw-col nsw-col-md-12">
               <p className="nsw-content-block__copy">
                 Answer the following questions to check if you meet the eligibility requirements for
-                the Commercial Heat Pump Water Heater Activity (F16 in the{' '}
+                the commercial heat pump water heater activity (F16 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
@@ -170,10 +172,11 @@ export default function ActivityRequirementsWH1(props) {
                 >
                   Peak Demand Reduction Scheme
                 </a>
-                ).
+                ). This activity is for replacement of an existing electric water heater with an
+                (air source) heat pump water heater.
               </p>
               <p className="nsw-content-block__copy">
-                If ineligible, you will be shown the ineligible answers and their corresponding rule
+                If you're ineligible, we'll show you why and give you the corresponding rule
                 clauses.
               </p>
               <p className="nsw-content-block__copy">

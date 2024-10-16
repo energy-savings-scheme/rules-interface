@@ -240,9 +240,8 @@ export default function CertificateEstimatorPP(props) {
               </h2>
               <br></br>
               <p className="nsw-content-block__copy">
-                Answer the following questions to estimate the energy savings certificates (ESCs)
-                and peak reduction certificates (PRCs) for the Residential and Small Business Pool
-                Pumps Activity (D5 in the{' '}
+                Estimate the energy savings certificates (ESCs) and peak reduction certificates
+                (PRCs) for the Residential and small business pool pumps activity (D5 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
@@ -256,7 +255,8 @@ export default function CertificateEstimatorPP(props) {
                 >
                   Peak Demand Reduction Scheme
                 </a>
-                ).
+                ) by answering the following questions. This activity is for the the new
+                installation or replacement of a high efficiency pool pump.
               </p>
               <p className="nsw-content-block__copy">
                 Where possible, residential and small business pool pumps specifications are
@@ -376,8 +376,8 @@ export default function CertificateEstimatorPP(props) {
 
           {stepNumber === 2 && (
             <CertificateEstimatorLoadClausesPP
-              variableToLoad1={'SYS2_PRC_calculation'}
-              variableToLoad2={'SYS2_ESC_calculation'}
+              variableToLoad1={'SYS2_PDRSAug24_PRC_calculation'}
+              variableToLoad2={'SYS2_PDRSAug24_ESC_calculation'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -408,8 +408,8 @@ export default function CertificateEstimatorPP(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
-              annualEnergySavings={'SYS2_energy_savings'}
-              peakDemandReductionSavings={'SYS2_peak_demand_annual_savings'}
+              annualEnergySavings={'SYS2_PDRSAug24_energy_savings'}
+              peakDemandReductionSavings={'SYS2_PDRSAug24_peak_demand_annual_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
@@ -419,8 +419,8 @@ export default function CertificateEstimatorPP(props) {
 
           {stepNumber === 3 && (
             <CertificateEstimatorLoadClausesPP
-              variableToLoad1={'SYS2_PRC_calculation'}
-              variableToLoad2={'SYS2_ESC_calculation'}
+              variableToLoad1={'SYS2_PDRSAug24_PRC_calculation'}
+              variableToLoad2={'SYS2_PDRSAug24_ESC_calculation'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -445,8 +445,8 @@ export default function CertificateEstimatorPP(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
-              annualEnergySavings={'SYS2_energy_savings'}
-              peakDemandReductionSavings={'SYS2_peak_demand_annual_savings'}
+              annualEnergySavings={'SYS2_PDRSAug24_energy_savings'}
+              peakDemandReductionSavings={'SYS2_PDRSAug24_peak_demand_annual_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}

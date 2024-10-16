@@ -1,0 +1,71 @@
+name: Build and Deploy to STAGING
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+env:
+  REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_PROD }}'
+  REACT_APP_API_BASE_URL: '${{ secrets.REACT_APP_API_BASE_URL_PROD }}'
+  REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_PROD }}'
+
+jobs:
+  build-and-deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Install tools
+        run: |
+          if ! command -v azcopy &> /dev/null
+          then
+            echo "azcopy not found, installing..."
+            curl -L https://aka.ms/downloadazcopy-v10-linux | \
+            sudo tar --strip-components=1 -C /usr/local/bin/ --no-same-owner --exclude=*.txt -xzvf -
+            sudo ln -s /usr/local/bin/azcopy /usr/local/bin/azcopy10
+          fi
+
+      - name: Build website
+        run: |
+          # Install all npm packages
+          yarn install
+
+          export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
+
+          # Create .env file
+          touch ./.env
+          echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> ./.env
+          echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> ./.env
+          echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> ./.env
+
+          # Build all the JS files for the Drupal
+          yarn run dist-build
+          # Build the react pages
+          yarn run build
+
+          # Prepare dist files to versioned directory
+          mkdir -p ./build/dist/$REACT_APP_BUILD_VERSION
+          cp -R ./dist/* ./build/dist/$REACT_APP_BUILD_VERSION/
+
+          # Prepare dist files to latest directory
+          mkdir -p ./build/dist/latest
+          cp -R ./dist/* ./build/dist/latest/
+
+      - name: Deploy to Azure
+        uses: TravisSpomer/deploy-to-azure-storage@v1.4.0
+        with:
+          source-path: build
+          cleanup: false
+          sas-url: ${{ secrets.DEPLOY_SAS_URL }}

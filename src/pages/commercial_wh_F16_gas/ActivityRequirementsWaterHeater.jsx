@@ -143,7 +143,7 @@ export default function ActivityRequirementsF16_gas(props) {
         style="dark"
         image={{
           alt: 'commercial ac',
-          src: '/F16.jpg',
+          src: '/F16(optimised).jpg',
         }}
         intro="Commercial"
         title="Gas water heater replacement with an air source heat pump - eligibility"
@@ -161,7 +161,7 @@ export default function ActivityRequirementsF16_gas(props) {
               <br></br>
               <p className="nsw-content-block__copy">
                 Answer the following questions to check if you meet the eligibility requirements for
-                the Commercial heat pump water heater activity (F16 in the{' '}
+                the commercial heat pump water heater activity (F16 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
@@ -172,7 +172,7 @@ export default function ActivityRequirementsF16_gas(props) {
                 source) heat pump water heater.
               </p>
               <p className="nsw-content-block__copy">
-                If ineligible, you will be shown the ineligible answers and their corresponding rule
+                If you're ineligible, we'll show you why and give you the corresponding rule
                 clauses.
               </p>
               <p className="nsw-content-block__copy">

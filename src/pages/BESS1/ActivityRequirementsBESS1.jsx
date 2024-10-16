@@ -10,6 +10,17 @@ import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesBESS1 from './LoadClausesActReq';
+import {
+  BESS1_V5Nov24_installation_final_activity_eligibility,
+  HVAC2_ACOP_eligible,
+  HVAC2_AEER_greater_than_minimum,
+  HVAC2_equipment_replaced,
+  HVAC2_HSPF_cold_eligible,
+  HVAC2_HSPF_mixed_eligible,
+  HVAC2_installed_centralised_system_common_area_BCA_Class2_building,
+  HVAC2_TCPSF_greater_than_minimum,
+} from 'types/openfisca_variables';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function ActivityRequirementsBESS1(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -18,16 +29,12 @@ export default function ActivityRequirementsBESS1(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    'BESS1_installation_final_activity_eligibility',
+    BESS1_V5Nov24_installation_final_activity_eligibility,
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
 
-  console.log(variables);
-
   if (formValues.length === 0) {
-    setLoading(true);
-  } else if (variables.length === 0) {
     setLoading(true);
   } else if (variables.length === 0) {
     setLoading(true);
@@ -65,15 +72,9 @@ export default function ActivityRequirementsBESS1(props) {
 
   useEffect(() => {
     if (variables.length > 0 && stepNumber === 1) {
-      console.log(variableToLoad);
-      console.log(variables);
       const variable = variables.find((item) => item.name === variableToLoad);
-      console.log(variable);
       const offsprings = variable.metadata.input_offspring;
-
-      console.log(offsprings);
       const children = variables.filter((item) => offsprings.includes(item.name));
-      console.log(children);
 
       // Define the original array (at a minimum include the Implementation Date)
       var array = [];
@@ -86,16 +87,14 @@ export default function ActivityRequirementsBESS1(props) {
 
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
 
-      console.log(array);
-
       const names = [
-        'HVAC2_equipment_replaced',
-        'HVAC2_installed_centralised_system_common_area_BCA_Class2_building',
-        'HVAC2_AEER_greater_than_minimum',
-        'HVAC2_TCPSF_greater_than_minimum',
-        'HVAC2_HSPF_mixed_eligible',
-        'HVAC2_HSPF_cold_eligible',
-        'HVAC2_ACOP_eligible',
+        HVAC2_equipment_replaced,
+        HVAC2_installed_centralised_system_common_area_BCA_Class2_building,
+        HVAC2_AEER_greater_than_minimum,
+        HVAC2_TCPSF_greater_than_minimum,
+        HVAC2_HSPF_mixed_eligible,
+        HVAC2_HSPF_cold_eligible,
+        HVAC2_ACOP_eligible,
       ];
 
       dep_arr = array.filter((item) => names.includes(item.name));
@@ -107,8 +106,6 @@ export default function ActivityRequirementsBESS1(props) {
 
       dep_arr = dep_arr.map((obj, i) => ({ ...obj, hide: true }));
 
-      console.log(dep_arr);
-
       setFormValues(array);
       setDependencies(dep_arr);
       setLoading(false);
@@ -116,9 +113,6 @@ export default function ActivityRequirementsBESS1(props) {
   }, [variables, variableToLoad, stepNumber]);
 
   useEffect(() => {
-    console.log(formValues);
-    console.log(clausesForm);
-
     let new_arr = [];
 
     formValues
@@ -132,48 +126,49 @@ export default function ActivityRequirementsBESS1(props) {
           new_arr.push(child);
       });
     setClausesForm(new_arr);
-
-    console.log(clausesForm);
   }, [stepNumber]);
 
   return (
     <Fragment>
       <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial ac',
-          src: 'BESS1.jpg',
-        }}
-        intro="Residential"
-        title="Install a new household solar battery - eligibility"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <HeroBanner
+          wide
+          style="dark"
+          image={{
+            alt: 'commercial ac',
+            src: 'BESS1.jpg',
+          }}
+          intro="Residential"
+          title="Install a new household solar battery - eligibility"
+        />
+      )}
 
       <div className="nsw-container" style={{ marginBottom: '10%' }}>
         <br></br>
         <br></br>
-        {stepNumber !== 2 && (
+        {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
               <br></br>
               <p className="nsw-content-block__copy">
                 Answer the following questions to check if you meet the eligibility requirements for
-                the residential solar battery activity (BESS1 in the{' '}
+                the battery installation incentive (BESS1 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
                   target="_blank"
                 >
                   Peak Demand Reduction Scheme
                 </a>{' '}
-                ). This activity is for the installation of a new 'behind the meter' solar battery
-                at a residential address. A key requirement of this activity is that there is
-                already a solar PV system installed at the address.
+                ). This incentive is for the installation of a behind the meter battery at a
+                residential or small business address. A key requirement of this incentive is that
+                there is already a solar photovoltaic (PV) system installed at your address, though
+                sites without solar can have the incentive priced into the quote for a new solar and
+                battery install.
               </p>
               <p className="nsw-content-block__copy">
-                Note that this activity is only eligible for the Peak Demand Reduction Scheme, and
-                is not eligible for the Energy Savings Scheme. If ineligible, you will be shown the
-                ineligible answers and their corresponding rule clauses.
+                If you're ineligible, we'll show you why and give you the corresponding rule
+                clauses.
               </p>
               <p className="nsw-content-block__copy">
                 Please keep in mind that the results are a guide only and cannot be promoted or

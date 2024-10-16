@@ -65,6 +65,7 @@ import CommercialHotWaterHeaterCertificateEstimation from 'pages/homepage/Commer
 import CertificateEstimatorF17 from 'pages/commercial_wh_f17/CertificateEstimatorF17';
 import CertificateEstimatorF16_gas from 'pages/commercial_wh_F16_gas/CertificateEstimatorF16_gas';
 import ActivityRequirementsF16_gas from 'pages/commercial_wh_F16_gas/ActivityRequirementsWaterHeater';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 function App() {
   const [entities, setEntities] = useState([]);
@@ -80,6 +81,7 @@ function App() {
   const [resSolarWaterHeaterBrands, setResSolarWaterHeaterBrands] = useState([]);
   const [resSolarBatteryBrands, setResSolarBatteryBrands] = useState([]);
 
+  console.log(`Loading version "${process.env.REACT_APP_BUILD_VERSION}".`);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -177,28 +179,28 @@ function App() {
 
   return (
     <Router>
-      <Header variables={variables} />
+      {!IS_DRUPAL_PAGES && <Header variables={variables} />}
 
       {loading && <SpinnerFullscreen />}
 
       <Switch>
         <Route path="/" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <Homepage />
         </Route>
 
         <Route path="/eligibility" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <EligibilityPage />
         </Route>
 
         <Route path="/certificate-estimation" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimationPage />
         </Route>
 
         <Route path="/commercial-ac-estimator" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorHVAC
             entities={entities}
             variables={variables}
@@ -212,7 +214,7 @@ function App() {
         </Route>
 
         <Route path="/commercial-electric-to-heat-pump-water-heater-certificates" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorWH
             entities={entities}
             variables={variables}
@@ -224,7 +226,7 @@ function App() {
         </Route>
 
         <Route path="/commercial-wh-test-estimator" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorWH2_test
             entities={entities}
             variables={variables}
@@ -236,7 +238,7 @@ function App() {
         </Route>
 
         <Route path="/residential-ac-estimator" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorResidentialAC
             entities={entities}
             variables={variables}
@@ -249,7 +251,7 @@ function App() {
           />
         </Route>
         <Route path="/refrigerated-cabinet-estimator" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorRC
             entities={entities}
             variables={variables}
@@ -261,8 +263,8 @@ function App() {
             setRF2Brands={setRF2Brands}
           />
         </Route>
-        <Route path="/pool-pumps-estimator" exact>
-          <Breadcrumb />
+        <Route path="/residential-pool-pump-certificates" exact>
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorPP
             entities={entities}
             variables={variables}
@@ -275,7 +277,7 @@ function App() {
           />
         </Route>
         <Route path="/commercial-motors-estimator" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorMotors
             entities={entities}
             variables={variables}
@@ -286,7 +288,7 @@ function App() {
           />
         </Route>
         <Route path="/residential-refrigerators-estimator" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorRefrigerators
             entities={entities}
             variables={variables}
@@ -297,7 +299,7 @@ function App() {
           />
         </Route>
         <Route path="/gas-heat-pumps-estimator" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorGasHeatPump
             entities={entities}
             variables={variables}
@@ -309,7 +311,7 @@ function App() {
           />
         </Route>
         <Route path="/electric-heat-pumps-estimator" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorElectricHeatPump
             entities={entities}
             variables={variables}
@@ -321,7 +323,7 @@ function App() {
           />
         </Route>
         <Route path="/residential-solar-water-heater-estimator" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorResidentialSolarWaterHeater
             entities={entities}
             variables={variables}
@@ -333,7 +335,7 @@ function App() {
           />
         </Route>
         <Route path="/residential-gas-replacement-solar-water-heater-estimator" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorResidentialGasReplacementSolarWaterHeater
             entities={entities}
             variables={variables}
@@ -346,7 +348,7 @@ function App() {
         </Route>
 
         <Route path="/residential-solar-battery-certificates" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorBESS1
             entities={entities}
             variables={variables}
@@ -358,12 +360,11 @@ function App() {
           />
         </Route>
         <Route path="/residential-solar-battery-demand-response-certificates" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorBESS2
             entities={entities}
             variables={variables}
-            resSolarBatteryBrands={resSolarBatteryBrands}
-            setResSolarBatteryBrands={setResSolarBatteryBrands}
+            brands={resSolarBatteryBrands}
             loading={loading}
             setEntities={setEntities}
             setVariables={setVariables}
@@ -371,7 +372,7 @@ function App() {
           />
         </Route>
         <Route path="/core-eligibility" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <BaseEligibility
             entities={entities}
             variables={variables}
@@ -382,7 +383,7 @@ function App() {
           />
         </Route>
         <Route path="/hot-water-heater-eligibility" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <HotWaterEligibilityPage
             entities={entities}
             variables={variables}
@@ -393,7 +394,7 @@ function App() {
           />
         </Route>
         <Route path="/hot-water-heater-certificate" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <HotWaterCertificatePage
             entities={entities}
             variables={variables}
@@ -404,7 +405,7 @@ function App() {
           />
         </Route>
         <Route path="/solar-battery-eligibility" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <SolarBatteryEligibilityPage
             entities={entities}
             variables={variables}
@@ -415,7 +416,7 @@ function App() {
           />
         </Route>
         <Route path="/solar-battery-certificates" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <SolarBatteryCertificatePage
             entities={entities}
             variables={variables}
@@ -426,7 +427,7 @@ function App() {
           />
         </Route>
         <Route path="/commercial-ac-activity-requirements" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsCommercialAC
             entities={entities}
             variables={variables}
@@ -437,7 +438,7 @@ function App() {
           />
         </Route>
         <Route path="/residential-ac-activity-requirements" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsResAC
             entities={entities}
             variables={variables}
@@ -448,7 +449,7 @@ function App() {
           />
         </Route>
         <Route path="/commercial-motors-activity-requirements" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsSYS1
             entities={entities}
             variables={variables}
@@ -458,8 +459,8 @@ function App() {
             setLoading={setLoading}
           />
         </Route>
-        <Route path="/pool-pumps-activity-requirements" exact>
-          <Breadcrumb />
+        <Route path="/residential-pool-pump-eligibility" exact>
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsSYS2
             entities={entities}
             variables={variables}
@@ -470,7 +471,7 @@ function App() {
           />
         </Route>
         <Route path="/residential-refrigeration-activity-requirements" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsRF1
             entities={entities}
             variables={variables}
@@ -481,7 +482,7 @@ function App() {
           />
         </Route>
         <Route path="/refrigerated-cabinet-activity-requirements" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsRF2
             entities={entities}
             variables={variables}
@@ -492,7 +493,7 @@ function App() {
           />
         </Route>
         <Route path="/commercial-heat-pump-water-heater-eligibility" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CommercialHotWaterHeaterEligibilityPage
             entities={entities}
             variables={variables}
@@ -503,7 +504,7 @@ function App() {
           />
         </Route>
         <Route path="/commercial-heat-pump-water-heater-certificates" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CommercialHotWaterHeaterCertificateEstimation
             entities={entities}
             variables={variables}
@@ -514,7 +515,7 @@ function App() {
           />
         </Route>
         <Route path="/commercial-electric-to-heat-pump-water-heater-eligibility" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsWH1
             entities={entities}
             variables={variables}
@@ -525,7 +526,7 @@ function App() {
           />
         </Route>
         <Route path="/commercial-new-heat-pump-water-heater-eligibility" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsF17
             entities={entities}
             variables={variables}
@@ -536,7 +537,7 @@ function App() {
           />
         </Route>
         <Route path="/commercial-new-heat-pump-water-heater-certificates" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorF17
             entities={entities}
             variables={variables}
@@ -548,7 +549,7 @@ function App() {
           />
         </Route>
         <Route path="/commercial-gas-to-heat-pump-water-heater-eligibility" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsF16_gas
             entities={entities}
             variables={variables}
@@ -559,7 +560,7 @@ function App() {
           />
         </Route>
         <Route path="/commercial-gas-to-heat-pump-water-heater-certificates" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorF16_gas
             entities={entities}
             variables={variables}
@@ -572,7 +573,7 @@ function App() {
         </Route>
 
         <Route path="/electric-residential-heat-pump-activity-requirements" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsD17
             entities={entities}
             variables={variables}
@@ -583,7 +584,7 @@ function App() {
           />
         </Route>
         <Route path="/gas-residential-heat-pump-activity-requirements" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsD19
             entities={entities}
             variables={variables}
@@ -594,7 +595,7 @@ function App() {
           />
         </Route>
         <Route path="/residential-solar-water-heater-activity-requirements" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsD18
             entities={entities}
             variables={variables}
@@ -605,7 +606,7 @@ function App() {
           />
         </Route>
         <Route path="/residential-solar-gas-water-heater-activity-requirements" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsD20
             entities={entities}
             variables={variables}
@@ -616,7 +617,7 @@ function App() {
           />
         </Route>
         <Route path="/residential-solar-battery-eligibility" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsBESS1
             entities={entities}
             variables={variables}
@@ -628,7 +629,7 @@ function App() {
         </Route>
 
         <Route path="/residential-solar-battery-demand-response-eligibility" exact>
-          <Breadcrumb />
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsBESS2
             entities={entities}
             variables={variables}
@@ -641,7 +642,7 @@ function App() {
         <Route path="*">Not Found</Route>
       </Switch>
 
-      <Footer />
+      {!IS_DRUPAL_PAGES && <Footer />}
     </Router>
   );
 }

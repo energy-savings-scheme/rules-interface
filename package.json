@@ -10,7 +10,9 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^1.4.0",
+    "babel-preset-react-app": "10.0.1",
     "bootstrap": "^5.2.2",
+    "caniuse-lite": "1.0.30001632",
     "cors": "^2.8.5",
     "date-fns": "^2.29.3",
     "moment": "^2.29.1",
@@ -32,7 +34,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dist-build": "ts-node ./scripts/dist-build.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -53,9 +56,15 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "husky": "^3.1.0",
     "prettier": "2.2.1",
-    "pretty-quick": "^3.1.0"
+    "pretty-quick": "^3.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  },
+  "resolutions": {
+    "@babel/core": "^7.16.0"
   },
   "husky": {
     "hooks": {

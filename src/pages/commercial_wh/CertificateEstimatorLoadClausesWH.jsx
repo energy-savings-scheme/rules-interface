@@ -135,26 +135,33 @@ export default function CertificateEstimatorLoadClausesWH(props) {
 
       array1.map((formItem) => {
         console.log(metadata);
-        if (formItem.name === 'WH1_annual_energy_savings') {
+        if (formItem.name === 'WH1_F16_electric_PDRSAug24_annual_energy_savings') {
           formItem.form_value = metadata[`annual_energy_savings_${zone}`];
         }
-        if (formItem.name === 'WH1_com_peak_load') {
+        if (formItem.name === 'WH1_F16_electric_PDRSAug24_com_peak_load') {
           formItem.form_value = metadata[`ComPkLoad_zone_${zone}`];
         }
-        if (formItem.name === 'WH1_HP_capacity_factor') {
-          formItem.form_value = metadata['HPCap'];
+        if (formItem.name === 'WH1_F16_electric_PDRSAug24_HP_capacity_factor') {
+          formItem.form_value = metadata[`HPCap`];
         }
-        if (formItem.name === 'WH1_HP_elec') {
+        if (formItem.name === 'WH1_F16_electric_PDRSAug24_WH_capacity_factor') {
+          formItem.form_value = metadata[`WHCap`];
+        }
+        if (formItem.name === 'WH1_F16_electric_PDRSAug24_HP_elec') {
           formItem.form_value = metadata[`HPElec_zone_${zone}`];
         }
-        if (formItem.name === 'WH1_HP_gas') {
+        if (formItem.name === 'WH1_F16_electric_PDRSAug24_HP_gas') {
           formItem.form_value = metadata[`HPGas_zone_${zone}`];
         }
+        if (formItem.name === 'WH1_F16_electric_PDRSAug24_volumetric_capacity') {
+          formItem.form_value = metadata['volumetric capacity'];
+        }
+
         // Remove whcap
         // if (formItem.name === 'WH1_WH_capacity_factor') {
         //   formItem.form_value = metadata['WHCap'];
         // }
-        if (formItem.name === 'WH1_PDRS__postcode') {
+        if (formItem.name === 'WH1_F16_electric_PDRSAug24_PDRS__postcode') {
           formItem.form_value = postcode;
           formItem.read_only = true;
         }

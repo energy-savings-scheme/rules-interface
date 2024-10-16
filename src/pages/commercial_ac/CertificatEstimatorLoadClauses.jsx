@@ -9,6 +9,7 @@ import Button from 'nsw-ds-react/button/button';
 import { Alert } from 'nsw-ds-react/alert/alert';
 import OpenFiscaApi from 'services/openfisca_api';
 import GlobalAlert from 'nsw-ds-react/global-alert/globalAlert';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorLoadClauses(props) {
   const {
@@ -47,7 +48,19 @@ export default function CertificateEstimatorLoadClauses(props) {
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
+    selectedClimateZone,
   } = props;
+
+  const bca_mapping = {
+    BCA_Climate_Zone_1: 'BCA Climate Zone 1',
+    BCA_Climate_Zone_2: 'BCA Climate Zone 2',
+    BCA_Climate_Zone_3: 'BCA Climate Zone 3',
+    BCA_Climate_Zone_4: 'BCA Climate Zone 4',
+    BCA_Climate_Zone_5: 'BCA Climate Zone 5',
+    BCA_Climate_Zone_6: 'BCA Climate Zone 6',
+    BCA_Climate_Zone_7: 'BCA Climate Zone 7',
+    BCA_Climate_Zone_8: 'BCA Climate Zone 8',
+  };
 
   console.log(variableToLoad1);
   console.log(variableToLoad2);
@@ -133,52 +146,54 @@ export default function CertificateEstimatorLoadClauses(props) {
       console.log(array1);
 
       array1.map((formItem) => {
-        if (formItem.name === 'HVAC2_rated_AEER_input') {
+        if (formItem.name === 'HVAC2_PDRSAug24_rated_AEER_input') {
           console.log(formItem.form_value);
           formItem.form_value = metadata['Rated AEER'];
         }
 
-        if (formItem.name === 'HVAC2_cooling_capacity_input') {
+        if (formItem.name === 'HVAC2_PDRSAug24_cooling_capacity_input') {
           formItem.form_value = metadata['Cooling Capacity'];
         }
 
-        if (formItem.name === 'HVAC2_heating_capacity_input') {
-          formItem.form_value = metadata['Heating Capacity'];
-        }
-
-        if (formItem.name === 'HVAC2_commercial_TCEC') {
+        if (formItem.name === 'HVAC2_PDRSAug24_commercial_TCEC') {
           formItem.form_value = metadata[`Commercial tcec_${zone}`];
         }
 
-        if (formItem.name === 'HVAC2_commercial_THEC') {
+        if (formItem.name === 'HVAC2_PDRSAug24_commercial_THEC') {
           formItem.form_value = metadata[`Commercial thec_${zone}`];
         }
 
-        if (formItem.name === 'HVAC2_TCSPF_mixed') {
+        if (formItem.name === 'HVAC2_PDRSAug24_heating_capacity_input') {
+          formItem.form_value = metadata['Heating Capacity'];
+        }
+
+        if (formItem.name === 'HVAC2_PDRSAug24_TCSPF_mixed') {
           formItem.form_value = metadata['Commercial TCSPF_mixed'];
         }
-
-        if (formItem.name === 'HVAC2_HSPF_cold') {
+        if (formItem.name === 'HVAC2_PDRSAug24_HSPF_cold') {
           formItem.form_value = metadata['Commercial HSPF_cold'];
         }
-
-        if (formItem.name === 'HVAC2_HSPF_mixed') {
+        if (formItem.name === 'HVAC2_PDRSAug24_HSPF_mixed') {
           formItem.form_value = metadata['Commercial HSPF_mixed'];
         }
 
-        if (formItem.name === 'HVAC2_input_power' && metadata['Input Power'] != '') {
+        if (formItem.name === 'HVAC2_PDRSAug24_input_power' && metadata['Input Power'] != '') {
           formItem.form_value = metadata['Input Power'];
         }
 
         if (
-          formItem.name === 'HVAC2_rated_ACOP_input' &&
+          formItem.name === 'HVAC2_PDRSAug24_rated_ACOP_input' &&
           metadata['Rated ACOP'] != '' &&
           metadata['Rated ACOP'] != '-'
         ) {
           formItem.form_value = metadata['Rated ACOP'];
         }
-        if (formItem.name === 'HVAC2_PDRS__postcode') {
+        if (formItem.name === 'HVAC2_PDRSAug24_PDRS__postcode') {
           formItem.form_value = postcode;
+          formItem.read_only = true;
+        }
+        if (formItem.name === 'HVAC2_PDRSAug24_BCA_Climate_Zone') {
+          formItem.form_value = bca_mapping[selectedClimateZone];
           formItem.read_only = true;
         }
       });
@@ -400,69 +415,71 @@ export default function CertificateEstimatorLoadClauses(props) {
                 />
               </div>
 
-              <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                <h4>More options</h4>
-                <br></br>
+              {!IS_DRUPAL_PAGES && (
+                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
+                  <h4>More options</h4>
+                  <br></br>
 
-                <div class="nsw-grid nsw-grid--spaced">
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="#" class="nsw-card__link">
-                            Back to estimator homepage
-                          </a>
+                  <div class="nsw-grid nsw-grid--spaced">
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a href="#" class="nsw-card__link">
+                              Back to estimator homepage
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                            east
+                          </span>
                         </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="/#core-eligibility" class="nsw-card__link">
-                            Check core eligibility
-                          </a>
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a href="/#core-eligibility" class="nsw-card__link">
+                              Check core eligibility
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                            east
+                          </span>
                         </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="/#commercial-ac-activity-requirements" class="nsw-card__link">
-                            Review eligibility for this activity
-                          </a>
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a href="/#commercial-ac-activity-requirements" class="nsw-card__link">
+                              Review eligibility for this activity
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                            east
+                          </span>
                         </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </Fragment>
         )}

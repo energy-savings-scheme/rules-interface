@@ -174,8 +174,8 @@ export default function CertificateEstimatorWH(props) {
     const payload = {
       buildings: {
         building_1: {
-          WH1_PDRS__postcode: { '2023-01-01': postcode },
-          WH1_get_HP_zone_by_BCA_climate_zone: { '2023-01-01': null },
+          WH1_F16_electric_PDRSAug24_PDRS__postcode: { '2023-01-01': postcode },
+          WH1_F16_electric_PDRSAug24_get_HP_zone_by_BCA_climate_zone: { '2023-01-01': null },
         },
       },
       persons: {
@@ -186,7 +186,9 @@ export default function CertificateEstimatorWH(props) {
     OpenFiscaApi.postCalculate(payload)
       .then((res) => {
         var result =
-          res.data.buildings.building_1['WH1_get_HP_zone_by_BCA_climate_zone']['2023-01-01'];
+          res.data.buildings.building_1[
+            'WH1_F16_electric_PDRSAug24_get_HP_zone_by_BCA_climate_zone'
+          ]['2023-01-01'];
         setZone(result);
         console.log(result);
       })
@@ -207,7 +209,7 @@ export default function CertificateEstimatorWH(props) {
         style="dark"
         image={{
           alt: 'commercial wh',
-          src: 'WH1.jpg',
+          src: 'WH1(optimised).jpg',
         }}
         intro="Commercial"
         title="Electric water heater replacement with an air source heat pump - certificates"
@@ -221,9 +223,8 @@ export default function CertificateEstimatorWH(props) {
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <p className="nsw-content-block__copy">
-                Answer the following questions to estimate the energy savings certificates (ESCs)
-                and peak reduction certificates (PRCs) for the Commercial Heat Pump Water Heater
-                Activity (F16 in the{' '}
+                Estimate the energy savings certificates (ESCs) and peak reduction certificates
+                (PRCs) for the commercial heat pump water heater activity (F16 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
@@ -237,18 +238,19 @@ export default function CertificateEstimatorWH(props) {
                 >
                   Peak Demand Reduction Scheme
                 </a>
-                ).
+                ) by answering the following questions. Note that a new installation activity will
+                not generate ESCs or PRCs.
               </p>
               <p className="nsw-content-block__copy">
-                Where possible, commercial heat pump water heater specifications are automatically
-                updated at the end of each week from the{' '}
+                At the end of each week, commercial heat pump water heater specifications are
+                automatically updated from the{' '}
                 <a
                   href="https://tessa.energysustainabilityschemes.nsw.gov.au/ipart?id=accepted_products"
                   target="_blank"
                 >
                   Independent Pricing and Regulatory Tribunal (IPART) Product Registry
                 </a>{' '}
-                based on brand and model, but you may also enter your own values.
+                based on brand and model. You can also enter your own values.
               </p>
               <p className="nsw-content-block__copy">
                 Please keep in mind that the results are a guide only and cannot be promoted or
@@ -341,10 +343,10 @@ export default function CertificateEstimatorWH(props) {
 
           {stepNumber === 2 && (
             <CertificateEstimatorLoadClausesWH
-              variableToLoad1={'WH1_PRC_calculation'}
-              variableToLoad2={'WH1_ESC_calculation'}
-              annualEnergySavings={'WH1_energy_savings'}
-              peakDemandReductionSavings={'WH1_peak_demand_annual_savings'}
+              variableToLoad1={'WH1_F16_electric_PDRSAug24_PRC_calculation'}
+              variableToLoad2={'WH1_F16_electric_PDRSAug24_ESC_calculation'}
+              annualEnergySavings={'WH1_F16_electric_PDRSAug24_energy_savings'}
+              peakDemandReductionSavings={'WH1_F16_electric_PDRSAug24_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -407,10 +409,10 @@ export default function CertificateEstimatorWH(props) {
 
           {stepNumber === 3 && (
             <CertificateEstimatorLoadClausesWH
-              variableToLoad1={'WH1_PRC_calculation'}
-              variableToLoad2={'WH1_ESC_calculation'}
-              annualEnergySavings={'WH1_energy_savings'}
-              peakDemandReductionSavings={'WH1_peak_demand_annual_savings'}
+              variableToLoad1={'WH1_F16_electric_PDRSAug24_PRC_calculation'}
+              variableToLoad2={'WH1_F16_electric_PDRSAug24_ESC_calculation'}
+              annualEnergySavings={'WH1_F16_electric_PDRSAug24_energy_savings'}
+              peakDemandReductionSavings={'WH1_F16_electric_PDRSAug24_peak_demand_annual_savings'}
               variables={variables}
               entities={entities}
               metadata={metadata}

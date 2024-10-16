@@ -149,31 +149,31 @@ export default function CertificateEstimatorLoadClausesRC(props) {
     console.log(selectedProductClass);
 
     array1.map((formItem) => {
-      if (formItem.name === 'RF2_product_EEI') {
+      if (formItem.name === 'RF2_F1_2_ESSJun24_product_EEI') {
         console.log(formItem.form_value);
         formItem.form_value = metadata['product_eei'];
       }
 
-      if (formItem.name === 'RF2_product_class') {
+      if (formItem.name === 'RF2_F1_2_ESSJun24_product_class') {
         console.log(formItem.form_value);
         formItem.form_value = selectedProductClass;
         console.log(formItem.form_value);
         formItem.read_only = true;
       }
 
-      if (formItem.name === 'RF2_total_display_area') {
-        formItem.form_value = metadata['total_display_area'];
-      }
+      // if (formItem.name === 'RF2_total_display_area') {
+      //   formItem.form_value = metadata['total_display_area'];
+      // }
 
-      if (formItem.name === 'RF2_total_energy_consumption') {
+      if (formItem.name === 'RF2_F1_2_ESSJun24_total_energy_consumption') {
         formItem.form_value = metadata['total_energy_consumption'];
       }
-      if (formItem.name === 'RF2_PDRS__postcode') {
+      if (formItem.name === 'RF2_F1_2_ESSJun24_PDRS__postcode') {
         formItem.form_value = postcode;
         formItem.read_only = true;
       }
 
-      if (formItem.name === 'RF2_duty_class') {
+      if (formItem.name === 'RF2_F1_2_ESSJun24_duty_class') {
         formItem.possible_values = {
           heavy_duty: 'Heavy Duty',
           light_duty: 'Light Duty',

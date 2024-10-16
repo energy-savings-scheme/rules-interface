@@ -207,7 +207,7 @@ export default function CertificateEstimatorF17(props) {
         style="dark"
         image={{
           alt: 'commercial wh',
-          src: '/F17.jpg',
+          src: '/F17(optimised).jpg',
         }}
         intro="Commercial"
         title="Install a new air source heat pump - certificates"
@@ -219,15 +219,16 @@ export default function CertificateEstimatorF17(props) {
             <div className="nsw-col nsw-col-md-10">
               <br></br>
               <p className="nsw-content-block__copy">
-                Answer the following questions to check if you meet the eligibility requirements for
-                the Commercial heat pump water heater activity (F17 in{' '}
+                Estimate the energy savings certificates (ESCs) for the commercial heat pump water
+                heater activity (F17 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
                 >
                   Energy Savings Scheme
                 </a>
-                ) . Note that a replacement activity will not generate ESCs or PRCs.
+                ) by answering the following questions. Note that a replacement activity will not
+                generate ESCs or PRCs.
               </p>
               <p className="nsw-content-block__copy">
                 Note that this activity is only eligible for the Energy Savings Scheme, and is not
@@ -236,7 +237,7 @@ export default function CertificateEstimatorF17(props) {
               </p>
               <p className="nsw-content-block__copy">
                 Where possible, commercial heat pump water heater specifications are automatically
-                updated at the end of each week from the{' '}
+                pulled in at the end of each week from the{' '}
                 <a
                   href="https://tessa.energysustainabilityschemes.nsw.gov.au/ipart?id=accepted_products"
                   target="_blank"

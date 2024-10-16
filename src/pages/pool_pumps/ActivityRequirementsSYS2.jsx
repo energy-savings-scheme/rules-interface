@@ -17,7 +17,7 @@ export default function ActivityRequirementsSYS2(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    'SYS2_replacement_final_activity_eligibility',
+    'SYS2_PDRSAug24_replacement_final_activity_eligibility',
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
@@ -89,14 +89,11 @@ export default function ActivityRequirementsSYS2(props) {
 
       console.log(array);
 
-      const names = ['SYS2_voluntary_labelling_scheme', 'SYS2_single_speed_input_power'];
+      const names = ['SYS2_PDRSAug24_existing_equipment_removed'];
 
       dep_arr = array.filter((item) => names.includes(item.name));
       array.find((item) => {
-        if (item.name === 'SYS2_voluntary_labelling_scheme') {
-          item.hide = true;
-        }
-        if (item.name === 'SYS2_single_speed_input_power') {
+        if (item.name === 'SYS2_PDRSAug24_existing_equipment_removed') {
           item.hide = true;
         }
       });
@@ -123,35 +120,16 @@ export default function ActivityRequirementsSYS2(props) {
     formValues
       .filter((x) => x.hide === false)
       .map((child) => {
+        console.log(child);
         if (
-          child.form_value !== child.default_value &&
-          new_arr.find((o) => o.name === child.name) === undefined &&
-          child.value_type === 'Boolean'
+          (child.form_value !== child.default_value &&
+            new_arr.find((o) => o.name === child.name) === undefined &&
+            child.value_type === 'Boolean') ||
+          child.value_type === 'String'
         ) {
           new_arr.push(child);
         }
       });
-
-    // var multiple_speed_var = formValues.find((item) => item.name === 'SYS2_multiple_speed');
-    // var single_speed_input_power_var = formValues.find(
-    //   (item) => item.name === 'SYS2_input_power_dropdown',
-    // );
-
-    // if (
-    //   multiple_speed_var !== undefined &&
-    //   multiple_speed_var.form_value === true &&
-    //   single_speed_input_power_var.form_value === 'single_speed'
-    // ) {
-    //   new_arr.push(single_speed_input_power_var);
-    // }
-
-    // if (
-    //   single_speed_input_power_var !== undefined &&
-    //   multiple_speed_var.form_value === false &&
-    //   single_speed_input_power_var.form_value === 'multiple_speed'
-    // ) {
-    //   new_arr.push(single_speed_input_power_var);
-    // }
 
     setClausesForm(new_arr);
   }, [stepNumber]);
@@ -183,7 +161,7 @@ export default function ActivityRequirementsSYS2(props) {
               <br></br>
               <p className="nsw-content-block__copy">
                 Answer the following questions to check if you meet the eligibility requirements for
-                the Residential Pool Pumps Activity (D5 in the{' '}
+                the Residential and small business pool pumps activity (D5 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
@@ -197,10 +175,11 @@ export default function ActivityRequirementsSYS2(props) {
                 >
                   Peak Demand Reduction Scheme
                 </a>
-                ).
+                ). This activity is for the the new installation or replacement of a high efficiency
+                pool pump.
               </p>
               <p className="nsw-content-block__copy">
-                If ineligible, you will be shown the ineligible answers and their corresponding rule
+                If you're ineligible, we'll show you why and give you the corresponding rule
                 clauses.
               </p>
               <p className="nsw-content-block__copy">
@@ -246,43 +225,6 @@ export default function ActivityRequirementsSYS2(props) {
           )}
         </Fragment>
       </div>
-      <section class="nsw-section nsw-section--off-white" style={{ backgroundColor: '#F5F5F5' }}>
-        <div class="nsw-container" style={{ paddingBottom: '4rem' }}>
-          <div class="nsw-layout">
-            <div class="nsw-layout__main">
-              <br></br>
-              <br></br>
-              <h2 className="nsw-col nsw-content-block__title">
-                Check your eligibility and estimate certificates
-              </h2>
-              <br></br>
-              <div class="nsw-grid">
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Review schemes base eligibility, activity requirements and estimate certificates"
-                    link="base_eligibility_commercialac/"
-                    image="/commercialac/navigation_row/full_flow_card.jpeg"
-                  ></Card>
-                </div>
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Check activity requirements and estimate certificates"
-                    link="activity-requirements/"
-                    image="/commercialac/navigation_row/activity_certificates.png"
-                  ></Card>
-                </div>
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Estimate certificates only"
-                    link="compare2activities"
-                    image="/commercialac/navigation_row/certificates_only.jpg"
-                  ></Card>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </Fragment>
   );
 }

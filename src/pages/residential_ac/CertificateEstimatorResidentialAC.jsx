@@ -22,6 +22,7 @@ export default function CertificateEstimatorResidentialAC(props) {
   const [dropdownOptionsModels, setDropdownOptionsModels] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedModel, setSelectedModel] = useState(null);
+  const [selectedClimateZone, setSelectedClimateZone] = useState('');
   const [models, setModels] = useState([]);
   const [metadata, setMetadata] = useState(null);
   const [calculationResult, setCalculationResult] = useState(null);
@@ -30,6 +31,7 @@ export default function CertificateEstimatorResidentialAC(props) {
   const [calculationError2, setCalculationError2] = useState(false);
   const [postcode, setPostcode] = useState(null);
   const [zone, setZone] = useState(null);
+  const [BCAzone, setBCAZone] = useState(null);
   const [registryData, setRegistryData] = useState(true);
   const [flow, setFlow] = useState(null);
   const [persistFormValues, setPersistFormValues] = useState([]);
@@ -40,6 +42,7 @@ export default function CertificateEstimatorResidentialAC(props) {
   const [lastModified, setLastModified] = useState('');
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
+  const [dropdownOptionsClimateZone, setDropdownOptionsClimateZone] = useState([]);
 
   useEffect(() => {
     if (annualEnergySavingsNumber < 0) {
@@ -57,6 +60,17 @@ export default function CertificateEstimatorResidentialAC(props) {
     window.scrollTo(0, 0);
 
     setDropdownOptions([{ value: '', text: 'Please select brand' }]);
+
+    setDropdownOptionsClimateZone([
+      { text: 'BCA Climate Zone 1', value: 'BCA_Climate_Zone_1' },
+      { text: 'BCA Climate Zone 2', value: 'BCA_Climate_Zone_2' },
+      { text: 'BCA Climate Zone 3', value: 'BCA_Climate_Zone_3' },
+      { text: 'BCA Climate Zone 4', value: 'BCA_Climate_Zone_4' },
+      { text: 'BCA Climate Zone 5', value: 'BCA_Climate_Zone_5' },
+      { text: 'BCA Climate Zone 6', value: 'BCA_Climate_Zone_6' },
+      { text: 'BCA Climate Zone 7', value: 'BCA_Climate_Zone_7' },
+      { text: 'BCA Climate Zone 8', value: 'BCA_Climate_Zone_8' },
+    ]);
 
     if (variables.length < 1) {
       OpenFiscaAPI.listEntities()
@@ -92,18 +106,30 @@ export default function CertificateEstimatorResidentialAC(props) {
     }
   }, []);
 
-  // For brands
   const populateDropDown = (newOption) => {
     setDropdownOptions((prev) => {
       return [...prev, newOption];
     });
   };
 
-  // For models   {text: abc, value: abc}
   const populateModelDropDown = (newOption) => {
     setDropdownOptionsModels((prev) => {
       return [...prev, newOption];
     });
+  };
+
+  const getClimateZoneText = (value) => {
+    const zoneMapping = {
+      1: 'BCA_Climate_Zone_1',
+      2: 'BCA_Climate_Zone_2',
+      3: 'BCA_Climate_Zone_3',
+      4: 'BCA_Climate_Zone_4',
+      5: 'BCA_Climate_Zone_5',
+      6: 'BCA_Climate_Zone_6',
+      7: 'BCA_Climate_Zone_7',
+      8: 'BCA_Climate_Zone_8',
+    };
+    return zoneMapping[value] || '';
   };
 
   useEffect(() => {
@@ -112,15 +138,17 @@ export default function CertificateEstimatorResidentialAC(props) {
     }
   }, [postcode]);
 
-  if (lastModified.length == 0) {
-    RegistryApi.getCommercialHVACLastModified()
-      .then((res) => {
-        setLastModified(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  useEffect(() => {
+    if (lastModified.length == 0) {
+      RegistryApi.getCommercialHVACLastModified()
+        .then((res) => {
+          setLastModified(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [lastModified]);
 
   const validatePostcode = (postcode) => {
     if (['2817', '2818', '2819'].includes(postcode)) {
@@ -167,8 +195,8 @@ export default function CertificateEstimatorResidentialAC(props) {
   }, [models]);
 
   useEffect(() => {
-    if (!selectedBrand) return null;
-    if (!selectedModel) return null;
+    if (!selectedBrand) return;
+    if (!selectedModel) return;
 
     var payload = {
       brand: selectedBrand,
@@ -209,11 +237,13 @@ export default function CertificateEstimatorResidentialAC(props) {
   }, [selectedBrand]);
 
   useEffect(() => {
+    if (!postcode) return;
+
     const payload = {
       buildings: {
         building_1: {
-          HVAC1_PDRS__postcode: { '2021-01-01': postcode },
-          HVAC1_get_climate_zone_by_postcode: { '2021-01-01': null },
+          HVAC1_PDRSAug24_PDRS__postcode: { '2021-01-01': postcode },
+          HVAC1_PDRSAug24_get_climate_zone_by_postcode: { '2021-01-01': null },
         },
       },
       persons: {
@@ -224,7 +254,9 @@ export default function CertificateEstimatorResidentialAC(props) {
     OpenFiscaApi.postCalculate(payload)
       .then((res) => {
         var result =
-          res.data.buildings.building_1['HVAC1_get_climate_zone_by_postcode']['2021-01-01'];
+          res.data.buildings.building_1['HVAC1_PDRSAug24_get_climate_zone_by_postcode'][
+            '2021-01-01'
+          ];
         setZone(result);
         console.log(result);
       })
@@ -233,6 +265,34 @@ export default function CertificateEstimatorResidentialAC(props) {
       });
 
     console.log(zone);
+
+    const payload_bca = {
+      buildings: {
+        building_1: {
+          HVAC1_PDRSAug24_PDRS__postcode: { '2021-01-01': postcode },
+          HVAC1_PDRSAug24_BCA_climate_zone_by_postcode: { '2021-01-01': null },
+        },
+      },
+      persons: {
+        person1: {},
+      },
+    };
+
+    OpenFiscaApi.postCalculate(payload_bca)
+      .then((res) => {
+        var result =
+          res.data.buildings.building_1['HVAC1_PDRSAug24_BCA_climate_zone_by_postcode'][
+            '2021-01-01'
+          ];
+        setBCAZone(result);
+        setSelectedClimateZone(getClimateZoneText(result));
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    console.log(BCAzone);
   }, [postcode]);
 
   return (
@@ -340,6 +400,31 @@ export default function CertificateEstimatorResidentialAC(props) {
                         required
                       />
                     </FormGroup>
+
+                    {postcode && postcode.length === 4 && (
+                      <FormGroup
+                        label="BCA Climate Zone"
+                        helper={
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                'Certain postcodes can belong to multiple climate zones, check your <a href="https://www.abcb.gov.au/resources/climate-zone-map" target="_blank">BCA Climate Zone on the map</a>',
+                            }}
+                          />
+                        } // primary question text
+                        errorText="Invalid value!" // error text if invalid
+                      >
+                        <Select
+                          style={{ maxWidth: '50%' }}
+                          options={dropdownOptionsClimateZone}
+                          onChange={(e) => {
+                            setSelectedClimateZone(e.target.value);
+                          }}
+                          value={selectedClimateZone}
+                          required
+                        />
+                      </FormGroup>
+                    )}
                     <FormGroup
                       label="Brand"
                       helper="Select residential air conditioner brand" // primary question text
@@ -391,10 +476,11 @@ export default function CertificateEstimatorResidentialAC(props) {
 
           {stepNumber === 2 && (
             <CertificateEstimatorResidentialACLoadClauses
-              variableToLoad1={'HVAC1_PRC_calculation'}
-              variableToLoad2={'HVAC1_ESC_calculation'}
-              annualEnergySavings={'HVAC1_annual_energy_savings'}
-              peakDemandReductionSavings={'HVAC1_peak_demand_annual_savings'}
+              variableToLoad1={'HVAC1_PDRSAug24_PRC_calculation'}
+              variableToLoad2={'HVAC1_PDRSAug24_ESC_calculation'}
+              annualEnergySavings={'HVAC1_PDRSAug24_annual_energy_savings'}
+              peakDemandReductionSavings={'HVAC1_PDRSAug24_peak_demand_annual_savings'}
+              selectedClimateZone={selectedClimateZone}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -451,10 +537,11 @@ export default function CertificateEstimatorResidentialAC(props) {
 
           {stepNumber === 3 && (
             <CertificateEstimatorResidentialACLoadClauses
-              variableToLoad1={'HVAC1_PRC_calculation'}
-              variableToLoad2={'HVAC1_ESC_calculation'}
-              annualEnergySavings={'HVAC1_annual_energy_savings'}
-              peakDemandReductionSavings={'HVAC1_peak_demand_annual_savings'}
+              variableToLoad1={'HVAC1_PDRSAug24_PRC_calculation'}
+              variableToLoad2={'HVAC1_PDRSAug24_ESC_calculation'}
+              annualEnergySavings={'HVAC1_PDRSAug24_annual_energy_savings'}
+              peakDemandReductionSavings={'HVAC1_PDRSAug24_peak_demand_annual_savings'}
+              selectedClimateZone={selectedClimateZone}
               variables={variables}
               entities={entities}
               metadata={metadata}

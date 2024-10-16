@@ -76,9 +76,23 @@ export default function LoadClausesWH1(props) {
     return JSON.stringify(result) + ' kW';
   };
 
-  const formatBooleanToString = (result) => {
-    return result === true ? 'Yes' : 'No';
+  const storageVolumeMapping = {
+    less_than_425_L: 'Less than 425 litres',
+    equal_425_L_to_700_L: '425 - 700 litres',
+    more_than_700_L: 'More than 700 litres',
   };
+
+  const formatStorageVolume = (value) => {
+    return storageVolumeMapping[value] || value;
+  };
+
+  const formatBooleanToString = (value) => {
+    return value ? 'Yes' : 'No';
+  };
+
+  const filteredClausesForm = clausesForm.filter(
+    (item) => !(item.name === 'WH1_F16_electric_PDRSAug24__storage_volume'),
+  );
 
   if (!variable) return null;
 
@@ -196,20 +210,24 @@ export default function LoadClausesWH1(props) {
                     style={{ width: '80%' }}
                   >
                     <p>
-                      {clausesForm.length > 0 &&
-                        clausesForm.map((item, i) => (
-                          <React.Fragment>
-                            <br></br>
-                            <br></br>
-                            <div class="nsw-global-alert__title">
-                              {item.metadata.display_question} :{' '}
-                              {formatBooleanToString(item.form_value)}
+                      {filteredClausesForm.length > 0 &&
+                        filteredClausesForm.map((item, i) => (
+                          <React.Fragment key={i}>
+                            <br />
+                            <br />
+                            <div className="nsw-global-alert__title">
+                              {item.metadata.display_question}:{' '}
+                              {item.name === 'WH1_F16_electric_PDRSAug24__storage_volume'
+                                ? formatStorageVolume(item.form_value)
+                                : item.value_type === 'Boolean'
+                                ? formatBooleanToString(item.form_value)
+                                : item.form_value}
                             </div>
                             <p style={{ whiteSpace: 'pre-line' }}>
                               {item.metadata.eligibility_clause &&
                                 item.metadata.eligibility_clause.split('<br />').join('\n')}
                             </p>
-                            <br></br>
+                            <br />
                           </React.Fragment>
                         ))}
                     </p>
@@ -246,73 +264,6 @@ export default function LoadClausesWH1(props) {
                     height: '1.5px',
                   }}
                 />
-              </div>
-
-              <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                <h4>More options</h4>
-                <br></br>
-
-                <div class="nsw-grid nsw-grid--spaced">
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="#" class="nsw-card__link">
-                            Back to estimator homepage
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="/#core-eligibility" class="nsw-card__link">
-                            Check core eligibility
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a
-                            href="/#commercial-electric-to-heat-pump-water-heater-certificates"
-                            class="nsw-card__link"
-                          >
-                            Estimate certificates for this activity
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </Fragment>

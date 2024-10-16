@@ -137,7 +137,7 @@ export default function CertificateEstimatorLoadClausesD19(props) {
       array1.map((formItem) => {
         console.log(metadata);
 
-        if (formItem.name === 'D19_system_size') {
+        if (formItem.name === 'D19_ESSJun24_system_size') {
           // console.log(formItem.form_value);
           console.log('zone is' + zone);
           formItem.form_value = metadata[`System_size_zone_${zone}`];
@@ -151,15 +151,15 @@ export default function CertificateEstimatorLoadClausesD19(props) {
           formItem.form_value = dic[metadata[`System_size_zone_${zone}`].toLowerCase()];
         }
 
-        if (formItem.name === 'D19_Be') {
+        if (formItem.name === 'D19_ESSJun24_Be') {
           formItem.form_value = metadata[`Be_annual_electrical_energy_usage_zone_${zone}`];
         }
 
-        if (formItem.name === 'D19_Bs') {
+        if (formItem.name === 'D19_ESSJun24_Bs') {
           formItem.form_value = metadata[`Bs_annual_supplementary_energy_zone_${zone}`];
         }
 
-        if (formItem.name === 'D19_PDRS__postcode') {
+        if (formItem.name === 'D19_ESSJun24_PDRS__postcode') {
           formItem.form_value = postcode;
           formItem.read_only = true;
         }
