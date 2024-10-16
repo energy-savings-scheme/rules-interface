@@ -150,21 +150,22 @@ export default function ActivityRequirementsBESS1(props) {
               <br></br>
               <p className="nsw-content-block__copy">
                 Answer the following questions to check if you meet the eligibility requirements for
-                the residential solar battery activity (BESS1 in the{' '}
+                the battery installation incentive (BESS1 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
                   target="_blank"
                 >
                   Peak Demand Reduction Scheme
                 </a>{' '}
-                ). This activity is for the installation of a new 'behind the meter' solar battery
-                at a residential address. A key requirement of this activity is that there is
-                already a solar PV system installed at the address.
+                ). This incentive is for the installation of a behind the meter battery at a
+                residential or small business address. A key requirement of this incentive is that
+                there is already a solar photovoltaic (PV) system installed at your address, though
+                sites without solar can have the incentive priced into the quote for a new solar and
+                battery install.
               </p>
               <p className="nsw-content-block__copy">
-                Note that this activity is only eligible for the Peak Demand Reduction Scheme, and
-                is not eligible for the Energy Savings Scheme. If ineligible, you will be shown the
-                ineligible answers and their corresponding rule clauses.
+                If you're ineligible, we'll show you why and give you the corresponding rule
+                clauses.
               </p>
               <p className="nsw-content-block__copy">
                 Please keep in mind that the results are a guide only and cannot be promoted or
