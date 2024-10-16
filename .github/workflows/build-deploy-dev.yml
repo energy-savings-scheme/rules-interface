@@ -42,6 +42,8 @@ jobs:
           # Install all npm packages
           yarn install
 
+          export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
+
           # Create .env file
           touch ./.env
           echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> ./.env
@@ -52,8 +54,6 @@ jobs:
           yarn run dist-build
           # Build the react pages
           yarn run build
-
-          export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
 
           # Prepare dist files to versioned directory
           mkdir -p ./build/dist/$REACT_APP_BUILD_VERSION
