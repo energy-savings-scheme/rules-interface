@@ -156,20 +156,21 @@ export default function ActivityRequirementsBESS2(props) {
               <br></br>
               <p className="nsw-content-block__copy">
                 Answer the following questions to check if you meet the eligibility requirements for
-                the residential solar battery demand response activity (BESS2 in the{' '}
+                the battery demand response incentive (BESS2 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
                   target="_blank"
                 >
                   Peak Demand Reduction Scheme
                 </a>{' '}
-                ). This activity is for the signup of a 'behind the meter' residential solar battery
-                to a demand response contract. A key requirement of this activity is that there is a
-                solar PV and battery system installed at the address.
+                ). This incentive is for the signup of your behind the meter battery to a
+                residential demand response contract, also known as a Virtual Power Plant (VPP). A
+                key requirement of this incentive is that there is a solar photovoltaic (PV) and
+                battery system installed at your address.
               </p>
               <p className="nsw-content-block__copy">
-                Note that this activity is only eligible for the Peak Demand Reduction Scheme, and
-                is not eligible for the Energy Savings Scheme.
+                If you're ineligible, we'll show you why and give you the corresponding rule
+                clauses.
               </p>
               <p className="nsw-content-block__copy">
                 Please keep in mind that the results are a guide only and cannot be promoted or

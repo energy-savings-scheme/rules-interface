@@ -43,11 +43,14 @@ export default function SolarBatteryEligibilityPage(props) {
                     The Safeguard certificate estimator reviews eligibility for:
                     <ul>
                       <li>installation of a new residential solar battery or</li>
-                      <li>signing up a solar battery to a demand response contract</li>
+                      <li>
+                        signing up a solar battery to a demand response contract, also known as a
+                        Virtual Power Plant (VPP)
+                      </li>
                     </ul>
                   </p>
                   <p className="nsw-content-block__copy">
-                    Both of these activities are for residential buildings only.
+                    Both of these incentives are for residential and small business sites only.
                   </p>
                 </div>
               </div>
@@ -69,8 +72,8 @@ export default function SolarBatteryEligibilityPage(props) {
               <div class="nsw-grid">
                 <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
-                    copy="Install a new residential battery energy storage system"
-                    headline="Install a new solar battery"
+                    copy="Install a new battery energy storage system "
+                    headline="Install a battery "
                     image="BESS1.jpg"
                     highlight
                     links={[
@@ -83,8 +86,8 @@ export default function SolarBatteryEligibilityPage(props) {
                 </div>
                 <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
-                    copy="Sign a residential battery energy storage system up to a demand response contract"
-                    headline="Sign a solar battery up to a demand response contract"
+                    copy="Sign a battery up to a demand response contract, also known as a Virtual Power Plant (VPP) "
+                    headline="Sign a battery up to a demand response contract "
                     image="BESS2.jpg"
                     highlight
                     links={[
