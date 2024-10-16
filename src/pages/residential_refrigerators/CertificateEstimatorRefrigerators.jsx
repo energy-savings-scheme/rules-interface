@@ -6,6 +6,7 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import CertificateEstimatorLoadClausesRefrigerators from './CertificateEstimatorLoadClausesRefrigerators';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorRefrigerators(props) {
   const { entities, variables, setVariables, setEntities } = props;
@@ -102,22 +103,24 @@ export default function CertificateEstimatorRefrigerators(props) {
   return (
     <Fragment>
       <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'res ref',
-          src: 'ResidentialFridgeFreezerRemoval.jpeg',
-        }}
-        intro="Residential and small business"
-        title="Spare refrigerator or freezer - certificates"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <HeroBanner
+          wide
+          style="dark"
+          image={{
+            alt: 'res ref',
+            src: 'ResidentialFridgeFreezerRemoval.jpeg',
+          }}
+          intro="Residential and small business"
+          title="Spare refrigerator or freezer - certificates"
+        />
+      )}
 
       <div className="nsw-container">
         <br></br>
         <br></br>
 
-        {stepNumber !== 2 && (
+        {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <h2 className="nsw-content-block__title">

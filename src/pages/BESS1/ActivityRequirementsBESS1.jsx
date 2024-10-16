@@ -20,6 +20,7 @@ import {
   HVAC2_installed_centralised_system_common_area_BCA_Class2_building,
   HVAC2_TCPSF_greater_than_minimum,
 } from 'types/openfisca_variables';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function ActivityRequirementsBESS1(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -130,21 +131,23 @@ export default function ActivityRequirementsBESS1(props) {
   return (
     <Fragment>
       <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial ac',
-          src: 'BESS1.jpg',
-        }}
-        intro="Residential"
-        title="Install a new household solar battery - eligibility"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <HeroBanner
+          wide
+          style="dark"
+          image={{
+            alt: 'commercial ac',
+            src: 'BESS1.jpg',
+          }}
+          intro="Residential"
+          title="Install a new household solar battery - eligibility"
+        />
+      )}
 
       <div className="nsw-container" style={{ marginBottom: '10%' }}>
         <br></br>
         <br></br>
-        {stepNumber !== 2 && (
+        {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
               <br></br>

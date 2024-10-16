@@ -20,6 +20,7 @@ import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { compareAsc, format, previousSunday } from 'date-fns';
 import axios from 'axios';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorHVAC(props) {
   const { entities, variables, hvacBrands, setVariables, setEntities, setHvacBrands } = props;
@@ -327,21 +328,23 @@ export default function CertificateEstimatorHVAC(props) {
   return (
     <Fragment>
       <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial ac',
-          src: '/commercialac/HVAC2Hero.jpeg',
-        }}
-        intro="Commercial"
-        title="Air conditioner - certificates"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <HeroBanner
+          wide
+          style="dark"
+          image={{
+            alt: 'commercial ac',
+            src: '/commercialac/HVAC2Hero.jpeg',
+          }}
+          intro="Commercial"
+          title="Air conditioner - certificates"
+        />
+      )}
 
       <div className="nsw-container">
         <br></br>
         <br></br>
-        {stepNumber !== 3 && (
+        {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <h2 className="nsw-content-block__title">

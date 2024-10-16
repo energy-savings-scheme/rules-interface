@@ -9,6 +9,7 @@ import Button from 'nsw-ds-react/button/button';
 import { Alert } from 'nsw-ds-react/alert/alert';
 import OpenFiscaApi from 'services/openfisca_api';
 import GlobalAlert from 'nsw-ds-react/global-alert/globalAlert';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorLoadClauses(props) {
   const {
@@ -414,69 +415,71 @@ export default function CertificateEstimatorLoadClauses(props) {
                 />
               </div>
 
-              <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                <h4>More options</h4>
-                <br></br>
+              {!IS_DRUPAL_PAGES && (
+                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
+                  <h4>More options</h4>
+                  <br></br>
 
-                <div class="nsw-grid nsw-grid--spaced">
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="#" class="nsw-card__link">
-                            Back to estimator homepage
-                          </a>
+                  <div class="nsw-grid nsw-grid--spaced">
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a href="#" class="nsw-card__link">
+                              Back to estimator homepage
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                            east
+                          </span>
                         </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="/#core-eligibility" class="nsw-card__link">
-                            Check core eligibility
-                          </a>
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a href="/#core-eligibility" class="nsw-card__link">
+                              Check core eligibility
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                            east
+                          </span>
                         </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="/#commercial-ac-activity-requirements" class="nsw-card__link">
-                            Review eligibility for this activity
-                          </a>
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a href="/#commercial-ac-activity-requirements" class="nsw-card__link">
+                              Review eligibility for this activity
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                            east
+                          </span>
                         </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </Fragment>
         )}
