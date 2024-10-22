@@ -13,6 +13,7 @@ export const C1_PDRSAug24_ESC_calculation = 'C1_PDRSAug24_ESC_calculation';
 export const F7_PDRSAug24_ESC_calculation = 'F7_PDRSAug24_ESC_calculation';
 
 export const HVAC1_PDRSAug24_BCA_Climate_Zone = 'HVAC1_PDRSAug24_BCA_Climate_Zone';
+export const HVAC2_PDRSAug24_BCA_Climate_Zone = 'HVAC2_PDRSAug24_BCA_Climate_Zone';
 
 export const BESS1_V5Nov24_installation_final_activity_eligibility =
   'BESS1_V5Nov24_installation_final_activity_eligibility';
