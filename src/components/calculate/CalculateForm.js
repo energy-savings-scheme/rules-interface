@@ -18,6 +18,7 @@ import {
   F7_PDRSAug24_ESC_calculation,
   F7_PDRSAug24_PDRS__postcode,
   HVAC1_PDRSAug24_BCA_Climate_Zone,
+  HVAC2_PDRSAug24_BCA_Climate_Zone,
 } from 'types/openfisca_variables';
 
 import { Float } from 'types/value_type';
@@ -135,6 +136,11 @@ export default function CalculateForm(props) {
           return { ...variable, form_value: option.value };
         }
       }
+
+      if (variable.name === HVAC2_PDRSAug24_BCA_Climate_Zone) {
+        variable.form_value = variable.form_value.replaceAll(' ', '_');
+      }
+
       return variable;
     });
 
