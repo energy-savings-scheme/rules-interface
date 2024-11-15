@@ -63,6 +63,9 @@ jobs:
           mkdir -p ./build/dist/latest
           cp -R ./dist/* ./build/dist/latest/
 
+          # Copy poc acp list folder
+          cp -R ./poc_acp/* ./build/dist/latest/
+
       - name: Deploy to Azure
         uses: TravisSpomer/deploy-to-azure-storage@v1.4.0
         with:
