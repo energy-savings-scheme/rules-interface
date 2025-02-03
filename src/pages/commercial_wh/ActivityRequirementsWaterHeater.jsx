@@ -11,8 +11,8 @@ import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesWH1 from './LoadClausesWh';
 import {
   F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility,
-  F16_electric_PDRSDec24__certified
-} from 'types/openfisca_variables'
+  F16_electric_PDRSDec24__certified,
+} from 'types/openfisca_variables';
 
 export default function ActivityRequirementsWH1(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -21,7 +21,7 @@ export default function ActivityRequirementsWH1(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility
+    F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility,
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);

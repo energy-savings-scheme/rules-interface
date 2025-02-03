@@ -43,6 +43,6 @@ export const BESS2_V5Nov24_usable_battery_capacity = 'BESS2_V5Nov24_usable_batte
 
 // Water heater electric (F16)
 export const F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility =
-  'F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility'
-export const F16_electric_PDRSDec24__storage_volume = 'F16_electric_PDRSDec24__storage_volume'
-export const F16_electric_PDRSDec24__certified = 'F16_electric_PDRSDec24__certified'
+  'F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility';
+export const F16_electric_PDRSDec24__storage_volume = 'F16_electric_PDRSDec24__storage_volume';
+export const F16_electric_PDRSDec24__certified = 'F16_electric_PDRSDec24__certified';

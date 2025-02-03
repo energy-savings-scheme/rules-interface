@@ -13,7 +13,7 @@ import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progres
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
-import {F16_electric_PDRSDec24__storage_volume} from 'types/openfisca_variables'
+import { F16_electric_PDRSDec24__storage_volume } from 'types/openfisca_variables';
 
 export default function LoadClausesWH1(props) {
   const {
