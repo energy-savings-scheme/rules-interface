@@ -11,7 +11,8 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesBESS1 from './LoadClausesActReq';
 import {
-  BESS1_V5Nov24_installation_final_activity_eligibility,
+  BESS1_PDRSDec24_installation_final_activity_eligibility,
+  BESS1_PDRSDec24_smoke_alarm,
   HVAC2_ACOP_eligible,
   HVAC2_AEER_greater_than_minimum,
   HVAC2_equipment_replaced,
@@ -29,7 +30,7 @@ export default function ActivityRequirementsBESS1(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    BESS1_V5Nov24_installation_final_activity_eligibility,
+    BESS1_PDRSDec24_installation_final_activity_eligibility,
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
@@ -95,6 +96,7 @@ export default function ActivityRequirementsBESS1(props) {
         HVAC2_HSPF_mixed_eligible,
         HVAC2_HSPF_cold_eligible,
         HVAC2_ACOP_eligible,
+        BESS1_PDRSDec24_smoke_alarm,
       ];
 
       dep_arr = array.filter((item) => names.includes(item.name));

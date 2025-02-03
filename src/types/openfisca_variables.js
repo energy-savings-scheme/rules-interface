@@ -19,6 +19,8 @@ export const BESS1_V5Nov24_installation_final_activity_eligibility =
   'BESS1_V5Nov24_installation_final_activity_eligibility';
 export const BESS2_V5Nov24_installation_final_activity_eligibility =
   'BESS2_V5Nov24_installation_final_activity_eligibility';
+export const BESS1_PDRSDec24_installation_final_activity_eligibility =
+  'BESS1_PDRSDec24_installation_final_activity_eligibility';
 
 export const BESS1_V5Nov24_peak_demand_annual_savings = 'BESS1_V5Nov24_peak_demand_annual_savings';
 export const BESS2_V5Nov24_peak_demand_annual_savings = 'BESS2_V5Nov24_peak_demand_annual_savings';
@@ -33,4 +35,14 @@ export const HVAC2_HSPF_cold_eligible = 'HVAC2_HSPF_cold_eligible';
 export const HVAC2_ACOP_eligible = 'HVAC2_ACOP_eligible';
 
 export const BESS1_V5Nov24_usable_battery_capacity = 'BESS1_V5Nov24_usable_battery_capacity';
+export const BESS1_PDRSDec24_inverter_installed = 'BESS1_PDRSDec24_inverter_installed';
+export const BESS1_PDRSDec24_inverter_warranty = 'BESS1_PDRSDec24_inverter_warranty';
+export const BESS1_PDRSDec24_installation_location = 'BESS1_PDRSDec24_installation_location';
+export const BESS1_PDRSDec24_smoke_alarm = 'BESS1_PDRSDec24_smoke_alarm';
 export const BESS2_V5Nov24_usable_battery_capacity = 'BESS2_V5Nov24_usable_battery_capacity';
+
+// Water heater electric (F16)
+export const F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility =
+  'F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility'
+export const F16_electric_PDRSDec24__storage_volume = 'F16_electric_PDRSDec24__storage_volume'
+export const F16_electric_PDRSDec24__certified = 'F16_electric_PDRSDec24__certified'
