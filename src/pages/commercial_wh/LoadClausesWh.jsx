@@ -13,6 +13,7 @@ import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progres
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
+import { F16_electric_PDRSDec24__storage_volume } from 'types/openfisca_variables';
 
 export default function LoadClausesWH1(props) {
   const {
@@ -91,7 +92,7 @@ export default function LoadClausesWH1(props) {
   };
 
   const filteredClausesForm = clausesForm.filter(
-    (item) => !(item.name === 'WH1_F16_electric_PDRSAug24__storage_volume'),
+    (item) => !(item.name === F16_electric_PDRSDec24__storage_volume),
   );
 
   if (!variable) return null;
@@ -217,7 +218,7 @@ export default function LoadClausesWH1(props) {
                             <br />
                             <div className="nsw-global-alert__title">
                               {item.metadata.display_question}:{' '}
-                              {item.name === 'WH1_F16_electric_PDRSAug24__storage_volume'
+                              {item.name === F16_electric_PDRSDec24__storage_volume
                                 ? formatStorageVolume(item.form_value)
                                 : item.value_type === 'Boolean'
                                 ? formatBooleanToString(item.form_value)

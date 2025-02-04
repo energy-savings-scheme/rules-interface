@@ -9,6 +9,10 @@ import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesWH1 from './LoadClausesWh';
+import {
+  F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility,
+  F16_electric_PDRSDec24__certified,
+} from 'types/openfisca_variables';
 
 export default function ActivityRequirementsWH1(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -17,7 +21,7 @@ export default function ActivityRequirementsWH1(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    'WH1_F16_electric_PDRSAug24__installation_replacement_final_activity_eligibility',
+    F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility,
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
@@ -89,7 +93,7 @@ export default function ActivityRequirementsWH1(props) {
 
       console.log(array);
 
-      const names = ['WH1_F16_electric_PDRSAug24__certified'];
+      const names = [F16_electric_PDRSDec24__certified];
 
       dep_arr = array.filter((item) => names.includes(item.name));
 
