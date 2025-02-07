@@ -289,7 +289,7 @@ export default function CertificateEstimatorLoadClausesWH(props) {
         {stepNumber === 3 && !calculationError && !calculationError2 && (
           <Fragment>
             {
-              <Alert as="info" title="ESCs and PRCs" style={{ width: '80%' }}>
+              <Alert as="info" title="ESCs" style={{ width: '80%' }}>
                 <p>
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   Based on the information provided, your ESCs are
@@ -298,10 +298,6 @@ export default function CertificateEstimatorLoadClausesWH(props) {
                   </span>
                   {/* </h4> */}
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
-                  and your PRCs are
-                  <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{Math.floor(calculationResult)}</b>
-                  </span>
                   {/* </h4> */}
                 </p>
                 <p>
@@ -311,17 +307,6 @@ export default function CertificateEstimatorLoadClausesWH(props) {
                       {Math.floor(calculationResult2) === 0
                         ? 0
                         : Math.round(annualEnergySavingsNumber * 100) / 100}
-                    </b>{' '}
-                    kWh{' '}
-                  </b>
-                </p>
-                <p>
-                  Your estimated annual peak demand reduction is{' '}
-                  <b>
-                    <b>
-                      {Math.floor(calculationResult) === 0
-                        ? 0
-                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
                     </b>{' '}
                     kWh{' '}
                   </b>

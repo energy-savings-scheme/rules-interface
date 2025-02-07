@@ -36,9 +36,10 @@ export const HVAC2_ACOP_eligible = 'HVAC2_ACOP_eligible';
 
 export const BESS1_V5Nov24_usable_battery_capacity = 'BESS1_V5Nov24_usable_battery_capacity';
 export const BESS1_PDRSDec24_inverter_installed = 'BESS1_PDRSDec24_inverter_installed';
-export const BESS1_PDRSDec24_inverter_warranty = 'BESS1_PDRSDec24_inverter_warranty';
 export const BESS1_PDRSDec24_installation_location = 'BESS1_PDRSDec24_installation_location';
 export const BESS1_PDRSDec24_smoke_alarm = 'BESS1_PDRSDec24_smoke_alarm';
+export const BESS1_PDRSDec24_inverter_warranty_length_eligible =
+  'BESS1_PDRSDec24_inverter_warranty_length_eligible';
 export const BESS2_V5Nov24_usable_battery_capacity = 'BESS2_V5Nov24_usable_battery_capacity';
 
 // Water heater electric (F16)
