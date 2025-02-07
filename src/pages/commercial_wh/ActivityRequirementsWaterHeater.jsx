@@ -86,7 +86,7 @@ export default function ActivityRequirementsWH1(props) {
       var dep_arr = [];
 
       children.map((child) => {
-        array.push({ ...child, form_value: '', invalid: false, hide: false });
+        array.push({ ...child, form_value: child.default_value, invalid: false, hide: false });
       });
 
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
@@ -168,13 +168,6 @@ export default function ActivityRequirementsWH1(props) {
                   target="_blank"
                 >
                   Energy Savings Scheme
-                </a>{' '}
-                and WH1 in the{' '}
-                <a
-                  href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
-                  target="_blank"
-                >
-                  Peak Demand Reduction Scheme
                 </a>
                 ). This activity is for replacement of an existing electric water heater with an
                 (air source) heat pump water heater.

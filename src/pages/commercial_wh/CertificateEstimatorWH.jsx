@@ -223,23 +223,16 @@ export default function CertificateEstimatorWH(props) {
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <p className="nsw-content-block__copy">
-                Estimate the energy savings certificates (ESCs) and peak reduction certificates
-                (PRCs) for the commercial heat pump water heater activity (F16 in the{' '}
+                Estimate the energy savings certificates (ESCs) for the commercial heat pump water
+                heater activity (F16 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
                 >
                   Energy Savings Scheme
-                </a>{' '}
-                and WH1 in the{' '}
-                <a
-                  href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
-                  target="_blank"
-                >
-                  Peak Demand Reduction Scheme
                 </a>
                 ) by answering the following questions. Note that a new installation activity will
-                not generate ESCs or PRCs.
+                not generate ESCs.
               </p>
               <p className="nsw-content-block__copy">
                 At the end of each week, commercial heat pump water heater specifications are

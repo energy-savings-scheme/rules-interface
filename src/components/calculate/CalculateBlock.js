@@ -8,7 +8,7 @@ import RadioButton from 'components/form_elements/RadioButton';
 import {
   BESS1_PDRSDec24_installation_location,
   BESS1_PDRSDec24_inverter_installed,
-  BESS1_PDRSDec24_inverter_warranty,
+  BESS1_PDRSDec24_inverter_warranty_length_eligible,
   BESS1_PDRSDec24_smoke_alarm,
   F16_electric_PDRSDec24__storage_volume,
   F16_electric_PDRSDec24__certified,
@@ -206,12 +206,25 @@ export default function CalculateBlock(props) {
       ).hide = true;
     }
 
+    if (formItem.name === F16_electric_PDRSDec24__storage_volume && formItem.form_value === true) {
+      formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = false;
+    } else if (
+      formItem.name === F16_electric_PDRSDec24__storage_volume &&
+      formItem.form_value === false
+    ) {
+      formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = true;
+    }
+
     const setItemValue = (e) => {
       if (formItem.name === BESS1_PDRSDec24_inverter_installed) {
         if (e.target.value === 'true') {
-          formValues.find((v) => v.name === BESS1_PDRSDec24_inverter_warranty).hide = false;
+          formValues.find(
+            (v) => v.name === BESS1_PDRSDec24_inverter_warranty_length_eligible,
+          ).hide = false;
         } else if (e.target.value === 'false') {
-          formValues.find((v) => v.name === BESS1_PDRSDec24_inverter_warranty).hide = true;
+          formValues.find(
+            (v) => v.name === BESS1_PDRSDec24_inverter_warranty_length_eligible,
+          ).hide = true;
         }
       }
 
