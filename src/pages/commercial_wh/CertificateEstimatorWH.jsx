@@ -8,15 +8,14 @@ import OpenFiscaApi from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
-import { format, previousSunday } from 'date-fns';
-import axios from 'axios';
+import { IS_DRUPAL_PAGES } from 'types/app_variables'
+
 
 export default function CertificateEstimatorWH(props) {
   const { entities, variables, brands } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
-  const [dependencies, setDependencies] = useState([]);
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [dropdownOptionsModels, setDropdownOptionsModels] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState(null);
@@ -204,16 +203,18 @@ export default function CertificateEstimatorWH(props) {
     <Fragment>
       {/* Search section */}
       <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial wh',
-          src: 'WH1(optimised).jpg',
-        }}
-        intro="Commercial"
-        title="Electric water heater replacement with an air source heat pump - certificates"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <HeroBanner
+          wide
+          style="dark"
+          image={{
+            alt: 'commercial wh',
+            src: 'WH1(optimised).jpg',
+          }}
+          intro="Commercial"
+          title="Electric water heater replacement with an air source heat pump - certificates"
+        />
+      )}
 
       <div className="nsw-container">
         <br></br>
@@ -223,8 +224,7 @@ export default function CertificateEstimatorWH(props) {
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <p className="nsw-content-block__copy">
-                Estimate the energy savings certificates (ESCs) for the commercial heat pump water
-                heater activity (F16 in the{' '}
+                Estimate the energy savings certificates (ESCs) for the commercial heat pump water heater activity (F16 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"

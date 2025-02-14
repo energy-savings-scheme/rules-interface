@@ -1,9 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
-import VariableSearchBar from 'pages/homepage/VariableSearchBar';
-
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
-import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
+import Card from 'nsw-ds-react/card/card';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
@@ -11,8 +8,9 @@ import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesWH1 from './LoadClausesWh';
 import {
   F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility,
-  F16_electric_PDRSDec24__certified,
-} from 'types/openfisca_variables';
+  F16_electric_PDRSDec24__certified
+} from 'types/openfisca_variables'
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function ActivityRequirementsWH1(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -21,7 +19,7 @@ export default function ActivityRequirementsWH1(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility,
+    F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
@@ -143,21 +141,23 @@ export default function ActivityRequirementsWH1(props) {
     <Fragment>
       {/* Search section */}
       <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial ac',
-          src: 'WH1(optimised).jpg',
-        }}
-        intro="Commercial"
-        title="Electric water heater replacement with an air source heat pump - eligibility"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <HeroBanner
+          wide
+          style="dark"
+          image={{
+            alt: 'commercial ac',
+            src: 'WH1(optimised).jpg',
+          }}
+          intro="Commercial"
+          title="Electric water heater replacement with an air source heat pump - eligibility"
+        />
+      )}
 
       <div className="nsw-container" style={{ marginBottom: '10%' }}>
         <br></br>
         <br></br>
-        {stepNumber !== 2 && (
+        {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
               <p className="nsw-content-block__copy">
@@ -219,7 +219,9 @@ export default function ActivityRequirementsWH1(props) {
           )}
         </Fragment>
       </div>
-      <section class="nsw-section nsw-section--off-white" style={{ backgroundColor: '#F5F5F5' }}>
+
+      {!IS_DRUPAL_PAGES && (
+        <section class="nsw-section nsw-section--off-white" style={{ backgroundColor: '#F5F5F5' }}>
         <div class="nsw-container" style={{ paddingBottom: '4rem' }}>
           <div class="nsw-layout">
             <div class="nsw-layout__main">
@@ -256,6 +258,7 @@ export default function ActivityRequirementsWH1(props) {
           </div>
         </div>
       </section>
+      )}
     </Fragment>
   );
 }
