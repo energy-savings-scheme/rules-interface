@@ -8,8 +8,7 @@ import OpenFiscaApi from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
-import { IS_DRUPAL_PAGES } from 'types/app_variables'
-
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorWH(props) {
   const { entities, variables, brands } = props;
@@ -224,7 +223,8 @@ export default function CertificateEstimatorWH(props) {
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <p className="nsw-content-block__copy">
-                Estimate the energy savings certificates (ESCs) for the commercial heat pump water heater activity (F16 in the{' '}
+                Estimate the energy savings certificates (ESCs) for the commercial heat pump water
+                heater activity (F16 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"

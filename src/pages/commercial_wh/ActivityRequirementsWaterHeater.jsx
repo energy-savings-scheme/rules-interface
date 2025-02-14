@@ -8,8 +8,8 @@ import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesWH1 from './LoadClausesWh';
 import {
   F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility,
-  F16_electric_PDRSDec24__certified
-} from 'types/openfisca_variables'
+  F16_electric_PDRSDec24__certified,
+} from 'types/openfisca_variables';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function ActivityRequirementsWH1(props) {
@@ -19,7 +19,7 @@ export default function ActivityRequirementsWH1(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility
+    F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility,
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
@@ -222,42 +222,42 @@ export default function ActivityRequirementsWH1(props) {
 
       {!IS_DRUPAL_PAGES && (
         <section class="nsw-section nsw-section--off-white" style={{ backgroundColor: '#F5F5F5' }}>
-        <div class="nsw-container" style={{ paddingBottom: '4rem' }}>
-          <div class="nsw-layout">
-            <div class="nsw-layout__main">
-              <br></br>
-              <br></br>
-              <h2 className="nsw-col nsw-content-block__title">
-                Check your eligibility and estimate certificates
-              </h2>
-              <br></br>
-              <div class="nsw-grid">
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Review schemes base eligibility, activity requirements and estimate certificates"
-                    link="base_eligibility_commercialac/"
-                    image="/commercialac/navigation_row/full_flow_card.jpeg"
-                  ></Card>
-                </div>
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Check activity requirements and estimate certificates"
-                    link="activity-requirements/"
-                    image="/commercialac/navigation_row/activity_certificates.png"
-                  ></Card>
-                </div>
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Estimate certificates only"
-                    link="compare2activities"
-                    image="/commercialac/navigation_row/certificates_only.jpg"
-                  ></Card>
+          <div class="nsw-container" style={{ paddingBottom: '4rem' }}>
+            <div class="nsw-layout">
+              <div class="nsw-layout__main">
+                <br></br>
+                <br></br>
+                <h2 className="nsw-col nsw-content-block__title">
+                  Check your eligibility and estimate certificates
+                </h2>
+                <br></br>
+                <div class="nsw-grid">
+                  <div className="nsw-col nsw-col-md-4">
+                    <Card
+                      headline="Review schemes base eligibility, activity requirements and estimate certificates"
+                      link="base_eligibility_commercialac/"
+                      image="/commercialac/navigation_row/full_flow_card.jpeg"
+                    ></Card>
+                  </div>
+                  <div className="nsw-col nsw-col-md-4">
+                    <Card
+                      headline="Check activity requirements and estimate certificates"
+                      link="activity-requirements/"
+                      image="/commercialac/navigation_row/activity_certificates.png"
+                    ></Card>
+                  </div>
+                  <div className="nsw-col nsw-col-md-4">
+                    <Card
+                      headline="Estimate certificates only"
+                      link="compare2activities"
+                      image="/commercialac/navigation_row/certificates_only.jpg"
+                    ></Card>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
       )}
     </Fragment>
   );
