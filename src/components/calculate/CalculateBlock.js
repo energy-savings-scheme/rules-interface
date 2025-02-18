@@ -5,6 +5,14 @@ import DateInput from 'components/form_elements/DateInput';
 import FormTextInput from 'components/form_elements/FormTextInput';
 import DropDownMenu from 'components/form_elements/DropDownMenu';
 import RadioButton from 'components/form_elements/RadioButton';
+import {
+  BESS1_PDRSDec24_installation_location,
+  BESS1_PDRSDec24_inverter_installed,
+  BESS1_PDRSDec24_inverter_warranty_length_eligible,
+  BESS1_PDRSDec24_smoke_alarm,
+  F16_electric_PDRSDec24__storage_volume,
+  F16_electric_PDRSDec24__certified,
+} from 'types/openfisca_variables';
 
 export default function CalculateBlock(props) {
   const {
@@ -56,8 +64,6 @@ export default function CalculateBlock(props) {
     console.log(zone);
   }
 
-  console.log('form values', formValues);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -70,9 +76,6 @@ export default function CalculateBlock(props) {
   const renderFormField = (formItem) => {
     var arr = [];
     arr = formValues.map((x) => ({ ...x }));
-
-    console.log(dependencies);
-    console.log(formValues);
 
     if (
       formItem.name === 'Base_meets_mandatory_requirement' &&
@@ -203,7 +206,36 @@ export default function CalculateBlock(props) {
       ).hide = true;
     }
 
+    if (formItem.name === F16_electric_PDRSDec24__storage_volume && formItem.form_value === true) {
+      formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = false;
+    } else if (
+      formItem.name === F16_electric_PDRSDec24__storage_volume &&
+      formItem.form_value === false
+    ) {
+      formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = true;
+    }
+
     const setItemValue = (e) => {
+      if (formItem.name === BESS1_PDRSDec24_inverter_installed) {
+        if (e.target.value === 'true') {
+          formValues.find(
+            (v) => v.name === BESS1_PDRSDec24_inverter_warranty_length_eligible,
+          ).hide = false;
+        } else if (e.target.value === 'false') {
+          formValues.find(
+            (v) => v.name === BESS1_PDRSDec24_inverter_warranty_length_eligible,
+          ).hide = true;
+        }
+      }
+
+      if (formItem.name === BESS1_PDRSDec24_installation_location) {
+        if (e.target.value === 'installed_outdoors') {
+          formValues.find((v) => v.name === BESS1_PDRSDec24_smoke_alarm).hide = true;
+        } else if (e.target.value === 'installed_indoors') {
+          formValues.find((v) => v.name === BESS1_PDRSDec24_smoke_alarm).hide = false;
+        }
+      }
+
       if (formItem.name === 'SYS2_multiple_speed') {
         if (e.target.value === 'true') {
           formValues.find((v) => v.name === 'SYS2_single_speed_input_power').hide = true;
@@ -480,11 +512,11 @@ export default function CalculateBlock(props) {
         }
       }
 
-      if (formItem.name === 'WH1_F16_electric_PDRSAug24__storage_volume') {
-        if (e.target.value === 'less_than_425_L' || e.target.value === 'equal_425_L_to_700_L') {
-          formValues.find((v) => v.name === 'WH1_F16_electric_PDRSAug24__certified').hide = false;
+      if (formItem.name === F16_electric_PDRSDec24__storage_volume) {
+        if (e.target.value === 'true') {
+          formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = false;
         } else {
-          formValues.find((v) => v.name === 'WH1_F16_electric_PDRSAug24__certified').hide = true;
+          formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = true;
         }
       }
 
