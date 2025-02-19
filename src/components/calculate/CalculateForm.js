@@ -19,6 +19,8 @@ import {
   F7_PDRSAug24_PDRS__postcode,
   HVAC1_PDRSAug24_BCA_Climate_Zone,
   HVAC2_PDRSAug24_BCA_Climate_Zone,
+  WH1_F16_electric_PDRSAug24_ESC_calculation,
+  WH1_F16_electric_PDRSAug24_PRC_calculation
 } from 'types/openfisca_variables';
 
 import { Float } from 'types/value_type';
@@ -355,6 +357,16 @@ export default function CalculateForm(props) {
               <b>Please answer the following questions to calculate your ESCs</b>
             </h5>
           ) : workflow === Workflow.CERTIFICATES &&
+            (variable.name === WH1_F16_electric_PDRSAug24_ESC_calculation ||
+            variable.name === WH1_F16_electric_PDRSAug24_PRC_calculation) ? (
+            // for now we just need to update the copy right now, this is just temporary solution
+            // that's why we adding this template below.
+            // F16 shouldn't have PRC anymore.
+            // TODO: Need to do refactor and find a good way on how to display this section properly.
+            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+              <b>Please answer the following questions to calculate your ESCs</b>
+            </h5>
+          ): workflow === Workflow.CERTIFICATES &&
             (variable.name === BESS1_V5Nov24_PRC_calculation ||
               variable.name === BESS2_V5Nov24_PRC_calculation) ? (
             <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
