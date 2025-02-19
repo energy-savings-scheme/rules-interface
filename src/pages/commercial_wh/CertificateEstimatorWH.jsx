@@ -9,7 +9,10 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
-import {WH1_F16_electric_PDRSAug24_PRC_calculation, WH1_F16_electric_PDRSAug24_ESC_calculation} from 'types/openfisca_variables';
+import {
+  WH1_F16_electric_PDRSAug24_PRC_calculation,
+  WH1_F16_electric_PDRSAug24_ESC_calculation,
+} from 'types/openfisca_variables';
 
 export default function CertificateEstimatorWH(props) {
   const { entities, variables, brands } = props;
