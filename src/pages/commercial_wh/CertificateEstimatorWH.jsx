@@ -9,6 +9,10 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import {
+  WH1_F16_electric_PDRSAug24_PRC_calculation,
+  WH1_F16_electric_PDRSAug24_ESC_calculation,
+} from 'types/openfisca_variables';
 
 export default function CertificateEstimatorWH(props) {
   const { entities, variables, brands } = props;
@@ -276,7 +280,7 @@ export default function CertificateEstimatorWH(props) {
                   <br></br>
                   <div className="nsw-content-block__content">
                     <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
-                      <b>Please answer the following questions to calculate your ESCs and PRCs</b>
+                      <b>Please answer the following questions to calculate your ESCs</b>
                     </h5>
 
                     <FormGroup
@@ -340,8 +344,8 @@ export default function CertificateEstimatorWH(props) {
 
           {stepNumber === 2 && (
             <CertificateEstimatorLoadClausesWH
-              variableToLoad1={'WH1_F16_electric_PDRSAug24_PRC_calculation'}
-              variableToLoad2={'WH1_F16_electric_PDRSAug24_ESC_calculation'}
+              variableToLoad1={WH1_F16_electric_PDRSAug24_PRC_calculation}
+              variableToLoad2={WH1_F16_electric_PDRSAug24_ESC_calculation}
               annualEnergySavings={'WH1_F16_electric_PDRSAug24_energy_savings'}
               peakDemandReductionSavings={'WH1_F16_electric_PDRSAug24_peak_demand_annual_savings'}
               variables={variables}
@@ -406,8 +410,8 @@ export default function CertificateEstimatorWH(props) {
 
           {stepNumber === 3 && (
             <CertificateEstimatorLoadClausesWH
-              variableToLoad1={'WH1_F16_electric_PDRSAug24_PRC_calculation'}
-              variableToLoad2={'WH1_F16_electric_PDRSAug24_ESC_calculation'}
+              variableToLoad1={WH1_F16_electric_PDRSAug24_PRC_calculation}
+              variableToLoad2={WH1_F16_electric_PDRSAug24_ESC_calculation}
               annualEnergySavings={'WH1_F16_electric_PDRSAug24_energy_savings'}
               peakDemandReductionSavings={'WH1_F16_electric_PDRSAug24_peak_demand_annual_savings'}
               variables={variables}
