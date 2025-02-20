@@ -243,14 +243,14 @@ export default function CertificateEstimatorF16_gas(props) {
         )}
 
         {/* {stepNumber === 3 && (
-      <div className="nsw-grid nsw-grid--spaced">
-        <div className="nsw-col nsw-col-md-10">
-          <h2 className="nsw-content-block__title">
-            Commercial Heat Pump Water Heater certificate estimator
-          </h2>
-        </div>
-      </div>
-    )} */}
+          <div className="nsw-grid nsw-grid--spaced">
+            <div className="nsw-col nsw-col-md-10">
+              <h2 className="nsw-content-block__title">
+                Commercial Heat Pump Water Heater certificate estimator
+              </h2>
+            </div>
+          </div>
+        )} */}
 
         <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%' }} />
 
