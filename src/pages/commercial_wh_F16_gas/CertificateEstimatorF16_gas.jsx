@@ -8,15 +8,13 @@ import OpenFiscaApi from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
-import { format, previousSunday } from 'date-fns';
-import axios from 'axios';
+import {IS_DRUPAL_PAGES} from 'types/app_variables';
 
 export default function CertificateEstimatorF16_gas(props) {
   const { entities, variables, brands } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
-  const [dependencies, setDependencies] = useState([]);
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [dropdownOptionsModels, setDropdownOptionsModels] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState(null);
@@ -93,7 +91,6 @@ export default function CertificateEstimatorF16_gas(props) {
       RegistryApi.getPostcodeValidation(postcode)
         .then((res) => {
           const persons = res.data;
-          console.log(res);
           if (
             persons.status === '200' &&
             persons.code === '200' &&
@@ -136,7 +133,6 @@ export default function CertificateEstimatorF16_gas(props) {
       brand: selectedBrand,
       model: selectedModel,
     };
-    console.log(payload);
     RegistryApi.getWHModelsMetadata(payload)
       .then((res) => {
         setMetadata(res.data);
@@ -144,8 +140,6 @@ export default function CertificateEstimatorF16_gas(props) {
       .catch((err) => {
         console.log(err);
       });
-
-    console.log(metadata);
   }, [selectedModel]);
 
   useEffect(() => {
@@ -155,8 +149,6 @@ export default function CertificateEstimatorF16_gas(props) {
   }, [brands]);
 
   useEffect(() => {
-    console.log(selectedBrand);
-
     RegistryApi.listWHModels(selectedBrand)
       .then((res) => {
         setModels(res.data);
@@ -166,8 +158,6 @@ export default function CertificateEstimatorF16_gas(props) {
         console.log(err);
         setRegistryData(false);
       });
-
-    console.log(models);
   }, [selectedBrand]);
 
   useEffect(() => {
@@ -188,33 +178,32 @@ export default function CertificateEstimatorF16_gas(props) {
         var result =
           res.data.buildings.building_1['WH1_get_HP_zone_by_BCA_climate_zone']['2023-01-01'];
         setZone(result);
-        console.log(result);
       })
       .catch((err) => {
         console.log(err);
       });
-
-    console.log('********');
-    console.log(zone);
   }, [postcode]);
 
   return (
     <Fragment>
       {/* Search section */}
-      <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial wh',
-          src: '/F16(optimised).jpg',
-        }}
-        intro="Commercial"
-        title="Gas water heater replacement with an air source heat pump - certificates"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial wh',
+              src: '/F16(optimised).jpg',
+            }}
+            intro="Commercial"
+            title="Gas water heater replacement with an air source heat pump - certificates"
+          />
+        </div>
+      )}
 
-      <div className="nsw-container">
-        {stepNumber !== 3 && (
+      <div className="nsw-container" style={{ marginTop: '1rem' }}>
+        {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <br></br>
