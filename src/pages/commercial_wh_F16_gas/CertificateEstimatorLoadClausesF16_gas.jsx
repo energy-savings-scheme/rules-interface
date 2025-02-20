@@ -8,6 +8,7 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorLoadClausesF16_gas(props) {
   const {
@@ -48,18 +49,10 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
     setPeakDemandReductionSavingsNumber,
   } = props;
 
-  console.log(variableToLoad1);
-  console.log(variableToLoad2);
-  console.log(metadata);
-  console.log('**********');
-  console.log(zone);
-  console.log(stepNumber);
-
   const [variable, setVariable] = useState({}); // all info about variable
 
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
-  const [dateInvalid, setDateInvalid] = useState(false);
 
   // const [formValues, setFormValues] = useState([]);
   const [dependencies, setDependencies] = useState([]);
@@ -92,9 +85,6 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
       });
   }, [variableToLoad2]);
 
-  console.log(variableData1);
-  console.log(variableData2);
-
   function addElement(arr, obj) {
     const { length } = arr;
     const id = length + 1;
@@ -114,9 +104,6 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
       const children1 = variables.filter((item) => offsprings1.includes(item.name));
       const children2 = variables.filter((item) => offsprings2.includes(item.name));
 
-      console.log(children1);
-      console.log(children2);
-
       // Define the original array (at a minimum include the Implementation Date)
       var array1 = [];
       var array2 = [];
@@ -131,13 +118,7 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
 
       array2.forEach((item) => addElement(array1, item));
 
-      console.log(array1);
-
       array1.map((formItem) => {
-        console.log(metadata);
-        // if (formItem.name === 'WH1_annual_energy_savings') {
-        //   formItem.form_value = metadata[`annual_energy_savings_${zone}`];
-        // }
         if (formItem.name === 'F16_gas_com_peak_load') {
           formItem.form_value = metadata[`ComPkLoad_zone_${zone}`];
         }
@@ -193,8 +174,6 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
   };
 
   if (!variable) return null;
-
-  console.log('******', selectedModel);
 
   return (
     <div className>
@@ -381,72 +360,74 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
                 />
               </div>
 
-              <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                <h4>More options</h4>
-                <br></br>
+              {!IS_DRUPAL_PAGES && (
+                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
+                  <h4>More options</h4>
+                  <br></br>
 
-                <div class="nsw-grid nsw-grid--spaced">
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="#" class="nsw-card__link">
-                            Back to estimator homepage
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="/#core-eligibility" class="nsw-card__link">
-                            Check core eligibility
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a
-                            href="/#commercial-gas-to-heat-pump-water-heater-eligibility"
-                            class="nsw-card__link"
+                  <div class="nsw-grid nsw-grid--spaced">
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a href="#" class="nsw-card__link">
+                              Back to estimator homepage
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
                           >
-                            Review eligibility for this activity
-                          </a>
+                            east
+                          </span>
                         </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
+                      </div>
+                    </div>
+
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a href="/#core-eligibility" class="nsw-card__link">
+                              Check core eligibility
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                            east
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a
+                              href="/#commercial-gas-to-heat-pump-water-heater-eligibility"
+                              class="nsw-card__link"
+                            >
+                              Review eligibility for this activity
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                            east
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </Fragment>
         )}
