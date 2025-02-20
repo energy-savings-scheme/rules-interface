@@ -9,7 +9,10 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
-import {WH1_F16_electric_PDRSAug24_PRC_calculation, WH1_F16_electric_PDRSAug24_ESC_calculation} from 'types/openfisca_variables';
+import {
+  WH1_F16_electric_PDRSAug24_PRC_calculation,
+  WH1_F16_electric_PDRSAug24_ESC_calculation,
+} from 'types/openfisca_variables';
 
 export default function CertificateEstimatorWH(props) {
   const { entities, variables, brands } = props;
@@ -221,37 +224,41 @@ export default function CertificateEstimatorWH(props) {
         <br></br>
 
         {stepNumber !== 3 && (
-          <div className="nsw-grid nsw-grid--spaced">
-            <div className="nsw-col nsw-col-md-10">
-              <p className="nsw-content-block__copy">
-                Estimate the energy savings certificates (ESCs) for the commercial heat pump water
-                heater activity (F16 in the{' '}
-                <a
-                  href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
-                  target="_blank"
-                >
-                  Energy Savings Scheme
-                </a>
-                ) by answering the following questions. Note that a new installation activity will
-                not generate ESCs.
-              </p>
-              <p className="nsw-content-block__copy">
-                At the end of each week, commercial heat pump water heater specifications are
-                automatically updated from the{' '}
-                <a
-                  href="https://tessa.energysustainabilityschemes.nsw.gov.au/ipart?id=accepted_products"
-                  target="_blank"
-                >
-                  Independent Pricing and Regulatory Tribunal (IPART) Product Registry
-                </a>{' '}
-                based on brand and model. You can also enter your own values.
-              </p>
-              <p className="nsw-content-block__copy">
-                Please keep in mind that the results are a guide only and cannot be promoted or
-                published.
-              </p>
-            </div>
-          </div>
+          <>
+            {!IS_DRUPAL_PAGES && (
+              <div className="nsw-grid nsw-grid--spaced">
+                <div className="nsw-col nsw-col-md-10">
+                  <p className="nsw-content-block__copy">
+                    Estimate the energy savings certificates (ESCs) for the commercial heat pump
+                    water heater activity (F16 in the{' '}
+                    <a
+                      href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
+                      target="_blank"
+                    >
+                      Energy Savings Scheme
+                    </a>
+                    ) by answering the following questions. Note that a new installation activity
+                    will not generate ESCs.
+                  </p>
+                  <p className="nsw-content-block__copy">
+                    At the end of each week, commercial heat pump water heater specifications are
+                    automatically updated from the{' '}
+                    <a
+                      href="https://tessa.energysustainabilityschemes.nsw.gov.au/ipart?id=accepted_products"
+                      target="_blank"
+                    >
+                      Independent Pricing and Regulatory Tribunal (IPART) Product Registry
+                    </a>{' '}
+                    based on brand and model. You can also enter your own values.
+                  </p>
+                  <p className="nsw-content-block__copy">
+                    Please keep in mind that the results are a guide only and cannot be promoted or
+                    published.
+                  </p>
+                </div>
+              </div>
+            )}
+          </>
         )}
 
         <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%' }} />
