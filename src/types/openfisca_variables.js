@@ -52,3 +52,4 @@ export const WH1_F16_electric_PDRSAug24_ESC_calculation =
   'WH1_F16_electric_PDRSAug24_ESC_calculation';
 export const WH1_F16_electric_PDRSAug24_PRC_calculation =
   'WH1_F16_electric_PDRSAug24_PRC_calculation';
+export const F16_gas_ESC_calculation = 'F16_gas_ESC_calculation';
