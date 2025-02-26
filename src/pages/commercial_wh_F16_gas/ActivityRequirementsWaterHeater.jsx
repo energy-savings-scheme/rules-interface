@@ -201,7 +201,10 @@ export default function ActivityRequirementsF16_gas(props) {
         </Fragment>
       </div>
       {!IS_DRUPAL_PAGES && (
-        <section className="nsw-section nsw-section--off-white" style={{ backgroundColor: '#F5F5F5' }}>
+        <section
+          className="nsw-section nsw-section--off-white"
+          style={{ backgroundColor: '#F5F5F5' }}
+        >
           <div className="nsw-container" style={{ paddingBottom: '4rem' }}>
             <div className="nsw-layout">
               <div className="nsw-layout__main">
