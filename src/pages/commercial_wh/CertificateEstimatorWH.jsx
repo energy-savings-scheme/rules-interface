@@ -10,8 +10,10 @@ import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import {
+  F16_electric_PDRSDec24_ESC_calculation,
   WH1_F16_electric_PDRSAug24_PRC_calculation,
-  WH1_F16_electric_PDRSAug24_ESC_calculation,
+  F16_electric_PDRSDec24_energy_savings,
+  WH1_F16_electric_PDRSAug24_peak_demand_annual_savings
 } from 'types/openfisca_variables';
 
 export default function CertificateEstimatorWH(props) {
@@ -345,9 +347,9 @@ export default function CertificateEstimatorWH(props) {
           {stepNumber === 2 && (
             <CertificateEstimatorLoadClausesWH
               variableToLoad1={WH1_F16_electric_PDRSAug24_PRC_calculation}
-              variableToLoad2={WH1_F16_electric_PDRSAug24_ESC_calculation}
-              annualEnergySavings={'WH1_F16_electric_PDRSAug24_energy_savings'}
-              peakDemandReductionSavings={'WH1_F16_electric_PDRSAug24_peak_demand_annual_savings'}
+              variableToLoad2={F16_electric_PDRSDec24_ESC_calculation}
+              annualEnergySavings={F16_electric_PDRSDec24_energy_savings}
+              peakDemandReductionSavings={WH1_F16_electric_PDRSAug24_peak_demand_annual_savings}
               variables={variables}
               entities={entities}
               metadata={metadata}
@@ -411,9 +413,9 @@ export default function CertificateEstimatorWH(props) {
           {stepNumber === 3 && (
             <CertificateEstimatorLoadClausesWH
               variableToLoad1={WH1_F16_electric_PDRSAug24_PRC_calculation}
-              variableToLoad2={WH1_F16_electric_PDRSAug24_ESC_calculation}
-              annualEnergySavings={'WH1_F16_electric_PDRSAug24_energy_savings'}
-              peakDemandReductionSavings={'WH1_F16_electric_PDRSAug24_peak_demand_annual_savings'}
+              variableToLoad2={F16_electric_PDRSDec24_ESC_calculation}
+              annualEnergySavings={F16_electric_PDRSDec24_energy_savings}
+              peakDemandReductionSavings={WH1_F16_electric_PDRSAug24_peak_demand_annual_savings}
               variables={variables}
               entities={entities}
               metadata={metadata}

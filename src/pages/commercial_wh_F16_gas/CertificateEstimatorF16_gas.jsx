@@ -8,7 +8,7 @@ import OpenFiscaApi from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
-import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import {IS_DRUPAL_PAGES} from 'types/app_variables';
 
 export default function CertificateEstimatorF16_gas(props) {
   const { entities, variables, brands } = props;
