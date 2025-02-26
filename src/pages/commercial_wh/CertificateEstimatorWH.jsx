@@ -13,7 +13,7 @@ import {
   F16_electric_PDRSDec24_ESC_calculation,
   WH1_F16_electric_PDRSAug24_PRC_calculation,
   F16_electric_PDRSDec24_energy_savings,
-  WH1_F16_electric_PDRSAug24_peak_demand_annual_savings
+  WH1_F16_electric_PDRSAug24_peak_demand_annual_savings,
 } from 'types/openfisca_variables';
 
 export default function CertificateEstimatorWH(props) {
