@@ -1,15 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
-import VariableSearchBar from 'pages/homepage/VariableSearchBar';
-
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
-import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
+import Card from 'nsw-ds-react/card/card';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
-import LoadClausesF17 from './LoadClausesF16_gas';
 import LoadClausesF16_gas from './LoadClausesF16_gas';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function ActivityRequirementsF16_gas(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -22,8 +19,6 @@ export default function ActivityRequirementsF16_gas(props) {
   );
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
-
-  console.log(variables);
 
   if (formValues.length === 0) {
     setLoading(true);
@@ -67,15 +62,9 @@ export default function ActivityRequirementsF16_gas(props) {
 
   useEffect(() => {
     if (variables.length > 0 && stepNumber === 1) {
-      console.log(variableToLoad);
-      console.log(variables);
       const variable = variables.find((item) => item.name === variableToLoad);
-      console.log(variable);
       const offsprings = variable.metadata.input_offspring;
-
-      console.log(offsprings);
       const children = variables.filter((item) => offsprings.includes(item.name));
-      console.log(children);
 
       // Define the original array (at a minimum include the Implementation Date)
       var array = [];
@@ -87,8 +76,6 @@ export default function ActivityRequirementsF16_gas(props) {
       });
 
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
-
-      console.log(array);
 
       const names = ['F17_certified'];
 
@@ -104,9 +91,6 @@ export default function ActivityRequirementsF16_gas(props) {
 
       array.map((obj) => dep_arr.find((o) => o.name === obj.name) || obj);
 
-      console.log(dep_arr);
-      console.log(array);
-
       setFormValues(array);
       setDependencies(dep_arr);
       setLoading(false);
@@ -114,9 +98,6 @@ export default function ActivityRequirementsF16_gas(props) {
   }, [variables, variableToLoad, stepNumber]);
 
   useEffect(() => {
-    console.log(formValues);
-    console.log(clausesForm);
-
     let new_arr = [];
 
     formValues
@@ -130,29 +111,30 @@ export default function ActivityRequirementsF16_gas(props) {
           new_arr.push(child);
       });
     setClausesForm(new_arr);
-
-    console.log(clausesForm);
   }, [stepNumber]);
 
   return (
     <Fragment>
       {/* Search section */}
-      <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial ac',
-          src: '/F16(optimised).jpg',
-        }}
-        intro="Commercial"
-        title="Gas water heater replacement with an air source heat pump - eligibility"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial ac',
+              src: '/F16(optimised).jpg',
+            }}
+            intro="Commercial"
+            title="Gas water heater replacement with an air source heat pump - eligibility"
+          />
+        </div>
+      )}
 
-      <div className="nsw-container" style={{ marginBottom: '10%' }}>
+      <div className="nsw-container" style={{ marginBottom: '10%', marginTop: '1rem' }}>
         <br></br>
         <br></br>
-        {stepNumber !== 2 && (
+        {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
               {/* <h2 className="nsw-content-block__title">
@@ -218,43 +200,48 @@ export default function ActivityRequirementsF16_gas(props) {
           )}
         </Fragment>
       </div>
-      <section class="nsw-section nsw-section--off-white" style={{ backgroundColor: '#F5F5F5' }}>
-        <div class="nsw-container" style={{ paddingBottom: '4rem' }}>
-          <div class="nsw-layout">
-            <div class="nsw-layout__main">
-              <br></br>
-              <br></br>
-              <h2 className="nsw-col nsw-content-block__title">
-                Check your eligibility and estimate certificates
-              </h2>
-              <br></br>
-              <div class="nsw-grid">
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Review schemes base eligibility, activity requirements and estimate certificates"
-                    link="base_eligibility_commercialac/"
-                    image="/commercialac/navigation_row/full_flow_card.jpeg"
-                  ></Card>
-                </div>
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Check activity requirements and estimate certificates"
-                    link="activity-requirements/"
-                    image="/commercialac/navigation_row/activity_certificates.png"
-                  ></Card>
-                </div>
-                <div className="nsw-col nsw-col-md-4">
-                  <Card
-                    headline="Estimate certificates only"
-                    link="compare2activities"
-                    image="/commercialac/navigation_row/certificates_only.jpg"
-                  ></Card>
+      {!IS_DRUPAL_PAGES && (
+        <section
+          className="nsw-section nsw-section--off-white"
+          style={{ backgroundColor: '#F5F5F5' }}
+        >
+          <div className="nsw-container" style={{ paddingBottom: '4rem' }}>
+            <div className="nsw-layout">
+              <div className="nsw-layout__main">
+                <br></br>
+                <br></br>
+                <h2 className="nsw-col nsw-content-block__title">
+                  Check your eligibility and estimate certificates
+                </h2>
+                <br></br>
+                <div className="nsw-grid">
+                  <div className="nsw-col nsw-col-md-4">
+                    <Card
+                      headline="Review schemes base eligibility, activity requirements and estimate certificates"
+                      link="base_eligibility_commercialac/"
+                      image="/commercialac/navigation_row/full_flow_card.jpeg"
+                    ></Card>
+                  </div>
+                  <div className="nsw-col nsw-col-md-4">
+                    <Card
+                      headline="Check activity requirements and estimate certificates"
+                      link="activity-requirements/"
+                      image="/commercialac/navigation_row/activity_certificates.png"
+                    ></Card>
+                  </div>
+                  <div className="nsw-col nsw-col-md-4">
+                    <Card
+                      headline="Estimate certificates only"
+                      link="compare2activities"
+                      image="/commercialac/navigation_row/certificates_only.jpg"
+                    ></Card>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </Fragment>
   );
 }
