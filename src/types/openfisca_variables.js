@@ -48,8 +48,10 @@ export const F16_electric_PDRSDec24__installation_replacement_final_activity_eli
 export const F16_electric_PDRSDec24__storage_volume = 'F16_electric_PDRSDec24__storage_volume';
 export const F16_electric_PDRSDec24__certified = 'F16_electric_PDRSDec24__certified';
 
-export const WH1_F16_electric_PDRSAug24_ESC_calculation =
-  'WH1_F16_electric_PDRSAug24_ESC_calculation';
+export const F16_electric_PDRSDec24_ESC_calculation = 'F16_electric_PDRSDec24_ESC_calculation';
 export const WH1_F16_electric_PDRSAug24_PRC_calculation =
   'WH1_F16_electric_PDRSAug24_PRC_calculation';
+export const F16_electric_PDRSDec24_energy_savings = 'F16_electric_PDRSDec24_energy_savings';
+export const WH1_F16_electric_PDRSAug24_peak_demand_annual_savings =
+  'WH1_F16_electric_PDRSAug24_peak_demand_annual_savings';
 export const F16_gas_ESC_calculation = 'F16_gas_ESC_calculation';
