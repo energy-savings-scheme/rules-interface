@@ -48,7 +48,7 @@ export default function CertificateEstimatorPP(props) {
   const [lastModified, setLastModified] = useState('');
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
-  const [userType, setUserType] = useState(null);
+  const [userType, setUserType] = useState('');
 
   useEffect(() => {
     if (annualEnergySavingsNumber < 0) {
@@ -531,9 +531,7 @@ export default function CertificateEstimatorPP(props) {
         </Fragment>
       </div>
       {stepNumber === 3 && (
-        <div className="nsw-m-top-md">
-          <FeedbackComponent />
-        </div>
+        <FeedbackComponent />
       )}
     </Fragment>
   );

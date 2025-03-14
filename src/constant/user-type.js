@@ -1,11 +1,11 @@
 export const USER_TYPE_OPTIONS = [
-    {text: 'Please select user type', item: ''},
-    {text: 'Accredited Certificate Provider', item: 'Accredited Certificate Provider'},
-    {text: 'Apartment Strata', item: 'Apartment Strata'},
-    {text: 'Business', item: 'Business'},
-    {text: 'Government', item: 'Government'},
-    {text: 'Household', item: 'Household'},
-    {text: 'Installer', item: 'Installer'},
-    {text: 'Manufacturer', item: 'Manufacturer'},
-    {text: 'Supplier', item: 'Supplier'}
+    {text: 'Please select user type', value: ''},
+    {text: 'Accredited Certificate Provider', value: 'Accredited Certificate Provider'},
+    {text: 'Apartment Strata', value: 'Apartment Strata'},
+    {text: 'Business', value: 'Business'},
+    {text: 'Government', value: 'Government'},
+    {text: 'Household', value: 'Household'},
+    {text: 'Installer', value: 'Installer'},
+    {text: 'Manufacturer', value: 'Manufacturer'},
+    {text: 'Supplier', value: 'Supplier'}
   ]
