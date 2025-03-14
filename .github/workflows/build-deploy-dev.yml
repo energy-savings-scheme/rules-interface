@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - nonprod
+      - feature/DG22-1942-feedback-segment-capture
 
 env:
   REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_DEV }}'
