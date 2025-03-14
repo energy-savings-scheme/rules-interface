@@ -49,6 +49,13 @@ export default function CertificateEstimatorPP(props) {
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
   const [userType, setUserType] = useState('');
+  const baseAnalyticsData = {
+    activityId: 'SYS2',
+    activityName: 'Pool Pumps',
+    activityType: 'Estimator',
+    formId: 'SYS2_C',
+    versionId: '202501_P',
+  }
 
   useEffect(() => {
     if (annualEnergySavingsNumber < 0) {
@@ -211,10 +218,10 @@ export default function CertificateEstimatorPP(props) {
 
   useEffect(() => {
     updateFeedbackFormAnalytics({
-      activityId: 'SYS2',
-      activityName: 'Pool Pumps',
-      activityType: 'Estimator',
-      versionId: '202501_P',
+      activityId: baseAnalyticsData.activityId,
+      activityName: baseAnalyticsData.activityName,
+      activityType: baseAnalyticsData.activityType,
+      versionId: baseAnalyticsData.versionId,
     })
   })
 
@@ -312,7 +319,7 @@ export default function CertificateEstimatorPP(props) {
                     </h5>
 
                     <FormGroup
-                      label="What is your interest in the scheme ?"
+                      label="What is your interest in the scheme?"
                       helper="Select the option that best describes you"
                     >
                       <Select
@@ -396,9 +403,6 @@ export default function CertificateEstimatorPP(props) {
           {stepNumber === 2 && loading && <SpinnerFullscreen />}
 
           {stepNumber === 2 && (
-            // <EstimatorFormAnalyticsContext.Provider value='empty'>
-            //
-            // </EstimatorFormAnalyticsContext.Provider>
             <CertificateEstimatorLoadClausesPP
               variableToLoad1={'SYS2_PDRSAug24_PRC_calculation'}
               variableToLoad2={'SYS2_PDRSAug24_ESC_calculation'}
@@ -509,11 +513,7 @@ export default function CertificateEstimatorPP(props) {
                     onClick={(e) => {
                       validatePostcode(postcode);
                       updateEstimatorFormAnalytics({
-                        activityId: 'SYS2',
-                        activityName: 'Pool Pumps',
-                        activityType: 'Estimator',
-                        formId: 'SYS2_C',
-                        versionId: '202501_P',
+                        ...baseAnalyticsData,
                         postcode: postcode,
                         brand: selectedBrand,
                         model: selectedModel,
