@@ -25,6 +25,7 @@ import {
 } from 'types/openfisca_variables';
 
 import { Float } from 'types/value_type';
+import {submitEstimatorFormAnalytics} from 'lib/analytics';
 
 export default function CalculateForm(props) {
   const {
@@ -191,6 +192,7 @@ export default function CalculateForm(props) {
         setCalculationError(false);
         setLoading(true);
         setShowError(false);
+        submitEstimatorFormAnalytics()
       })
       .catch((err) => {
         setCalculationResult(null);
