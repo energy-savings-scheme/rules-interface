@@ -8,7 +8,7 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import { Alert } from 'nsw-ds-react/alert/alert';
 import OpenFiscaApi from 'services/openfisca_api';
-import GlobalAlert from 'nsw-ds-react/global-alert/globalAlert';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorLoadClausesPP(props) {
   const {
@@ -49,11 +49,6 @@ export default function CertificateEstimatorLoadClausesPP(props) {
     setPeakDemandReductionSavingsNumber,
   } = props;
 
-  console.log(variableToLoad1);
-  console.log(variableToLoad2);
-  console.log(metadata);
-  console.log(postcode);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -90,9 +85,6 @@ export default function CertificateEstimatorLoadClausesPP(props) {
       });
   }, [variableToLoad2]);
 
-  console.log(variableData1);
-  console.log(variableData2);
-
   function addElement(arr, obj) {
     const { length } = arr;
     const id = length + 1;
@@ -112,9 +104,6 @@ export default function CertificateEstimatorLoadClausesPP(props) {
       const children1 = variables.filter((item) => offsprings1.includes(item.name));
       const children2 = variables.filter((item) => offsprings2.includes(item.name));
 
-      console.log(children1);
-      console.log(children2);
-
       // Define the original array (at a minimum include the Implementation Date)
       var array1 = [];
       var array2 = [];
@@ -129,12 +118,8 @@ export default function CertificateEstimatorLoadClausesPP(props) {
 
       array2.forEach((item) => addElement(array1, item));
 
-      console.log(array1);
-
       array1.map((formItem) => {
         if (formItem.name === 'SYS2_pool_pump_type') {
-          console.log(formItem.form_value);
-          console.log('pool pump type' + metadata['pool_pump_type']);
 
           const dct = {
             'multi speed': 'multiple_speed_pool_pump',
@@ -147,8 +132,6 @@ export default function CertificateEstimatorLoadClausesPP(props) {
         }
 
         if (formItem.name === 'SYS2_star_rating') {
-          console.log(formItem.form_value);
-
           const dic = {
             4.5: 'four_and_a_half_stars',
             5: 'five_stars',
@@ -381,78 +364,71 @@ export default function CertificateEstimatorLoadClausesPP(props) {
                 marginBottom: '5%',
               }}
             >
-              <div className="nsw-col-md-12" style={{ width: '80%' }}>
-                <hr
-                  style={{
-                    background: 'black',
-                    height: '1.5px',
-                  }}
-                />
-              </div>
+              {!IS_DRUPAL_PAGES && (
+                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
+                  <h4>More options</h4>
+                  <br></br>
 
-              <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                <h4>More options</h4>
-                <br></br>
-
-                <div class="nsw-grid nsw-grid--spaced">
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="#" class="nsw-card__link">
-                            Back to estimator homepage
-                          </a>
+                  <div class="nsw-grid nsw-grid--spaced">
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a href="#" class="nsw-card__link">
+                              Back to estimator homepage
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                            east
+                          </span>
                         </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="/#core-eligibility" class="nsw-card__link">
-                            Check core eligibility
-                          </a>
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a href="/#core-eligibility" class="nsw-card__link">
+                              Check core eligibility
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                            east
+                          </span>
                         </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="/#residential-pool-pump-eligibility" class="nsw-card__link">
-                            Review eligibility for this activity
-                          </a>
+                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div class="nsw-card__content null">
+                          <div class="nsw-card__title">
+                            <a href="/#residential-pool-pump-eligibility" class="nsw-card__link">
+                              Review eligibility for this activity
+                            </a>
+                          </div>
+                          <span
+                            class="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                            east
+                          </span>
                         </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </Fragment>
         )}

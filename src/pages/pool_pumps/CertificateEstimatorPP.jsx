@@ -1,24 +1,18 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, createContext } from 'react';
 
-import VariableSearchBar from 'pages/homepage/VariableSearchBar';
-
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
-import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
-import DropDownMenu from 'components/form_elements/DropDownMenu';
 import Button from 'nsw-ds-react/button/button';
-import { FormGroupSelect } from 'nsw-ds-react/forms';
 import { FormGroup, TextInput, Select } from 'nsw-ds-react/forms';
 import RegistryApi from 'services/registry_api';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
-import OpenFiscaApi from 'services/openfisca_api';
-import Notification from 'nsw-ds-react/notification/notification';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import CertificateEstimatorLoadClausesPP from './CertificateEstimatorLoadClausesPP';
-import { compareAsc, format, previousSunday } from 'date-fns';
-import axios from 'axios';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import {updateEstimatorFormAnalytics, updateFeedbackFormAnalytics} from 'lib/analytics';
+import FeedbackComponent from '../../components/feedback/feedback';
 
 export default function CertificateEstimatorPP(props) {
   const {
@@ -54,6 +48,7 @@ export default function CertificateEstimatorPP(props) {
   const [lastModified, setLastModified] = useState('');
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
+  const [userType, setUserType] = useState('');
 
   useEffect(() => {
     if (annualEnergySavingsNumber < 0) {
@@ -145,7 +140,6 @@ export default function CertificateEstimatorPP(props) {
       RegistryApi.getPostcodeValidation(postcode)
         .then((res) => {
           const persons = res.data;
-          console.log(res);
           if (
             persons.status === '200' &&
             persons.code === '200' &&
@@ -215,24 +209,34 @@ export default function CertificateEstimatorPP(props) {
       });
   }, [selectedBrand]);
 
+  useEffect(() => {
+    updateFeedbackFormAnalytics({
+      activityId: 'SYS2',
+      activityName: 'Pool Pumps',
+      activityType: 'Estimator',
+      versionId: '202501_P',
+    })
+  })
+
   return (
     <Fragment>
-      <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'pool pumps',
-          src: 'ResidentialPoolPumps.jpg',
-        }}
-        intro="Residential and small business"
-        title="Pool pump - certificates"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'pool pumps',
+              src: 'ResidentialPoolPumps.jpg',
+            }}
+            intro="Residential and small business"
+            title="Pool pump - certificates"
+          />
+        </div>
+      )}
 
-      <div className="nsw-container">
-        <br></br>
-        <br></br>
-        {stepNumber !== 3 && (
+      <div className="nsw-container" style={{ marginTop: '1rem' }}>
+        {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <h2 className="nsw-content-block__title">
@@ -274,7 +278,7 @@ export default function CertificateEstimatorPP(props) {
           </div>
         )}
 
-        {stepNumber === 3 && (
+        {!IS_DRUPAL_PAGES && stepNumber === 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
               <h2 className="nsw-content-block__title">
@@ -308,6 +312,21 @@ export default function CertificateEstimatorPP(props) {
                     </h5>
 
                     <FormGroup
+                      label="What is your interest in the scheme ?"
+                      helper="Select the option that best describes you"
+                    >
+                      <Select
+                        style={{ maxWidth: '50%' }}
+                        options={USER_TYPE_OPTIONS}
+                        onChange={(e) => {
+                          setUserType(e.target.value);
+                        }}
+                        value={userType}
+                        required
+                      />
+                    </FormGroup>
+
+                    <FormGroup
                       label="Postcode"
                       helper="Postcode where the installation has taken place" // helper text (secondary label)
                       errorText="Invalid value!" // error text if invalid
@@ -333,7 +352,9 @@ export default function CertificateEstimatorPP(props) {
                         style={{ maxWidth: '50%', marginBottom: '1%' }}
                         options={dropdownOptions}
                         onChange={(e) => {
-                          setSelectedBrand(PoolPumpBrands.find((item) => item === e.target.value));
+                          setSelectedBrand(
+                            PoolPumpBrands.find((item) => item === e.target.value),
+                          );
                         }}
                         value={selectedBrand}
                         required
@@ -375,6 +396,9 @@ export default function CertificateEstimatorPP(props) {
           {stepNumber === 2 && loading && <SpinnerFullscreen />}
 
           {stepNumber === 2 && (
+            // <EstimatorFormAnalyticsContext.Provider value='empty'>
+            //
+            // </EstimatorFormAnalyticsContext.Provider>
             <CertificateEstimatorLoadClausesPP
               variableToLoad1={'SYS2_PDRSAug24_PRC_calculation'}
               variableToLoad2={'SYS2_PDRSAug24_ESC_calculation'}
@@ -476,13 +500,25 @@ export default function CertificateEstimatorPP(props) {
             postcode &&
             postcode.length === 4 &&
             selectedBrand &&
-            selectedModel && (
+            selectedModel &&
+            userType && (
               <div className="nsw-row" style={{ paddingTop: '30px', width: '80%' }}>
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"
                     onClick={(e) => {
                       validatePostcode(postcode);
+                      updateEstimatorFormAnalytics({
+                        activityId: 'SYS2',
+                        activityName: 'Pool Pumps',
+                        activityType: 'Estimator',
+                        formId: 'SYS2_C',
+                        versionId: '202501_P',
+                        postcode: postcode,
+                        brand: selectedBrand,
+                        model: selectedModel,
+                        userType: userType,
+                      });
                       // setFlow(null);
                       // setStepNumber(stepNumber + 1);
                     }}
@@ -494,6 +530,9 @@ export default function CertificateEstimatorPP(props) {
             )}
         </Fragment>
       </div>
+      {stepNumber === 3 && (
+        <FeedbackComponent />
+      )}
     </Fragment>
   );
 }
