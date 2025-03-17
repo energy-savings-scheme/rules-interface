@@ -8,7 +8,6 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import { Alert } from 'nsw-ds-react/alert/alert';
 import OpenFiscaApi from 'services/openfisca_api';
-import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorLoadClausesPP(props) {
   const {
@@ -94,15 +93,9 @@ export default function CertificateEstimatorLoadClausesPP(props) {
   }
 
   useEffect(() => {
-    if (variables) {
-      const variable1 = variables.find((item) => item.name === variableToLoad1);
-      const variable2 = variables.find((item) => item.name === variableToLoad2);
-
-      const offsprings1 = variable1.metadata.input_offspring;
-      const offsprings2 = variable2.metadata.input_offspring;
-
-      const children1 = variables.filter((item) => offsprings1.includes(item.name));
-      const children2 = variables.filter((item) => offsprings2.includes(item.name));
+    if (Object.keys(variableData1).length && Object.keys(variableData2).length) {
+      const children1 = variableData1.input_offsprings;
+      const children2 = variableData2.input_offsprings;
 
       // Define the original array (at a minimum include the Implementation Date)
       var array1 = [];

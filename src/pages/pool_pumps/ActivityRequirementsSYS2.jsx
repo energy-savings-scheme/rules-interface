@@ -1,9 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
-import VariableSearchBar from 'pages/homepage/VariableSearchBar';
-
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
-import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
@@ -19,16 +15,11 @@ export default function ActivityRequirementsSYS2(props) {
   const [variableToLoad, setVariableToLoad] = useState(
     'SYS2_PDRSAug24_replacement_final_activity_eligibility',
   );
+  const [variable, setVariable] = useState({});
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
 
-  console.log(variables);
-
   if (formValues.length === 0) {
-    setLoading(true);
-  } else if (variables.length === 0) {
-    setLoading(true);
-  } else if (variables.length === 0) {
     setLoading(true);
   } else {
     setLoading(false);
@@ -40,41 +31,22 @@ export default function ActivityRequirementsSYS2(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    if (variables.length < 1) {
-      OpenFiscaAPI.listEntities()
-        .then((res) => {
-          setEntities(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   }, []);
 
   useEffect(() => {
-    if (variables.length > 0 && stepNumber === 1) {
-      console.log(variableToLoad);
-      console.log(variables);
-      const variable = variables.find((item) => item.name === variableToLoad);
-      console.log(variable);
-      const offsprings = variable.metadata.input_offspring;
+    OpenFiscaAPI.getVariable(variableToLoad)
+      .then((res) => {
+        setVariable(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [variableToLoad]);
 
-      console.log(offsprings);
-      const children = variables.filter((item) => offsprings.includes(item.name));
-      console.log(children);
+  useEffect(() => {
+    if (Object.keys(variable).length && stepNumber === 1) {
+      const children = variable.input_offsprings;
 
       // Define the original array (at a minimum include the Implementation Date)
       var array = [];
@@ -86,8 +58,6 @@ export default function ActivityRequirementsSYS2(props) {
       });
 
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
-
-      console.log(array);
 
       const names = ['SYS2_PDRSAug24_existing_equipment_removed'];
 
@@ -102,14 +72,11 @@ export default function ActivityRequirementsSYS2(props) {
 
       array.map((obj) => dep_arr.find((o) => o.name === obj.name) || obj);
 
-      console.log(dep_arr);
-      console.log(array);
-
       setFormValues(array);
       setDependencies(dep_arr);
       setLoading(false);
     }
-  }, [variables, variableToLoad, stepNumber]);
+  }, [variable]);
 
   useEffect(() => {
     console.log(formValues);
