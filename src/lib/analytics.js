@@ -11,24 +11,24 @@ class FormAnalytics {
   }
 }
 
-const ESTIMATOR_FORM_ANALYTICS = new FormAnalytics('SafeguardEstimator')
-const FEEDBACK_FORM_ANALYTICS = new FormAnalytics('SafeguardFeedback')
+const estimatorFormAnalytics = new FormAnalytics('SafeguardEstimator')
+const feedbackFormAnalytics = new FormAnalytics('SafeguardFeedback')
 
 export function updateEstimatorFormAnalytics(values) {
-  ESTIMATOR_FORM_ANALYTICS.updateData(values)
-  return ESTIMATOR_FORM_ANALYTICS.values
+  estimatorFormAnalytics.updateData(values)
+  return estimatorFormAnalytics.values
 }
 
 export function updateFeedbackFormAnalytics(values) {
-  FEEDBACK_FORM_ANALYTICS.updateData(values)
-  return FEEDBACK_FORM_ANALYTICS.values
+  feedbackFormAnalytics.updateData(values)
+  return feedbackFormAnalytics.values
 }
 
 export function submitEstimatorFormAnalytics() {
   window.dataLayer = window.dataLayer || [];
   const submittedData = {
-    ...ESTIMATOR_FORM_ANALYTICS.values,
-    event: ESTIMATOR_FORM_ANALYTICS.event,
+    ...estimatorFormAnalytics.values,
+    event: estimatorFormAnalytics.event,
     submittedAt: moment().utc().format()
   }
   window.dataLayer.push(submittedData);
@@ -38,8 +38,8 @@ export function submitEstimatorFormAnalytics() {
 export function submitFeedbackFormAnalytics(isHelpful) {
   window.dataLayer = window.dataLayer || [];
   const submittedData = {
-    ...FEEDBACK_FORM_ANALYTICS.values,
-    event: FEEDBACK_FORM_ANALYTICS.event,
+    ...feedbackFormAnalytics.values,
+    event: feedbackFormAnalytics.event,
     isHelpful: isHelpful,
     submittedAt: moment().utc().format()
   }
