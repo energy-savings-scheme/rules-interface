@@ -84,16 +84,6 @@ export default function CertificateEstimatorPP(props) {
         });
     }
 
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
     if (PoolPumpBrands.length < 1) {
       RegistryApi.getPoolPumpBrands()
         .then((res) => {
@@ -256,6 +246,7 @@ export default function CertificateEstimatorPP(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Energy Savings Scheme
                 </a>{' '}
@@ -263,6 +254,7 @@ export default function CertificateEstimatorPP(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Peak Demand Reduction Scheme
                 </a>
@@ -362,6 +354,7 @@ export default function CertificateEstimatorPP(props) {
                           setSelectedBrand(
                             PoolPumpBrands.find((item) => item === e.target.value),
                           );
+                          setSelectedModel('');
                         }}
                         value={selectedBrand}
                         required
@@ -531,7 +524,85 @@ export default function CertificateEstimatorPP(props) {
         </Fragment>
       </div>
       {stepNumber === 3 && (
-        <FeedbackComponent />
+        <>
+          <FeedbackComponent />
+          {!IS_DRUPAL_PAGES && (
+            <div className="nsw-container">
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
+                  <h4>More options</h4>
+                  <br></br>
+
+                  <div className="nsw-grid nsw-grid--spaced">
+                    <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div className="nsw-card__content null">
+                          <div className="nsw-card__title">
+                            <a href="#" className="nsw-card__link">
+                              Back to estimator homepage
+                            </a>
+                          </div>
+                          <span
+                            className="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                                  east
+                                </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div className="nsw-card__content null">
+                          <div className="nsw-card__title">
+                            <a href="/#core-eligibility" className="nsw-card__link">
+                              Check core eligibility
+                            </a>
+                          </div>
+                          <span
+                            className="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                                  east
+                                </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div className="nsw-card__content null">
+                          <div className="nsw-card__title">
+                            <a href="/#residential-pool-pump-eligibility" className="nsw-card__link">
+                              Review eligibility for this activity
+                            </a>
+                          </div>
+                          <span
+                            className="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                                  east
+                                </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </Fragment>
   );

@@ -56,14 +56,6 @@ export default function CalculateBlock(props) {
     setPeakDemandReductionSavingsNumber,
   } = props;
 
-  if (metadata) {
-    console.log(metadata);
-  }
-
-  if (zone) {
-    console.log(zone);
-  }
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
