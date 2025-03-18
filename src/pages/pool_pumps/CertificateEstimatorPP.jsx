@@ -354,6 +354,7 @@ export default function CertificateEstimatorPP(props) {
                           setSelectedBrand(
                             PoolPumpBrands.find((item) => item === e.target.value),
                           );
+                          setSelectedModel('');
                         }}
                         value={selectedBrand}
                         required
