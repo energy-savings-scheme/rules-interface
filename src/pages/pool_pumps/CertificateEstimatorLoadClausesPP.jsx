@@ -113,7 +113,6 @@ export default function CertificateEstimatorLoadClausesPP(props) {
 
       array1.map((formItem) => {
         if (formItem.name === 'SYS2_pool_pump_type') {
-
           const dct = {
             'multi speed': 'multiple_speed_pool_pump',
             'single speed': 'single_speed_pool_pump',

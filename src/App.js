@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
 
 // Import Pages
-import CalculatePage from 'pages/calculate/CalculatePage';
 import Homepage from 'pages/homepage/Homepage';
-import BaseEligibilityCommercialAC from 'pages/base_eligibility/BaseEligibility';
-import BaseEligibilityCommercialWH from 'pages/commercial_wh/BaseEligibilityCommercialWhPage';
 import ActivityRequirementsCommercialAC from 'pages/commercial_ac/ActivityRequirementsAirCon';
 import ActivityRequirementsSYS1 from 'pages/commercial_motors/ActivityRequirementsSYS1';
 import EligibilityPage from 'pages/homepage/EligibilityPage';
@@ -19,15 +16,12 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 
 // Import services
 import OpenFiscaAPI from 'services/openfisca_api';
-import variable_tree from 'services/variable_tree.json';
 
 // Import styles
 //import './styles/App.css';
 import 'nsw-design-system/src/main.scss';
 import '@fontsource/public-sans';
 import '@fontsource/public-sans/600.css';
-import CommercialAC from 'pages/commercial_ac/CommercialAcPage';
-import CommercialWH from 'pages/commercial_wh/CommercialWhPage';
 import RegistryApi from 'services/registry_api';
 import CertificateEstimatorHVAC from 'pages/commercial_ac/CertificateEstimator';
 import CertificateEstimatorWH from 'pages/commercial_wh/CertificateEstimatorWH';
@@ -73,13 +67,13 @@ function App() {
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hvacBrands, setHvacBrands] = useState([]);
-  const [hvacModels, setHvacModels] = useState([]);
   const [whBrands, setWhBrands] = useState([]);
   const [RF2Brands, setRF2Brands] = useState([]);
   const [PoolPumpBrands, setPoolPumpBrands] = useState([]);
   const [resHPBrands, setresHPBrands] = useState([]);
   const [resSolarWaterHeaterBrands, setResSolarWaterHeaterBrands] = useState([]);
   const [resSolarBatteryBrands, setResSolarBatteryBrands] = useState([]);
+  const location = useLocation();
 
   console.log(`Loading version "${process.env.REACT_APP_BUILD_VERSION}".`);
   useEffect(() => {
@@ -90,28 +84,39 @@ function App() {
     OpenFiscaAPI.listEntities()
       .then((res) => {
         setEntities(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    OpenFiscaAPI.listVariables()
-      .then((res) => {
-        setVariables(res.data);
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
 
-    OpenFiscaAPI.listActivities()
-      .then((res) => {
-        setActivities(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    /*
+     * These API calls will be removed in the future, since it is no longer needed
+     * but for now we need them for backward compatibility for performance improvement changes
+     * and only the residential pool pump have been implemented the changes
+     * */
+    if (
+      location.hash !== '#/residential-pool-pump-certificates' &&
+      location.hash !== '#/residential-pool-pump-eligibility'
+    ) {
+      OpenFiscaAPI.listVariables()
+        .then((res) => {
+          setVariables(res.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      OpenFiscaAPI.listActivities()
+        .then((res) => {
+          setActivities(res.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
 
     RegistryApi.getCommercialHVACBrands()
       .then((res) => {
@@ -175,7 +180,7 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [location]);
 
   return (
     <Router>
