@@ -351,9 +351,7 @@ export default function CertificateEstimatorPP(props) {
                         style={{ maxWidth: '50%', marginBottom: '1%' }}
                         options={dropdownOptions}
                         onChange={(e) => {
-                          setSelectedBrand(
-                            PoolPumpBrands.find((item) => item === e.target.value),
-                          );
+                          setSelectedBrand(PoolPumpBrands.find((item) => item === e.target.value));
                           setSelectedModel('');
                         }}
                         value={selectedBrand}
