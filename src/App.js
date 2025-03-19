@@ -73,7 +73,7 @@ function App() {
   const [resHPBrands, setresHPBrands] = useState([]);
   const [resSolarWaterHeaterBrands, setResSolarWaterHeaterBrands] = useState([]);
   const [resSolarBatteryBrands, setResSolarBatteryBrands] = useState([]);
-  const location = useLocation()
+  const location = useLocation();
 
   console.log(`Loading version "${process.env.REACT_APP_BUILD_VERSION}".`);
   useEffect(() => {
@@ -91,10 +91,10 @@ function App() {
       });
 
     /*
-    * These API calls will be removed in the future, since it is no longer needed
-    * but for now we need them for backward compatibility for performance improvement changes
-    * and only the residential pool pump certificates have been implemented the changes
-    * */
+     * These API calls will be removed in the future, since it is no longer needed
+     * but for now we need them for backward compatibility for performance improvement changes
+     * and only the residential pool pump certificates have been implemented the changes
+     * */
     if (location.hash !== '#/residential-pool-pump-certificates') {
       OpenFiscaAPI.listVariables()
         .then((res) => {
@@ -114,7 +114,6 @@ function App() {
           console.log(err);
         });
     }
-
 
     RegistryApi.getCommercialHVACBrands()
       .then((res) => {

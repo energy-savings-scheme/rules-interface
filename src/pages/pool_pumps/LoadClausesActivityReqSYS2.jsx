@@ -281,8 +281,8 @@ export default function LoadClausesSYS2(props) {
                             focusable="false"
                             aria-hidden="true"
                           >
-                          east
-                        </span>
+                            east
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -300,8 +300,8 @@ export default function LoadClausesSYS2(props) {
                             focusable="false"
                             aria-hidden="true"
                           >
-                          east
-                        </span>
+                            east
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -310,7 +310,10 @@ export default function LoadClausesSYS2(props) {
                       <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
                         <div className="nsw-card__content null">
                           <div className="nsw-card__title">
-                            <a href="/#residential-pool-pump-certificates" className="nsw-card__link">
+                            <a
+                              href="/#residential-pool-pump-certificates"
+                              className="nsw-card__link"
+                            >
                               Estimate certificates for this activity
                             </a>
                           </div>
@@ -319,8 +322,8 @@ export default function LoadClausesSYS2(props) {
                             focusable="false"
                             aria-hidden="true"
                           >
-                          east
-                        </span>
+                            east
+                          </span>
                         </div>
                       </div>
                     </div>

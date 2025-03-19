@@ -11,7 +11,7 @@ import Alert from 'nsw-ds-react/alert/alert';
 import CertificateEstimatorLoadClausesPP from './CertificateEstimatorLoadClausesPP';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import {updateEstimatorFormAnalytics, updateFeedbackFormAnalytics} from 'lib/analytics';
+import { updateEstimatorFormAnalytics, updateFeedbackFormAnalytics } from 'lib/analytics';
 import FeedbackComponent from '../../components/feedback/feedback';
 
 export default function CertificateEstimatorPP(props) {
@@ -55,7 +55,7 @@ export default function CertificateEstimatorPP(props) {
     activityType: 'Estimator',
     formId: 'SYS2_C',
     versionId: '202501_P',
-  }
+  };
 
   useEffect(() => {
     if (annualEnergySavingsNumber < 0) {
@@ -212,8 +212,8 @@ export default function CertificateEstimatorPP(props) {
       activityName: baseAnalyticsData.activityName,
       activityType: baseAnalyticsData.activityType,
       versionId: baseAnalyticsData.versionId,
-    })
-  })
+    });
+  });
 
   return (
     <Fragment>
@@ -351,9 +351,7 @@ export default function CertificateEstimatorPP(props) {
                         style={{ maxWidth: '50%', marginBottom: '1%' }}
                         options={dropdownOptions}
                         onChange={(e) => {
-                          setSelectedBrand(
-                            PoolPumpBrands.find((item) => item === e.target.value),
-                          );
+                          setSelectedBrand(PoolPumpBrands.find((item) => item === e.target.value));
                           setSelectedModel('');
                         }}
                         value={selectedBrand}
@@ -554,8 +552,8 @@ export default function CertificateEstimatorPP(props) {
                             focusable="false"
                             aria-hidden="true"
                           >
-                                  east
-                                </span>
+                            east
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -573,8 +571,8 @@ export default function CertificateEstimatorPP(props) {
                             focusable="false"
                             aria-hidden="true"
                           >
-                                  east
-                                </span>
+                            east
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -583,7 +581,10 @@ export default function CertificateEstimatorPP(props) {
                       <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
                         <div className="nsw-card__content null">
                           <div className="nsw-card__title">
-                            <a href="/#residential-pool-pump-eligibility" className="nsw-card__link">
+                            <a
+                              href="/#residential-pool-pump-eligibility"
+                              className="nsw-card__link"
+                            >
                               Review eligibility for this activity
                             </a>
                           </div>
@@ -592,8 +593,8 @@ export default function CertificateEstimatorPP(props) {
                             focusable="false"
                             aria-hidden="true"
                           >
-                                  east
-                                </span>
+                            east
+                          </span>
                         </div>
                       </div>
                     </div>

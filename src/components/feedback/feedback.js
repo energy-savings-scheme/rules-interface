@@ -1,6 +1,5 @@
 import React from 'react';
-import {submitFeedbackFormAnalytics} from 'lib/analytics';
-
+import { submitFeedbackFormAnalytics } from 'lib/analytics';
 
 export default function FeedbackComponent(props) {
   const [isSubmitted, setIsSubmitted] = React.useState(false);
