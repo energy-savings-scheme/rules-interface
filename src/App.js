@@ -91,11 +91,11 @@ function App() {
       });
 
     /*
-     * These API calls will be removed in the future, since it is no longer needed
-     * but for now we need them for backward compatibility for performance improvement changes
-     * and only the residential pool pump certificates have been implemented the changes
-     * */
-    if (location.hash !== '#/residential-pool-pump-certificates') {
+    * These API calls will be removed in the future, since it is no longer needed
+    * but for now we need them for backward compatibility for performance improvement changes
+    * and only the residential pool pump have been implemented the changes
+    * */
+    if (location.hash !== '#/residential-pool-pump-certificates' && location.hash !== '#/residential-pool-pump-eligibility') {
       OpenFiscaAPI.listVariables()
         .then((res) => {
           setVariables(res.data);
