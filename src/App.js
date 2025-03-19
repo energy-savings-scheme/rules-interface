@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
 
 // Import Pages
 import Homepage from 'pages/homepage/Homepage';
@@ -64,6 +64,7 @@ import { IS_DRUPAL_PAGES } from 'types/app_variables';
 function App() {
   const [entities, setEntities] = useState([]);
   const [variables, setVariables] = useState([]);
+  const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hvacBrands, setHvacBrands] = useState([]);
   const [whBrands, setWhBrands] = useState([]);
@@ -72,6 +73,7 @@ function App() {
   const [resHPBrands, setresHPBrands] = useState([]);
   const [resSolarWaterHeaterBrands, setResSolarWaterHeaterBrands] = useState([]);
   const [resSolarBatteryBrands, setResSolarBatteryBrands] = useState([]);
+  const location = useLocation()
 
   console.log(`Loading version "${process.env.REACT_APP_BUILD_VERSION}".`);
   useEffect(() => {
@@ -87,6 +89,32 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
+
+    /*
+    * These API calls will be removed in the future, since it is no longer needed
+    * but for now we need them for backward compatibility for performance improvement changes
+    * and only the residential pool pump certificates have been implemented the changes
+    * */
+    if (location.hash !== '#/residential-pool-pump-certificates') {
+      OpenFiscaAPI.listVariables()
+        .then((res) => {
+          setVariables(res.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      OpenFiscaAPI.listActivities()
+        .then((res) => {
+          setActivities(res.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
 
     RegistryApi.getCommercialHVACBrands()
       .then((res) => {
@@ -150,11 +178,11 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [location]);
 
   return (
     <Router>
-      {!IS_DRUPAL_PAGES && <Header />}
+      {!IS_DRUPAL_PAGES && <Header variables={variables} />}
 
       {loading && <SpinnerFullscreen />}
 
