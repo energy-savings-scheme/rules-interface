@@ -5,6 +5,7 @@ import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesSYS2 from './LoadClausesActivityReqSYS2';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function ActivityRequirementsSYS2(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -104,22 +105,23 @@ export default function ActivityRequirementsSYS2(props) {
   return (
     <Fragment>
       {/* Search section */}
-      <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial ac',
-          src: 'base_elig_hero.jpg',
-        }}
-        intro="Residential and small business"
-        title="Pool pump - eligibility"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial ac',
+              src: 'base_elig_hero.jpg',
+            }}
+            intro="Residential and small business"
+            title="Pool pump - eligibility"
+          />
+        </div>
+      )}
 
-      <div className="nsw-container" style={{ marginBottom: '10%' }}>
-        <br></br>
-        <br></br>
-        {stepNumber !== 2 && (
+      <div className="nsw-container" style={{ marginBottom: '10%', marginTop: '1rem' }}>
+        {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
               <h2 className="nsw-content-block__title">
