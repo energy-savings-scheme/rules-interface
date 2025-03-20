@@ -6,6 +6,10 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesSYS2 from './LoadClausesActivityReqSYS2';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import FeedbackComponent from 'components/feedback/feedback';
+import { FormGroup, Select } from '../../nsw-ds-react/forms';
+import { USER_TYPE_OPTIONS } from '../../constant/user-type';
+import {SYS2_PDRSAug24_replacement_final_activity_eligibility} from 'types/openfisca_variables';
 
 export default function ActivityRequirementsSYS2(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -14,11 +18,12 @@ export default function ActivityRequirementsSYS2(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    'SYS2_PDRSAug24_replacement_final_activity_eligibility',
+    SYS2_PDRSAug24_replacement_final_activity_eligibility,
   );
   const [variable, setVariable] = useState({});
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
+  const [userType, setUserType] = useState('');
 
   if (formValues.length === 0) {
     setLoading(true);
@@ -72,7 +77,7 @@ export default function ActivityRequirementsSYS2(props) {
       dep_arr = dep_arr.map((obj, i) => ({ ...obj, hide: true }));
 
       array.map((obj) => dep_arr.find((o) => o.name === obj.name) || obj);
-
+      
       setFormValues(array);
       setDependencies(dep_arr);
       setLoading(false);
@@ -80,9 +85,6 @@ export default function ActivityRequirementsSYS2(props) {
   }, [variable]);
 
   useEffect(() => {
-    console.log(formValues);
-    console.log(clausesForm);
-
     let new_arr = [];
 
     formValues
@@ -120,7 +122,7 @@ export default function ActivityRequirementsSYS2(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ marginBottom: '10%', marginTop: '1rem' }}>
+      <div className="nsw-container" style={{ marginTop: '1rem' }}>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
@@ -174,7 +176,27 @@ export default function ActivityRequirementsSYS2(props) {
         <Fragment>
           {loading && <SpinnerFullscreen />}
           {!loading && (
-            <LoadClausesSYS2
+            <>
+              {stepNumber === 1 && (
+                <FormGroup
+                  label="What is your interest in the scheme?"
+                  helper="Select the option that best describes you"
+                  className="nsw-m-bottom-xs nsw-m-top-md"
+                  htmlId="user-type"
+                >
+                  <Select
+                    htmlId="user-type"
+                    style={{ maxWidth: '50%' }}
+                    options={USER_TYPE_OPTIONS}
+                    onChange={(e) => {
+                      setUserType(e.target.value);
+                    }}
+                    value={userType}
+                    required
+                  />
+                </FormGroup>
+              )}
+              <LoadClausesSYS2
               variableToLoad={variableToLoad}
               variables={variables}
               entities={entities}
@@ -191,9 +213,94 @@ export default function ActivityRequirementsSYS2(props) {
                 setStepNumber(stepNumber - 1);
               }}
             />
+            </>
           )}
         </Fragment>
       </div>
+      {stepNumber === 2 && (
+        <>
+          <FeedbackComponent />
+          {!IS_DRUPAL_PAGES && (
+            <div className="nsw-container">
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
+                  <h4>More options</h4>
+                  <br></br>
+
+                  <div className="nsw-grid nsw-grid--spaced">
+                    <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div className="nsw-card__content null">
+                          <div className="nsw-card__title">
+                            <a href="#" className="nsw-card__link">
+                              Back to estimator homepage
+                            </a>
+                          </div>
+                          <span
+                            className="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                                east
+                              </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div className="nsw-card__content null">
+                          <div className="nsw-card__title">
+                            <a href="/#core-eligibility" className="nsw-card__link">
+                              Check core eligibility
+                            </a>
+                          </div>
+                          <span
+                            className="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                                east
+                              </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div className="nsw-card__content null">
+                          <div className="nsw-card__title">
+                            <a
+                              href="/#residential-pool-pump-certificates"
+                              className="nsw-card__link"
+                            >
+                              Estimate certificates for this activity
+                            </a>
+                          </div>
+                          <span
+                            className="material-icons nsw-material-icons nsw-card__icon"
+                            focusable="false"
+                            aria-hidden="true"
+                          >
+                                east
+                              </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </Fragment>
   );
 }
