@@ -5,8 +5,7 @@ import Button from 'nsw-ds-react/button/button';
 import Alert from 'nsw-ds-react/alert/alert';
 
 import { Spinner } from 'react-bootstrap';
-import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
-import axios from 'axios';
+
 import RegistryApi from 'services/registry_api';
 import {
   BESS1_V5Nov24_PDRS__postcode,
@@ -22,10 +21,12 @@ import {
   F16_electric_PDRSDec24_ESC_calculation,
   WH1_F16_electric_PDRSAug24_PRC_calculation,
   F16_gas_ESC_calculation,
+  SYS2_PDRSAug24_replacement_final_activity_eligibility
 } from 'types/openfisca_variables';
 
 import { Float } from 'types/value_type';
-import {submitEstimatorFormAnalytics} from 'lib/analytics';
+import { submitEstimatorFormAnalytics, updateEstimatorFormAnalytics, updateFeedbackFormAnalytics } from 'lib/analytics';
+import { BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
 
 export default function CalculateForm(props) {
   const {
@@ -166,6 +167,25 @@ export default function CalculateForm(props) {
     };
 
     if (workflow === Workflow.ELIGIBILITY) {
+      // collect data for analytics
+      // this is temporary for the pool pump eligibility activity only until applied to all activities
+      if (variable.name === SYS2_PDRSAug24_replacement_final_activity_eligibility) {
+        const userType = document.querySelector('select#user-type')
+        if (!userType.value) {
+          document.querySelector('select#user-type').reportValidity();
+          document.querySelector('select#user-type').setCustomValidity('Please select an item in the list.')
+          setLoading(false);
+          return false;
+        } else {
+          updateEstimatorFormAnalytics({
+            ...BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA,
+            userType: userType.value
+          })
+          updateFeedbackFormAnalytics({
+            ...BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA
+          })
+        }
+      }
       formValues
         .filter((x) => x.hide === false)
         .map((variable) => {
