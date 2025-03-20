@@ -55,3 +55,6 @@ export const F16_electric_PDRSDec24_energy_savings = 'F16_electric_PDRSDec24_ene
 export const WH1_F16_electric_PDRSAug24_peak_demand_annual_savings =
   'WH1_F16_electric_PDRSAug24_peak_demand_annual_savings';
 export const F16_gas_ESC_calculation = 'F16_gas_ESC_calculation';
+
+// POOL PUMPS
+export const SYS2_PDRSAug24_replacement_final_activity_eligibility = 'SYS2_PDRSAug24_replacement_final_activity_eligibility';
