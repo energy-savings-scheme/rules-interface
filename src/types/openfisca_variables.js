@@ -58,6 +58,7 @@ export const F16_gas_ESC_calculation = 'F16_gas_ESC_calculation';
 
 // POOL PUMPS
 export const SYS2_PDRSAug24_replacement_final_activity_eligibility = 'SYS2_PDRSAug24_replacement_final_activity_eligibility';
+export const SYS2_PDRSAug24_new_installation_or_replacement = 'SYS2_PDRSAug24_new_installation_or_replacement';
 
 // CORE ELIGIBILITY
 export const ESS__PDRS__ACP_base_scheme_eligibility = 'ESS__PDRS__ACP_base_scheme_eligibility';
