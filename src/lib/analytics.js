@@ -7,7 +7,7 @@ class FormAnalytics {
   }
 
   updateData(values) {
-    this.values = values
+    Object.assign(this.values, values)
   }
 }
 

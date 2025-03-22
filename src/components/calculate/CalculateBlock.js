@@ -207,6 +207,10 @@ export default function CalculateBlock(props) {
       formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = true;
     }
 
+    if (formItem.name === 'SYS2_PDRSAug24_new_installation_or_replacement') {
+      formItem.defaultOption = { text: 'Please select activity', value: '', disabled: true }
+    }
+
     const setItemValue = (e) => {
       if (formItem.name === BESS1_PDRSDec24_inverter_installed) {
         if (e.target.value === 'true') {
