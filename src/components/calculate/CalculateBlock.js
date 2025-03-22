@@ -12,6 +12,7 @@ import {
   BESS1_PDRSDec24_smoke_alarm,
   F16_electric_PDRSDec24__storage_volume,
   F16_electric_PDRSDec24__certified,
+  SYS2_PDRSAug24_new_installation_or_replacement
 } from 'types/openfisca_variables';
 
 export default function CalculateBlock(props) {
@@ -207,7 +208,7 @@ export default function CalculateBlock(props) {
       formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = true;
     }
 
-    if (formItem.name === 'SYS2_PDRSAug24_new_installation_or_replacement') {
+    if (formItem.name === SYS2_PDRSAug24_new_installation_or_replacement) {
       formItem.defaultOption = { text: 'Please select activity', value: '', disabled: true }
     }
 
@@ -244,7 +245,7 @@ export default function CalculateBlock(props) {
         }
       }
 
-      if (formItem.name === 'SYS2_PDRSAug24_new_installation_or_replacement') {
+      if (formItem.name === SYS2_PDRSAug24_new_installation_or_replacement) {
         if (e.target.value === 'replacement_activity') {
           formValues.find(
             (v) => v.name === 'SYS2_PDRSAug24_existing_equipment_removed',

@@ -75,7 +75,7 @@ function App() {
   const [resSolarBatteryBrands, setResSolarBatteryBrands] = useState([]);
   const location = useLocation()
 
-  const notImplementPerformceImprovement = function(hash) {
+  const notImplementPerformanceImprovement = function(hash) {
     const listPathHasPerformanceImprovement = [
       'residential-pool-pump-certificates',
       'residential-pool-pump-eligibility',
@@ -110,7 +110,7 @@ function App() {
     * but for now we need them for backward compatibility for performance improvement changes
     * and only the residential pool pump have been implemented the changes
     * */
-    if (notImplementPerformceImprovement(location.hash)) {
+    if (notImplementPerformanceImprovement(location.hash)) {
       OpenFiscaAPI.listVariables()
         .then((res) => {
           setVariables(res.data);
