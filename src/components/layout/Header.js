@@ -1,13 +1,9 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { MainNav } from 'nsw-ds-react/main-nav/mainNav';
-import { Breadcrumbs } from 'nsw-ds-react/breadcrumbs/breadcrumb';
-import VariableSearchBar from 'pages/homepage/VariableSearchBar';
 import 'nsw-design-system/dist/css/main.css';
-import nextId from 'react-id-generator';
 
 export default function Header(props) {
-  const { variables } = props;
   return (
     <Fragment>
       <div className="nsw-masthead" style={{ marginBottom: 20, backgroundColor: '#ffffff' }}>

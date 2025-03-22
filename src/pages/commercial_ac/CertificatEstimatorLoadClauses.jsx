@@ -8,7 +8,6 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import { Alert } from 'nsw-ds-react/alert/alert';
 import OpenFiscaApi from 'services/openfisca_api';
-import GlobalAlert from 'nsw-ds-react/global-alert/globalAlert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorLoadClauses(props) {
@@ -62,11 +61,6 @@ export default function CertificateEstimatorLoadClauses(props) {
     BCA_Climate_Zone_8: 'BCA Climate Zone 8',
   };
 
-  console.log(variableToLoad1);
-  console.log(variableToLoad2);
-  console.log(metadata);
-  console.log(postcode);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -79,8 +73,8 @@ export default function CertificateEstimatorLoadClauses(props) {
   // const [formValues, setFormValues] = useState([]);
   const [dependencies, setDependencies] = useState([]);
 
-  const [variableData1, setVariableData1] = useState([]);
-  const [variableData2, setVariableData2] = useState([]);
+  const [variableData1, setVariableData1] = useState({});
+  const [variableData2, setVariableData2] = useState({});
 
   useEffect(() => {
     OpenFiscaApi.getVariable(variableToLoad1)
@@ -104,9 +98,6 @@ export default function CertificateEstimatorLoadClauses(props) {
       });
   }, [variableToLoad2]);
 
-  console.log(variableData1);
-  console.log(variableData2);
-
   function addElement(arr, obj) {
     const { length } = arr;
     const id = length + 1;
@@ -116,18 +107,9 @@ export default function CertificateEstimatorLoadClauses(props) {
   }
 
   useEffect(() => {
-    if (variables) {
-      const variable1 = variables.find((item) => item.name === variableToLoad1);
-      const variable2 = variables.find((item) => item.name === variableToLoad2);
-
-      const offsprings1 = variable1.metadata.input_offspring;
-      const offsprings2 = variable2.metadata.input_offspring;
-
-      const children1 = variables.filter((item) => offsprings1.includes(item.name));
-      const children2 = variables.filter((item) => offsprings2.includes(item.name));
-
-      console.log(children1);
-      console.log(children2);
+    if (Object.keys(variableData1).length && Object.keys(variableData2).length) {
+      const children1 = variableData1.input_offsprings;
+      const children2 = variableData2.input_offsprings;
 
       // Define the original array (at a minimum include the Implementation Date)
       var array1 = [];
@@ -143,11 +125,8 @@ export default function CertificateEstimatorLoadClauses(props) {
 
       array2.forEach((item) => addElement(array1, item));
 
-      console.log(array1);
-
       array1.map((formItem) => {
         if (formItem.name === 'HVAC2_PDRSAug24_rated_AEER_input') {
-          console.log(formItem.form_value);
           formItem.form_value = metadata['Rated AEER'];
         }
 

@@ -7,16 +7,14 @@ import OpenFiscaApi from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
-import { format, previousSunday } from 'date-fns';
-import axios from 'axios';
 import CertificateEstimatorLoadClausesD20 from './CertificateEstimatorLoadClausesD20';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorResidentialGasReplacementSolarWaterHeater(props) {
   const { entities, variables, brands } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
-  const [dependencies, setDependencies] = useState([]);
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [dropdownOptionsModels, setDropdownOptionsModels] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState(null);
@@ -107,7 +105,6 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
       RegistryApi.getPostcodeValidation(postcode)
         .then((res) => {
           const persons = res.data;
-          console.log(res);
           if (
             persons.status === '200' &&
             persons.code === '200' &&
@@ -149,7 +146,6 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
       brand: selectedBrand,
       model: selectedModel,
     };
-    console.log(payload);
     RegistryApi.getResidentialSolarWaterHeaterMetadata(payload)
       .then((res) => {
         setMetadata(res.data);
@@ -157,8 +153,6 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
       .catch((err) => {
         console.log(err);
       });
-
-    console.log(metadata);
   }, [selectedModel]);
 
   useEffect(() => {
@@ -168,8 +162,6 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
   }, [brands]);
 
   useEffect(() => {
-    console.log(selectedBrand);
-
     RegistryApi.getResidentialSolarWaterHeaterModels(selectedBrand)
       .then((res) => {
         setModels(res.data);
@@ -179,8 +171,6 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
         console.log(err);
         setRegistryData(false);
       });
-
-    console.log(models);
   }, [selectedBrand]);
 
   useEffect(() => {
@@ -203,34 +193,31 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
             '2023-01-01'
           ];
         setZone(result);
-        console.log(result);
       })
       .catch((err) => {
         console.log(err);
       });
-
-    console.log(zone);
   }, [postcode]);
 
   return (
     <Fragment>
-      <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial wh',
-          src: 'iStock-1322180347(optimised).jpg',
-        }}
-        intro="Residential and small business"
-        title="Gas water heater replacement with a solar electric boosted water heater - certificates"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial wh',
+              src: 'iStock-1322180347(optimised).jpg',
+            }}
+            intro="Residential and small business"
+            title="Gas water heater replacement with a solar electric boosted water heater - certificates"
+          />
+        </div>
+      )}
 
-      <div className="nsw-container">
-        <br></br>
-        <br></br>
-
-        {stepNumber !== 3 && (
+      <div className="nsw-container" style={{ marginTop: '1rem' }}>
+        {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             {' '}
             <div className="nsw-col nsw-col-md-10">
@@ -242,6 +229,7 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Energy Savings Scheme
                 </a>{' '}
@@ -259,6 +247,7 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
                 <a
                   href="https://tessa.energysustainabilityschemes.nsw.gov.au/ipart?id=accepted_products"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Independent Pricing and Regulatory Tribunal (IPART) Product Registry
                 </a>{' '}

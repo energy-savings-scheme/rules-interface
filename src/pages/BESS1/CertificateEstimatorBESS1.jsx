@@ -14,6 +14,7 @@ import {
   BESS1_V5Nov24_PRC_calculation,
   BESS1_V5Nov24_usable_battery_capacity,
 } from 'types/openfisca_variables';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorBESS1(props) {
   const { entities, variables, setVariables, brands, setEntities } = props;
@@ -25,8 +26,8 @@ export default function CertificateEstimatorBESS1(props) {
   const [calculationResult2, setCalculationResult2] = useState(null);
   const [calculationError, setCalculationError] = useState(false);
   const [calculationError2, setCalculationError2] = useState(false);
-  const [variableData1, setVariableData1] = useState([]);
-  const [variableData2, setVariableData2] = useState([]);
+  const [variableData1, setVariableData1] = useState({});
+  const [variableData2, setVariableData2] = useState({});
   const [persistFormValues, setPersistFormValues] = useState([]);
   const [flow, setFlow] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -44,16 +45,6 @@ export default function CertificateEstimatorBESS1(props) {
       OpenFiscaAPI.listEntities()
         .then((res) => {
           setEntities(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -95,22 +86,23 @@ export default function CertificateEstimatorBESS1(props) {
 
   return (
     <Fragment>
-      <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial wh',
-          src: 'BESS1.jpg',
-        }}
-        intro="Residential"
-        title="Install a new household solar battery - certificates"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial wh',
+              src: 'BESS1.jpg',
+            }}
+            intro="Residential"
+            title="Install a new household solar battery - certificates"
+          />
+        </div>
+      )}
 
-      <div className="nsw-container">
-        <br></br>
-        <br></br>
-        {stepNumber !== 3 && (
+      <div className="nsw-container" style={{ marginTop: '1rem' }}>
+        {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <p className="nsw-content-block__copy">

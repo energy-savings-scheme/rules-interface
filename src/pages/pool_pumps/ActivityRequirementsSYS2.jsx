@@ -77,7 +77,7 @@ export default function ActivityRequirementsSYS2(props) {
       dep_arr = dep_arr.map((obj, i) => ({ ...obj, hide: true }));
 
       array.map((obj) => dep_arr.find((o) => o.name === obj.name) || obj);
-      
+
       setFormValues(array);
       setDependencies(dep_arr);
       setLoading(false);
@@ -135,6 +135,7 @@ export default function ActivityRequirementsSYS2(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Energy Savings Scheme
                 </a>{' '}
@@ -142,6 +143,7 @@ export default function ActivityRequirementsSYS2(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Peak Demand Reduction Scheme
                 </a>

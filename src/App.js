@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
 // Import Pages
 import Homepage from 'pages/homepage/Homepage';
@@ -64,7 +64,6 @@ import { IS_DRUPAL_PAGES } from 'types/app_variables';
 function App() {
   const [entities, setEntities] = useState([]);
   const [variables, setVariables] = useState([]);
-  const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hvacBrands, setHvacBrands] = useState([]);
   const [whBrands, setWhBrands] = useState([]);
@@ -73,22 +72,6 @@ function App() {
   const [resHPBrands, setresHPBrands] = useState([]);
   const [resSolarWaterHeaterBrands, setResSolarWaterHeaterBrands] = useState([]);
   const [resSolarBatteryBrands, setResSolarBatteryBrands] = useState([]);
-  const location = useLocation()
-
-  const notImplementPerformceImprovement = function(hash) {
-    const listPathHasPerformanceImprovement = [
-      'residential-pool-pump-certificates',
-      'residential-pool-pump-eligibility',
-      'core-eligibility',
-    ]
-    const hashSplit = hash.split('/')
-    if (hashSplit.length <= 1) { // means '/' not found in the hash
-      return true
-    }
-    const pathName = hashSplit.at(-1)
-    return !listPathHasPerformanceImprovement.includes(pathName);
-
-  }
 
   console.log(`Loading version "${process.env.REACT_APP_BUILD_VERSION}".`);
   useEffect(() => {
@@ -104,32 +87,6 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-
-    /*
-    * These API calls will be removed in the future, since it is no longer needed
-    * but for now we need them for backward compatibility for performance improvement changes
-    * and only the residential pool pump have been implemented the changes
-    * */
-    if (notImplementPerformceImprovement(location.hash)) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      OpenFiscaAPI.listActivities()
-        .then((res) => {
-          setActivities(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
 
     RegistryApi.getCommercialHVACBrands()
       .then((res) => {
@@ -193,11 +150,11 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, [location]);
+  }, []);
 
   return (
     <Router>
-      {!IS_DRUPAL_PAGES && <Header variables={variables} />}
+      {!IS_DRUPAL_PAGES && <Header />}
 
       {loading && <SpinnerFullscreen />}
 
