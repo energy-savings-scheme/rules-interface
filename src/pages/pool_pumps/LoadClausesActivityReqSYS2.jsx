@@ -88,7 +88,6 @@ export default function LoadClausesSYS2(props) {
 
   return (
     <div className style={{ marginBottom: '7%' }}>
-      <br></br>
       {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
       {stepNumber === 2 && calculationError && showError && (
@@ -96,7 +95,6 @@ export default function LoadClausesSYS2(props) {
           <p>We are experiencing technical difficulties right now, please try again later.</p>
         </Alert>
       )}
-      <div></div>
       <div>
         {stepNumber === 1 && (
           <Fragment>

@@ -73,7 +73,22 @@ function App() {
   const [resHPBrands, setresHPBrands] = useState([]);
   const [resSolarWaterHeaterBrands, setResSolarWaterHeaterBrands] = useState([]);
   const [resSolarBatteryBrands, setResSolarBatteryBrands] = useState([]);
-  const location = useLocation();
+  const location = useLocation()
+
+  const notImplementPerformceImprovement = function(hash) {
+    const listPathHasPerformanceImprovement = [
+      'residential-pool-pump-certificates',
+      'residential-pool-pump-eligibility',
+      'core-eligibility',
+    ]
+    const hashSplit = hash.split('/')
+    if (hashSplit.length <= 1) { // means '/' not found in the hash
+      return true
+    }
+    const pathName = hashSplit.at(-1)
+    return !listPathHasPerformanceImprovement.includes(pathName);
+
+  }
 
   console.log(`Loading version "${process.env.REACT_APP_BUILD_VERSION}".`);
   useEffect(() => {
@@ -91,14 +106,11 @@ function App() {
       });
 
     /*
-     * These API calls will be removed in the future, since it is no longer needed
-     * but for now we need them for backward compatibility for performance improvement changes
-     * and only the residential pool pump have been implemented the changes
-     * */
-    if (
-      location.hash !== '#/residential-pool-pump-certificates' &&
-      location.hash !== '#/residential-pool-pump-eligibility'
-    ) {
+    * These API calls will be removed in the future, since it is no longer needed
+    * but for now we need them for backward compatibility for performance improvement changes
+    * and only the residential pool pump have been implemented the changes
+    * */
+    if (notImplementPerformceImprovement(location.hash)) {
       OpenFiscaAPI.listVariables()
         .then((res) => {
           setVariables(res.data);
