@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, createContext } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import Button from 'nsw-ds-react/button/button';

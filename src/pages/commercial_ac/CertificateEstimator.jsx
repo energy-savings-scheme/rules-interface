@@ -1,25 +1,15 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
-import VariableSearchBar from 'pages/homepage/VariableSearchBar';
-
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
-import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
-import LoadClauses from './LoadClauses';
-import DropDownMenu from 'components/form_elements/DropDownMenu';
 import Button from 'nsw-ds-react/button/button';
-import { FormGroupSelect } from 'nsw-ds-react/forms';
 import { FormGroup, TextInput, Select } from 'nsw-ds-react/forms';
 import RegistryApi from 'services/registry_api';
 import CertificateEstimatorLoadClauses from './CertificatEstimatorLoadClauses';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import OpenFiscaApi from 'services/openfisca_api';
-import Notification from 'nsw-ds-react/notification/notification';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
-import { compareAsc, format, previousSunday } from 'date-fns';
-import axios from 'axios';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorHVAC(props) {
@@ -80,17 +70,7 @@ export default function CertificateEstimatorHVAC(props) {
         });
     }
 
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    if (lastModified.length == 0) {
+    if (lastModified.length === 0) {
       RegistryApi.getCommercialHVACLastModified('commercial_hvac')
         .then((res) => {
           setLastModified(res.data);
@@ -169,7 +149,6 @@ export default function CertificateEstimatorHVAC(props) {
       RegistryApi.getPostcodeValidation(postcode)
         .then((res) => {
           const persons = res.data;
-          console.log(res);
           if (
             persons.status === '200' &&
             persons.code === '200' &&
@@ -285,13 +264,10 @@ export default function CertificateEstimatorHVAC(props) {
             '2021-01-01'
           ];
         setZone(result);
-        console.log(result);
       })
       .catch((err) => {
         console.log(err);
       });
-
-    console.log(zone);
 
     const payload_bca = {
       buildings: {
@@ -314,36 +290,32 @@ export default function CertificateEstimatorHVAC(props) {
             ];
           setBCAZone(result);
           setSelectedClimateZone(getClimateZoneText(result));
-          console.log(result);
         })
         .catch((err) => {
           console.log(err);
         });
-
-      console.log(BCAzone);
       setSelectedClimateZone(BCAzone);
     }
   }, [postcode]);
 
   return (
     <Fragment>
-      <br></br>
       {!IS_DRUPAL_PAGES && (
-        <HeroBanner
-          wide
-          style="dark"
-          image={{
-            alt: 'commercial ac',
-            src: '/commercialac/HVAC2Hero.jpeg',
-          }}
-          intro="Commercial"
-          title="Air conditioner - certificates"
-        />
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial ac',
+              src: '/commercialac/HVAC2Hero.jpeg',
+            }}
+            intro="Commercial"
+            title="Air conditioner - certificates"
+          />
+        </div>
       )}
 
-      <div className="nsw-container">
-        <br></br>
-        <br></br>
+      <div className="nsw-container" style={{ marginTop: '1rem' }}>
         {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
@@ -358,6 +330,7 @@ export default function CertificateEstimatorHVAC(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Energy Savings Scheme
                 </a>{' '}
@@ -365,6 +338,7 @@ export default function CertificateEstimatorHVAC(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Peak Demand Reduction Scheme
                 </a>
@@ -373,7 +347,11 @@ export default function CertificateEstimatorHVAC(props) {
               <p className="nsw-content-block__copy">
                 Where possible, residential and small business air conditioner specifications are
                 automatically updated at the end of each week from the{' '}
-                <a href="https://reg.energyrating.gov.au/comparator/product_types/" target="_blank">
+                <a
+                  href="https://reg.energyrating.gov.au/comparator/product_types/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Greenhouse & Energy Minimum Standards (GEMS) Registry
                 </a>{' '}
                 based on brand and model, but you may also enter your own values.
@@ -385,9 +363,8 @@ export default function CertificateEstimatorHVAC(props) {
             </div>
           </div>
         )}
-        <br></br>
 
-        {stepNumber === 3 && (
+        {!IS_DRUPAL_PAGES && stepNumber === 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <h2 className="nsw-content-block__title">

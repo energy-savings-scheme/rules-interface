@@ -46,11 +46,6 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
     setPeakDemandReductionSavingsNumber,
   } = props;
 
-  console.log(variableData1);
-  console.log(variableData2);
-
-  console.log(stepNumber);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -60,66 +55,49 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
   const [dependencies, setDependencies] = useState([]);
-  const [error, setError] = useState(false);
 
   function addElement(arr, obj) {
-    const { length } = arr;
-    const id = length + 1;
     const found = arr.some((el) => el.name === obj.name);
     if (!found) arr.push(obj);
     return arr;
   }
 
   useEffect(() => {
-    if (variableData1.length === 0 || variableData1.length === 0) {
-      setLoading(true);
-    } else {
+    if (Object.keys(variableData1).length && Object.keys(variableData2).length) {
       setLoading(false);
-      if (variables.length === 0) {
-        setLoading(true);
-      } else {
-        setLoading(false);
-        const variable1 = variables.find((item) => item.name === 'C1_PDRSAug24_ESC_calculation');
-        const variable2 = variables.find((item) => item.name === 'C1_PDRSAug24_ESC_calculation');
+      setLoading(false);
+      const children1 = variableData1.input_offsprings;
+      const children2 = variableData2.input_offsprings;
 
-        const offsprings1 = variable1.metadata.input_offspring;
-        const offsprings2 = variable2.metadata.input_offspring;
+      // Define the original array (at a minimum include the Implementation Date)
+      var array1 = [];
+      var array2 = [];
 
-        const children1 = variables.filter((item) => offsprings1.includes(item.name));
-        const children2 = variables.filter((item) => offsprings2.includes(item.name));
+      children1.map((child) => {
+        array1.push({ ...child, form_value: '', invalid: false });
+      });
 
-        // Define the original array (at a minimum include the Implementation Date)
-        var array1 = [];
-        var array2 = [];
+      children2.map((child) => {
+        array2.push({ ...child, form_value: '', invalid: false });
+      });
 
-        children1.map((child) => {
-          array1.push({ ...child, form_value: '', invalid: false });
+      array2.forEach((item) => addElement(array1, item));
+
+      array1 = array1.filter((item) => item.name !== 'RF1_peak_demand_savings_capacity');
+
+      if (persistFormValues.length > 1 && flow === 'backward') {
+        array1.map((e) => {
+          let found = persistFormValues.find((f) => e.name === f.name);
+          if (found !== undefined) {
+            e['form_value'] = found['form_value'];
+          }
+          return e;
         });
-
-        children2.map((child) => {
-          array2.push({ ...child, form_value: '', invalid: false });
-        });
-
-        array2.forEach((item) => addElement(array1, item));
-
-        console.log(array1);
-
-        array1 = array1.filter((item) => item.name !== 'RF1_peak_demand_savings_capacity');
-
-        if (persistFormValues.length > 1 && flow === 'backward') {
-          array1.map((e) => {
-            let found = persistFormValues.find((f) => e.name === f.name);
-            if (found !== undefined) {
-              e['form_value'] = found['form_value'];
-            }
-            return e;
-          });
-        }
-
-        array1.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
-
-        setFormValues(array1);
       }
+
+      array1.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
+
+      setFormValues(array1);
     }
   }, [variableData1, variableData2]);
 

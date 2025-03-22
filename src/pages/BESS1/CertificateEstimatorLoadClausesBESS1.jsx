@@ -63,30 +63,23 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
   }, []);
 
   function addElement(arr, obj) {
-    const { length } = arr;
-    const id = length + 1;
     const found = arr.some((el) => el.name === obj.name);
     if (!found) arr.push(obj);
     return arr;
   }
 
   useEffect(() => {
-    if (variableData1.length == 0) {
+    if (Object.keys(variableData1).length === 0) {
       setLoading(true);
     } else {
       setLoading(false);
-      if (variables.length == 0) {
+      if (Object.keys(variableData1).length === 0 || Object.keys(variableData2).length === 0) {
         setLoading(true);
       } else {
         setLoading(false);
-        const variable1 = variables.find((item) => item.name === BESS1_V5Nov24_PRC_calculation);
-        const variable2 = variables.find((item) => item.name === BESS1_V5Nov24_PRC_calculation);
 
-        const offsprings1 = variable1.metadata.input_offspring;
-        const offsprings2 = variable2.metadata.input_offspring;
-
-        const children1 = variables.filter((item) => offsprings1.includes(item.name));
-        const children2 = variables.filter((item) => offsprings2.includes(item.name));
+        const children1 = variableData1.input_offsprings;
+        const children2 = variableData2.input_offsprings;
 
         // Define the original array (at a minimum include the Implementation Date)
         var array1 = [];

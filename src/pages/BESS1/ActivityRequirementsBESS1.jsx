@@ -1,11 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
-import VariableSearchBar from 'pages/homepage/VariableSearchBar';
-
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
-import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
-import LoadClauses from './LoadClausesActReq';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
@@ -24,7 +19,7 @@ import {
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function ActivityRequirementsBESS1(props) {
-  const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
+  const { entities, variables, loading, setLoading } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
@@ -32,12 +27,11 @@ export default function ActivityRequirementsBESS1(props) {
   const [variableToLoad, setVariableToLoad] = useState(
     BESS1_PDRSDec24_installation_final_activity_eligibility,
   );
+  const [variable, setVariable] = useState({});
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
 
   if (formValues.length === 0) {
-    setLoading(true);
-  } else if (variables.length === 0) {
     setLoading(true);
   } else {
     setLoading(false);
@@ -48,34 +42,19 @@ export default function ActivityRequirementsBESS1(props) {
   }, [stepNumber]);
 
   useEffect(() => {
-    if (variables.length < 1) {
-      OpenFiscaAPI.listEntities()
-        .then((res) => {
-          setEntities(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, []);
+    OpenFiscaAPI.getVariable(variableToLoad)
+      .then((res) => {
+        setVariable(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [variableToLoad]);
 
   useEffect(() => {
-    if (variables.length > 0 && stepNumber === 1) {
-      const variable = variables.find((item) => item.name === variableToLoad);
-      const offsprings = variable.metadata.input_offspring;
-      const children = variables.filter((item) => offsprings.includes(item.name));
+    if (Object.keys(variable).length && stepNumber === 1) {
+      const children = variable.input_offsprings;
 
       // Define the original array (at a minimum include the Implementation Date)
       var array = [];
@@ -112,7 +91,7 @@ export default function ActivityRequirementsBESS1(props) {
       setDependencies(dep_arr);
       setLoading(false);
     }
-  }, [variables, variableToLoad, stepNumber]);
+  }, [variable]);
 
   useEffect(() => {
     let new_arr = [];
@@ -132,23 +111,22 @@ export default function ActivityRequirementsBESS1(props) {
 
   return (
     <Fragment>
-      <br></br>
       {!IS_DRUPAL_PAGES && (
-        <HeroBanner
-          wide
-          style="dark"
-          image={{
-            alt: 'commercial ac',
-            src: 'BESS1.jpg',
-          }}
-          intro="Residential"
-          title="Install a new household solar battery - eligibility"
-        />
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial ac',
+              src: 'BESS1.jpg',
+            }}
+            intro="Residential"
+            title="Install a new household solar battery - eligibility"
+          />
+        </div>
       )}
 
-      <div className="nsw-container" style={{ marginBottom: '10%' }}>
-        <br></br>
-        <br></br>
+      <div className="nsw-container" style={{ marginBottom: '10%', marginTop: '1rem' }}>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">

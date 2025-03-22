@@ -7,9 +7,6 @@ import moment from 'moment';
 import CalculateBlock from 'components/calculate/CalculateBlock';
 
 import Button from 'nsw-ds-react/button/button';
-import { FormGroup, FormGroupSelect, TextInput } from 'nsw-ds-react/forms';
-import { Notification } from 'nsw-ds-react/notification/notification';
-import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
@@ -30,8 +27,6 @@ export default function LoadClausesWH1(props) {
     showError,
     setShowError,
   } = props;
-
-  console.log(variableToLoad);
 
   const [variable, setVariable] = useState({}); // all info about variable
 

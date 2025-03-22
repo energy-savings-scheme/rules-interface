@@ -86,23 +86,15 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
   }, [variableToLoad2]);
 
   function addElement(arr, obj) {
-    const { length } = arr;
-    const id = length + 1;
     const found = arr.some((el) => el.name === obj.name);
     if (!found) arr.push(obj);
     return arr;
   }
 
   useEffect(() => {
-    if (variables) {
-      const variable1 = variables.find((item) => item.name === variableToLoad1);
-      const variable2 = variables.find((item) => item.name === variableToLoad2);
-
-      const offsprings1 = variable1.metadata.input_offspring;
-      const offsprings2 = variable2.metadata.input_offspring;
-
-      const children1 = variables.filter((item) => offsprings1.includes(item.name));
-      const children2 = variables.filter((item) => offsprings2.includes(item.name));
+    if (Object.keys(variableData1).length && Object.keys(variableData2).length) {
+      const children1 = variableData1.input_offsprings;
+      const children2 = variableData2.input_offsprings;
 
       // Define the original array (at a minimum include the Implementation Date)
       var array1 = [];
@@ -119,6 +111,9 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
       array2.forEach((item) => addElement(array1, item));
 
       array1.map((formItem) => {
+        // if (formItem.name === 'WH1_annual_energy_savings') {
+        //   formItem.form_value = metadata[`annual_energy_savings_${zone}`];
+        // }
         if (formItem.name === 'F16_gas_com_peak_load') {
           formItem.form_value = metadata[`ComPkLoad_zone_${zone}`];
         }

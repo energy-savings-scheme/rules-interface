@@ -19,8 +19,8 @@ export default function CertificateEstimatorRefrigerators(props) {
   const [calculationError2, setCalculationError2] = useState(false);
   const [postcode, setPostcode] = useState(null);
   const [registryData, setRegistryData] = useState(true);
-  const [variableData1, setVariableData1] = useState([]);
-  const [variableData2, setVariableData2] = useState([]);
+  const [variableData1, setVariableData1] = useState({});
+  const [variableData2, setVariableData2] = useState({});
   const [persistFormValues, setPersistFormValues] = useState([]);
   const [flow, setFlow] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -35,16 +35,6 @@ export default function CertificateEstimatorRefrigerators(props) {
       OpenFiscaAPI.listEntities()
         .then((res) => {
           setEntities(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -80,8 +70,6 @@ export default function CertificateEstimatorRefrigerators(props) {
     OpenFiscaAPI.getVariable('C1_PDRSAug24_ESC_calculation')
       .then((res) => {
         setVariableData1(res.data);
-        console.log(res.data);
-        console.log('here!!');
         setLoading(false);
       })
       .catch((err) => {
@@ -91,35 +79,31 @@ export default function CertificateEstimatorRefrigerators(props) {
     OpenFiscaAPI.getVariable('C1_PDRSAug24_ESC_calculation')
       .then((res) => {
         setVariableData2(res.data);
-        console.log(res.data);
-
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [variables, entities]);
+  }, []);
 
   return (
     <Fragment>
-      <br></br>
       {!IS_DRUPAL_PAGES && (
-        <HeroBanner
-          wide
-          style="dark"
-          image={{
-            alt: 'res ref',
-            src: 'ResidentialFridgeFreezerRemoval.jpeg',
-          }}
-          intro="Residential and small business"
-          title="Spare refrigerator or freezer - certificates"
-        />
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'res ref',
+              src: 'ResidentialFridgeFreezerRemoval.jpeg',
+            }}
+            intro="Residential and small business"
+            title="Spare refrigerator or freezer - certificates"
+          />
+        </div>
       )}
 
-      <div className="nsw-container">
-        <br></br>
-        <br></br>
-
+      <div className="nsw-container" style={{ marginTop: '1rem' }}>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
@@ -133,6 +117,7 @@ export default function CertificateEstimatorRefrigerators(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Energy Savings Scheme
                 </a>
@@ -151,7 +136,7 @@ export default function CertificateEstimatorRefrigerators(props) {
           </div>
         )}
 
-        {stepNumber === 2 && (
+        {!IS_DRUPAL_PAGES && stepNumber === 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
               <h2 className="nsw-content-block__title">

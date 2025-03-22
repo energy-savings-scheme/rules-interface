@@ -8,8 +8,7 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import CertificateEstimatorLoadClausesRC from './CertificatEstimatorLoadClausesRC';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
-import { compareAsc, format, previousSunday } from 'date-fns';
-import axios from 'axios';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorRC(props) {
   const { entities, variables, RF2Brands, setVariables, setEntities, setRF2Brands } = props;
@@ -87,16 +86,6 @@ export default function CertificateEstimatorRC(props) {
         });
     }
 
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
     if (RF2Brands.length < 1) {
       RegistryApi.getRF2Brands()
         .then((res) => {
@@ -150,7 +139,6 @@ export default function CertificateEstimatorRC(props) {
       RegistryApi.getPostcodeValidation(postcode)
         .then((res) => {
           const persons = res.data;
-          console.log(res);
           if (
             persons.status === '200' &&
             persons.code === '200' &&
@@ -194,7 +182,6 @@ export default function CertificateEstimatorRC(props) {
       brand: selectedBrand,
       model: selectedModel,
     };
-    console.log(payload);
     RegistryApi.getRF2ModelsMetadata(payload)
       .then((res) => {
         setMetadata(res.data);
@@ -202,8 +189,6 @@ export default function CertificateEstimatorRC(props) {
       .catch((err) => {
         console.log(err);
       });
-
-    console.log(metadata);
   }, [selectedModel]);
 
   useEffect(() => {
@@ -213,8 +198,6 @@ export default function CertificateEstimatorRC(props) {
   }, [RF2Brands]);
 
   useEffect(() => {
-    console.log(selectedBrand);
-
     RegistryApi.listRF2Models(selectedBrand)
       .then((res) => {
         setModels(res.data);
@@ -224,29 +207,27 @@ export default function CertificateEstimatorRC(props) {
         console.log(err);
         setRegistryData(false);
       });
-
-    console.log(models);
   }, [selectedBrand]);
 
   return (
     <Fragment>
-      <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'RF2',
-          src: '/CommercialRefrigeratedCabinet.jpg',
-        }}
-        intro="Commercial"
-        title="Refrigerated cabinet - certificates"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'RF2',
+              src: '/CommercialRefrigeratedCabinet.jpg',
+            }}
+            intro="Commercial"
+            title="Refrigerated cabinet - certificates"
+          />
+        </div>
+      )}
 
-      <div className="nsw-container">
-        <br></br>
-        <br></br>
-
-        {stepNumber !== 3 && (
+      <div className="nsw-container" style={{ marginTop: '1rem' }}>
+        {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <h2 className="nsw-content-block__title">
@@ -259,6 +240,7 @@ export default function CertificateEstimatorRC(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Energy Savings Scheme
                 </a>{' '}
@@ -266,6 +248,7 @@ export default function CertificateEstimatorRC(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Peak Demand Reduction Scheme
                 </a>
@@ -274,7 +257,11 @@ export default function CertificateEstimatorRC(props) {
               <p className="nsw-content-block__copy">
                 Where possible, residential and small business air conditioner specifications are
                 automatically updated at the end of each week from the{' '}
-                <a href="https://reg.energyrating.gov.au/comparator/product_types/" target="_blank">
+                <a
+                  href="https://reg.energyrating.gov.au/comparator/product_types/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Greenhouse & Energy Minimum Standards (GEMS) Registry
                 </a>{' '}
                 based on brand and model, but you may also enter your own values.
@@ -287,7 +274,7 @@ export default function CertificateEstimatorRC(props) {
           </div>
         )}
 
-        {stepNumber === 3 && (
+        {!IS_DRUPAL_PAGES && stepNumber === 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
               <h2 className="nsw-content-block__title">
