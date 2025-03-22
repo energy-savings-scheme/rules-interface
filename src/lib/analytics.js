@@ -1,27 +1,27 @@
-import moment from 'moment';
+import moment from 'moment'
 
 class FormAnalytics {
   constructor(event) {
-    this.event = event;
-    this.values = {};
+    this.event = event
+    this.values = {}
   }
 
   updateData(values) {
-    this.values = values;
+    Object.assign(this.values, values)
   }
 }
 
-const estimatorFormAnalytics = new FormAnalytics('SafeguardEstimator');
-const feedbackFormAnalytics = new FormAnalytics('SafeguardFeedback');
+const estimatorFormAnalytics = new FormAnalytics('SafeguardEstimator')
+const feedbackFormAnalytics = new FormAnalytics('SafeguardFeedback')
 
 export function updateEstimatorFormAnalytics(values) {
-  estimatorFormAnalytics.updateData(values);
-  return estimatorFormAnalytics.values;
+  estimatorFormAnalytics.updateData(values)
+  return estimatorFormAnalytics.values
 }
 
 export function updateFeedbackFormAnalytics(values) {
-  feedbackFormAnalytics.updateData(values);
-  return feedbackFormAnalytics.values;
+  feedbackFormAnalytics.updateData(values)
+  return feedbackFormAnalytics.values
 }
 
 export function submitEstimatorFormAnalytics() {
@@ -29,10 +29,10 @@ export function submitEstimatorFormAnalytics() {
   const submittedData = {
     ...estimatorFormAnalytics.values,
     event: estimatorFormAnalytics.event,
-    submittedAt: moment().utc().format(),
-  };
+    submittedAt: moment().utc().format()
+  }
   window.dataLayer.push(submittedData);
-  console.log(`Estimator form analytics: ${JSON.stringify(submittedData)}`);
+  console.log(`Estimator form analytics: ${JSON.stringify(submittedData)}`)
 }
 
 export function submitFeedbackFormAnalytics(isHelpful) {
@@ -41,8 +41,8 @@ export function submitFeedbackFormAnalytics(isHelpful) {
     ...feedbackFormAnalytics.values,
     event: feedbackFormAnalytics.event,
     isHelpful: isHelpful,
-    submittedAt: moment().utc().format(),
-  };
+    submittedAt: moment().utc().format()
+  }
   window.dataLayer.push(submittedData);
-  console.log(`Feedback form analytics: ${JSON.stringify(submittedData)}`);
+  console.log(`Feedback form analytics: ${JSON.stringify(submittedData)}`)
 }

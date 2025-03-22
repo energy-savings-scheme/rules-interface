@@ -10,6 +10,7 @@ import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
+import {SYS2_PDRSAug24_new_installation_or_replacement} from 'types/openfisca_variables';
 
 export default function LoadClausesSYS2(props) {
   const {
@@ -81,14 +82,13 @@ export default function LoadClausesSYS2(props) {
   };
 
   const filteredClausesForm = clausesForm.filter(
-    (item) => !(item.name === 'SYS2_PDRSAug24_new_installation_or_replacement'),
+    (item) => !(item.name === SYS2_PDRSAug24_new_installation_or_replacement),
   );
 
   if (!variable) return null;
 
   return (
     <div className style={{ marginBottom: '7%' }}>
-      <br></br>
       {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
       {stepNumber === 2 && calculationError && showError && (
@@ -96,7 +96,6 @@ export default function LoadClausesSYS2(props) {
           <p>We are experiencing technical difficulties right now, please try again later.</p>
         </Alert>
       )}
-      <div></div>
       <div>
         {stepNumber === 1 && (
           <Fragment>
