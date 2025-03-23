@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import {submitFeedbackFormAnalytics} from 'lib/analytics';
-import './feedback.css';
-
 
 export default function FeedbackComponent(props) {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -19,13 +17,21 @@ export default function FeedbackComponent(props) {
   return (
     <>
       <section
-        className={`nsw-section nsw-section--box nsw-bg--off-white feedback-container ${
-          isSubmitted ? 'hide' : ''
-        }`}
+        className="nsw-section nsw-section--box nsw-bg--off-white"
+        style={{
+          position: 'absolute',
+          left: '0',
+          width: '100vw',
+          display: isSubmitted ? 'none' : 'block',
+        }}
         ref={uiSectionRef}
       >
-        <div className="display-flex">
-          <div className="feedback-left-block nsw-col-md-6 nsw-m-right-xs">
+        <div style={{display: 'flex'}}>
+          <div className="nsw-col-md-6 nsw-m-right-xs" style={{
+            display: 'flex',
+            justifyContent: 'end',
+            alignItems: 'center'
+          }}>
             <span className="nsw-small">
               <b>Was this tool helpful for you today?</b>
             </span>
@@ -48,7 +54,10 @@ export default function FeedbackComponent(props) {
               <span>Yes</span>
             </button>
           </div>
-          <div className="feedback-right-block nsw-col-md-6 nsw-m-left-xs">
+          <div className="nsw-col-md-6 nsw-m-left-xs" style={{
+            display: 'flex',
+            alignItems: 'center'
+          }}>
             <button
               type="button"
               className="nsw-button nsw-button--dark nsw-p-top-sm nsw-p-bottom-sm nsw-m-right-md"
@@ -76,10 +85,10 @@ export default function FeedbackComponent(props) {
         </div>
       </section>
       <div
-        style={{ height: uiSectionHeight }}
-        className={`nsw-m-bottom-xxl ${isSubmitted ? 'hide' : ''}`}
+        style={{ height: uiSectionHeight, display: isSubmitted ? 'none' : 'block' }}
+        className="nsw-m-bottom-xxl"
       ></div>
-      <div className={`nsw-container ${isSubmitted ? '' : 'hide'}`}>
+      <div className="nsw-container" style={{display: isSubmitted ? 'block' : 'none'}}>
         <p className="nsw-small">
           {feedbackMessage}
           <strong className="nsw-text-underline">{feedbackEmail}</strong>
