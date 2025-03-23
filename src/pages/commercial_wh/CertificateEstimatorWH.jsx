@@ -96,7 +96,6 @@ export default function CertificateEstimatorWH(props) {
       RegistryApi.getPostcodeValidation(postcode)
         .then((res) => {
           const persons = res.data;
-          console.log(res);
           if (
             persons.status === '200' &&
             persons.code === '200' &&
@@ -139,7 +138,6 @@ export default function CertificateEstimatorWH(props) {
       brand: selectedBrand,
       model: selectedModel,
     };
-    console.log(payload);
     RegistryApi.getWHModelsMetadata(payload)
       .then((res) => {
         setMetadata(res.data);
@@ -147,8 +145,6 @@ export default function CertificateEstimatorWH(props) {
       .catch((err) => {
         console.log(err);
       });
-
-    console.log(metadata);
   }, [selectedModel]);
 
   useEffect(() => {
@@ -158,8 +154,6 @@ export default function CertificateEstimatorWH(props) {
   }, [brands]);
 
   useEffect(() => {
-    console.log(selectedBrand);
-
     RegistryApi.listWHModels(selectedBrand)
       .then((res) => {
         setModels(res.data);
@@ -169,8 +163,6 @@ export default function CertificateEstimatorWH(props) {
         console.log(err);
         setRegistryData(false);
       });
-
-    console.log(models);
   }, [selectedBrand]);
 
   useEffect(() => {
@@ -193,73 +185,65 @@ export default function CertificateEstimatorWH(props) {
             'WH1_F16_electric_PDRSAug24_get_HP_zone_by_BCA_climate_zone'
           ]['2023-01-01'];
         setZone(result);
-        console.log(result);
       })
       .catch((err) => {
         console.log(err);
       });
-
-    console.log('********');
-    console.log(zone);
   }, [postcode]);
 
   return (
     <Fragment>
       {/* Search section */}
-      <br></br>
       {!IS_DRUPAL_PAGES && (
-        <HeroBanner
-          wide
-          style="dark"
-          image={{
-            alt: 'commercial wh',
-            src: 'WH1(optimised).jpg',
-          }}
-          intro="Commercial"
-          title="Electric water heater replacement with an air source heat pump - certificates"
-        />
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial wh',
+              src: 'WH1(optimised).jpg',
+            }}
+            intro="Commercial"
+            title="Electric water heater replacement with an air source heat pump - certificates"
+          />
+        </div>
       )}
 
-      <div className="nsw-container">
-        <br></br>
-        <br></br>
-
-        {stepNumber !== 3 && (
-          <>
-            {!IS_DRUPAL_PAGES && (
-              <div className="nsw-grid nsw-grid--spaced">
-                <div className="nsw-col nsw-col-md-10">
-                  <p className="nsw-content-block__copy">
-                    Estimate the energy savings certificates (ESCs) for the commercial heat pump
-                    water heater activity (F16 in the{' '}
-                    <a
-                      href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
-                      target="_blank"
-                    >
-                      Energy Savings Scheme
-                    </a>
-                    ) by answering the following questions. Note that a new installation activity
-                    will not generate ESCs.
-                  </p>
-                  <p className="nsw-content-block__copy">
-                    At the end of each week, commercial heat pump water heater specifications are
-                    automatically updated from the{' '}
-                    <a
-                      href="https://tessa.energysustainabilityschemes.nsw.gov.au/ipart?id=accepted_products"
-                      target="_blank"
-                    >
-                      Independent Pricing and Regulatory Tribunal (IPART) Product Registry
-                    </a>{' '}
-                    based on brand and model. You can also enter your own values.
-                  </p>
-                  <p className="nsw-content-block__copy">
-                    Please keep in mind that the results are a guide only and cannot be promoted or
-                    published.
-                  </p>
-                </div>
-              </div>
-            )}
-          </>
+      <div className="nsw-container" style={{marginTop: '1rem'}}>
+        {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
+          <div className="nsw-grid nsw-grid--spaced">
+            <div className="nsw-col nsw-col-md-10">
+              <p className="nsw-content-block__copy">
+                Estimate the energy savings certificates (ESCs) for the commercial heat pump
+                water heater activity (F16 in the{' '}
+                <a
+                  href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Energy Savings Scheme
+                </a>
+                ) by answering the following questions. Note that a new installation activity
+                will not generate ESCs.
+              </p>
+              <p className="nsw-content-block__copy">
+                At the end of each week, commercial heat pump water heater specifications are
+                automatically updated from the{' '}
+                <a
+                  href="https://tessa.energysustainabilityschemes.nsw.gov.au/ipart?id=accepted_products"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Independent Pricing and Regulatory Tribunal (IPART) Product Registry
+                </a>{' '}
+                based on brand and model. You can also enter your own values.
+              </p>
+              <p className="nsw-content-block__copy">
+                Please keep in mind that the results are a guide only and cannot be promoted or
+                published.
+              </p>
+            </div>
+          </div>
         )}
 
         <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%' }} />

@@ -8,15 +8,13 @@ import OpenFiscaApi from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
-import { format, previousSunday } from 'date-fns';
-import axios from 'axios';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
   const { entities, variables, brands } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
-  const [dependencies, setDependencies] = useState([]);
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [dropdownOptionsModels, setDropdownOptionsModels] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState(null);
@@ -107,7 +105,6 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
       RegistryApi.getPostcodeValidation(postcode)
         .then((res) => {
           const persons = res.data;
-          console.log(res);
           if (
             persons.status === '200' &&
             persons.code === '200' &&
@@ -150,7 +147,6 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
       brand: selectedBrand,
       model: selectedModel,
     };
-    console.log(payload);
     RegistryApi.getResidentialSolarWaterHeaterMetadata(payload)
       .then((res) => {
         setMetadata(res.data);
@@ -158,8 +154,6 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
       .catch((err) => {
         console.log(err);
       });
-
-    console.log(metadata);
   }, [selectedModel]);
 
   useEffect(() => {
@@ -169,8 +163,6 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
   }, [brands]);
 
   useEffect(() => {
-    console.log(selectedBrand);
-
     RegistryApi.getResidentialSolarWaterHeaterModels(selectedBrand)
       .then((res) => {
         setModels(res.data);
@@ -180,8 +172,6 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
         console.log(err);
         setRegistryData(false);
       });
-
-    console.log(models);
   }, [selectedBrand]);
 
   useEffect(() => {
@@ -204,35 +194,32 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
             '2023-01-01'
           ];
         setZone(result);
-        console.log(result);
       })
       .catch((err) => {
         console.log(err);
       });
-
-    console.log(zone);
   }, [postcode]);
 
   return (
     <Fragment>
       {/* Search section */}
-      <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial wh',
-          src: 'iStock-1373843137(optimised).jpg',
-        }}
-        intro="Residential and small business"
-        title="Electric water heater replacement with a solar electric boosted water heater - certificates"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial wh',
+              src: 'iStock-1373843137(optimised).jpg',
+            }}
+            intro="Residential and small business"
+            title="Electric water heater replacement with a solar electric boosted water heater - certificates"
+          />
+        </div>
+      )}
 
-      <div className="nsw-container">
-        <br></br>
-        <br></br>
-
-        {stepNumber !== 3 && (
+      <div className="nsw-container" style={{ marginTop: '1rem' }}>
+        {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               {/* <h2 className="nsw-content-block__title">Solar water heater certificate estimator</h2> */}
@@ -243,6 +230,7 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Energy Savings Scheme
                 </a>{' '}
@@ -260,6 +248,7 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
                 <a
                   href="https://tessa.energysustainabilityschemes.nsw.gov.au/ipart?id=accepted_products"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Independent Pricing and Regulatory Tribunal (IPART) Product Registry
                 </a>{' '}

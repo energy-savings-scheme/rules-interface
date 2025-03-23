@@ -1,14 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
-import VariableSearchBar from 'pages/homepage/VariableSearchBar';
-
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
-import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesResidentialActivityRequirements from './LoadClausesActivityRequirements';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function ActivityRequirementsResAC(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -19,16 +16,11 @@ export default function ActivityRequirementsResAC(props) {
   const [variableToLoad, setVariableToLoad] = useState(
     'HVAC1_PDRSAug24_installation_replacement_final_activity_eligibility',
   );
+  const [variable, setVariable] = useState({});
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
 
-  console.log(variables);
-
   if (formValues.length === 0) {
-    setLoading(true);
-  } else if (variables.length === 0) {
-    setLoading(true);
-  } else if (variables.length === 0) {
     setLoading(true);
   } else {
     setLoading(false);
@@ -40,41 +32,22 @@ export default function ActivityRequirementsResAC(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    if (variables.length < 1) {
-      OpenFiscaAPI.listEntities()
-        .then((res) => {
-          setEntities(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   }, []);
 
   useEffect(() => {
-    if (variables.length > 0 && stepNumber === 1) {
-      console.log(variableToLoad);
-      console.log(variables);
-      const variable = variables.find((item) => item.name === variableToLoad);
-      console.log(variable);
-      const offsprings = variable.metadata.input_offspring;
+    OpenFiscaAPI.getVariable(variableToLoad)
+      .then((res) => {
+        setVariable(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [variableToLoad]);
 
-      console.log(offsprings);
-      const children = variables.filter((item) => offsprings.includes(item.name));
-      console.log(children);
+  useEffect(() => {
+    if (Object.keys(variable).length && stepNumber === 1) {
+      const children = variable.input_offsprings;
 
       // Define the original array (at a minimum include the Implementation Date)
       var array = [];
@@ -86,8 +59,6 @@ export default function ActivityRequirementsResAC(props) {
       });
 
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
-
-      console.log(array);
 
       const names = [
         'HVAC1_PDRSAug24_AEER_greater_than_minimum',
@@ -106,18 +77,13 @@ export default function ActivityRequirementsResAC(props) {
 
       dep_arr = dep_arr.map((obj, i) => ({ ...obj, hide: true }));
 
-      console.log(dep_arr);
-
       setFormValues(array);
       setDependencies(dep_arr);
       setLoading(false);
     }
-  }, [variables, variableToLoad, stepNumber]);
+  }, [variable]);
 
   useEffect(() => {
-    console.log(formValues);
-    console.log(clausesForm);
-
     let new_arr = [];
 
     formValues
@@ -131,29 +97,28 @@ export default function ActivityRequirementsResAC(props) {
           new_arr.push(child);
       });
     setClausesForm(new_arr);
-
-    console.log(clausesForm);
   }, [stepNumber]);
 
   return (
     <Fragment>
       {/* Search section */}
-      <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial ac',
-          src: 'base_elig_hero.jpg',
-        }}
-        intro="Residential and small business"
-        title="Air conditioner - eligibility"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial ac',
+              src: 'base_elig_hero.jpg',
+            }}
+            intro="Residential and small business"
+            title="Air conditioner - eligibility"
+          />
+        </div>
+      )}
 
-      <div className="nsw-container" style={{ marginBottom: '10%' }}>
-        <br></br>
-        <br></br>
-        {stepNumber !== 2 && (
+      <div className="nsw-container" style={{ marginBottom: '10%', marginTop: '1rem' }}>
+        {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <h2 className="nsw-content-block__title">

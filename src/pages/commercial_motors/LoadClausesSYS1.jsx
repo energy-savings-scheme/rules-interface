@@ -7,9 +7,6 @@ import moment from 'moment';
 import CalculateBlock from 'components/calculate/CalculateBlock';
 
 import Button from 'nsw-ds-react/button/button';
-import { FormGroup, FormGroupSelect, TextInput } from 'nsw-ds-react/forms';
-import { Notification } from 'nsw-ds-react/notification/notification';
-import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
@@ -31,15 +28,10 @@ export default function LoadClausesSYS1(props) {
     setShowError,
   } = props;
 
-  console.log(variableToLoad);
-
-  // const [dropdownOptions, setDropdownOptions] = useState([{}]);
-  // const [stepNumber, setStepNumber] = useState(1);
   const [variable, setVariable] = useState({}); // all info about variable
 
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
-  const [dateInvalid, setDateInvalid] = useState(false);
 
   const [calculationResult, setCalculationResult] = useState(null);
   const [calculationError, setCalculationError] = useState(false);

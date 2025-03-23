@@ -1,19 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
-import VariableSearchBar from 'pages/homepage/VariableSearchBar';
-
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
-import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
-import DropDownMenu from 'components/form_elements/DropDownMenu';
 import Button from 'nsw-ds-react/button/button';
-import { FormGroupSelect } from 'nsw-ds-react/forms';
-import { FormGroup, TextInput, Select } from 'nsw-ds-react/forms';
-import RegistryApi from 'services/registry_api';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
-import OpenFiscaApi from 'services/openfisca_api';
-import Notification from 'nsw-ds-react/notification/notification';
 import CertificateEstimatorLoadClausesMotors from './CertificateEstimatorLoadClausesMotors';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
@@ -31,8 +21,8 @@ export default function CertificateEstimatorMotors(props) {
   const [calculationError2, setCalculationError2] = useState(false);
   const [postcode, setPostcode] = useState(null);
   const [registryData, setRegistryData] = useState(true);
-  const [variableData1, setVariableData1] = useState([]);
-  const [variableData2, setVariableData2] = useState([]);
+  const [variableData1, setVariableData1] = useState({});
+  const [variableData2, setVariableData2] = useState({});
   const [persistFormValues, setPersistFormValues] = useState([]);
   const [flow, setFlow] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -47,16 +37,7 @@ export default function CertificateEstimatorMotors(props) {
       OpenFiscaAPI.listEntities()
         .then((res) => {
           setEntities(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
+          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
@@ -80,8 +61,6 @@ export default function CertificateEstimatorMotors(props) {
     OpenFiscaAPI.getVariable('F7_PDRSAug24_ESC_calculation')
       .then((res) => {
         setVariableData1(res.data);
-        console.log(res.data);
-        console.log('here!!');
         setLoading(false);
       })
       .catch((err) => {
@@ -91,8 +70,6 @@ export default function CertificateEstimatorMotors(props) {
     OpenFiscaAPI.getVariable('F7_PDRSAug24_ESC_calculation')
       .then((res) => {
         setVariableData2(res.data);
-        console.log(res.data);
-
         setLoading(false);
       })
       .catch((err) => {
@@ -102,23 +79,22 @@ export default function CertificateEstimatorMotors(props) {
 
   return (
     <Fragment>
-      <br></br>
       {!IS_DRUPAL_PAGES && (
-        <HeroBanner
-          wide
-          style="dark"
-          image={{
-            alt: 'commercial motors',
-            src: 'CommercialVentilationRefrigeration.jpeg',
-          }}
-          intro="Commercial"
-          title="Motors - certificates"
-        />
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial motors',
+              src: 'CommercialVentilationRefrigeration.jpeg',
+            }}
+            intro="Commercial"
+            title="Motors - certificates"
+          />
+        </div>
       )}
 
-      <div className="nsw-container">
-        <br></br>
-        <br></br>
+      <div className="nsw-container" style={{ marginTop: '1rem' }}>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
@@ -130,6 +106,7 @@ export default function CertificateEstimatorMotors(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Energy Savings Scheme
                 </a>
