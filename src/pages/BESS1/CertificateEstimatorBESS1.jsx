@@ -15,6 +15,13 @@ import {
   BESS1_V5Nov24_usable_battery_capacity,
 } from 'types/openfisca_variables';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import {BASE_BESS1_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+} from 'lib/analytics';
+import FeedbackComponent from 'components/feedback/feedback';
+import MoreOptionsCard from 'components/more-options-card/more-options-card';
 
 export default function CertificateEstimatorBESS1(props) {
   const { entities, variables, setVariables, brands, setEntities } = props;
@@ -37,9 +44,12 @@ export default function CertificateEstimatorBESS1(props) {
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedModel, setSelectedModel] = useState(null);
   const [postcode, setPostcode] = useState(null);
+  const [userType, setUserType] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    updateEstimatorFormAnalytics(BASE_BESS1_ESTIMATOR_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_BESS1_ESTIMATOR_ANALYTICS_DATA);
 
     if (variables.length < 1) {
       OpenFiscaAPI.listEntities()
@@ -101,7 +111,9 @@ export default function CertificateEstimatorBESS1(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ marginTop: '1rem' }}>
+      <div className="nsw-container">
+        <br></br>
+        <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
@@ -165,6 +177,8 @@ export default function CertificateEstimatorBESS1(props) {
               selectedModel={selectedModel}
               postcode={postcode}
               setPostcode={setPostcode}
+              userType={userType}
+              setUserType={setUserType}
             />
           )}
 
@@ -247,6 +261,28 @@ export default function CertificateEstimatorBESS1(props) {
           )}
         </Fragment>
       </div>
+      {stepNumber === 3 && (
+        <>
+          <FeedbackComponent />
+          {!IS_DRUPAL_PAGES && (
+            <div className="nsw-container">
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <MoreOptionsCard options={[{
+                  title: 'Review eligibility for this activity',
+                  link: '/#residential-solar-battery-eligibility'
+                }]}/>
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </Fragment>
   );
 }

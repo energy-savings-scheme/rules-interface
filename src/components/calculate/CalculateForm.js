@@ -117,6 +117,18 @@ export default function CalculateForm(props) {
     return item;
   };
 
+  const validateUserType = () => {
+    const userType = document.querySelector('select#user-type');
+
+    if (!userType.value) {
+      document.querySelector('select#user-type').reportValidity();
+      document.querySelector('select#user-type').setCustomValidity('Please select an item in the list.')
+      return false
+    }
+
+    return true
+  }
+
   const handleCalculate = (e) => {
     e.preventDefault();
 
@@ -192,6 +204,12 @@ export default function CalculateForm(props) {
           };
         });
     } else {
+      if (variable.name === C1_PDRSAug24_ESC_calculation || variable.name === F7_PDRSAug24_ESC_calculation) {
+        if (!validateUserType()) {
+          setLoading(false);
+          return false
+        }
+      }
       formValues.map((variable) => {
         const variable_entity = entities.find((item) => item.name === variable.entity);
 
@@ -370,12 +388,6 @@ export default function CalculateForm(props) {
       <div className="nsw-content-block">
         <div className="nsw-content-block__content">
           {workflow === Workflow.CERTIFICATES &&
-          (variable.name === C1_PDRSAug24_ESC_calculation ||
-            variable.name === F7_PDRSAug24_ESC_calculation) ? (
-            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
-              <b>Please answer the following questions to calculate your ESCs</b>
-            </h5>
-          ) : workflow === Workflow.CERTIFICATES &&
             (variable.name === F16_electric_PDRSDec24_ESC_calculation ||
               variable.name === WH1_F16_electric_PDRSAug24_PRC_calculation ||
               variable.name === F16_gas_ESC_calculation) ? (

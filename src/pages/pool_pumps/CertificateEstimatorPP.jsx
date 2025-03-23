@@ -12,8 +12,14 @@ import CertificateEstimatorLoadClausesPP from './CertificateEstimatorLoadClauses
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
 import {BASE_POOL_PUMP_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-analytics-data';
-import {updateEstimatorFormAnalytics, updateFeedbackFormAnalytics} from 'lib/analytics';
-import FeedbackComponent from '../../components/feedback/feedback';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+  updateSearchCaptureAnalytics,
+  updateSegmentCaptureAnalytics
+} from 'lib/analytics';
+import FeedbackComponent from 'components/feedback/feedback';
+import MoreOptionsCard from 'components/more-options-card/more-options-card';
 
 export default function CertificateEstimatorPP(props) {
   const {
@@ -219,7 +225,9 @@ export default function CertificateEstimatorPP(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ marginTop: '1rem' }}>
+      <div className="nsw-container">
+        <br></br>
+        <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
@@ -300,8 +308,10 @@ export default function CertificateEstimatorPP(props) {
                     <FormGroup
                       label="What is your interest in the scheme?"
                       helper="Select the option that best describes you"
+                      htmlId="user-type"
                     >
                       <Select
+                        htmlId="user-type"
                         style={{ maxWidth: '50%' }}
                         options={USER_TYPE_OPTIONS}
                         onChange={(e) => {
@@ -338,9 +348,7 @@ export default function CertificateEstimatorPP(props) {
                         style={{ maxWidth: '50%', marginBottom: '1%' }}
                         options={dropdownOptions}
                         onChange={(e) => {
-                          setSelectedBrand(
-                            PoolPumpBrands.find((item) => item === e.target.value),
-                          );
+                          setSelectedBrand(PoolPumpBrands.find((item) => item === e.target.value));
                           setSelectedModel('');
                         }}
                         value={selectedBrand}
@@ -492,14 +500,8 @@ export default function CertificateEstimatorPP(props) {
                     as="dark"
                     onClick={(e) => {
                       validatePostcode(postcode);
-                      updateEstimatorFormAnalytics({
-                        postcode: postcode,
-                        brand: selectedBrand,
-                        model: selectedModel,
-                        userType: userType,
-                      });
-                      // setFlow(null);
-                      // setStepNumber(stepNumber + 1);
+                      updateSearchCaptureAnalytics(postcode, selectedBrand, selectedModel);
+                      updateSegmentCaptureAnalytics(userType)
                     }}
                   >
                     Next
@@ -522,69 +524,10 @@ export default function CertificateEstimatorPP(props) {
                   marginBottom: '5%',
                 }}
               >
-                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                  <h4>More options</h4>
-                  <br></br>
-
-                  <div className="nsw-grid nsw-grid--spaced">
-                    <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div className="nsw-card__content null">
-                          <div className="nsw-card__title">
-                            <a href="#" className="nsw-card__link">
-                              Back to estimator homepage
-                            </a>
-                          </div>
-                          <span
-                            className="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                                  east
-                                </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div className="nsw-card__content null">
-                          <div className="nsw-card__title">
-                            <a href="/#core-eligibility" className="nsw-card__link">
-                              Check core eligibility
-                            </a>
-                          </div>
-                          <span
-                            className="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                                  east
-                                </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div className="nsw-card__content null">
-                          <div className="nsw-card__title">
-                            <a href="/#residential-pool-pump-eligibility" className="nsw-card__link">
-                              Review eligibility for this activity
-                            </a>
-                          </div>
-                          <span
-                            className="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                                  east
-                                </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <MoreOptionsCard options={[{
+                  title: 'Review eligibility for this activity',
+                  link: '/#residential-pool-pump-eligibility'
+                }]}/>
               </div>
             </div>
           )}

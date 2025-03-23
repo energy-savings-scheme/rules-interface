@@ -8,7 +8,9 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
-import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import { FormGroup, Select } from 'nsw-ds-react/forms';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import {updateSegmentCaptureAnalytics} from 'lib/analytics';
 
 export default function CertificateEstimatorLoadClausesMotors(props) {
   const {
@@ -50,6 +52,7 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
   const [dependencies, setDependencies] = useState([]);
+  const [userType, setUserType] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -115,6 +118,26 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
       <div style={{ marginTop: 70, marginBottom: 70 }}>
         {stepNumber === 1 && (
           <Fragment>
+            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+              <b>Please answer the following questions to calculate your ESCs</b>
+            </h5>
+            <FormGroup
+              label="What is your interest in the scheme?"
+              helper="Select the option that best describes you"
+              htmlId="user-type"
+            >
+              <Select
+                htmlId="user-type"
+                style={{ maxWidth: '50%' }}
+                options={USER_TYPE_OPTIONS}
+                onChange={(e) => {
+                  setUserType(e.target.value);
+                  updateSegmentCaptureAnalytics(e.target.value)
+                }}
+                value={userType}
+                required
+              />
+            </FormGroup>
             <CalculateBlock
               calculationDate={calculationDate}
               variable={variableData1}
@@ -233,92 +256,6 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
                   Change activity
                 </Button>
               </div> */}
-            </div>
-            <div
-              className="nsw-row"
-              style={{
-                padding: 'inherit',
-                marginTop: '5%',
-                marginBottom: '5%',
-              }}
-            >
-              <div className="nsw-col-md-12" style={{ width: '80%' }}>
-                <hr
-                  style={{
-                    background: 'black',
-                    height: '1.5px',
-                  }}
-                />
-              </div>
-
-              {!IS_DRUPAL_PAGES && (
-                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                  <h4>More options</h4>
-                  <br></br>
-
-                  <div class="nsw-grid nsw-grid--spaced">
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="#" class="nsw-card__link">
-                              Back to estimator homepage
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="/#core-eligibility" class="nsw-card__link">
-                              Check core eligibility
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a
-                              href="/#commercial-motors-activity-requirements"
-                              class="nsw-card__link"
-                            >
-                              Review eligibility for this activity
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </Fragment>
         )}
