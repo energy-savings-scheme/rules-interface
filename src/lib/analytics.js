@@ -24,6 +24,20 @@ export function updateFeedbackFormAnalytics(values) {
   return feedbackFormAnalytics.values
 }
 
+export function updateSearchCaptureAnalytics(postcode, brand, model) {
+  updateEstimatorFormAnalytics({
+    sf_postcode: postcode,
+    sf_brand: brand,
+    sf_model: model
+  })
+}
+
+export function updateSegmentCaptureAnalytics(userType) {
+  updateEstimatorFormAnalytics({
+    sf_userType: userType
+  })
+}
+
 export function submitEstimatorFormAnalytics() {
   window.dataLayer = window.dataLayer || [];
   const submittedData = {
@@ -40,7 +54,7 @@ export function submitFeedbackFormAnalytics(isHelpful) {
   const submittedData = {
     ...feedbackFormAnalytics.values,
     event: feedbackFormAnalytics.event,
-    isHelpful: isHelpful,
+    sf_isHelpful: isHelpful,
     submittedAt: moment().utc().format()
   }
   window.dataLayer.push(submittedData);

@@ -7,6 +7,19 @@ import CertificateEstimatorLoadClausesRefrigerators from './CertificateEstimator
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import FeedbackComponent from 'components/feedback/feedback';
+import MoreOptionsCard from 'components/more-options-card/more-options-card';
+import {
+  BASE_RESIDENTIAL_REFRIGERATOR_ESTIMATOR_ANALYTICS_DATA,
+} from 'constant/base-analytics-data';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+} from 'lib/analytics';
+import {
+  C1_PDRSAug24_ESC_calculation,
+  C1_PDRSAug24_energy_savings
+} from 'types/openfisca_variables';
 
 export default function CertificateEstimatorRefrigerators(props) {
   const { entities, variables, setVariables, setEntities } = props;
@@ -27,9 +40,12 @@ export default function CertificateEstimatorRefrigerators(props) {
   const [showError, setShowError] = useState(false);
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
+  const [userType, setUserType] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    updateEstimatorFormAnalytics(BASE_RESIDENTIAL_REFRIGERATOR_ESTIMATOR_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_RESIDENTIAL_REFRIGERATOR_ESTIMATOR_ANALYTICS_DATA)
 
     if (variables.length < 1) {
       OpenFiscaAPI.listEntities()
@@ -41,18 +57,6 @@ export default function CertificateEstimatorRefrigerators(props) {
         });
     }
   }, []);
-
-  // useEffect(() => {
-  //   if (parseInt(calculationResult) === 0) {
-  //     setAnnualEnergySavingsNumber(0);
-  //   }
-  // }, [calculationResult]);
-
-  // useEffect(() => {
-  //   if (parseInt(calculationResult2) === 0) {
-  //     setPeakDemandReductionSavingsNumber(0);
-  //   }
-  // }, [calculationResult2]);
 
   useEffect(() => {
     if (annualEnergySavingsNumber < 0) {
@@ -67,7 +71,7 @@ export default function CertificateEstimatorRefrigerators(props) {
   }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
-    OpenFiscaAPI.getVariable('C1_PDRSAug24_ESC_calculation')
+    OpenFiscaAPI.getVariable(C1_PDRSAug24_ESC_calculation)
       .then((res) => {
         setVariableData1(res.data);
         setLoading(false);
@@ -76,7 +80,7 @@ export default function CertificateEstimatorRefrigerators(props) {
         console.log(err);
       });
 
-    OpenFiscaAPI.getVariable('C1_PDRSAug24_ESC_calculation')
+    OpenFiscaAPI.getVariable(C1_PDRSAug24_ESC_calculation)
       .then((res) => {
         setVariableData2(res.data);
         setLoading(false);
@@ -103,7 +107,9 @@ export default function CertificateEstimatorRefrigerators(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ marginTop: '1rem' }}>
+      <div className="nsw-container">
+        <br></br>
+        <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
@@ -189,8 +195,8 @@ export default function CertificateEstimatorRefrigerators(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
-              annualEnergySavings={'C1_PDRSAug24_energy_savings'}
-              peakDemandReductionSavings={'C1_PDRSAug24_energy_savings'}
+              annualEnergySavings={C1_PDRSAug24_energy_savings}
+              peakDemandReductionSavings={C1_PDRSAug24_energy_savings}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
@@ -223,8 +229,8 @@ export default function CertificateEstimatorRefrigerators(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
-              annualEnergySavings={'C1_PDRSAug24_energy_savings'}
-              peakDemandReductionSavings={'C1_PDRSAug24_energy_savings'}
+              annualEnergySavings={C1_PDRSAug24_energy_savings}
+              peakDemandReductionSavings={C1_PDRSAug24_energy_savings}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
@@ -238,8 +244,12 @@ export default function CertificateEstimatorRefrigerators(props) {
                 <Button
                   as="dark"
                   onClick={(e) => {
+                    console.log("NEXT")
                     setFlow('forward');
                     setStepNumber(stepNumber + 1);
+                    updateEstimatorFormAnalytics({
+                      sf_postcode: postcode
+                    });
                   }}
                   style={{ float: 'right' }}
                 >
@@ -250,6 +260,28 @@ export default function CertificateEstimatorRefrigerators(props) {
           )}
         </Fragment>
       </div>
+      {stepNumber === 2 && (
+        <>
+          <FeedbackComponent />
+          {!IS_DRUPAL_PAGES && (
+            <div className="nsw-container">
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <MoreOptionsCard options={[{
+                  title: 'Review eligibility for this activity',
+                  link: '/#residential-refrigeration-activity-requirements'
+                }]}/>
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </Fragment>
   );
 }
