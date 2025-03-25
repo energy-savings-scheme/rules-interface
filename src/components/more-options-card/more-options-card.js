@@ -27,7 +27,7 @@ export default function MoreOptionsCard(props) {
         {
           allOptions.map((option) => {
             return (
-              <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+              <div className={`nsw-col ${isCoreEligibility ? 'nsw-col-md-6' : 'nsw-col-md-4'}`} style={{ height: '12vw' }}>
                 <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
                   <div className="nsw-card__content null">
                     <div className="nsw-card__title">

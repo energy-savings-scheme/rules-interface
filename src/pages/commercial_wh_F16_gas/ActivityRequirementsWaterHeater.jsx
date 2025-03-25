@@ -7,6 +7,17 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesF16_gas from './LoadClausesF16_gas';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import { FormGroup, Select } from 'nsw-ds-react/forms';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+  updateSegmentCaptureAnalytics,
+  clearSearchCaptureAnalytics
+} from 'lib/analytics';
+import FeedbackComponent from 'components/feedback/feedback';
+import MoreOptionsCard from 'components/more-options-card/more-options-card';
+import {BASE_COMMERCIAL_GAS_HEAT_PUMP_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
 
 export default function ActivityRequirementsF16_gas(props) {
   const { entities, variables, loading, setLoading } = props;
@@ -20,6 +31,7 @@ export default function ActivityRequirementsF16_gas(props) {
   const [variable, setVariable] = useState({});
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
+  const [userType, setUserType] = useState('');
 
   if (formValues.length === 0) {
     setLoading(true);
@@ -29,6 +41,9 @@ export default function ActivityRequirementsF16_gas(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    clearSearchCaptureAnalytics();
+    updateEstimatorFormAnalytics(BASE_COMMERCIAL_GAS_HEAT_PUMP_ELIGIBILITY_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_COMMERCIAL_GAS_HEAT_PUMP_ELIGIBILITY_ANALYTICS_DATA);
   }, [stepNumber]);
 
   useEffect(() => {
@@ -110,7 +125,9 @@ export default function ActivityRequirementsF16_gas(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ marginBottom: '10%', marginTop: '1rem' }}>
+      <div className="nsw-container" style={{ marginTop: '1rem' }}>
+        <br></br>
+        <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
@@ -157,64 +174,74 @@ export default function ActivityRequirementsF16_gas(props) {
         <Fragment>
           {loading && <SpinnerFullscreen />}
           {!loading && (
-            <LoadClausesF16_gas
-              variableToLoad={variableToLoad}
-              variables={variables}
-              entities={entities}
-              stepNumber={stepNumber}
-              setStepNumber={setStepNumber}
-              formValues={formValues}
-              dependencies={dependencies}
-              setFormValues={setFormValues}
-              clausesForm={clausesForm}
-              setClausesForm={setClausesForm}
-              showError={showError}
-              setShowError={setShowError}
-              backAction={(e) => {
-                setStepNumber(stepNumber - 1);
-              }}
-            />
+            <>
+              <br></br>
+              {stepNumber === 1 && (
+                <FormGroup
+                  label="What is your interest in the scheme?"
+                  helper="Select the option that best describes you"
+                  className="nsw-m-bottom-xs nsw-m-top-md"
+                  htmlId="user-type"
+                >
+                  <Select
+                    htmlId="user-type"
+                    style={{ maxWidth: '50%' }}
+                    options={USER_TYPE_OPTIONS}
+                    onChange={(e) => {
+                      setUserType(e.target.value);
+                      updateSegmentCaptureAnalytics(e.target.value)
+                    }}
+                    value={userType}
+                    required
+                  />
+                </FormGroup>
+              )}
+              <LoadClausesF16_gas
+                variableToLoad={variableToLoad}
+                variables={variables}
+                entities={entities}
+                stepNumber={stepNumber}
+                setStepNumber={setStepNumber}
+                formValues={formValues}
+                dependencies={dependencies}
+                setFormValues={setFormValues}
+                clausesForm={clausesForm}
+                setClausesForm={setClausesForm}
+                showError={showError}
+                setShowError={setShowError}
+                backAction={(e) => {
+                  setStepNumber(stepNumber - 1);
+                }}
+              />
+            </>
           )}
         </Fragment>
       </div>
-      {!IS_DRUPAL_PAGES && (
-        <section className="nsw-section nsw-section--off-white" style={{ backgroundColor: '#F5F5F5' }}>
-          <div className="nsw-container" style={{ paddingBottom: '4rem' }}>
-            <div className="nsw-layout">
-              <div className="nsw-layout__main">
-                <br></br>
-                <br></br>
-                <h2 className="nsw-col nsw-content-block__title">
-                  Check your eligibility and estimate certificates
-                </h2>
-                <br></br>
-                <div className="nsw-grid">
-                  <div className="nsw-col nsw-col-md-4">
-                    <Card
-                      headline="Review schemes base eligibility, activity requirements and estimate certificates"
-                      link="base_eligibility_commercialac/"
-                      image="/commercialac/navigation_row/full_flow_card.jpeg"
-                    ></Card>
-                  </div>
-                  <div className="nsw-col nsw-col-md-4">
-                    <Card
-                      headline="Check activity requirements and estimate certificates"
-                      link="activity-requirements/"
-                      image="/commercialac/navigation_row/activity_certificates.png"
-                    ></Card>
-                  </div>
-                  <div className="nsw-col nsw-col-md-4">
-                    <Card
-                      headline="Estimate certificates only"
-                      link="compare2activities"
-                      image="/commercialac/navigation_row/certificates_only.jpg"
-                    ></Card>
-                  </div>
-                </div>
+      {stepNumber === 2 && (
+        <>
+          <FeedbackComponent />
+          {!IS_DRUPAL_PAGES && (
+            <div className="nsw-container">
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#commercial-gas-to-heat-pump-water-heater-certificates',
+                    },
+                  ]}
+                />
               </div>
             </div>
-          </div>
-        </section>
+          )}
+        </>
       )}
     </Fragment>
   );
