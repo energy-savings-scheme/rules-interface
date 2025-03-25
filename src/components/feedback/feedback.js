@@ -65,7 +65,7 @@ export default function FeedbackComponent(props) {
                 submitFeedbackFormAnalytics(false);
                 setIsSubmitted(true);
                 setFeedbackMessage(
-                  'Thanks for your feedback, if you would like to provide us with more details you contact us on ',
+                  'Thank you for your feedback. If you would like to provide us with more details you can contact us on ',
                 );
               }}
             >

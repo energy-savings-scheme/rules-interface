@@ -335,6 +335,7 @@ export default function CertificateEstimatorF17(props) {
                         options={dropdownOptions}
                         onChange={(e) => {
                           setSelectedBrand(brands.find((item) => item === e.target.value));
+                          setSelectedModel('');
                         }}
                         value={selectedBrand}
                         required

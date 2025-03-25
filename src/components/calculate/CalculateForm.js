@@ -23,11 +23,18 @@ import {
   F16_gas_ESC_calculation,
   SYS2_PDRSAug24_replacement_final_activity_eligibility,
   ESS__PDRS__ACP_base_scheme_eligibility,
+  BESS1_PDRSAug24_PDRS__postcode,
+  BESS2_PDRSAug24_PDRS__postcode,
+  BESS1_PDRSAug24_PRC_calculation,
+  BESS2_PDRSAug24_PRC_calculation
 } from 'types/openfisca_variables';
 
 import { Float } from 'types/value_type';
-import { submitEstimatorFormAnalytics, updateEstimatorFormAnalytics, updateFeedbackFormAnalytics } from 'lib/analytics';
-import { BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
+import {
+  clearSearchCaptureAnalytics,
+  submitEstimatorFormAnalytics,
+  updatePostCodeAnalytics,
+} from 'lib/analytics';
 
 export default function CalculateForm(props) {
   const {
@@ -204,7 +211,14 @@ export default function CalculateForm(props) {
           };
         });
     } else {
-      if (variable.name === C1_PDRSAug24_ESC_calculation || variable.name === F7_PDRSAug24_ESC_calculation) {
+      // special variable below are certificate pages that has only 2 steps.
+      const specialVariables = [
+        C1_PDRSAug24_ESC_calculation,
+        F7_PDRSAug24_ESC_calculation,
+        BESS1_PDRSAug24_PRC_calculation,
+        BESS2_PDRSAug24_PRC_calculation
+      ]
+      if (specialVariables.includes(variable.name)) {
         if (!validateUserType()) {
           setLoading(false);
           return false
@@ -226,7 +240,6 @@ export default function CalculateForm(props) {
         setCalculationError(false);
         setLoading(true);
         setShowError(false);
-        submitEstimatorFormAnalytics()
       })
       .catch((err) => {
         setCalculationResult(null);
@@ -335,7 +348,9 @@ export default function CalculateForm(props) {
           variable.name === C1_PDRSAug24_PDRS__postcode ||
           variable.name === F7_PDRSAug24_PDRS__postcode ||
           variable.name === BESS1_V5Nov24_PDRS__postcode ||
-          variable.name === BESS2_V5Nov24_PDRS__postcode
+          variable.name === BESS2_V5Nov24_PDRS__postcode ||
+          variable.name === BESS1_PDRSAug24_PDRS__postcode ||
+          variable.name === BESS2_PDRSAug24_PDRS__postcode
         ) {
           if (['2817', '2818', '2819'].includes(variable.form_value)) {
             setFlow(null);
@@ -355,6 +370,8 @@ export default function CalculateForm(props) {
                     setShowPostcodeError(false);
                     setFlow(null);
                     setStepNumber(stepNumber + 1);
+                    updatePostCodeAnalytics(variable.form_value);
+                    submitEstimatorFormAnalytics()
                   } else {
                     setShowPostcodeError(true);
                     setShowNoResponsePostcodeError(false);
@@ -378,8 +395,16 @@ export default function CalculateForm(props) {
       setStepNumber(stepNumber + 1);
     }
 
+    if (stepNumber !== 1 && workflow === Workflow.CERTIFICATES) {
+      submitEstimatorFormAnalytics()
+    }
+
     if (workflow !== Workflow.ELIGIBILITY) {
       setPersistFormValues(formValues);
+    } else {
+      // remove post code property before sending to analytics
+      clearSearchCaptureAnalytics()
+      submitEstimatorFormAnalytics()
     }
   };
 
@@ -404,6 +429,12 @@ export default function CalculateForm(props) {
             <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your PRCs</b>
             </h5>
+          ) : workflow === Workflow.CERTIFICATES &&
+            (variable.name === C1_PDRSAug24_ESC_calculation ||
+              variable.name === F7_PDRSAug24_ESC_calculation ||
+              variable.name === BESS1_PDRSAug24_PRC_calculation ||
+              variable.name === BESS2_PDRSAug24_PRC_calculation ) ? (
+                <></>
           ) : workflow === Workflow.CERTIFICATES ? (
             <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your ESCs and PRCs</b>

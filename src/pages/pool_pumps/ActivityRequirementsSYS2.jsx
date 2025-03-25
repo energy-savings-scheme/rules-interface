@@ -10,7 +10,7 @@ import FeedbackComponent from 'components/feedback/feedback';
 import { FormGroup, Select } from '../../nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
 import {BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
-import {updateEstimatorFormAnalytics, updateFeedbackFormAnalytics} from 'lib/analytics';
+import {updateEstimatorFormAnalytics, updateFeedbackFormAnalytics, updateSegmentCaptureAnalytics} from 'lib/analytics';
 import {SYS2_PDRSAug24_replacement_final_activity_eligibility} from 'types/openfisca_variables';
 
 export default function ActivityRequirementsSYS2(props) {
@@ -191,9 +191,7 @@ export default function ActivityRequirementsSYS2(props) {
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
                       setUserType(e.target.value);
-                      updateEstimatorFormAnalytics({
-                        userType: e.target.value
-                      })
+                      updateSegmentCaptureAnalytics(e.target.value)
                     }}
                     value={userType}
                     required

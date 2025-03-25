@@ -481,6 +481,7 @@ export default function CertificateEstimatorHVAC(props) {
                         options={dropdownOptions}
                         onChange={(e) => {
                           setSelectedBrand(hvacBrands.find((item) => item === e.target.value));
+                          setSelectedModel('');
                         }}
                         value={selectedBrand}
                         required

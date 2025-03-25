@@ -3,22 +3,19 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
-// import CertificateEstimatorLoadClausesMotors from './CertificateEstimatorLoadClausesMotors';
 import CertificateEstimatorLoadClausesBESS1 from './CertificateEstimatorLoadClausesBESS1';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
-import BESSBrandSelector from 'components/certificate/BESSBrandSelector';
 import {
-  BESS1_V5Nov24_PDRS__postcode,
-  BESS1_V5Nov24_peak_demand_annual_savings,
-  BESS1_V5Nov24_PRC_calculation,
-  BESS1_V5Nov24_usable_battery_capacity,
+  BESS1_PDRSAug24_PRC_calculation,
+  BESS1_PDRSAug24_peak_demand_annual_savings
 } from 'types/openfisca_variables';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import {BASE_BESS1_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
+  clearSearchCaptureAnalytics
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
@@ -48,6 +45,7 @@ export default function CertificateEstimatorBESS1(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    clearSearchCaptureAnalytics();
     updateEstimatorFormAnalytics(BASE_BESS1_ESTIMATOR_ANALYTICS_DATA);
     updateFeedbackFormAnalytics(BASE_BESS1_ESTIMATOR_ANALYTICS_DATA);
 
@@ -75,7 +73,7 @@ export default function CertificateEstimatorBESS1(props) {
   }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
-    OpenFiscaAPI.getVariable(BESS1_V5Nov24_PRC_calculation)
+    OpenFiscaAPI.getVariable(BESS1_PDRSAug24_PRC_calculation)
       .then((res) => {
         setVariableData1(res.data);
         setLoading(false);
@@ -84,7 +82,7 @@ export default function CertificateEstimatorBESS1(props) {
         console.log(err);
       });
 
-    OpenFiscaAPI.getVariable(BESS1_V5Nov24_PRC_calculation)
+    OpenFiscaAPI.getVariable(BESS1_PDRSAug24_PRC_calculation)
       .then((res) => {
         setVariableData2(res.data);
         setLoading(false);
@@ -114,7 +112,7 @@ export default function CertificateEstimatorBESS1(props) {
       <div className="nsw-container">
         <br></br>
         <br></br>
-        {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
+        {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <p className="nsw-content-block__copy">
@@ -149,12 +147,12 @@ export default function CertificateEstimatorBESS1(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
 
-        {stepNumber === 3 && loading && !showError && <SpinnerFullscreen />}
+        {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
         <Fragment>
-          {stepNumber === 3 && calculationError && calculationError2 && showError && (
+          {stepNumber === 2 && calculationError && calculationError2 && showError && (
             <Alert as="error" title="Sorry!" style={{ width: '80%' }}>
               <p>We are experiencing technical difficulties right now, please try again later.</p>
             </Alert>
@@ -163,33 +161,11 @@ export default function CertificateEstimatorBESS1(props) {
           {stepNumber === 1 && loading && <SpinnerFullscreen />}
 
           {stepNumber === 1 && (
-            <BESSBrandSelector
-              brands={brands}
-              usableBatteryCapacityName={BESS1_V5Nov24_usable_battery_capacity}
-              postcodeName={BESS1_V5Nov24_PDRS__postcode}
-              persistFormValues={persistFormValues}
-              setPersistFormValues={setPersistFormValues}
-              formValues={formValues}
-              setStepNumber={setStepNumber}
-              setSelectedBrand={setSelectedBrand}
-              selectedBrand={selectedBrand}
-              setSelectedModel={setSelectedModel}
-              selectedModel={selectedModel}
-              postcode={postcode}
-              setPostcode={setPostcode}
-              userType={userType}
-              setUserType={setUserType}
-            />
-          )}
-
-          {stepNumber === 2 && loading && <SpinnerFullscreen />}
-
-          {stepNumber === 2 && (
             <CertificateEstimatorLoadClausesBESS1
               variableData1={variableData1}
               variableData2={variableData2}
-              annualEnergySavings={BESS1_V5Nov24_peak_demand_annual_savings}
-              peakDemandReductionSavings={BESS1_V5Nov24_peak_demand_annual_savings}
+              annualEnergySavings={BESS1_PDRSAug24_peak_demand_annual_savings}
+              peakDemandReductionSavings={BESS1_PDRSAug24_peak_demand_annual_savings}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
@@ -220,18 +196,20 @@ export default function CertificateEstimatorBESS1(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              userType={userType}
+              setUserType={setUserType}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
             />
           )}
 
-          {stepNumber === 3 && (
+          {stepNumber === 2 && (
             <CertificateEstimatorLoadClausesBESS1
               variableData1={variableData1}
               variableData2={variableData2}
-              annualEnergySavings={BESS1_V5Nov24_peak_demand_annual_savings}
-              peakDemandReductionSavings={BESS1_V5Nov24_peak_demand_annual_savings}
+              annualEnergySavings={BESS1_PDRSAug24_peak_demand_annual_savings}
+              peakDemandReductionSavings={BESS1_PDRSAug24_peak_demand_annual_savings}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
@@ -257,11 +235,13 @@ export default function CertificateEstimatorBESS1(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              userType={userType}
+              setUserType={setUserType}
             />
           )}
         </Fragment>
       </div>
-      {stepNumber === 3 && (
+      {stepNumber === 2 && (
         <>
           <FeedbackComponent />
           {!IS_DRUPAL_PAGES && (
