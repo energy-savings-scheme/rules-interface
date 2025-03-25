@@ -17,6 +17,17 @@ import {
   HVAC2_TCPSF_greater_than_minimum,
 } from 'types/openfisca_variables';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import { FormGroup, Select } from 'nsw-ds-react/forms';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+  updateSegmentCaptureAnalytics,
+  clearSearchCaptureAnalytics
+} from 'lib/analytics';
+import FeedbackComponent from 'components/feedback/feedback';
+import MoreOptionsCard from 'components/more-options-card/more-options-card';
+import {BASE_BESS1_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
 
 export default function ActivityRequirementsBESS1(props) {
   const { entities, variables, loading, setLoading } = props;
@@ -30,6 +41,7 @@ export default function ActivityRequirementsBESS1(props) {
   const [variable, setVariable] = useState({});
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
+  const [userType, setUserType] = useState('');
 
   if (formValues.length === 0) {
     setLoading(true);
@@ -39,6 +51,9 @@ export default function ActivityRequirementsBESS1(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    clearSearchCaptureAnalytics();
+    updateEstimatorFormAnalytics(BASE_BESS1_ELIGIBILITY_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_BESS1_ELIGIBILITY_ANALYTICS_DATA);
   }, [stepNumber]);
 
   useEffect(() => {
@@ -126,7 +141,9 @@ export default function ActivityRequirementsBESS1(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ marginBottom: '10%', marginTop: '1rem' }}>
+      <div className="nsw-container" style={{  marginTop: '1rem' }}>
+        <br></br>
+        <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
@@ -173,26 +190,75 @@ export default function ActivityRequirementsBESS1(props) {
         <Fragment>
           {loading && <SpinnerFullscreen />}
           {!loading && (
-            <LoadClausesBESS1
-              variableToLoad={variableToLoad}
-              variables={variables}
-              entities={entities}
-              stepNumber={stepNumber}
-              setStepNumber={setStepNumber}
-              formValues={formValues}
-              dependencies={dependencies}
-              setFormValues={setFormValues}
-              clausesForm={clausesForm}
-              setClausesForm={setClausesForm}
-              showError={showError}
-              setShowError={setShowError}
-              backAction={(e) => {
-                setStepNumber(stepNumber - 1);
-              }}
-            />
+            <>
+              <br></br>
+              {stepNumber === 1 && (
+                <FormGroup
+                  label="What is your interest in the scheme?"
+                  helper="Select the option that best describes you"
+                  className="nsw-m-bottom-xs nsw-m-top-md"
+                  htmlId="user-type"
+                >
+                  <Select
+                    htmlId="user-type"
+                    style={{ maxWidth: '50%' }}
+                    options={USER_TYPE_OPTIONS}
+                    onChange={(e) => {
+                      setUserType(e.target.value);
+                      updateSegmentCaptureAnalytics(e.target.value)
+                    }}
+                    value={userType}
+                    required
+                  />
+                </FormGroup>
+              )}
+              <LoadClausesBESS1
+                variableToLoad={variableToLoad}
+                variables={variables}
+                entities={entities}
+                stepNumber={stepNumber}
+                setStepNumber={setStepNumber}
+                formValues={formValues}
+                dependencies={dependencies}
+                setFormValues={setFormValues}
+                clausesForm={clausesForm}
+                setClausesForm={setClausesForm}
+                showError={showError}
+                setShowError={setShowError}
+                backAction={(e) => {
+                  setStepNumber(stepNumber - 1);
+                }}
+              />
+            </>
           )}
         </Fragment>
       </div>
+      {stepNumber === 2 && (
+        <>
+          <FeedbackComponent />
+          {!IS_DRUPAL_PAGES && (
+            <div className="nsw-container">
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#residential-solar-battery-certificates',
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </Fragment>
   );
 }

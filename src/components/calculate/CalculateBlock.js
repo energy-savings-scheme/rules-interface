@@ -12,7 +12,9 @@ import {
   BESS1_PDRSDec24_smoke_alarm,
   F16_electric_PDRSDec24__storage_volume,
   F16_electric_PDRSDec24__certified,
-  SYS2_PDRSAug24_new_installation_or_replacement
+  SYS2_PDRSAug24_new_installation_or_replacement,
+  HVAC1_PDRSAug24_new_installation_or_replacement,
+  HVAC2_new_installation_or_replacement,
 } from 'types/openfisca_variables';
 
 export default function CalculateBlock(props) {
@@ -208,7 +210,10 @@ export default function CalculateBlock(props) {
       formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = true;
     }
 
-    if (formItem.name === SYS2_PDRSAug24_new_installation_or_replacement) {
+    if (formItem.name === SYS2_PDRSAug24_new_installation_or_replacement ||
+        formItem.name === HVAC1_PDRSAug24_new_installation_or_replacement ||
+        formItem.name === HVAC2_new_installation_or_replacement
+    ) {
       formItem.defaultOption = { text: 'Please select activity', value: '', disabled: true }
     }
 

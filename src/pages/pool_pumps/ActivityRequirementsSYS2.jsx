@@ -12,6 +12,7 @@ import { USER_TYPE_OPTIONS } from 'constant/user-type';
 import {BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
 import {updateEstimatorFormAnalytics, updateFeedbackFormAnalytics, updateSegmentCaptureAnalytics} from 'lib/analytics';
 import {SYS2_PDRSAug24_replacement_final_activity_eligibility} from 'types/openfisca_variables';
+import MoreOptionsCard from 'components/more-options-card/more-options-card';
 
 export default function ActivityRequirementsSYS2(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -178,6 +179,7 @@ export default function ActivityRequirementsSYS2(props) {
           {loading && <SpinnerFullscreen />}
           {!loading && (
             <>
+              <br></br>
               {stepNumber === 1 && (
                 <FormGroup
                   label="What is your interest in the scheme?"
@@ -232,72 +234,14 @@ export default function ActivityRequirementsSYS2(props) {
                   marginBottom: '5%',
                 }}
               >
-                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                  <h4>More options</h4>
-                  <br></br>
-
-                  <div className="nsw-grid nsw-grid--spaced">
-                    <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div className="nsw-card__content null">
-                          <div className="nsw-card__title">
-                            <a href="#" className="nsw-card__link">
-                              Back to estimator homepage
-                            </a>
-                          </div>
-                          <span
-                            className="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                                east
-                              </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div className="nsw-card__content null">
-                          <div className="nsw-card__title">
-                            <a href="/#core-eligibility" className="nsw-card__link">
-                              Check core eligibility
-                            </a>
-                          </div>
-                          <span
-                            className="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                                east
-                              </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div className="nsw-card__content null">
-                          <div className="nsw-card__title">
-                            <a
-                              href="/#residential-pool-pump-certificates"
-                              className="nsw-card__link"
-                            >
-                              Estimate certificates for this activity
-                            </a>
-                          </div>
-                          <span
-                            className="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                                east
-                              </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#residential-pool-pump-certificates',
+                    },
+                  ]}
+                />
               </div>
             </div>
           )}
