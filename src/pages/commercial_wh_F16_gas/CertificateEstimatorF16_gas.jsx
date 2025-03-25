@@ -333,6 +333,7 @@ export default function CertificateEstimatorF16_gas(props) {
                         options={dropdownOptions}
                         onChange={(e) => {
                           setSelectedBrand(brands.find((item) => item === e.target.value));
+                          setSelectedModel('');
                         }}
                         value={selectedBrand}
                         required

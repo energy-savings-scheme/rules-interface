@@ -12,6 +12,7 @@ import {BASE_COMMERCIAL_MOTOR_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-anal
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
+  clearSearchCaptureAnalytics
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
@@ -40,9 +41,11 @@ export default function CertificateEstimatorMotors(props) {
   const [showError, setShowError] = useState(false);
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
+  const [userType, setUserType] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    clearSearchCaptureAnalytics();
     updateEstimatorFormAnalytics(BASE_COMMERCIAL_MOTOR_ESTIMATOR_ANALYTICS_DATA);
     updateFeedbackFormAnalytics(BASE_COMMERCIAL_MOTOR_ESTIMATOR_ANALYTICS_DATA);
 
@@ -194,6 +197,8 @@ export default function CertificateEstimatorMotors(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              userType={userType}
+              setUserType={setUserType}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
@@ -231,6 +236,8 @@ export default function CertificateEstimatorMotors(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              userType={userType}
+              setUserType={setUserType}
             />
           )}
 

@@ -8,7 +8,7 @@ import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import {USER_TYPE_OPTIONS} from 'constant/user-type';
 import {BASE_CORE_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
 import { FormGroup, Select } from '../../nsw-ds-react/forms';
-import {updateEstimatorFormAnalytics, updateFeedbackFormAnalytics} from 'lib/analytics';
+import {updateEstimatorFormAnalytics, updateFeedbackFormAnalytics, updateSegmentCaptureAnalytics} from 'lib/analytics';
 import {ESS__PDRS__ACP_base_scheme_eligibility} from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 
@@ -193,9 +193,7 @@ export default function BaseEligibility(props) {
                   options={USER_TYPE_OPTIONS}
                   onChange={(e) => {
                     setUserType(e.target.value);
-                    updateEstimatorFormAnalytics({
-                      userType: e.target.value
-                    })
+                    updateSegmentCaptureAnalytics(e.target.value)
                   }}
                   value={userType}
                   required

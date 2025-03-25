@@ -327,6 +327,7 @@ export default function CertificateEstimatorWH(props) {
                         options={dropdownOptions}
                         onChange={(e) => {
                           setSelectedBrand(brands.find((item) => item === e.target.value));
+                          setSelectedModel('');
                         }}
                         value={selectedBrand}
                         required

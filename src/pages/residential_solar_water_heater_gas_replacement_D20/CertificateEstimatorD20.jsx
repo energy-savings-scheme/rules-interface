@@ -338,6 +338,7 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
                         options={dropdownOptions}
                         onChange={(e) => {
                           setSelectedBrand(brands.find((item) => item === e.target.value));
+                          setSelectedModel('');
                         }}
                         value={selectedBrand}
                         required
