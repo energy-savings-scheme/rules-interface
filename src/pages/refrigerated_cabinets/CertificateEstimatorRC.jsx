@@ -366,6 +366,7 @@ export default function CertificateEstimatorRC(props) {
                         options={dropdownOptions}
                         onChange={(e) => {
                           setSelectedBrand(RF2Brands.find((item) => item === e.target.value));
+                          setSelectedModel('');
                         }}
                         value={selectedBrand}
                         required

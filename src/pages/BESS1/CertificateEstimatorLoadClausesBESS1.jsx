@@ -8,10 +8,9 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
-import {
-  BESS1_V5Nov24_PDRS__postcode,
-  BESS1_V5Nov24_PRC_calculation,
-} from '../../types/openfisca_variables';
+import { FormGroup, Select } from 'nsw-ds-react/forms';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import { updateSegmentCaptureAnalytics } from 'lib/analytics';
 
 export default function CertificateEstimatorLoadClausesBESS1(props) {
   const {
@@ -49,6 +48,8 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
+    userType,
+    setUserType,
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -94,14 +95,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
 
         array2.forEach((item) => addElement(array1, item));
 
-        array1.forEach((formItem) => {
-          if (formItem.name === BESS1_V5Nov24_PDRS__postcode) {
-            formItem.form_value = postcode;
-            formItem.read_only = true;
-          }
-        });
-
-        if (persistFormValues.length > 0) {
+        if (persistFormValues.length > 1 && flow === 'backward') {
           array1.map((e) => {
             let found = persistFormValues.find((f) => e.name === f.name);
             if (found !== undefined) {
@@ -131,27 +125,29 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
   return (
     <div className>
       <div style={{ marginTop: 70, marginBottom: 70 }}>
-        {stepNumber === 2 && (
+        {stepNumber === 1 && (
           <Fragment>
-            <div
-              class="nsw-global-alert nsw-global-alert--light js-global-alert"
-              role="alert"
-              style={{ width: '80%', marginBottom: '7%' }}
+            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+              <b>Please answer the following questions to calculate your PRCs</b>
+            </h5>
+
+            <FormGroup
+              label="What is your interest in the scheme?"
+              helper="Select the option that best describes you"
+              htmlId="user-type"
             >
-              <div class="nsw-global-alert__wrapper">
-                <div class="nsw-global-alert__content">
-                  {/* <div class="nsw-global-alert__title"></div> */}
-                  <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
-                  </p>
-                  <p>
-                    {' '}
-                    <b>Model: </b> {selectedModel}
-                  </p>
-                </div>
-              </div>
-            </div>
+              <Select
+                htmlId="user-type"
+                style={{ maxWidth: '50%' }}
+                options={USER_TYPE_OPTIONS}
+                onChange={(e) => {
+                  setUserType(e.target.value);
+                  updateSegmentCaptureAnalytics(e.target.value);
+                }}
+                value={userType}
+                required
+              />
+            </FormGroup>
 
             <CalculateBlock
               calculationDate={calculationDate}
@@ -195,7 +191,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
           </Fragment>
         )}
 
-        {stepNumber === 3 && !calculationError && !calculationError2 && (
+        {stepNumber === 2 && !calculationError && !calculationError2 && (
           <Fragment>
             {
               <Alert as="info" title="PRCs" style={{ width: '80%' }}>
@@ -241,7 +237,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
             </Alert>
           ))}
 
-        {stepNumber === 3 && (
+        {stepNumber === 2 && (
           <Fragment>
             <div
               className="nsw-row"

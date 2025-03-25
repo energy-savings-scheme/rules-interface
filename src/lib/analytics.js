@@ -11,7 +11,7 @@ class FormAnalytics {
   }
 }
 
-const estimatorFormAnalytics = new FormAnalytics('SafeguardEstimator')
+const estimatorFormAnalytics = new FormAnalytics('SafeguardSubmission')
 const feedbackFormAnalytics = new FormAnalytics('SafeguardFeedback')
 
 export function updateEstimatorFormAnalytics(values) {
@@ -30,12 +30,39 @@ export function updateSearchCaptureAnalytics(postcode, brand, model) {
     sf_brand: brand,
     sf_model: model
   })
+  updateFeedbackFormAnalytics({
+    sf_postcode: postcode,
+    sf_brand: brand,
+    sf_model: model
+  })
 }
 
 export function updateSegmentCaptureAnalytics(userType) {
   updateEstimatorFormAnalytics({
     sf_userType: userType
   })
+  updateFeedbackFormAnalytics({
+    sf_userType: userType
+  })
+}
+
+export function updatePostCodeAnalytics(postcode) {
+  updateEstimatorFormAnalytics({
+    sf_postcode: postcode
+  })
+  updateFeedbackFormAnalytics({
+    sf_postcode: postcode
+  })
+}
+
+export function clearSearchCaptureAnalytics() {
+  delete estimatorFormAnalytics.values.sf_postcode
+  delete estimatorFormAnalytics.values.sf_brand
+  delete estimatorFormAnalytics.values.sf_model
+
+  delete feedbackFormAnalytics.values.sf_postcode
+  delete feedbackFormAnalytics.values.sf_brand
+  delete feedbackFormAnalytics.values.sf_model
 }
 
 export function submitEstimatorFormAnalytics() {

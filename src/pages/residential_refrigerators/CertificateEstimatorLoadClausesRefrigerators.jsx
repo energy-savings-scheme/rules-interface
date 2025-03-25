@@ -46,6 +46,8 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
+    userType,
+    setUserType
   } = props;
 
   useEffect(() => {
@@ -57,7 +59,6 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
   const [dependencies, setDependencies] = useState([]);
-  const [userType, setUserType] = useState('');
 
   function addElement(arr, obj) {
     const found = arr.some((el) => el.name === obj.name);

@@ -45,6 +45,8 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
+    userType,
+    setUserType
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -52,7 +54,6 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
   const [dependencies, setDependencies] = useState([]);
-  const [userType, setUserType] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);

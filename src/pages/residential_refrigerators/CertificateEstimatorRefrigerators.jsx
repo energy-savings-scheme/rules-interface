@@ -15,6 +15,7 @@ import {
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
+  clearSearchCaptureAnalytics
 } from 'lib/analytics';
 import {
   C1_PDRSAug24_ESC_calculation,
@@ -44,6 +45,7 @@ export default function CertificateEstimatorRefrigerators(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    clearSearchCaptureAnalytics();
     updateEstimatorFormAnalytics(BASE_RESIDENTIAL_REFRIGERATOR_ESTIMATOR_ANALYTICS_DATA);
     updateFeedbackFormAnalytics(BASE_RESIDENTIAL_REFRIGERATOR_ESTIMATOR_ANALYTICS_DATA)
 
@@ -201,6 +203,8 @@ export default function CertificateEstimatorRefrigerators(props) {
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              userType={userType}
+              setUserType={setUserType}
             />
           )}
 
@@ -235,6 +239,8 @@ export default function CertificateEstimatorRefrigerators(props) {
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              userType={userType}
+              setUserType={setUserType}
             />
           )}
 
