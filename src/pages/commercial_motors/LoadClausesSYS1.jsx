@@ -10,7 +10,6 @@ import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
-import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function LoadClausesSYS1(props) {
   const {
@@ -79,7 +78,6 @@ export default function LoadClausesSYS1(props) {
 
   return (
     <div className style={{ marginBottom: '7%' }}>
-      <br></br>
       {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
       {stepNumber === 2 && calculationError && showError && (
@@ -88,64 +86,7 @@ export default function LoadClausesSYS1(props) {
         </Alert>
       )}
 
-      <div></div>
       <div>
-        {stepNumber === 1 && (
-          <Fragment>
-            <div className="nsw-row">
-              <div className="nsw-col">
-                <br></br>
-                <div className="nsw-content-block">
-                  <div className="nsw-content-block__content">
-                    {/* <h3 className="nsw-content-block__title">
-                      What would you like to calculate savings for?
-                    </h3>
-
-                    <FormGroupSelect
-                      label="What activity are you calculating savings for?" // primary label
-                      helper="Select a variable below." // helper text (secondary label)
-                      options={dropdownOptions}
-                      value={variable.name}
-                      onChange={(e) => {
-                        setVariable(variables.find((item) => item.name === e.target.value));
-                      }}
-                    ></FormGroupSelect>
-                    <FormGroup
-                      label="What is the activity date?"
-                      helper="What date did the energy saving activity occur?"
-                      errorText="The date provided is invalid!"
-                      status={dateInvalid && 'invalid'}
-                    >
-                      <TextInput
-                        as="input"
-                        type="date"
-                        status={dateInvalid && 'invalid'}
-                        placeholder="Enter value"
-                        value={calculationDate}
-                        onChange={(e) => setCalculationDate(e.target.value)}
-                      />
-                    </FormGroup> */}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* <div className="nsw-row">
-              <div className="nsw-col">
-                <Button
-                  as="primary"
-                  onClick={(e) => {
-                    setStepNumber(stepNumber + 1);
-                  }}
-                  style={{ float: 'right' }}
-                >
-                  Check Schemes Base Eligibility
-                </Button>
-              </div>
-            </div> */}
-          </Fragment>
-        )}
-
         {stepNumber === 1 && (
           <Fragment>
             <CalculateBlock
@@ -234,81 +175,6 @@ export default function LoadClausesSYS1(props) {
                   Check activity requirements again
                 </Button>
               </div>
-
-              <div className="nsw-col-md-12" style={{ width: '80%' }}>
-                <hr
-                  style={{
-                    background: 'black',
-                    height: '1.5px',
-                  }}
-                />
-              </div>
-
-              {!IS_DRUPAL_PAGES && (
-                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                  <h4>More options</h4>
-                  <br></br>
-
-                  <div class="nsw-grid nsw-grid--spaced">
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="#" class="nsw-card__link">
-                              Back to estimator homepage
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="/#core-eligibility" class="nsw-card__link">
-                              Check core eligibility
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="/#commercial-motors-estimator" class="nsw-card__link">
-                              Estimate certificates for this activity
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </Fragment>
         )}

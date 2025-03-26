@@ -7,10 +7,16 @@ import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import {USER_TYPE_OPTIONS} from 'constant/user-type';
 import {BASE_CORE_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
-import { FormGroup, Select } from '../../nsw-ds-react/forms';
-import {updateEstimatorFormAnalytics, updateFeedbackFormAnalytics, updateSegmentCaptureAnalytics} from 'lib/analytics';
+import { FormGroup, Select } from 'nsw-ds-react/forms';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+  updateSegmentCaptureAnalytics,
+  clearSearchCaptureAnalytics
+} from 'lib/analytics';
 import {ESS__PDRS__ACP_base_scheme_eligibility} from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
+import MoreOptionsCard from '../../components/more-options-card/more-options-card';
 
 export default function BaseEligibility(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -34,6 +40,7 @@ export default function BaseEligibility(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    clearSearchCaptureAnalytics();
     updateEstimatorFormAnalytics(BASE_CORE_ELIGIBILITY_ANALYTICS_DATA)
     updateFeedbackFormAnalytics(BASE_CORE_ELIGIBILITY_ANALYTICS_DATA)
   }, [stepNumber]);
@@ -131,6 +138,8 @@ export default function BaseEligibility(props) {
       )}
 
       <div className="nsw-container" style={{ marginTop: '1rem' }}>
+        <br></br>
+        <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
@@ -230,48 +239,15 @@ export default function BaseEligibility(props) {
           <FeedbackComponent />
           {!IS_DRUPAL_PAGES && (
             <div className="nsw-container">
-              <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                <h4>More options</h4>
-                <br></br>
-                <div class="nsw-grid nsw-grid--spaced">
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="#certificate-estimation" class="nsw-card__link">
-                            Estimate certificates for an activity
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                        east
-                      </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="#eligibility" class="nsw-card__link">
-                            Check eligibility for an activity
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                        east
-                      </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <MoreOptionsCard coreEligibility={true} options={[]} />
               </div>
             </div>
           )}

@@ -187,19 +187,9 @@ export default function CalculateForm(props) {
     };
 
     if (workflow === Workflow.ELIGIBILITY) {
-      // validate user type field
-      // user type field is part of segment capture, and will be push to google analytics
-      // this is temporary for the pool pump eligibility activity and core eligibility
-      // until applied to all activities
-      if (variable.name === SYS2_PDRSAug24_replacement_final_activity_eligibility ||
-        variable.name === ESS__PDRS__ACP_base_scheme_eligibility) {
-        const userType = document.querySelector('select#user-type')
-        if (!userType.value) {
-          document.querySelector('select#user-type').reportValidity();
-          document.querySelector('select#user-type').setCustomValidity('Please select an item in the list.')
-          setLoading(false);
-          return false;
-        }
+      if (!validateUserType()) {
+        setLoading(false);
+        return false
       }
       formValues
         .filter((x) => x.hide === false)

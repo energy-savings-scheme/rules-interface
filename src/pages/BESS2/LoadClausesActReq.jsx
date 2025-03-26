@@ -7,13 +7,9 @@ import moment from 'moment';
 import CalculateBlock from 'components/calculate/CalculateBlock';
 
 import Button from 'nsw-ds-react/button/button';
-import { FormGroup, FormGroupSelect, TextInput } from 'nsw-ds-react/forms';
-import { Notification } from 'nsw-ds-react/notification/notification';
-import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
-import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function LoadClausesBESS2(props) {
   const {
@@ -31,13 +27,10 @@ export default function LoadClausesBESS2(props) {
     setShowError,
   } = props;
 
-  console.log(variableToLoad);
-
   const [variable, setVariable] = useState({}); // all info about variable
 
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
-  const [dateInvalid, setDateInvalid] = useState(false);
 
   const [calculationResult, setCalculationResult] = useState(null);
   const [calculationError, setCalculationError] = useState(false);
@@ -86,19 +79,6 @@ export default function LoadClausesBESS2(props) {
   return (
     <div className style={{ marginBottom: '7%' }}>
       <div>
-        {stepNumber === 1 && (
-          <Fragment>
-            <div className="nsw-row">
-              <div className="nsw-col">
-                <br></br>
-                <div className="nsw-content-block">
-                  <div className="nsw-content-block__content"></div>
-                </div>
-              </div>
-            </div>
-          </Fragment>
-        )}
-
         {stepNumber === 1 && (
           <Fragment>
             <CalculateBlock
@@ -195,84 +175,6 @@ export default function LoadClausesBESS2(props) {
                   Check activity requirements again
                 </Button>
               </div>
-
-              <div className="nsw-col-md-12" style={{ width: '80%' }}>
-                <hr
-                  style={{
-                    background: 'black',
-                    height: '1.5px',
-                  }}
-                />
-              </div>
-
-              {!IS_DRUPAL_PAGES && (
-                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                  <h4>More options</h4>
-                  <br></br>
-
-                  <div class="nsw-grid nsw-grid--spaced">
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="#" class="nsw-card__link">
-                              Back to estimator homepage
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="/#core-eligibility" class="nsw-card__link">
-                              Check core eligibility
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a
-                              href="/#residential-solar-battery-demand-response-certificates"
-                              class="nsw-card__link"
-                            >
-                              Estimate certificates for this activity
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </Fragment>
         )}

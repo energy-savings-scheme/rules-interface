@@ -32,7 +32,6 @@ export default function LoadClausesWH1(props) {
 
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
-  const [dateInvalid, setDateInvalid] = useState(false);
 
   const [calculationResult, setCalculationResult] = useState(null);
   const [calculationError, setCalculationError] = useState(false);
@@ -94,7 +93,6 @@ export default function LoadClausesWH1(props) {
 
   return (
     <div className style={{ marginBottom: '7%' }}>
-      <br></br>
       {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
       {stepNumber === 2 && calculationError && showError && (
@@ -102,64 +100,8 @@ export default function LoadClausesWH1(props) {
           <p>We are experiencing technical difficulties right now, please try again later.</p>
         </Alert>
       )}
-      <div></div>
+
       <div>
-        {stepNumber === 1 && (
-          <Fragment>
-            <div className="nsw-row">
-              <div className="nsw-col">
-                <br></br>
-                <div className="nsw-content-block">
-                  <div className="nsw-content-block__content">
-                    {/* <h3 className="nsw-content-block__title">
-                      What would you like to calculate savings for?
-                    </h3>
-
-                    <FormGroupSelect
-                      label="What activity are you calculating savings for?" // primary label
-                      helper="Select a variable below." // helper text (secondary label)
-                      options={dropdownOptions}
-                      value={variable.name}
-                      onChange={(e) => {
-                        setVariable(variables.find((item) => item.name === e.target.value));
-                      }}
-                    ></FormGroupSelect>
-                    <FormGroup
-                      label="What is the activity date?"
-                      helper="What date did the energy saving activity occur?"
-                      errorText="The date provided is invalid!"
-                      status={dateInvalid && 'invalid'}
-                    >
-                      <TextInput
-                        as="input"
-                        type="date"
-                        status={dateInvalid && 'invalid'}
-                        placeholder="Enter value"
-                        value={calculationDate}
-                        onChange={(e) => setCalculationDate(e.target.value)}
-                      />
-                    </FormGroup> */}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* <div className="nsw-row">
-              <div className="nsw-col">
-                <Button
-                  as="primary"
-                  onClick={(e) => {
-                    setStepNumber(stepNumber + 1);
-                  }}
-                  style={{ float: 'right' }}
-                >
-                  Check Schemes Base Eligibility
-                </Button>
-              </div>
-            </div> */}
-          </Fragment>
-        )}
-
         {stepNumber === 1 && (
           <Fragment>
             <CalculateBlock
@@ -251,15 +193,6 @@ export default function LoadClausesWH1(props) {
                 >
                   Check activity requirements again
                 </Button>
-              </div>
-
-              <div className="nsw-col-md-12" style={{ width: '80%' }}>
-                <hr
-                  style={{
-                    background: 'black',
-                    height: '1.5px',
-                  }}
-                />
               </div>
             </div>
           </Fragment>
