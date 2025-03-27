@@ -419,7 +419,7 @@ export default function CertificateEstimatorHVAC(props) {
                     >
                       <Select
                         htmlId="user-type"
-                        style={{ maxWidth: '50%' }}
+                        style={{ maxWidth: '50%', marginBottom: '1%' }}
                         options={USER_TYPE_OPTIONS}
                         onChange={(e) => {
                           setUserType(e.target.value);

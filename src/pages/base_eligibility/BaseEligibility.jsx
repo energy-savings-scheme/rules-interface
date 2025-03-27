@@ -193,12 +193,12 @@ export default function BaseEligibility(props) {
                 <FormGroup
                 label="What is your interest in the scheme?"
                 helper="Select the option that best describes you"
-                className="nsw-m-bottom-xs nsw-m-top-md"
                 htmlId="user-type"
+                style={{marginTop: '4%'}}
               >
                 <Select
                   htmlId="user-type"
-                  style={{ maxWidth: '50%' }}
+                  style={{ maxWidth: '50%', marginBottom: '2.5%' }}
                   options={USER_TYPE_OPTIONS}
                   onChange={(e) => {
                     setUserType(e.target.value);

@@ -122,7 +122,7 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
             >
               <Select
                 htmlId="user-type"
-                style={{ maxWidth: '50%' }}
+                style={{ maxWidth: '50%', marginBottom: '2.5%' }}
                 options={USER_TYPE_OPTIONS}
                 onChange={(e) => {
                   setUserType(e.target.value);
