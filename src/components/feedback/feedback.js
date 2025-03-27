@@ -41,7 +41,7 @@ export default function FeedbackComponent(props) {
               onClick={() => {
                 submitFeedbackFormAnalytics(true);
                 setIsSubmitted(true);
-                setFeedbackMessage('Thanks for your feedback! You can also contact us on ');
+                setFeedbackMessage('Thank you for your feedback. You can also contact us on ');
               }}
             >
               <span
