@@ -250,7 +250,6 @@ export default function CertificateEstimatorRefrigerators(props) {
                 <Button
                   as="dark"
                   onClick={(e) => {
-                    console.log("NEXT")
                     setFlow('forward');
                     setStepNumber(stepNumber + 1);
                     updateEstimatorFormAnalytics({
