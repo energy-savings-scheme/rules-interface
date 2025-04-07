@@ -10,7 +10,7 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import {updateSegmentCaptureAnalytics} from 'lib/analytics';
+import { updateSegmentCaptureAnalytics } from 'lib/analytics';
 
 export default function CertificateEstimatorLoadClausesMotors(props) {
   const {
@@ -46,7 +46,7 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
     userType,
-    setUserType
+    setUserType,
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -133,7 +133,7 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
                 options={USER_TYPE_OPTIONS}
                 onChange={(e) => {
                   setUserType(e.target.value);
-                  updateSegmentCaptureAnalytics(e.target.value)
+                  updateSegmentCaptureAnalytics(e.target.value);
                 }}
                 value={userType}
                 required

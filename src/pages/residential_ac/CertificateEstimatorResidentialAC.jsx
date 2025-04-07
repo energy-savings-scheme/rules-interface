@@ -13,12 +13,12 @@ import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
-import {BASE_RESIDENTIAL_AC_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_RESIDENTIAL_AC_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSearchCaptureAnalytics,
-  updateSegmentCaptureAnalytics
+  updateSegmentCaptureAnalytics,
 } from 'lib/analytics';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
 
@@ -636,4 +636,4 @@ export default function CertificateEstimatorResidentialAC(props) {
       )}
     </Fragment>
   );
-};
+}

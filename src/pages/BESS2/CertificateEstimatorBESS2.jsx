@@ -8,14 +8,14 @@ import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import {
   BESS2_PDRSAug24_PRC_calculation,
-  BESS2_PDRSAug24_peak_demand_annual_savings
+  BESS2_PDRSAug24_peak_demand_annual_savings,
 } from 'types/openfisca_variables';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
-import {BASE_BESS2_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_BESS2_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
-  clearSearchCaptureAnalytics
+  clearSearchCaptureAnalytics,
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
@@ -254,10 +254,14 @@ export default function CertificateEstimatorBESS2(props) {
                   marginBottom: '5%',
                 }}
               >
-                <MoreOptionsCard options={[{
-                  title: 'Review eligibility for this activity',
-                  link: '/#residential-solar-battery-demand-response-eligibility'
-                }]}/>
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#residential-solar-battery-demand-response-eligibility',
+                    },
+                  ]}
+                />
               </div>
             </div>
           )}

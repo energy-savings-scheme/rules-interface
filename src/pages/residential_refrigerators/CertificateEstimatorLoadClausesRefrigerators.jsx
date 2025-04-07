@@ -47,7 +47,7 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
     userType,
-    setUserType
+    setUserType,
   } = props;
 
   useEffect(() => {

@@ -210,11 +210,12 @@ export default function CalculateBlock(props) {
       formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = true;
     }
 
-    if (formItem.name === SYS2_PDRSAug24_new_installation_or_replacement ||
-        formItem.name === HVAC1_PDRSAug24_new_installation_or_replacement ||
-        formItem.name === HVAC2_new_installation_or_replacement
+    if (
+      formItem.name === SYS2_PDRSAug24_new_installation_or_replacement ||
+      formItem.name === HVAC1_PDRSAug24_new_installation_or_replacement ||
+      formItem.name === HVAC2_new_installation_or_replacement
     ) {
-      formItem.defaultOption = { text: 'Please select activity', value: '', disabled: true }
+      formItem.defaultOption = { text: 'Please select activity', value: '', disabled: true };
     }
 
     const setItemValue = (e) => {

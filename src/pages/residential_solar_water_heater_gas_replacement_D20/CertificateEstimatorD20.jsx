@@ -10,12 +10,12 @@ import Alert from 'nsw-ds-react/alert/alert';
 import CertificateEstimatorLoadClausesD20 from './CertificateEstimatorLoadClausesD20';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import {BASE_RESIDENTIAL_GAS_SOLAR_WH_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_RESIDENTIAL_GAS_SOLAR_WH_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSearchCaptureAnalytics,
-  updateSegmentCaptureAnalytics
+  updateSegmentCaptureAnalytics,
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
@@ -487,7 +487,7 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
                     onClick={(e) => {
                       validatePostcode(postcode);
                       updateSearchCaptureAnalytics(postcode, selectedBrand, selectedModel);
-                      updateSegmentCaptureAnalytics(userType)
+                      updateSegmentCaptureAnalytics(userType);
                     }}
                   >
                     Next
@@ -510,10 +510,14 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
                   marginBottom: '5%',
                 }}
               >
-                <MoreOptionsCard options={[{
-                  title: 'Review eligibility for this activity',
-                  link: '/#residential-solar-gas-water-heater-activity-requirements'
-                }]}/>
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#residential-solar-gas-water-heater-activity-requirements',
+                    },
+                  ]}
+                />
               </div>
             </div>
           )}

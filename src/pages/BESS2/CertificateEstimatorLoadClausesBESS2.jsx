@@ -49,7 +49,7 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
     userType,
-    setUserType
+    setUserType,
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
