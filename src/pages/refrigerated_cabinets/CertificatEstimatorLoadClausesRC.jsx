@@ -7,7 +7,6 @@ import moment from 'moment';
 import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
-import OpenFiscaAPI from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 
 export default function CertificateEstimatorLoadClausesRC(props) {
@@ -29,7 +28,6 @@ export default function CertificateEstimatorLoadClausesRC(props) {
     calculationResult2,
     setCalculationResult2,
     postcode,
-    zone,
     formValues,
     setFormValues,
     selectedBrand,
@@ -51,13 +49,6 @@ export default function CertificateEstimatorLoadClausesRC(props) {
     setPeakDemandReductionSavingsNumber,
   } = props;
 
-  console.log(variableToLoad1);
-  console.log(variableToLoad2);
-  console.log(metadata);
-  console.log(postcode);
-
-  console.log(stepNumber);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -67,8 +58,8 @@ export default function CertificateEstimatorLoadClausesRC(props) {
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
   const [dependencies, setDependencies] = useState([]);
-  const [variableData1, setVariableData1] = useState([]);
-  const [variableData2, setVariableData2] = useState([]);
+  const [variableData1, setVariableData1] = useState({});
+  const [variableData2, setVariableData2] = useState({});
 
   useEffect(() => {
     OpenFiscaApi.getVariable(variableToLoad1)
@@ -92,113 +83,80 @@ export default function CertificateEstimatorLoadClausesRC(props) {
       });
   }, [variableToLoad2]);
 
-  console.log(variableData1);
-  console.log(variableData2);
-
   function addElement(arr, obj) {
-    const { length } = arr;
-    const id = length + 1;
     const found = arr.some((el) => el.name === obj.name);
     if (!found) arr.push(obj);
     return arr;
   }
 
   useEffect(() => {
-    if (variables.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    console.log(variables);
-    const variable1 = variables.find((item) => item.name === variableToLoad1);
-    console.log(variable1);
-    const variable2 = variables.find((item) => item.name === variableToLoad2);
-    console.log(variable2);
+    if (Object.keys(variableData1).length && Object.keys(variableData2).length) {
+      const children1 = variableData1.input_offsprings;
+      const children2 = variableData2.input_offsprings;
 
-    const offsprings1 = variable1.metadata.input_offspring;
-    const offsprings2 = variable2.metadata.input_offspring;
+      // Define the original array (at a minimum include the Implementation Date)
+      var array1 = [];
+      var array2 = [];
 
-    const children1 = variables.filter((item) => offsprings1.includes(item.name));
-    const children2 = variables.filter((item) => offsprings2.includes(item.name));
-
-    console.log(children1);
-    console.log(children2);
-
-    // Define the original array (at a minimum include the Implementation Date)
-    var array1 = [];
-    var array2 = [];
-
-    children1.map((child) => {
-      array1.push({ ...child, form_value: '', invalid: false });
-    });
-
-    children2.map((child) => {
-      array2.push({ ...child, form_value: '', invalid: false });
-    });
-
-    array2.forEach((item) => addElement(array1, item));
-
-    console.log(array1);
-
-    console.log(metadata);
-
-    console.log(selectedProductClass);
-
-    array1.map((formItem) => {
-      if (formItem.name === 'RF2_F1_2_ESSJun24_product_EEI') {
-        console.log(formItem.form_value);
-        formItem.form_value = metadata['product_eei'];
-      }
-
-      if (formItem.name === 'RF2_F1_2_ESSJun24_product_class') {
-        console.log(formItem.form_value);
-        formItem.form_value = selectedProductClass;
-        console.log(formItem.form_value);
-        formItem.read_only = true;
-      }
-
-      // if (formItem.name === 'RF2_total_display_area') {
-      //   formItem.form_value = metadata['total_display_area'];
-      // }
-
-      if (formItem.name === 'RF2_F1_2_ESSJun24_total_energy_consumption') {
-        formItem.form_value = metadata['total_energy_consumption'];
-      }
-      if (formItem.name === 'RF2_F1_2_ESSJun24_PDRS__postcode') {
-        formItem.form_value = postcode;
-        formItem.read_only = true;
-      }
-
-      if (formItem.name === 'RF2_F1_2_ESSJun24_duty_class') {
-        formItem.possible_values = {
-          heavy_duty: 'Heavy Duty',
-          light_duty: 'Light Duty',
-          normal_duty: 'Normal duty',
-        };
-
-        if (!['Class 3', 'Class 4', 'Class 9', 'Class 10'].includes(selectedProductClass)) {
-          delete formItem.possible_values['heavy_duty'];
-        }
-      }
-    });
-
-    if (persistFormValues.length > 1 && flow === 'backward') {
-      array1.map((e) => {
-        let found = persistFormValues.find((f) => e.name === f.name);
-        if (found !== undefined) {
-          e['form_value'] = found['form_value'];
-        }
-        return e;
+      children1.map((child) => {
+        array1.push({ ...child, form_value: '', invalid: false });
       });
+
+      children2.map((child) => {
+        array2.push({ ...child, form_value: '', invalid: false });
+      });
+
+      array2.forEach((item) => addElement(array1, item));
+
+      array1.map((formItem) => {
+        if (formItem.name === 'RF2_F1_2_ESSJun24_product_EEI') {
+          formItem.form_value = metadata['product_eei'];
+        }
+
+        if (formItem.name === 'RF2_F1_2_ESSJun24_product_class') {
+          formItem.form_value = selectedProductClass;
+          formItem.read_only = true;
+        }
+
+        // if (formItem.name === 'RF2_total_display_area') {
+        //   formItem.form_value = metadata['total_display_area'];
+        // }
+
+        if (formItem.name === 'RF2_F1_2_ESSJun24_total_energy_consumption') {
+          formItem.form_value = metadata['total_energy_consumption'];
+        }
+        if (formItem.name === 'RF2_F1_2_ESSJun24_PDRS__postcode') {
+          formItem.form_value = postcode;
+          formItem.read_only = true;
+        }
+
+        if (formItem.name === 'RF2_F1_2_ESSJun24_duty_class') {
+          formItem.possible_values = {
+            heavy_duty: 'Heavy Duty',
+            light_duty: 'Light Duty',
+            normal_duty: 'Normal duty',
+          };
+
+          if (!['Class 3', 'Class 4', 'Class 9', 'Class 10'].includes(selectedProductClass)) {
+            delete formItem.possible_values['heavy_duty'];
+          }
+        }
+      });
+
+      if (persistFormValues.length > 1 && flow === 'backward') {
+        array1.map((e) => {
+          let found = persistFormValues.find((f) => e.name === f.name);
+          if (found !== undefined) {
+            e['form_value'] = found['form_value'];
+          }
+          return e;
+        });
+      }
+
+      array1.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
+
+      setFormValues(array1);
     }
-
-    array1.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
-
-    setFormValues(array1);
   }, [variableData1, variableData2, selectedProductClass]);
 
   if (!variable) return null;
@@ -369,91 +327,6 @@ export default function CertificateEstimatorLoadClausesRC(props) {
                 >
                   Estimate certificates again
                 </Button>
-              </div>
-            </div>
-
-            <div
-              className="nsw-row"
-              style={{
-                padding: 'inherit',
-                marginTop: '5%',
-                marginBottom: '5%',
-              }}
-            >
-              <div className="nsw-col-md-12" style={{ width: '80%' }}>
-                <hr
-                  style={{
-                    background: 'black',
-                    height: '1.5px',
-                  }}
-                />
-              </div>
-
-              <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                <h4>More options</h4>
-                <br></br>
-
-                <div class="nsw-grid nsw-grid--spaced">
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="#" class="nsw-card__link">
-                            Back to estimator homepage
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="/#core-eligibility" class="nsw-card__link">
-                            Check core eligibility
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a
-                            href="/#refrigerated-cabinet-activity-requirements"
-                            class="nsw-card__link"
-                          >
-                            Review eligibility for this activity
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </Fragment>

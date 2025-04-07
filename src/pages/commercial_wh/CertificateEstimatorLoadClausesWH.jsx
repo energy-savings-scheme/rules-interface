@@ -8,7 +8,6 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
-import { IS_DRUPAL_PAGES } from 'types/app_variables';
 
 export default function CertificateEstimatorLoadClausesWH(props) {
   const {
@@ -49,20 +48,11 @@ export default function CertificateEstimatorLoadClausesWH(props) {
     setPeakDemandReductionSavingsNumber,
   } = props;
 
-  console.log(variableToLoad1);
-  console.log(variableToLoad2);
-  console.log(metadata);
-  console.log('**********');
-  console.log(zone);
-  console.log(stepNumber);
-
   const [variable, setVariable] = useState({}); // all info about variable
 
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
-  const [dateInvalid, setDateInvalid] = useState(false);
 
-  // const [formValues, setFormValues] = useState([]);
   const [dependencies, setDependencies] = useState([]);
   const [variableData1, setVariableData1] = useState([]);
   const [variableData2, setVariableData2] = useState([]);
@@ -93,9 +83,6 @@ export default function CertificateEstimatorLoadClausesWH(props) {
       });
   }, [variableToLoad2]);
 
-  console.log(variableData1);
-  console.log(variableData2);
-
   function addElement(arr, obj) {
     const { length } = arr;
     const id = length + 1;
@@ -105,18 +92,9 @@ export default function CertificateEstimatorLoadClausesWH(props) {
   }
 
   useEffect(() => {
-    if (variables) {
-      const variable1 = variables.find((item) => item.name === variableToLoad1);
-      const variable2 = variables.find((item) => item.name === variableToLoad2);
-
-      const offsprings1 = variable1.metadata.input_offspring;
-      const offsprings2 = variable2.metadata.input_offspring;
-
-      const children1 = variables.filter((item) => offsprings1.includes(item.name));
-      const children2 = variables.filter((item) => offsprings2.includes(item.name));
-
-      console.log(children1);
-      console.log(children2);
+    if (Object.keys(variableData1).length && Object.keys(variableData2).length) {
+      const children1 = variableData1.input_offsprings;
+      const children2 = variableData2.input_offsprings;
 
       // Define the original array (at a minimum include the Implementation Date)
       var array1 = [];
@@ -132,10 +110,7 @@ export default function CertificateEstimatorLoadClausesWH(props) {
 
       array2.forEach((item) => addElement(array1, item));
 
-      console.log(array1);
-
       array1.map((formItem) => {
-        console.log(metadata);
         if (formItem.name === 'WH1_F16_electric_PDRSAug24_annual_energy_savings') {
           formItem.form_value = metadata[`annual_energy_savings_${zone}`];
         }
@@ -193,8 +168,6 @@ export default function CertificateEstimatorLoadClausesWH(props) {
   };
 
   if (!variable) return null;
-
-  console.log('******', selectedModel);
 
   return (
     <div className>
@@ -365,93 +338,6 @@ export default function CertificateEstimatorLoadClausesWH(props) {
                   Change activity
                 </Button>
               </div> */}
-            </div>
-
-            <div
-              className="nsw-row"
-              style={{
-                padding: 'inherit',
-                marginTop: '5%',
-                marginBottom: '5%',
-              }}
-            >
-              <div className="nsw-col-md-12" style={{ width: '80%' }}>
-                <hr
-                  style={{
-                    background: 'black',
-                    height: '1.5px',
-                  }}
-                />
-              </div>
-
-              {!IS_DRUPAL_PAGES && (
-                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                  <h4>More options</h4>
-                  <br></br>
-
-                  <div class="nsw-grid nsw-grid--spaced">
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="#" class="nsw-card__link">
-                              Back to estimator homepage
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="/#core-eligibility" class="nsw-card__link">
-                              Check core eligibility
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a
-                              href="/#commercial-electric-to-heat-pump-water-heater-eligibility"
-                              class="nsw-card__link"
-                            >
-                              Review eligibility for this activity
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </Fragment>
         )}

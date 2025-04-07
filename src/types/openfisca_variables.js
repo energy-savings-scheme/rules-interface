@@ -1,6 +1,7 @@
 // Postcode
 export const BESS1_V5Nov24_PDRS__postcode = 'BESS1_V5Nov24_PDRS__postcode';
 export const BESS2_V5Nov24_PDRS__postcode = 'BESS2_V5Nov24_PDRS__postcode';
+export const BESS1_PDRSAug24_PDRS__postcode = 'BESS1_PDRSAug24_PDRS__postcode';
 export const BESS2_PDRSAug24_PDRS__postcode = 'BESS2_PDRSAug24_PDRS__postcode';
 export const C1_PDRSAug24_PDRS__postcode = 'C1_PDRSAug24_PDRS__postcode';
 export const F7_PDRSAug24_PDRS__postcode = 'F7_PDRSAug24_PDRS__postcode';
@@ -8,12 +9,20 @@ export const F7_PDRSAug24_PDRS__postcode = 'F7_PDRSAug24_PDRS__postcode';
 // Calculation
 export const BESS1_V5Nov24_PRC_calculation = 'BESS1_V5Nov24_PRC_calculation';
 export const BESS2_V5Nov24_PRC_calculation = 'BESS2_V5Nov24_PRC_calculation';
+export const BESS1_PDRSAug24_PRC_calculation = 'BESS1_PDRSAug24_PRC_calculation';
+export const BESS1_PDRSAug24_peak_demand_annual_savings =
+  'BESS1_PDRSAug24_peak_demand_annual_savings';
 export const BESS2_PDRSAug24_PRC_calculation = 'BESS2_PDRSAug24_PRC_calculation';
+export const BESS2_PDRSAug24_peak_demand_annual_savings =
+  'BESS2_PDRSAug24_peak_demand_annual_savings';
 export const C1_PDRSAug24_ESC_calculation = 'C1_PDRSAug24_ESC_calculation';
-export const F7_PDRSAug24_ESC_calculation = 'F7_PDRSAug24_ESC_calculation';
+export const C1_PDRSAug24_energy_savings = 'C1_PDRSAug24_energy_savings';
 
 export const HVAC1_PDRSAug24_BCA_Climate_Zone = 'HVAC1_PDRSAug24_BCA_Climate_Zone';
+export const HVAC1_PDRSAug24_new_installation_or_replacement =
+  'HVAC1_PDRSAug24_new_installation_or_replacement';
 export const HVAC2_PDRSAug24_BCA_Climate_Zone = 'HVAC2_PDRSAug24_BCA_Climate_Zone';
+export const HVAC2_new_installation_or_replacement = 'HVAC2_new_installation_or_replacement';
 
 export const BESS1_V5Nov24_installation_final_activity_eligibility =
   'BESS1_V5Nov24_installation_final_activity_eligibility';
@@ -55,3 +64,16 @@ export const F16_electric_PDRSDec24_energy_savings = 'F16_electric_PDRSDec24_ene
 export const WH1_F16_electric_PDRSAug24_peak_demand_annual_savings =
   'WH1_F16_electric_PDRSAug24_peak_demand_annual_savings';
 export const F16_gas_ESC_calculation = 'F16_gas_ESC_calculation';
+
+// COMMERCIAL MOTOR
+export const F7_PDRSAug24_ESC_calculation = 'F7_PDRSAug24_ESC_calculation';
+export const F7_PDRSAug24_energy_savings = 'F7_PDRSAug24_energy_savings';
+
+// POOL PUMPS
+export const SYS2_PDRSAug24_replacement_final_activity_eligibility =
+  'SYS2_PDRSAug24_replacement_final_activity_eligibility';
+export const SYS2_PDRSAug24_new_installation_or_replacement =
+  'SYS2_PDRSAug24_new_installation_or_replacement';
+
+// CORE ELIGIBILITY
+export const ESS__PDRS__ACP_base_scheme_eligibility = 'ESS__PDRS__ACP_base_scheme_eligibility';

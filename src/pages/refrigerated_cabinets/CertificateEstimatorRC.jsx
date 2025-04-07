@@ -8,8 +8,17 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import CertificateEstimatorLoadClausesRC from './CertificatEstimatorLoadClausesRC';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
-import { compareAsc, format, previousSunday } from 'date-fns';
-import axios from 'axios';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import { BASE_COMMERCIAL_REFRIGERATED_CABINET_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+  updateSearchCaptureAnalytics,
+  updateSegmentCaptureAnalytics,
+} from 'lib/analytics';
+import FeedbackComponent from 'components/feedback/feedback';
+import MoreOptionsCard from 'components/more-options-card/more-options-card';
 
 export default function CertificateEstimatorRC(props) {
   const { entities, variables, RF2Brands, setVariables, setEntities, setRF2Brands } = props;
@@ -40,6 +49,7 @@ export default function CertificateEstimatorRC(props) {
   const [lastModified, setLastModified] = useState('');
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
+  const [userType, setUserType] = useState('');
 
   useEffect(() => {
     if (annualEnergySavingsNumber < 0) {
@@ -55,6 +65,8 @@ export default function CertificateEstimatorRC(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    updateEstimatorFormAnalytics(BASE_COMMERCIAL_REFRIGERATED_CABINET_ESTIMATOR_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_COMMERCIAL_REFRIGERATED_CABINET_ESTIMATOR_ANALYTICS_DATA);
 
     setDropdownOptions([{ value: '', text: 'Please select brand' }]);
 
@@ -81,16 +93,6 @@ export default function CertificateEstimatorRC(props) {
       OpenFiscaAPI.listEntities()
         .then((res) => {
           setEntities(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -150,7 +152,6 @@ export default function CertificateEstimatorRC(props) {
       RegistryApi.getPostcodeValidation(postcode)
         .then((res) => {
           const persons = res.data;
-          console.log(res);
           if (
             persons.status === '200' &&
             persons.code === '200' &&
@@ -194,7 +195,6 @@ export default function CertificateEstimatorRC(props) {
       brand: selectedBrand,
       model: selectedModel,
     };
-    console.log(payload);
     RegistryApi.getRF2ModelsMetadata(payload)
       .then((res) => {
         setMetadata(res.data);
@@ -202,8 +202,6 @@ export default function CertificateEstimatorRC(props) {
       .catch((err) => {
         console.log(err);
       });
-
-    console.log(metadata);
   }, [selectedModel]);
 
   useEffect(() => {
@@ -213,8 +211,6 @@ export default function CertificateEstimatorRC(props) {
   }, [RF2Brands]);
 
   useEffect(() => {
-    console.log(selectedBrand);
-
     RegistryApi.listRF2Models(selectedBrand)
       .then((res) => {
         setModels(res.data);
@@ -224,29 +220,29 @@ export default function CertificateEstimatorRC(props) {
         console.log(err);
         setRegistryData(false);
       });
-
-    console.log(models);
   }, [selectedBrand]);
 
   return (
     <Fragment>
-      <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'RF2',
-          src: '/CommercialRefrigeratedCabinet.jpg',
-        }}
-        intro="Commercial"
-        title="Refrigerated cabinet - certificates"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'RF2',
+              src: '/CommercialRefrigeratedCabinet.jpg',
+            }}
+            intro="Commercial"
+            title="Refrigerated cabinet - certificates"
+          />
+        </div>
+      )}
 
       <div className="nsw-container">
         <br></br>
         <br></br>
-
-        {stepNumber !== 3 && (
+        {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <h2 className="nsw-content-block__title">
@@ -259,6 +255,7 @@ export default function CertificateEstimatorRC(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Energy Savings Scheme
                 </a>{' '}
@@ -266,6 +263,7 @@ export default function CertificateEstimatorRC(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Peak Demand Reduction Scheme
                 </a>
@@ -274,7 +272,11 @@ export default function CertificateEstimatorRC(props) {
               <p className="nsw-content-block__copy">
                 Where possible, residential and small business air conditioner specifications are
                 automatically updated at the end of each week from the{' '}
-                <a href="https://reg.energyrating.gov.au/comparator/product_types/" target="_blank">
+                <a
+                  href="https://reg.energyrating.gov.au/comparator/product_types/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Greenhouse & Energy Minimum Standards (GEMS) Registry
                 </a>{' '}
                 based on brand and model, but you may also enter your own values.
@@ -287,7 +289,7 @@ export default function CertificateEstimatorRC(props) {
           </div>
         )}
 
-        {stepNumber === 3 && (
+        {!IS_DRUPAL_PAGES && stepNumber === 3 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
               <h2 className="nsw-content-block__title">
@@ -321,6 +323,23 @@ export default function CertificateEstimatorRC(props) {
                     </h5>
 
                     <FormGroup
+                      label="What is your interest in the scheme?"
+                      helper="Select the option that best describes you"
+                      htmlId="user-type"
+                    >
+                      <Select
+                        htmlId="user-type"
+                        style={{ maxWidth: '50%' }}
+                        options={USER_TYPE_OPTIONS}
+                        onChange={(e) => {
+                          setUserType(e.target.value);
+                        }}
+                        value={userType}
+                        required
+                      />
+                    </FormGroup>
+
+                    <FormGroup
                       label="Postcode"
                       helper="Postcode where the installation has taken place" // helper text (secondary label)
                       errorText="Invalid value!" // error text if invalid
@@ -347,6 +366,7 @@ export default function CertificateEstimatorRC(props) {
                         options={dropdownOptions}
                         onChange={(e) => {
                           setSelectedBrand(RF2Brands.find((item) => item === e.target.value));
+                          setSelectedModel('');
                         }}
                         value={selectedBrand}
                         required
@@ -507,15 +527,16 @@ export default function CertificateEstimatorRC(props) {
             postcode.length === 4 &&
             selectedBrand &&
             selectedModel &&
-            selectedProductClass && (
+            selectedProductClass &&
+            userType && (
               <div className="nsw-row" style={{ paddingTop: '30px', width: '80%' }}>
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"
                     onClick={(e) => {
                       validatePostcode(postcode);
-                      // setFlow(null);
-                      // setStepNumber(stepNumber + 1);
+                      updateSearchCaptureAnalytics(postcode, selectedBrand, selectedModel);
+                      updateSegmentCaptureAnalytics(userType);
                     }}
                   >
                     Next
@@ -525,6 +546,32 @@ export default function CertificateEstimatorRC(props) {
             )}
         </Fragment>
       </div>
+      {stepNumber === 3 && (
+        <>
+          <FeedbackComponent />
+          {!IS_DRUPAL_PAGES && (
+            <div className="nsw-container">
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#refrigerated-cabinet-activity-requirements',
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </Fragment>
   );
 }

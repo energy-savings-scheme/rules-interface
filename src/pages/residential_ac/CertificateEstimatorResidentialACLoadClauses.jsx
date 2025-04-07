@@ -60,16 +60,6 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
     BCA_Climate_Zone_8: 'BCA Climate Zone 8',
   };
 
-  console.log(variableToLoad1);
-  console.log(variableToLoad2);
-  console.log(metadata);
-  console.log(postcode);
-
-  console.log(stepNumber);
-
-  console.log(peakDemandReductionSavingsNumber);
-  console.log(annualEnergySavingsNumber);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -80,12 +70,8 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
   const [dateInvalid, setDateInvalid] = useState(false);
   const [dependencies, setDependencies] = useState([]);
-  const [variableData1, setVariableData1] = useState([]);
-  const [variableData2, setVariableData2] = useState([]);
-
-  console.log(calculationResult);
-  console.log(calculationResult2);
-  console.log('peak demand', peakDemandReductionSavingsNumber);
+  const [variableData1, setVariableData1] = useState({});
+  const [variableData2, setVariableData2] = useState({});
 
   if (calculationResult2 === null) {
     setCalculationResult2('0');
@@ -117,9 +103,6 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
       });
   }, [variableToLoad2]);
 
-  console.log(variableData1);
-  console.log(variableData2);
-
   function addElement(arr, obj) {
     const { length } = arr;
     const id = length + 1;
@@ -129,18 +112,9 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
   }
 
   useEffect(() => {
-    if (variables) {
-      const variable1 = variables.find((item) => item.name === variableToLoad1);
-      const variable2 = variables.find((item) => item.name === variableToLoad2);
-
-      const offsprings1 = variable1.metadata.input_offspring;
-      const offsprings2 = variable2.metadata.input_offspring;
-
-      const children1 = variables.filter((item) => offsprings1.includes(item.name));
-      const children2 = variables.filter((item) => offsprings2.includes(item.name));
-
-      console.log(children1);
-      console.log(children2);
+    if (Object.keys(variableData1).length && Object.keys(variableData2).length) {
+      const children1 = variableData1.input_offsprings;
+      const children2 = variableData2.input_offsprings;
 
       // Define the original array (at a minimum include the Implementation Date)
       var array1 = [];
@@ -156,11 +130,8 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
 
       array2.forEach((item) => addElement(array1, item));
 
-      console.log(array1);
-
       array1.map((formItem) => {
         if (formItem.name === 'HVAC1_PDRSAug24_rated_AEER_input') {
-          console.log(formItem.form_value);
           formItem.form_value = metadata['Rated AEER'];
         }
 
@@ -396,88 +367,6 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                 >
                   Estimate certificates again
                 </Button>
-              </div>
-            </div>
-
-            <div
-              className="nsw-row"
-              style={{
-                padding: 'inherit',
-                marginTop: '5%',
-                marginBottom: '5%',
-              }}
-            >
-              <div className="nsw-col-md-12" style={{ width: '80%' }}>
-                <hr
-                  style={{
-                    background: 'black',
-                    height: '1.5px',
-                  }}
-                />
-              </div>
-
-              <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                <h4>More options</h4>
-                <br></br>
-
-                <div class="nsw-grid nsw-grid--spaced">
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="#" class="nsw-card__link">
-                            Back to estimator homepage
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="/#core-eligibility" class="nsw-card__link">
-                            Check core eligibility
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="/#residential-ac-activity-requirements" class="nsw-card__link">
-                            Review eligibility for this activity
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </Fragment>

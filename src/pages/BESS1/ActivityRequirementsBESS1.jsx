@@ -1,11 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
-import VariableSearchBar from 'pages/homepage/VariableSearchBar';
-
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
-import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
-import LoadClauses from './LoadClausesActReq';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
@@ -22,9 +17,20 @@ import {
   HVAC2_TCPSF_greater_than_minimum,
 } from 'types/openfisca_variables';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import { FormGroup, Select } from 'nsw-ds-react/forms';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+  updateSegmentCaptureAnalytics,
+  clearSearchCaptureAnalytics,
+} from 'lib/analytics';
+import FeedbackComponent from 'components/feedback/feedback';
+import MoreOptionsCard from 'components/more-options-card/more-options-card';
+import { BASE_BESS1_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
 
 export default function ActivityRequirementsBESS1(props) {
-  const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
+  const { entities, variables, loading, setLoading } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
@@ -32,12 +38,12 @@ export default function ActivityRequirementsBESS1(props) {
   const [variableToLoad, setVariableToLoad] = useState(
     BESS1_PDRSDec24_installation_final_activity_eligibility,
   );
+  const [variable, setVariable] = useState({});
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
+  const [userType, setUserType] = useState('');
 
   if (formValues.length === 0) {
-    setLoading(true);
-  } else if (variables.length === 0) {
     setLoading(true);
   } else {
     setLoading(false);
@@ -45,37 +51,25 @@ export default function ActivityRequirementsBESS1(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    clearSearchCaptureAnalytics();
+    updateEstimatorFormAnalytics(BASE_BESS1_ELIGIBILITY_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_BESS1_ELIGIBILITY_ANALYTICS_DATA);
   }, [stepNumber]);
 
   useEffect(() => {
-    if (variables.length < 1) {
-      OpenFiscaAPI.listEntities()
-        .then((res) => {
-          setEntities(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, []);
+    OpenFiscaAPI.getVariable(variableToLoad)
+      .then((res) => {
+        setVariable(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [variableToLoad]);
 
   useEffect(() => {
-    if (variables.length > 0 && stepNumber === 1) {
-      const variable = variables.find((item) => item.name === variableToLoad);
-      const offsprings = variable.metadata.input_offspring;
-      const children = variables.filter((item) => offsprings.includes(item.name));
+    if (Object.keys(variable).length && stepNumber === 1) {
+      const children = variable.input_offsprings;
 
       // Define the original array (at a minimum include the Implementation Date)
       var array = [];
@@ -112,7 +106,7 @@ export default function ActivityRequirementsBESS1(props) {
       setDependencies(dep_arr);
       setLoading(false);
     }
-  }, [variables, variableToLoad, stepNumber]);
+  }, [variable]);
 
   useEffect(() => {
     let new_arr = [];
@@ -132,21 +126,22 @@ export default function ActivityRequirementsBESS1(props) {
 
   return (
     <Fragment>
-      <br></br>
       {!IS_DRUPAL_PAGES && (
-        <HeroBanner
-          wide
-          style="dark"
-          image={{
-            alt: 'commercial ac',
-            src: 'BESS1.jpg',
-          }}
-          intro="Residential"
-          title="Install a new household solar battery - eligibility"
-        />
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial ac',
+              src: 'BESS1.jpg',
+            }}
+            intro="Residential"
+            title="Install a new household solar battery - eligibility"
+          />
+        </div>
       )}
 
-      <div className="nsw-container" style={{ marginBottom: '10%' }}>
+      <div className="nsw-container" style={{ marginTop: '1rem' }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -195,26 +190,74 @@ export default function ActivityRequirementsBESS1(props) {
         <Fragment>
           {loading && <SpinnerFullscreen />}
           {!loading && (
-            <LoadClausesBESS1
-              variableToLoad={variableToLoad}
-              variables={variables}
-              entities={entities}
-              stepNumber={stepNumber}
-              setStepNumber={setStepNumber}
-              formValues={formValues}
-              dependencies={dependencies}
-              setFormValues={setFormValues}
-              clausesForm={clausesForm}
-              setClausesForm={setClausesForm}
-              showError={showError}
-              setShowError={setShowError}
-              backAction={(e) => {
-                setStepNumber(stepNumber - 1);
-              }}
-            />
+            <>
+              {stepNumber === 1 && (
+                <FormGroup
+                  label="What is your interest in the scheme?"
+                  helper="Select the option that best describes you"
+                  htmlId="user-type"
+                  style={{ marginTop: '4%' }}
+                >
+                  <Select
+                    htmlId="user-type"
+                    style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                    options={USER_TYPE_OPTIONS}
+                    onChange={(e) => {
+                      setUserType(e.target.value);
+                      updateSegmentCaptureAnalytics(e.target.value);
+                    }}
+                    value={userType}
+                    required
+                  />
+                </FormGroup>
+              )}
+              <LoadClausesBESS1
+                variableToLoad={variableToLoad}
+                variables={variables}
+                entities={entities}
+                stepNumber={stepNumber}
+                setStepNumber={setStepNumber}
+                formValues={formValues}
+                dependencies={dependencies}
+                setFormValues={setFormValues}
+                clausesForm={clausesForm}
+                setClausesForm={setClausesForm}
+                showError={showError}
+                setShowError={setShowError}
+                backAction={(e) => {
+                  setStepNumber(stepNumber - 1);
+                }}
+              />
+            </>
           )}
         </Fragment>
       </div>
+      {stepNumber === 2 && (
+        <>
+          <FeedbackComponent />
+          {!IS_DRUPAL_PAGES && (
+            <div className="nsw-container">
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#residential-solar-battery-certificates',
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </Fragment>
   );
 }

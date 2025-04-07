@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormGroup, Select, TextInput } from 'nsw-ds-react/forms';
 import Button from 'nsw-ds-react/button/button';
 import Alert from 'nsw-ds-react/alert/alert';
 import RegistryApi from 'services/registry_api';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import { updateSearchCaptureAnalytics, updateSegmentCaptureAnalytics } from 'lib/analytics';
 
 export default function BESSBrandSelector(props) {
   const {
@@ -18,6 +20,8 @@ export default function BESSBrandSelector(props) {
     setSelectedModel,
     postcode,
     setPostcode,
+    userType,
+    setUserType,
   } = props;
   const [registryDataLoaded, setRegistryDataLoaded] = useState(true);
   const [brandOptions, setBrandOptions] = useState([]);
@@ -171,6 +175,23 @@ export default function BESSBrandSelector(props) {
               </h5>
 
               <FormGroup
+                label="What is your interest in the scheme?"
+                helper="Select the option that best describes you"
+                htmlId="user-type"
+              >
+                <Select
+                  htmlId="user-type"
+                  style={{ maxWidth: '50%' }}
+                  options={USER_TYPE_OPTIONS}
+                  onChange={(e) => {
+                    setUserType(e.target.value);
+                  }}
+                  value={userType}
+                  required
+                />
+              </FormGroup>
+
+              <FormGroup
                 label="Postcode"
                 helper="Postcode where the installation has taken place" // primary question text
                 errorText="Invalid value!" // error text if invalid
@@ -250,13 +271,15 @@ export default function BESSBrandSelector(props) {
         </Alert>
       )}
 
-      {registryDataLoaded && selectedModel && (
+      {registryDataLoaded && selectedModel && userType && (
         <div className="nsw-row" style={{ paddingTop: '30px', width: '80%' }}>
           <div className="nsw-col" style={{ padding: 'inherit' }}>
             <Button
               as="dark"
               onClick={(e) => {
                 validatePostcode(postcode);
+                updateSearchCaptureAnalytics(postcode, selectedBrand, selectedModel);
+                updateSegmentCaptureAnalytics(userType);
               }}
             >
               Next

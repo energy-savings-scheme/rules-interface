@@ -8,7 +8,9 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
-import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import { FormGroup, Select } from 'nsw-ds-react/forms';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import { updateSegmentCaptureAnalytics } from 'lib/analytics';
 
 export default function CertificateEstimatorLoadClausesMotors(props) {
   const {
@@ -43,6 +45,8 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
+    userType,
+    setUserType,
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -56,76 +60,55 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
   }, []);
 
   function addElement(arr, obj) {
-    const { length } = arr;
-    const id = length + 1;
     const found = arr.some((el) => el.name === obj.name);
     if (!found) arr.push(obj);
     return arr;
   }
 
   useEffect(() => {
-    if (variableData1.length == 0 || variableData1.length == 0) {
+    if (Object.keys(variableData1).length === 0 || Object.keys(variableData2).length == 0) {
       setLoading(true);
     } else {
       setLoading(false);
-      if (variables.length == 0) {
-        setLoading(true);
-      } else {
-        setLoading(false);
-        console.log(variables);
-        const variable1 = variables.find((item) => item.name === 'F7_PDRSAug24_ESC_calculation');
-        const variable2 = variables.find((item) => item.name === 'F7_PDRSAug24_ESC_calculation');
 
-        const offsprings1 = variable1.metadata.input_offspring;
-        const offsprings2 = variable2.metadata.input_offspring;
+      const children1 = variableData1.input_offsprings;
+      const children2 = variableData2.input_offsprings;
 
-        const children1 = variables.filter((item) => offsprings1.includes(item.name));
-        const children2 = variables.filter((item) => offsprings2.includes(item.name));
+      // Define the original array (at a minimum include the Implementation Date)
+      var array1 = [];
+      var array2 = [];
 
-        console.log(children1);
-        console.log(children2);
+      children1.map((child) => {
+        array1.push({ ...child, form_value: '', invalid: false });
+      });
 
-        // Define the original array (at a minimum include the Implementation Date)
-        var array1 = [];
-        var array2 = [];
+      children2.map((child) => {
+        array2.push({ ...child, form_value: '', invalid: false });
+      });
 
-        children1.map((child) => {
-          array1.push({ ...child, form_value: '', invalid: false });
+      array2.forEach((item) => addElement(array1, item));
+
+      if (persistFormValues.length > 1 && flow === 'backward') {
+        array1.map((e) => {
+          let found = persistFormValues.find((f) => e.name === f.name);
+          if (found !== undefined) {
+            e['form_value'] = found['form_value'];
+          }
+          return e;
         });
-
-        children2.map((child) => {
-          array2.push({ ...child, form_value: '', invalid: false });
-        });
-
-        array2.forEach((item) => addElement(array1, item));
-
-        console.log(array1);
-
-        console.log(persistFormValues);
-
-        if (persistFormValues.length > 1 && flow === 'backward') {
-          array1.map((e) => {
-            let found = persistFormValues.find((f) => e.name === f.name);
-            if (found !== undefined) {
-              e['form_value'] = found['form_value'];
-            }
-            return e;
-          });
-        }
-
-        array1.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
-
-        setFormValues(array1);
-
-        const names = [
-          'F7_PDRSAug24_existing_equipment_rated_output',
-          'F7_PDRSAug24_existing_equipment_no_of_poles',
-          'F7_PDRSAug24_existing_equipment_motor_frequency',
-        ];
-        array2 = array1.filter((item) => names.includes(item.name));
-        console.log(array2);
-        setDependencies(array2);
       }
+
+      array1.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
+
+      setFormValues(array1);
+
+      const names = [
+        'F7_PDRSAug24_existing_equipment_rated_output',
+        'F7_PDRSAug24_existing_equipment_no_of_poles',
+        'F7_PDRSAug24_existing_equipment_motor_frequency',
+      ];
+      array2 = array1.filter((item) => names.includes(item.name));
+      setDependencies(array2);
     }
   }, [variableData1, variableData2]);
 
@@ -136,6 +119,26 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
       <div style={{ marginTop: 70, marginBottom: 70 }}>
         {stepNumber === 1 && (
           <Fragment>
+            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+              <b>Please answer the following questions to calculate your ESCs</b>
+            </h5>
+            <FormGroup
+              label="What is your interest in the scheme?"
+              helper="Select the option that best describes you"
+              htmlId="user-type"
+            >
+              <Select
+                htmlId="user-type"
+                style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                options={USER_TYPE_OPTIONS}
+                onChange={(e) => {
+                  setUserType(e.target.value);
+                  updateSegmentCaptureAnalytics(e.target.value);
+                }}
+                value={userType}
+                required
+              />
+            </FormGroup>
             <CalculateBlock
               calculationDate={calculationDate}
               variable={variableData1}
@@ -254,92 +257,6 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
                   Change activity
                 </Button>
               </div> */}
-            </div>
-            <div
-              className="nsw-row"
-              style={{
-                padding: 'inherit',
-                marginTop: '5%',
-                marginBottom: '5%',
-              }}
-            >
-              <div className="nsw-col-md-12" style={{ width: '80%' }}>
-                <hr
-                  style={{
-                    background: 'black',
-                    height: '1.5px',
-                  }}
-                />
-              </div>
-
-              {!IS_DRUPAL_PAGES && (
-                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                  <h4>More options</h4>
-                  <br></br>
-
-                  <div class="nsw-grid nsw-grid--spaced">
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="#" class="nsw-card__link">
-                              Back to estimator homepage
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="/#core-eligibility" class="nsw-card__link">
-                              Check core eligibility
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a
-                              href="/#commercial-motors-activity-requirements"
-                              class="nsw-card__link"
-                            >
-                              Review eligibility for this activity
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </Fragment>
         )}

@@ -1,14 +1,22 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
-import VariableSearchBar from 'pages/homepage/VariableSearchBar';
-
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
-import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesSYS2 from './LoadClausesActivityReqSYS2';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import FeedbackComponent from 'components/feedback/feedback';
+import { FormGroup, Select } from '../../nsw-ds-react/forms';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import { BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+  updateSegmentCaptureAnalytics,
+} from 'lib/analytics';
+import { SYS2_PDRSAug24_replacement_final_activity_eligibility } from 'types/openfisca_variables';
+import MoreOptionsCard from 'components/more-options-card/more-options-card';
 
 export default function ActivityRequirementsSYS2(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -17,18 +25,14 @@ export default function ActivityRequirementsSYS2(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    'SYS2_PDRSAug24_replacement_final_activity_eligibility',
+    SYS2_PDRSAug24_replacement_final_activity_eligibility,
   );
+  const [variable, setVariable] = useState({});
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
-
-  console.log(variables);
+  const [userType, setUserType] = useState('');
 
   if (formValues.length === 0) {
-    setLoading(true);
-  } else if (variables.length === 0) {
-    setLoading(true);
-  } else if (variables.length === 0) {
     setLoading(true);
   } else {
     setLoading(false);
@@ -36,45 +40,24 @@ export default function ActivityRequirementsSYS2(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    updateEstimatorFormAnalytics(BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA);
   }, [stepNumber]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
-    if (variables.length < 1) {
-      OpenFiscaAPI.listEntities()
-        .then((res) => {
-          setEntities(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, []);
+    OpenFiscaAPI.getVariable(variableToLoad)
+      .then((res) => {
+        setVariable(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [variableToLoad]);
 
   useEffect(() => {
-    if (variables.length > 0 && stepNumber === 1) {
-      console.log(variableToLoad);
-      console.log(variables);
-      const variable = variables.find((item) => item.name === variableToLoad);
-      console.log(variable);
-      const offsprings = variable.metadata.input_offspring;
-
-      console.log(offsprings);
-      const children = variables.filter((item) => offsprings.includes(item.name));
-      console.log(children);
+    if (Object.keys(variable).length && stepNumber === 1) {
+      const children = variable.input_offsprings;
 
       // Define the original array (at a minimum include the Implementation Date)
       var array = [];
@@ -86,8 +69,6 @@ export default function ActivityRequirementsSYS2(props) {
       });
 
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
-
-      console.log(array);
 
       const names = ['SYS2_PDRSAug24_existing_equipment_removed'];
 
@@ -102,25 +83,18 @@ export default function ActivityRequirementsSYS2(props) {
 
       array.map((obj) => dep_arr.find((o) => o.name === obj.name) || obj);
 
-      console.log(dep_arr);
-      console.log(array);
-
       setFormValues(array);
       setDependencies(dep_arr);
       setLoading(false);
     }
-  }, [variables, variableToLoad, stepNumber]);
+  }, [variable]);
 
   useEffect(() => {
-    console.log(formValues);
-    console.log(clausesForm);
-
     let new_arr = [];
 
     formValues
       .filter((x) => x.hide === false)
       .map((child) => {
-        console.log(child);
         if (
           (child.form_value !== child.default_value &&
             new_arr.find((o) => o.name === child.name) === undefined &&
@@ -137,22 +111,23 @@ export default function ActivityRequirementsSYS2(props) {
   return (
     <Fragment>
       {/* Search section */}
-      <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial ac',
-          src: 'base_elig_hero.jpg',
-        }}
-        intro="Residential and small business"
-        title="Pool pump - eligibility"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial ac',
+              src: 'base_elig_hero.jpg',
+            }}
+            intro="Residential and small business"
+            title="Pool pump - eligibility"
+          />
+        </div>
+      )}
 
-      <div className="nsw-container" style={{ marginBottom: '10%' }}>
-        <br></br>
-        <br></br>
-        {stepNumber !== 2 && (
+      <div className="nsw-container" style={{ marginTop: '1rem' }}>
+        {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
               <h2 className="nsw-content-block__title">
@@ -165,6 +140,7 @@ export default function ActivityRequirementsSYS2(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Energy Savings Scheme
                 </a>{' '}
@@ -172,6 +148,7 @@ export default function ActivityRequirementsSYS2(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Peak Demand Reduction Scheme
                 </a>
@@ -205,26 +182,74 @@ export default function ActivityRequirementsSYS2(props) {
         <Fragment>
           {loading && <SpinnerFullscreen />}
           {!loading && (
-            <LoadClausesSYS2
-              variableToLoad={variableToLoad}
-              variables={variables}
-              entities={entities}
-              stepNumber={stepNumber}
-              setStepNumber={setStepNumber}
-              formValues={formValues}
-              dependencies={dependencies}
-              setFormValues={setFormValues}
-              clausesForm={clausesForm}
-              setClausesForm={setClausesForm}
-              showError={showError}
-              setShowError={setShowError}
-              backAction={(e) => {
-                setStepNumber(stepNumber - 1);
-              }}
-            />
+            <>
+              {stepNumber === 1 && (
+                <FormGroup
+                  label="What is your interest in the scheme?"
+                  helper="Select the option that best describes you"
+                  htmlId="user-type"
+                  style={{ marginTop: '4%' }}
+                >
+                  <Select
+                    htmlId="user-type"
+                    style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                    options={USER_TYPE_OPTIONS}
+                    onChange={(e) => {
+                      setUserType(e.target.value);
+                      updateSegmentCaptureAnalytics(e.target.value);
+                    }}
+                    value={userType}
+                    required
+                  />
+                </FormGroup>
+              )}
+              <LoadClausesSYS2
+                variableToLoad={variableToLoad}
+                variables={variables}
+                entities={entities}
+                stepNumber={stepNumber}
+                setStepNumber={setStepNumber}
+                formValues={formValues}
+                dependencies={dependencies}
+                setFormValues={setFormValues}
+                clausesForm={clausesForm}
+                setClausesForm={setClausesForm}
+                showError={showError}
+                setShowError={setShowError}
+                backAction={(e) => {
+                  setStepNumber(stepNumber - 1);
+                }}
+              />
+            </>
           )}
         </Fragment>
       </div>
+      {stepNumber === 2 && (
+        <>
+          <FeedbackComponent />
+          {!IS_DRUPAL_PAGES && (
+            <div className="nsw-container">
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#residential-pool-pump-certificates',
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </Fragment>
   );
 }

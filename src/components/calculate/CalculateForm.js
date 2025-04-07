@@ -5,8 +5,7 @@ import Button from 'nsw-ds-react/button/button';
 import Alert from 'nsw-ds-react/alert/alert';
 
 import { Spinner } from 'react-bootstrap';
-import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
-import axios from 'axios';
+
 import RegistryApi from 'services/registry_api';
 import {
   BESS1_V5Nov24_PDRS__postcode,
@@ -22,9 +21,20 @@ import {
   F16_electric_PDRSDec24_ESC_calculation,
   WH1_F16_electric_PDRSAug24_PRC_calculation,
   F16_gas_ESC_calculation,
+  SYS2_PDRSAug24_replacement_final_activity_eligibility,
+  ESS__PDRS__ACP_base_scheme_eligibility,
+  BESS1_PDRSAug24_PDRS__postcode,
+  BESS2_PDRSAug24_PDRS__postcode,
+  BESS1_PDRSAug24_PRC_calculation,
+  BESS2_PDRSAug24_PRC_calculation,
 } from 'types/openfisca_variables';
 
 import { Float } from 'types/value_type';
+import {
+  clearSearchCaptureAnalytics,
+  submitEstimatorFormAnalytics,
+  updatePostCodeAnalytics,
+} from 'lib/analytics';
 
 export default function CalculateForm(props) {
   const {
@@ -114,6 +124,20 @@ export default function CalculateForm(props) {
     return item;
   };
 
+  const validateUserType = () => {
+    const userType = document.querySelector('select#user-type');
+
+    if (!userType.value) {
+      document.querySelector('select#user-type').reportValidity();
+      document
+        .querySelector('select#user-type')
+        .setCustomValidity('Please select an item in the list.');
+      return false;
+    }
+
+    return true;
+  };
+
   const handleCalculate = (e) => {
     e.preventDefault();
 
@@ -165,6 +189,10 @@ export default function CalculateForm(props) {
     };
 
     if (workflow === Workflow.ELIGIBILITY) {
+      if (!validateUserType()) {
+        setLoading(false);
+        return false;
+      }
       formValues
         .filter((x) => x.hide === false)
         .map((variable) => {
@@ -175,6 +203,19 @@ export default function CalculateForm(props) {
           };
         });
     } else {
+      // special variable below are certificate pages that has only 2 steps.
+      const specialVariables = [
+        C1_PDRSAug24_ESC_calculation,
+        F7_PDRSAug24_ESC_calculation,
+        BESS1_PDRSAug24_PRC_calculation,
+        BESS2_PDRSAug24_PRC_calculation,
+      ];
+      if (specialVariables.includes(variable.name)) {
+        if (!validateUserType()) {
+          setLoading(false);
+          return false;
+        }
+      }
       formValues.map((variable) => {
         const variable_entity = entities.find((item) => item.name === variable.entity);
 
@@ -299,7 +340,9 @@ export default function CalculateForm(props) {
           variable.name === C1_PDRSAug24_PDRS__postcode ||
           variable.name === F7_PDRSAug24_PDRS__postcode ||
           variable.name === BESS1_V5Nov24_PDRS__postcode ||
-          variable.name === BESS2_V5Nov24_PDRS__postcode
+          variable.name === BESS2_V5Nov24_PDRS__postcode ||
+          variable.name === BESS1_PDRSAug24_PDRS__postcode ||
+          variable.name === BESS2_PDRSAug24_PDRS__postcode
         ) {
           if (['2817', '2818', '2819'].includes(variable.form_value)) {
             setFlow(null);
@@ -319,6 +362,8 @@ export default function CalculateForm(props) {
                     setShowPostcodeError(false);
                     setFlow(null);
                     setStepNumber(stepNumber + 1);
+                    updatePostCodeAnalytics(variable.form_value);
+                    submitEstimatorFormAnalytics();
                   } else {
                     setShowPostcodeError(true);
                     setShowNoResponsePostcodeError(false);
@@ -342,8 +387,16 @@ export default function CalculateForm(props) {
       setStepNumber(stepNumber + 1);
     }
 
+    if (stepNumber !== 1 && workflow === Workflow.CERTIFICATES) {
+      submitEstimatorFormAnalytics();
+    }
+
     if (workflow !== Workflow.ELIGIBILITY) {
       setPersistFormValues(formValues);
+    } else {
+      // remove post code property before sending to analytics
+      clearSearchCaptureAnalytics();
+      submitEstimatorFormAnalytics();
     }
   };
 
@@ -352,15 +405,9 @@ export default function CalculateForm(props) {
       <div className="nsw-content-block">
         <div className="nsw-content-block__content">
           {workflow === Workflow.CERTIFICATES &&
-          (variable.name === C1_PDRSAug24_ESC_calculation ||
-            variable.name === F7_PDRSAug24_ESC_calculation) ? (
-            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
-              <b>Please answer the following questions to calculate your ESCs</b>
-            </h5>
-          ) : workflow === Workflow.CERTIFICATES &&
-            (variable.name === F16_electric_PDRSDec24_ESC_calculation ||
-              variable.name === WH1_F16_electric_PDRSAug24_PRC_calculation ||
-              variable.name === F16_gas_ESC_calculation) ? (
+          (variable.name === F16_electric_PDRSDec24_ESC_calculation ||
+            variable.name === WH1_F16_electric_PDRSAug24_PRC_calculation ||
+            variable.name === F16_gas_ESC_calculation) ? (
             // for now we just need to update the copy right now, this is just temporary solution
             // that's why we adding this template below.
             // F16 shouldn't have PRC anymore.
@@ -374,6 +421,12 @@ export default function CalculateForm(props) {
             <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your PRCs</b>
             </h5>
+          ) : workflow === Workflow.CERTIFICATES &&
+            (variable.name === C1_PDRSAug24_ESC_calculation ||
+              variable.name === F7_PDRSAug24_ESC_calculation ||
+              variable.name === BESS1_PDRSAug24_PRC_calculation ||
+              variable.name === BESS2_PDRSAug24_PRC_calculation) ? (
+            <></>
           ) : workflow === Workflow.CERTIFICATES ? (
             <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your ESCs and PRCs</b>

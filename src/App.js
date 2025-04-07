@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
 // Import Pages
-import CalculatePage from 'pages/calculate/CalculatePage';
 import Homepage from 'pages/homepage/Homepage';
-import BaseEligibilityCommercialAC from 'pages/base_eligibility/BaseEligibility';
-import BaseEligibilityCommercialWH from 'pages/commercial_wh/BaseEligibilityCommercialWhPage';
 import ActivityRequirementsCommercialAC from 'pages/commercial_ac/ActivityRequirementsAirCon';
 import ActivityRequirementsSYS1 from 'pages/commercial_motors/ActivityRequirementsSYS1';
 import EligibilityPage from 'pages/homepage/EligibilityPage';
@@ -19,15 +16,12 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 
 // Import services
 import OpenFiscaAPI from 'services/openfisca_api';
-import variable_tree from 'services/variable_tree.json';
 
 // Import styles
 //import './styles/App.css';
 import 'nsw-design-system/src/main.scss';
 import '@fontsource/public-sans';
 import '@fontsource/public-sans/600.css';
-import CommercialAC from 'pages/commercial_ac/CommercialAcPage';
-import CommercialWH from 'pages/commercial_wh/CommercialWhPage';
 import RegistryApi from 'services/registry_api';
 import CertificateEstimatorHVAC from 'pages/commercial_ac/CertificateEstimator';
 import CertificateEstimatorWH from 'pages/commercial_wh/CertificateEstimatorWH';
@@ -70,10 +64,8 @@ import { IS_DRUPAL_PAGES } from 'types/app_variables';
 function App() {
   const [entities, setEntities] = useState([]);
   const [variables, setVariables] = useState([]);
-  const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hvacBrands, setHvacBrands] = useState([]);
-  const [hvacModels, setHvacModels] = useState([]);
   const [whBrands, setWhBrands] = useState([]);
   const [RF2Brands, setRF2Brands] = useState([]);
   const [PoolPumpBrands, setPoolPumpBrands] = useState([]);
@@ -90,23 +82,6 @@ function App() {
     OpenFiscaAPI.listEntities()
       .then((res) => {
         setEntities(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    OpenFiscaAPI.listVariables()
-      .then((res) => {
-        setVariables(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    OpenFiscaAPI.listActivities()
-      .then((res) => {
-        setActivities(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -179,7 +154,7 @@ function App() {
 
   return (
     <Router>
-      {!IS_DRUPAL_PAGES && <Header variables={variables} />}
+      {!IS_DRUPAL_PAGES && <Header />}
 
       {loading && <SpinnerFullscreen />}
 

@@ -8,11 +8,9 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
-import {
-  BESS1_V5Nov24_PDRS__postcode,
-  BESS1_V5Nov24_PRC_calculation,
-} from '../../types/openfisca_variables';
-import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import { FormGroup, Select } from 'nsw-ds-react/forms';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import { updateSegmentCaptureAnalytics } from 'lib/analytics';
 
 export default function CertificateEstimatorLoadClausesBESS1(props) {
   const {
@@ -50,6 +48,8 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
+    userType,
+    setUserType,
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -63,30 +63,23 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
   }, []);
 
   function addElement(arr, obj) {
-    const { length } = arr;
-    const id = length + 1;
     const found = arr.some((el) => el.name === obj.name);
     if (!found) arr.push(obj);
     return arr;
   }
 
   useEffect(() => {
-    if (variableData1.length == 0) {
+    if (Object.keys(variableData1).length === 0) {
       setLoading(true);
     } else {
       setLoading(false);
-      if (variables.length == 0) {
+      if (Object.keys(variableData1).length === 0 || Object.keys(variableData2).length === 0) {
         setLoading(true);
       } else {
         setLoading(false);
-        const variable1 = variables.find((item) => item.name === BESS1_V5Nov24_PRC_calculation);
-        const variable2 = variables.find((item) => item.name === BESS1_V5Nov24_PRC_calculation);
 
-        const offsprings1 = variable1.metadata.input_offspring;
-        const offsprings2 = variable2.metadata.input_offspring;
-
-        const children1 = variables.filter((item) => offsprings1.includes(item.name));
-        const children2 = variables.filter((item) => offsprings2.includes(item.name));
+        const children1 = variableData1.input_offsprings;
+        const children2 = variableData2.input_offsprings;
 
         // Define the original array (at a minimum include the Implementation Date)
         var array1 = [];
@@ -102,14 +95,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
 
         array2.forEach((item) => addElement(array1, item));
 
-        array1.forEach((formItem) => {
-          if (formItem.name === BESS1_V5Nov24_PDRS__postcode) {
-            formItem.form_value = postcode;
-            formItem.read_only = true;
-          }
-        });
-
-        if (persistFormValues.length > 0) {
+        if (persistFormValues.length > 1 && flow === 'backward') {
           array1.map((e) => {
             let found = persistFormValues.find((f) => e.name === f.name);
             if (found !== undefined) {
@@ -139,27 +125,29 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
   return (
     <div className>
       <div style={{ marginTop: 70, marginBottom: 70 }}>
-        {stepNumber === 2 && (
+        {stepNumber === 1 && (
           <Fragment>
-            <div
-              class="nsw-global-alert nsw-global-alert--light js-global-alert"
-              role="alert"
-              style={{ width: '80%', marginBottom: '7%' }}
+            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+              <b>Please answer the following questions to calculate your PRCs</b>
+            </h5>
+
+            <FormGroup
+              label="What is your interest in the scheme?"
+              helper="Select the option that best describes you"
+              htmlId="user-type"
             >
-              <div class="nsw-global-alert__wrapper">
-                <div class="nsw-global-alert__content">
-                  {/* <div class="nsw-global-alert__title"></div> */}
-                  <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
-                  </p>
-                  <p>
-                    {' '}
-                    <b>Model: </b> {selectedModel}
-                  </p>
-                </div>
-              </div>
-            </div>
+              <Select
+                htmlId="user-type"
+                style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                options={USER_TYPE_OPTIONS}
+                onChange={(e) => {
+                  setUserType(e.target.value);
+                  updateSegmentCaptureAnalytics(e.target.value);
+                }}
+                value={userType}
+                required
+              />
+            </FormGroup>
 
             <CalculateBlock
               calculationDate={calculationDate}
@@ -203,7 +191,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
           </Fragment>
         )}
 
-        {stepNumber === 3 && !calculationError && !calculationError2 && (
+        {stepNumber === 2 && !calculationError && !calculationError2 && (
           <Fragment>
             {
               <Alert as="info" title="PRCs" style={{ width: '80%' }}>
@@ -249,7 +237,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
             </Alert>
           ))}
 
-        {stepNumber === 3 && (
+        {stepNumber === 2 && (
           <Fragment>
             <div
               className="nsw-row"
@@ -272,92 +260,6 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
                   Estimate certificates again
                 </Button>
               </div>
-            </div>
-            <div
-              className="nsw-row"
-              style={{
-                padding: 'inherit',
-                marginTop: '5%',
-                marginBottom: '5%',
-              }}
-            >
-              <div className="nsw-col-md-12" style={{ width: '80%' }}>
-                <hr
-                  style={{
-                    background: 'black',
-                    height: '1.5px',
-                  }}
-                />
-              </div>
-
-              {!IS_DRUPAL_PAGES && (
-                <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                  <h4>More options</h4>
-                  <br></br>
-
-                  <div class="nsw-grid nsw-grid--spaced">
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="#" class="nsw-card__link">
-                              Back to estimator homepage
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="/#core-eligibility" class="nsw-card__link">
-                              Check core eligibility
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a
-                              href="/#commercial-motors-activity-requirements"
-                              class="nsw-card__link"
-                            >
-                              Review eligibility for this activity
-                            </a>
-                          </div>
-                          <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
-                            focusable="false"
-                            aria-hidden="true"
-                          >
-                            east
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </Fragment>
         )}

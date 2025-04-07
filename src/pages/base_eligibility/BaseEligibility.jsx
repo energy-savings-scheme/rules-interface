@@ -1,10 +1,22 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import LoadClausesBaseEligibility from './LoadClausesBaseEligibility';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import { BASE_CORE_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
+import { FormGroup, Select } from 'nsw-ds-react/forms';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+  updateSegmentCaptureAnalytics,
+  clearSearchCaptureAnalytics,
+} from 'lib/analytics';
+import { ESS__PDRS__ACP_base_scheme_eligibility } from 'types/openfisca_variables';
+import FeedbackComponent from 'components/feedback/feedback';
+import MoreOptionsCard from '../../components/more-options-card/more-options-card';
 
 export default function BaseEligibility(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -12,17 +24,15 @@ export default function BaseEligibility(props) {
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
-  const [variableToLoad, setVariableToLoad] = useState('ESS__PDRS__ACP_base_scheme_eligibility');
+  const [variableToLoad, setVariableToLoad] = useState(ESS__PDRS__ACP_base_scheme_eligibility);
+  const [variable, setVariable] = useState({});
   const [persistFormValues, setPersistFormValues] = useState([]);
   const [clausesForm, setClausesForm] = useState([]);
   const [secDep, setSecDep] = useState([]);
   const [showError, setShowError] = useState(false);
+  const [userType, setUserType] = useState('');
 
   if (formValues.length === 0) {
-    setLoading(true);
-  } else if (variables.length === 0) {
-    setLoading(true);
-  } else if (variables.length === 0) {
     setLoading(true);
   } else {
     setLoading(false);
@@ -30,43 +40,25 @@ export default function BaseEligibility(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    clearSearchCaptureAnalytics();
+    updateEstimatorFormAnalytics(BASE_CORE_ELIGIBILITY_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_CORE_ELIGIBILITY_ANALYTICS_DATA);
   }, [stepNumber]);
 
   useEffect(() => {
-    if (variables.length < 1) {
-      OpenFiscaAPI.listEntities()
-        .then((res) => {
-          setEntities(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    OpenFiscaAPI.getVariable(variableToLoad)
+      .then((res) => {
+        setVariable(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffect(() => {
-    if (variables.length > 0 && stepNumber === 1) {
-      console.log(variableToLoad);
-      console.log(variables);
-      const variable = variables.find((item) => item.name === variableToLoad);
-      console.log(variable);
-      const offsprings = variable.metadata.input_offspring;
-
-      console.log(offsprings);
-      const children = variables.filter((item) => offsprings.includes(item.name));
-      console.log(children);
+    if (Object.keys(variable).length && stepNumber === 1) {
+      const children = variable.input_offsprings;
 
       // Define the original array (at a minimum include the Implementation Date)
       var array = [];
@@ -78,8 +70,6 @@ export default function BaseEligibility(props) {
       });
 
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
-
-      console.log(array);
 
       const names = [
         'Base_basix_affected_development',
@@ -106,12 +96,9 @@ export default function BaseEligibility(props) {
       setLoading(false);
       setSecDep(second_dep);
     }
-  }, [variables, variableToLoad, stepNumber]);
+  }, [variable]);
 
   useEffect(() => {
-    console.log(formValues);
-    console.log(clausesForm);
-
     let new_arr = [];
 
     formValues
@@ -131,29 +118,29 @@ export default function BaseEligibility(props) {
       });
 
     setClausesForm(new_arr);
-
-    console.log(clausesForm);
   }, [stepNumber]);
 
   return (
     <Fragment>
-      <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial ac',
-          src: 'base_elig_hero.jpg',
-        }}
-        intro="Energy Savings Scheme and Peak Demand Reduction Scheme"
-        title="Safeguard Certificate Estimator"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial ac',
+              src: 'base_elig_hero.jpg',
+            }}
+            intro="Energy Savings Scheme and Peak Demand Reduction Scheme"
+            title="Safeguard Certificate Estimator"
+          />
+        </div>
+      )}
 
-      <div className="nsw-container" style={{ marginBottom: '10%', paddingLeft: '0px' }}>
+      <div className="nsw-container" style={{ marginTop: '1rem' }}>
         <br></br>
         <br></br>
-
-        {stepNumber !== 2 && (
+        {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <h2 className="nsw-content-block__title">Core eligibility requirements</h2>
@@ -163,6 +150,7 @@ export default function BaseEligibility(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Energy Savings Scheme
                 </a>{' '}
@@ -170,6 +158,7 @@ export default function BaseEligibility(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Peak Demand Reduction Scheme
                 </a>
@@ -199,30 +188,71 @@ export default function BaseEligibility(props) {
         <Fragment>
           {loading && <SpinnerFullscreen />}
           {!loading && (
-            <LoadClausesBaseEligibility
-              variableToLoad={variableToLoad}
-              variables={variables}
-              entities={entities}
-              stepNumber={stepNumber}
-              setStepNumber={setStepNumber}
-              formValues={formValues}
-              dependencies={dependencies}
-              setFormValues={setFormValues}
-              persistFormValues={persistFormValues}
-              setPersistFormValues={setPersistFormValues}
-              clausesForm={clausesForm}
-              setClausesForm={setClausesForm}
-              secDep={secDep}
-              setSecDep={setSecDep}
-              showError={showError}
-              setShowError={setShowError}
-              backAction={(e) => {
-                setStepNumber(stepNumber - 1);
-              }}
-            />
+            <>
+              {stepNumber === 1 && (
+                <FormGroup
+                  label="What is your interest in the scheme?"
+                  helper="Select the option that best describes you"
+                  htmlId="user-type"
+                  style={{ marginTop: '4%' }}
+                >
+                  <Select
+                    htmlId="user-type"
+                    style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                    options={USER_TYPE_OPTIONS}
+                    onChange={(e) => {
+                      setUserType(e.target.value);
+                      updateSegmentCaptureAnalytics(e.target.value);
+                    }}
+                    value={userType}
+                    required
+                  />
+                </FormGroup>
+              )}
+              <LoadClausesBaseEligibility
+                variableToLoad={variableToLoad}
+                variables={variables}
+                entities={entities}
+                stepNumber={stepNumber}
+                setStepNumber={setStepNumber}
+                formValues={formValues}
+                dependencies={dependencies}
+                setFormValues={setFormValues}
+                persistFormValues={persistFormValues}
+                setPersistFormValues={setPersistFormValues}
+                clausesForm={clausesForm}
+                setClausesForm={setClausesForm}
+                secDep={secDep}
+                setSecDep={setSecDep}
+                showError={showError}
+                setShowError={setShowError}
+                backAction={(e) => {
+                  setStepNumber(stepNumber - 1);
+                }}
+              />
+            </>
           )}
         </Fragment>
       </div>
+      {stepNumber === 2 && (
+        <>
+          <FeedbackComponent />
+          {!IS_DRUPAL_PAGES && (
+            <div className="nsw-container">
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <MoreOptionsCard coreEligibility={true} options={[]} />
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </Fragment>
   );
 }

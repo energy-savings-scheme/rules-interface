@@ -7,6 +7,18 @@ import CertificateEstimatorLoadClausesRefrigerators from './CertificateEstimator
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import FeedbackComponent from 'components/feedback/feedback';
+import MoreOptionsCard from 'components/more-options-card/more-options-card';
+import { BASE_RESIDENTIAL_REFRIGERATOR_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+  clearSearchCaptureAnalytics,
+} from 'lib/analytics';
+import {
+  C1_PDRSAug24_ESC_calculation,
+  C1_PDRSAug24_energy_savings,
+} from 'types/openfisca_variables';
 
 export default function CertificateEstimatorRefrigerators(props) {
   const { entities, variables, setVariables, setEntities } = props;
@@ -19,17 +31,21 @@ export default function CertificateEstimatorRefrigerators(props) {
   const [calculationError2, setCalculationError2] = useState(false);
   const [postcode, setPostcode] = useState(null);
   const [registryData, setRegistryData] = useState(true);
-  const [variableData1, setVariableData1] = useState([]);
-  const [variableData2, setVariableData2] = useState([]);
+  const [variableData1, setVariableData1] = useState({});
+  const [variableData2, setVariableData2] = useState({});
   const [persistFormValues, setPersistFormValues] = useState([]);
   const [flow, setFlow] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
+  const [userType, setUserType] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    clearSearchCaptureAnalytics();
+    updateEstimatorFormAnalytics(BASE_RESIDENTIAL_REFRIGERATOR_ESTIMATOR_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_RESIDENTIAL_REFRIGERATOR_ESTIMATOR_ANALYTICS_DATA);
 
     if (variables.length < 1) {
       OpenFiscaAPI.listEntities()
@@ -40,29 +56,7 @@ export default function CertificateEstimatorRefrigerators(props) {
           console.log(err);
         });
     }
-
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   }, []);
-
-  // useEffect(() => {
-  //   if (parseInt(calculationResult) === 0) {
-  //     setAnnualEnergySavingsNumber(0);
-  //   }
-  // }, [calculationResult]);
-
-  // useEffect(() => {
-  //   if (parseInt(calculationResult2) === 0) {
-  //     setPeakDemandReductionSavingsNumber(0);
-  //   }
-  // }, [calculationResult2]);
 
   useEffect(() => {
     if (annualEnergySavingsNumber < 0) {
@@ -77,49 +71,45 @@ export default function CertificateEstimatorRefrigerators(props) {
   }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
-    OpenFiscaAPI.getVariable('C1_PDRSAug24_ESC_calculation')
+    OpenFiscaAPI.getVariable(C1_PDRSAug24_ESC_calculation)
       .then((res) => {
         setVariableData1(res.data);
-        console.log(res.data);
-        console.log('here!!');
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
 
-    OpenFiscaAPI.getVariable('C1_PDRSAug24_ESC_calculation')
+    OpenFiscaAPI.getVariable(C1_PDRSAug24_ESC_calculation)
       .then((res) => {
         setVariableData2(res.data);
-        console.log(res.data);
-
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [variables, entities]);
+  }, []);
 
   return (
     <Fragment>
-      <br></br>
       {!IS_DRUPAL_PAGES && (
-        <HeroBanner
-          wide
-          style="dark"
-          image={{
-            alt: 'res ref',
-            src: 'ResidentialFridgeFreezerRemoval.jpeg',
-          }}
-          intro="Residential and small business"
-          title="Spare refrigerator or freezer - certificates"
-        />
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'res ref',
+              src: 'ResidentialFridgeFreezerRemoval.jpeg',
+            }}
+            intro="Residential and small business"
+            title="Spare refrigerator or freezer - certificates"
+          />
+        </div>
       )}
 
       <div className="nsw-container">
         <br></br>
         <br></br>
-
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
@@ -133,6 +123,7 @@ export default function CertificateEstimatorRefrigerators(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Energy Savings Scheme
                 </a>
@@ -151,7 +142,7 @@ export default function CertificateEstimatorRefrigerators(props) {
           </div>
         )}
 
-        {stepNumber === 2 && (
+        {!IS_DRUPAL_PAGES && stepNumber === 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
               <h2 className="nsw-content-block__title">
@@ -204,12 +195,14 @@ export default function CertificateEstimatorRefrigerators(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
-              annualEnergySavings={'C1_PDRSAug24_energy_savings'}
-              peakDemandReductionSavings={'C1_PDRSAug24_energy_savings'}
+              annualEnergySavings={C1_PDRSAug24_energy_savings}
+              peakDemandReductionSavings={C1_PDRSAug24_energy_savings}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              userType={userType}
+              setUserType={setUserType}
             />
           )}
 
@@ -238,12 +231,14 @@ export default function CertificateEstimatorRefrigerators(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
-              annualEnergySavings={'C1_PDRSAug24_energy_savings'}
-              peakDemandReductionSavings={'C1_PDRSAug24_energy_savings'}
+              annualEnergySavings={C1_PDRSAug24_energy_savings}
+              peakDemandReductionSavings={C1_PDRSAug24_energy_savings}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              userType={userType}
+              setUserType={setUserType}
             />
           )}
 
@@ -255,6 +250,9 @@ export default function CertificateEstimatorRefrigerators(props) {
                   onClick={(e) => {
                     setFlow('forward');
                     setStepNumber(stepNumber + 1);
+                    updateEstimatorFormAnalytics({
+                      sf_postcode: postcode,
+                    });
                   }}
                   style={{ float: 'right' }}
                 >
@@ -265,6 +263,32 @@ export default function CertificateEstimatorRefrigerators(props) {
           )}
         </Fragment>
       </div>
+      {stepNumber === 2 && (
+        <>
+          <FeedbackComponent />
+          {!IS_DRUPAL_PAGES && (
+            <div className="nsw-container">
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#residential-refrigeration-activity-requirements',
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </Fragment>
   );
 }

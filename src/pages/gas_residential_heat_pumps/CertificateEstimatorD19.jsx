@@ -8,15 +8,23 @@ import OpenFiscaApi from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
-import { format, previousSunday } from 'date-fns';
-import axios from 'axios';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import { BASE_RESIDENTIAL_GAS_HEAT_PUMP_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+  updateSearchCaptureAnalytics,
+  updateSegmentCaptureAnalytics,
+} from 'lib/analytics';
+import FeedbackComponent from 'components/feedback/feedback';
+import MoreOptionsCard from 'components/more-options-card/more-options-card';
 
 export default function CertificateEstimatorGasHeatPump(props) {
   const { entities, variables, brands } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
-  const [dependencies, setDependencies] = useState([]);
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [dropdownOptionsModels, setDropdownOptionsModels] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState(null);
@@ -39,9 +47,12 @@ export default function CertificateEstimatorGasHeatPump(props) {
   const [lastModified, setLastModified] = useState('');
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
+  const [userType, setUserType] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    updateEstimatorFormAnalytics(BASE_RESIDENTIAL_GAS_HEAT_PUMP_ESTIMATOR_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_RESIDENTIAL_GAS_HEAT_PUMP_ESTIMATOR_ANALYTICS_DATA);
   }, []);
 
   useEffect(() => {
@@ -93,7 +104,6 @@ export default function CertificateEstimatorGasHeatPump(props) {
       RegistryApi.getPostcodeValidation(postcode)
         .then((res) => {
           const persons = res.data;
-          console.log(res);
           if (
             persons.status === '200' &&
             persons.code === '200' &&
@@ -136,7 +146,6 @@ export default function CertificateEstimatorGasHeatPump(props) {
       brand: selectedBrand,
       model: selectedModel,
     };
-    console.log(payload);
     RegistryApi.getResidentialHeatPumpModelsMetadata(payload)
       .then((res) => {
         setMetadata(res.data);
@@ -144,8 +153,6 @@ export default function CertificateEstimatorGasHeatPump(props) {
       .catch((err) => {
         console.log(err);
       });
-
-    console.log(metadata);
   }, [selectedModel]);
 
   useEffect(() => {
@@ -155,8 +162,6 @@ export default function CertificateEstimatorGasHeatPump(props) {
   }, [brands]);
 
   useEffect(() => {
-    console.log(selectedBrand);
-
     RegistryApi.getResidentialHeatPumpModels(selectedBrand)
       .then((res) => {
         setModels(res.data);
@@ -166,8 +171,6 @@ export default function CertificateEstimatorGasHeatPump(props) {
         console.log(err);
         setRegistryData(false);
       });
-
-    console.log(models);
   }, [selectedBrand]);
 
   useEffect(() => {
@@ -190,36 +193,35 @@ export default function CertificateEstimatorGasHeatPump(props) {
             '2023-01-01'
           ];
         setZone(result);
-        console.log(result);
       })
       .catch((err) => {
         console.log(err);
       });
-
-    console.log(zone);
   }, [postcode]);
 
   return (
     <Fragment>
       {/* Search section */}
-      <br></br>
-      <HeroBanner
-        wide
-        style="dark"
-        image={{
-          alt: 'commercial wh',
-          src: 'D19(optimised).jpg',
-        }}
-        intro="Residential and small business"
-        title="Gas water heater replacement with an air source heat pump - certificates"
-      />
+      {!IS_DRUPAL_PAGES && (
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial wh',
+              src: 'D19(optimised).jpg',
+            }}
+            intro="Residential and small business"
+            title="Gas water heater replacement with an air source heat pump - certificates"
+          />
+        </div>
+      )}
 
       <div className="nsw-container">
         <br></br>
         <br></br>
-
-        {stepNumber !== 3 && (
-          <div className="nsw-grid nsw-grid--spaced">
+        {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
+          <div className="nsw-grid nsw-grid--spaced" style={{ marginTop: '1rem' }}>
             <div className="nsw-col nsw-col-md-10">
               {/* <h2 className="nsw-content-block__title">
                 Gas heat pump water heater certificate estimator
@@ -234,6 +236,7 @@ export default function CertificateEstimatorGasHeatPump(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Energy Savings Scheme
                 </a>{' '}
@@ -251,6 +254,7 @@ export default function CertificateEstimatorGasHeatPump(props) {
                 <a
                   href="https://tessa.energysustainabilityschemes.nsw.gov.au/ipart?id=accepted_products"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Independent Pricing and Regulatory Tribunal (IPART) Product Registry
                 </a>{' '}
@@ -297,6 +301,23 @@ export default function CertificateEstimatorGasHeatPump(props) {
                     </h5>
 
                     <FormGroup
+                      label="What is your interest in the scheme?"
+                      helper="Select the option that best describes you"
+                      htmlId="user-type"
+                    >
+                      <Select
+                        htmlId="user-type"
+                        style={{ maxWidth: '50%' }}
+                        options={USER_TYPE_OPTIONS}
+                        onChange={(e) => {
+                          setUserType(e.target.value);
+                        }}
+                        value={userType}
+                        required
+                      />
+                    </FormGroup>
+
+                    <FormGroup
                       label="Postcode"
                       helper="Postcode where the replacement has taken place" // helper text (secondary label)
                       errorText="Invalid value!" // error text if invalid
@@ -323,6 +344,7 @@ export default function CertificateEstimatorGasHeatPump(props) {
                         options={dropdownOptions}
                         onChange={(e) => {
                           setSelectedBrand(brands.find((item) => item === e.target.value));
+                          setSelectedModel('');
                         }}
                         value={selectedBrand}
                         required
@@ -460,15 +482,16 @@ export default function CertificateEstimatorGasHeatPump(props) {
             postcode &&
             postcode.length === 4 &&
             selectedBrand &&
-            selectedModel && (
+            selectedModel &&
+            userType && (
               <div className="nsw-row" style={{ paddingTop: '30px', width: '80%' }}>
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"
                     onClick={(e) => {
                       validatePostcode(postcode);
-                      // setFlow(null);
-                      // setStepNumber(stepNumber + 1);
+                      updateSearchCaptureAnalytics(postcode, selectedBrand, selectedModel);
+                      updateSegmentCaptureAnalytics(userType);
                     }}
                   >
                     Next
@@ -478,6 +501,32 @@ export default function CertificateEstimatorGasHeatPump(props) {
             )}
         </Fragment>
       </div>
+      {stepNumber === 3 && (
+        <>
+          <FeedbackComponent />
+          {!IS_DRUPAL_PAGES && (
+            <div className="nsw-container">
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#gas-residential-heat-pump-activity-requirements',
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </Fragment>
   );
 }

@@ -7,13 +7,9 @@ import moment from 'moment';
 import CalculateBlock from 'components/calculate/CalculateBlock';
 
 import Button from 'nsw-ds-react/button/button';
-import { FormGroup, FormGroupSelect, TextInput } from 'nsw-ds-react/forms';
-import { Notification } from 'nsw-ds-react/notification/notification';
-import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
 
 export default function LoadClausesBaseEligibility(props) {
   const {
@@ -31,15 +27,10 @@ export default function LoadClausesBaseEligibility(props) {
     setShowError,
   } = props;
 
-  console.log(variableToLoad);
-
-  const [dropdownOptions, setDropdownOptions] = useState([{}]);
-  // const [stepNumber, setStepNumber] = useState(1);
   const [variable, setVariable] = useState({}); // all info about variable
 
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
-  const [dateInvalid, setDateInvalid] = useState(false);
 
   const [calculationResult, setCalculationResult] = useState(null);
   const [calculationError, setCalculationError] = useState(false);
@@ -65,6 +56,10 @@ export default function LoadClausesBaseEligibility(props) {
       .catch((err) => {
         console.log(err);
       });
+
+    return () => {
+      setVariable({});
+    };
   }, [variableToLoad]);
 
   const formatResultString = (result) => {
@@ -94,8 +89,6 @@ export default function LoadClausesBaseEligibility(props) {
   return (
     <div className style={{ marginBottom: '7%' }}>
       <div>
-        <br></br>
-        <br></br>
         {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
         {stepNumber === 2 && calculationError && showError && (
@@ -189,59 +182,6 @@ export default function LoadClausesBaseEligibility(props) {
                 >
                   Check core eligibility again
                 </Button>
-              </div>
-
-              <div className="nsw-col-md-12" style={{ width: '80%' }}>
-                <hr
-                  style={{
-                    background: 'black',
-                    height: '1.5px',
-                  }}
-                />
-              </div>
-
-              <div className="nsw-col-md-12" style={{ paddingTop: '9%', width: '80%' }}>
-                <h4>More options</h4>
-                <br></br>
-                <div class="nsw-grid nsw-grid--spaced">
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="#certificate-estimation" class="nsw-card__link">
-                            Estimate certificates for an activity
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                    <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                      <div class="nsw-card__content null">
-                        <div class="nsw-card__title">
-                          <a href="#eligibility" class="nsw-card__link">
-                            Check eligibility for an activity
-                          </a>
-                        </div>
-                        <span
-                          class="material-icons nsw-material-icons nsw-card__icon"
-                          focusable="false"
-                          aria-hidden="true"
-                        >
-                          east
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </Fragment>

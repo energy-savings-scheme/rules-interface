@@ -1,23 +1,25 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
-import VariableSearchBar from 'pages/homepage/VariableSearchBar';
-
-import Card, { CardCopy } from 'nsw-ds-react/card/card';
-import { ContentBlock } from 'nsw-ds-react/content-block/contenBlock';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
-import DropDownMenu from 'components/form_elements/DropDownMenu';
 import Button from 'nsw-ds-react/button/button';
-import { FormGroupSelect } from 'nsw-ds-react/forms';
-import { FormGroup, TextInput, Select } from 'nsw-ds-react/forms';
-import RegistryApi from 'services/registry_api';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
-import OpenFiscaApi from 'services/openfisca_api';
-import Notification from 'nsw-ds-react/notification/notification';
 import CertificateEstimatorLoadClausesMotors from './CertificateEstimatorLoadClausesMotors';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import { BASE_COMMERCIAL_MOTOR_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+  clearSearchCaptureAnalytics,
+} from 'lib/analytics';
+import FeedbackComponent from 'components/feedback/feedback';
+import MoreOptionsCard from 'components/more-options-card/more-options-card';
+import {
+  F7_PDRSAug24_ESC_calculation,
+  F7_PDRSAug24_energy_savings,
+} from 'types/openfisca_variables';
 
 export default function CertificateEstimatorMotors(props) {
   const { entities, variables, setVariables, setEntities } = props;
@@ -31,32 +33,27 @@ export default function CertificateEstimatorMotors(props) {
   const [calculationError2, setCalculationError2] = useState(false);
   const [postcode, setPostcode] = useState(null);
   const [registryData, setRegistryData] = useState(true);
-  const [variableData1, setVariableData1] = useState([]);
-  const [variableData2, setVariableData2] = useState([]);
+  const [variableData1, setVariableData1] = useState({});
+  const [variableData2, setVariableData2] = useState({});
   const [persistFormValues, setPersistFormValues] = useState([]);
   const [flow, setFlow] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
+  const [userType, setUserType] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    clearSearchCaptureAnalytics();
+    updateEstimatorFormAnalytics(BASE_COMMERCIAL_MOTOR_ESTIMATOR_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_COMMERCIAL_MOTOR_ESTIMATOR_ANALYTICS_DATA);
 
     if (variables.length < 1) {
       OpenFiscaAPI.listEntities()
         .then((res) => {
           setEntities(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    if (entities.length < 1) {
-      OpenFiscaAPI.listVariables()
-        .then((res) => {
-          setVariables(res.data);
+          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
@@ -77,22 +74,18 @@ export default function CertificateEstimatorMotors(props) {
   }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
-    OpenFiscaAPI.getVariable('F7_PDRSAug24_ESC_calculation')
+    OpenFiscaAPI.getVariable(F7_PDRSAug24_ESC_calculation)
       .then((res) => {
         setVariableData1(res.data);
-        console.log(res.data);
-        console.log('here!!');
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
 
-    OpenFiscaAPI.getVariable('F7_PDRSAug24_ESC_calculation')
+    OpenFiscaAPI.getVariable(F7_PDRSAug24_ESC_calculation)
       .then((res) => {
         setVariableData2(res.data);
-        console.log(res.data);
-
         setLoading(false);
       })
       .catch((err) => {
@@ -102,18 +95,19 @@ export default function CertificateEstimatorMotors(props) {
 
   return (
     <Fragment>
-      <br></br>
       {!IS_DRUPAL_PAGES && (
-        <HeroBanner
-          wide
-          style="dark"
-          image={{
-            alt: 'commercial motors',
-            src: 'CommercialVentilationRefrigeration.jpeg',
-          }}
-          intro="Commercial"
-          title="Motors - certificates"
-        />
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'commercial motors',
+              src: 'CommercialVentilationRefrigeration.jpeg',
+            }}
+            intro="Commercial"
+            title="Motors - certificates"
+          />
+        </div>
       )}
 
       <div className="nsw-container">
@@ -130,6 +124,7 @@ export default function CertificateEstimatorMotors(props) {
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Energy Savings Scheme
                 </a>
@@ -173,8 +168,8 @@ export default function CertificateEstimatorMotors(props) {
             <CertificateEstimatorLoadClausesMotors
               variableData1={variableData1}
               variableData2={variableData2}
-              annualEnergySavings={'F7_PDRSAug24_energy_savings'}
-              peakDemandReductionSavings={'F7_PDRSAug24_energy_savings'}
+              annualEnergySavings={F7_PDRSAug24_energy_savings}
+              peakDemandReductionSavings={F7_PDRSAug24_energy_savings}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
@@ -202,6 +197,8 @@ export default function CertificateEstimatorMotors(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              userType={userType}
+              setUserType={setUserType}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
@@ -212,8 +209,8 @@ export default function CertificateEstimatorMotors(props) {
             <CertificateEstimatorLoadClausesMotors
               variableData1={variableData1}
               variableData2={variableData2}
-              annualEnergySavings={'F7_PDRSAug24_energy_savings'}
-              peakDemandReductionSavings={'F7_PDRSAug24_energy_savings'}
+              annualEnergySavings={F7_PDRSAug24_energy_savings}
+              peakDemandReductionSavings={F7_PDRSAug24_energy_savings}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
@@ -239,6 +236,8 @@ export default function CertificateEstimatorMotors(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              userType={userType}
+              setUserType={setUserType}
             />
           )}
 
@@ -260,6 +259,32 @@ export default function CertificateEstimatorMotors(props) {
           )}
         </Fragment>
       </div>
+      {stepNumber === 2 && (
+        <>
+          <FeedbackComponent />
+          {!IS_DRUPAL_PAGES && (
+            <div className="nsw-container">
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#commercial-motors-activity-requirements',
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </Fragment>
   );
 }
