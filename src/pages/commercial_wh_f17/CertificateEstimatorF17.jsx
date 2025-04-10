@@ -19,6 +19,7 @@ import {
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
+import {F17_ESC_calculation} from 'types/openfisca_variables';
 
 export default function CertificateEstimatorF17(props) {
   const { entities, variables, brands } = props;
@@ -232,7 +233,7 @@ export default function CertificateEstimatorF17(props) {
                   Energy Savings Scheme
                 </a>
                 ) by answering the following questions. Note that a replacement activity will not
-                generate ESCs or PRCs.
+                generate ESCs.
               </p>
               <p className="nsw-content-block__copy">
                 Note that this activity is only eligible for the Energy Savings Scheme, and is not
@@ -288,7 +289,7 @@ export default function CertificateEstimatorF17(props) {
                   <br></br>
                   <div className="nsw-content-block__content">
                     <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
-                      <b>Please answer the following questions to calculate your ESCs and PRCs</b>
+                      <b>Please answer the following questions to calculate your ESCs</b>
                     </h5>
 
                     <FormGroup
@@ -370,8 +371,8 @@ export default function CertificateEstimatorF17(props) {
 
           {stepNumber === 2 && (
             <CertificateEstimatorLoadClausesF17
-              variableToLoad1={'F17_ESC_calculation'}
-              variableToLoad2={'F17_ESC_calculation'}
+              variableToLoad1={F17_ESC_calculation}
+              variableToLoad2={F17_ESC_calculation}
               annualEnergySavings={'F17_annual_energy_savings'}
               peakDemandReductionSavings={'F17_annual_energy_savings'}
               variables={variables}
@@ -436,8 +437,8 @@ export default function CertificateEstimatorF17(props) {
 
           {stepNumber === 3 && (
             <CertificateEstimatorLoadClausesF17
-              variableToLoad1={'F17_ESC_calculation'}
-              variableToLoad2={'F17_ESC_calculation'}
+              variableToLoad1={F17_ESC_calculation}
+              variableToLoad2={F17_ESC_calculation}
               annualEnergySavings={'F17_annual_energy_savings'}
               peakDemandReductionSavings={'F17_annual_energy_savings'}
               variables={variables}
