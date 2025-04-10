@@ -216,7 +216,7 @@ export default function CalculateForm(props) {
       if (specialVariables.includes(variable.name)) {
         if (!validateUserType()) {
           setLoading(false);
-          return false
+          return false;
         }
       }
       formValues.map((variable) => {
