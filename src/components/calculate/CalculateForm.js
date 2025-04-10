@@ -135,11 +135,11 @@ export default function CalculateForm(props) {
     if (!userType.value) {
       document.querySelector('select#user-type').reportValidity();
       document.querySelector('select#user-type').setCustomValidity('Please select an item in the list.')
-      return false
+      return false;
     }
 
-    return true
-  }
+    return true;
+  };
 
   const handleCalculate = (e) => {
     e.preventDefault();
@@ -194,7 +194,7 @@ export default function CalculateForm(props) {
     if (workflow === Workflow.ELIGIBILITY) {
       if (!validateUserType()) {
         setLoading(false);
-        return false
+        return false;
       }
       formValues
         .filter((x) => x.hide === false)
@@ -211,8 +211,8 @@ export default function CalculateForm(props) {
         C1_PDRSAug24_ESC_calculation,
         F7_PDRSAug24_ESC_calculation,
         BESS1_PDRSAug24_PRC_calculation,
-        BESS2_PDRSAug24_PRC_calculation
-      ]
+        BESS2_PDRSAug24_PRC_calculation,
+      ];
       if (specialVariables.includes(variable.name)) {
         if (!validateUserType()) {
           setLoading(false);
@@ -366,7 +366,7 @@ export default function CalculateForm(props) {
                     setFlow(null);
                     setStepNumber(stepNumber + 1);
                     updatePostCodeAnalytics(variable.form_value);
-                    submitEstimatorFormAnalytics()
+                    submitEstimatorFormAnalytics();
                   } else {
                     setShowPostcodeError(true);
                     setShowNoResponsePostcodeError(false);
@@ -391,15 +391,15 @@ export default function CalculateForm(props) {
     }
 
     if (stepNumber !== 1 && workflow === Workflow.CERTIFICATES) {
-      submitEstimatorFormAnalytics()
+      submitEstimatorFormAnalytics();
     }
 
     if (workflow !== Workflow.ELIGIBILITY) {
       setPersistFormValues(formValues);
     } else {
       // remove post code property before sending to analytics
-      clearSearchCaptureAnalytics()
-      submitEstimatorFormAnalytics()
+      clearSearchCaptureAnalytics();
+      submitEstimatorFormAnalytics();
     }
   };
 
@@ -434,8 +434,8 @@ export default function CalculateForm(props) {
             (variable.name === C1_PDRSAug24_ESC_calculation ||
               variable.name === F7_PDRSAug24_ESC_calculation ||
               variable.name === BESS1_PDRSAug24_PRC_calculation ||
-              variable.name === BESS2_PDRSAug24_PRC_calculation ) ? (
-                <></>
+              variable.name === BESS2_PDRSAug24_PRC_calculation) ? (
+            <></>
           ) : workflow === Workflow.CERTIFICATES ? (
             <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your ESCs and PRCs</b>
