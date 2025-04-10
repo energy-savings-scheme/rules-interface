@@ -19,7 +19,7 @@ import {
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
-import {D20_ESSJun24_ESC_calculation} from 'types/openfisca_variables';
+import { D20_ESSJun24_ESC_calculation } from 'types/openfisca_variables';
 
 export default function CertificateEstimatorResidentialGasReplacementSolarWaterHeater(props) {
   const { entities, variables, brands } = props;

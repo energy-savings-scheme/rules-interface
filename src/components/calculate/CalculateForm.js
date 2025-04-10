@@ -31,7 +31,7 @@ import {
   D18_ESSJun24_ESC_calculation,
   D19_ESSJun24_ESC_calculation,
   D20_ESSJun24_ESC_calculation,
-  F17_ESC_calculation
+  F17_ESC_calculation,
 } from 'types/openfisca_variables';
 
 import { Float } from 'types/value_type';
@@ -134,7 +134,9 @@ export default function CalculateForm(props) {
 
     if (!userType.value) {
       document.querySelector('select#user-type').reportValidity();
-      document.querySelector('select#user-type').setCustomValidity('Please select an item in the list.')
+      document
+        .querySelector('select#user-type')
+        .setCustomValidity('Please select an item in the list.');
       return false;
     }
 
@@ -408,15 +410,14 @@ export default function CalculateForm(props) {
       <div className="nsw-content-block">
         <div className="nsw-content-block__content">
           {workflow === Workflow.CERTIFICATES &&
-            (variable.name === F16_electric_PDRSDec24_ESC_calculation ||
-              variable.name === WH1_F16_electric_PDRSAug24_PRC_calculation ||
-              variable.name === F16_gas_ESC_calculation ||
-              variable.name === D17_ESSJun24_ESC_calculation ||
-              variable.name === D18_ESSJun24_ESC_calculation ||
-              variable.name === D19_ESSJun24_ESC_calculation ||
-              variable.name === D20_ESSJun24_ESC_calculation ||
-              variable.name === F17_ESC_calculation
-            ) ? (
+          (variable.name === F16_electric_PDRSDec24_ESC_calculation ||
+            variable.name === WH1_F16_electric_PDRSAug24_PRC_calculation ||
+            variable.name === F16_gas_ESC_calculation ||
+            variable.name === D17_ESSJun24_ESC_calculation ||
+            variable.name === D18_ESSJun24_ESC_calculation ||
+            variable.name === D19_ESSJun24_ESC_calculation ||
+            variable.name === D20_ESSJun24_ESC_calculation ||
+            variable.name === F17_ESC_calculation) ? (
             // for now we just need to update the copy right now, this is just temporary solution
             // that's why we adding this template below.
             // F16 shouldn't have PRC anymore.

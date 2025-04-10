@@ -19,7 +19,7 @@ import {
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
-import {F17_ESC_calculation} from 'types/openfisca_variables';
+import { F17_ESC_calculation } from 'types/openfisca_variables';
 
 export default function CertificateEstimatorF17(props) {
   const { entities, variables, brands } = props;
