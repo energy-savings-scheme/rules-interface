@@ -29,6 +29,7 @@ import {
   BESS2_PDRSAug24_PRC_calculation,
   D17_ESSJun24_ESC_calculation,
   D18_ESSJun24_ESC_calculation,
+  D19_ESSJun24_ESC_calculation,
   D20_ESSJun24_ESC_calculation,
   F17_ESC_calculation
 } from 'types/openfisca_variables';
@@ -412,6 +413,7 @@ export default function CalculateForm(props) {
               variable.name === F16_gas_ESC_calculation ||
               variable.name === D17_ESSJun24_ESC_calculation ||
               variable.name === D18_ESSJun24_ESC_calculation ||
+              variable.name === D19_ESSJun24_ESC_calculation ||
               variable.name === D20_ESSJun24_ESC_calculation ||
               variable.name === F17_ESC_calculation
             ) ? (
