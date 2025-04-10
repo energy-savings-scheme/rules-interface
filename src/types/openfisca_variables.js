@@ -51,6 +51,12 @@ export const BESS1_PDRSDec24_inverter_warranty_length_eligible =
   'BESS1_PDRSDec24_inverter_warranty_length_eligible';
 export const BESS2_V5Nov24_usable_battery_capacity = 'BESS2_V5Nov24_usable_battery_capacity';
 
+export const D17_ESSJun24_ESC_calculation = 'D17_ESSJun24_ESC_calculation';
+export const D18_ESSJun24_ESC_calculation = 'D18_ESSJun24_ESC_calculation';
+export const D19_ESSJun24_ESC_calculation = 'D19_ESSJun24_ESC_calculation';
+export const D20_ESSJun24_ESC_calculation = 'D20_ESSJun24_ESC_calculation';
+export const F17_ESC_calculation = 'F17_ESC_calculation';
+
 // Water heater electric (F16)
 export const F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility =
   'F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility';
