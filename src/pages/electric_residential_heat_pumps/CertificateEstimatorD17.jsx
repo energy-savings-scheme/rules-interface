@@ -19,6 +19,7 @@ import {
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
+import {D17_ESSJun24_ESC_calculation} from 'types/openfisca_variables';
 
 export default function CertificateEstimatorElectricHeatPump(props) {
   const { entities, variables, brands } = props;
@@ -377,8 +378,8 @@ export default function CertificateEstimatorElectricHeatPump(props) {
 
           {stepNumber === 2 && (
             <CertificateEstimatorLoadClausesD17
-              variableToLoad1={'D17_ESSJun24_ESC_calculation'}
-              variableToLoad2={'D17_ESSJun24_ESC_calculation'}
+              variableToLoad1={D17_ESSJun24_ESC_calculation}
+              variableToLoad2={D17_ESSJun24_ESC_calculation}
               annualEnergySavings={'D17_ESSJun24_annual_energy_savings'}
               peakDemandReductionSavings={'D17_ESSJun24_annual_energy_savings'}
               annualEnergySavingsNumber={annualEnergySavingsNumber}
