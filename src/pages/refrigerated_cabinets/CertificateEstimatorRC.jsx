@@ -147,6 +147,7 @@ export default function CertificateEstimatorRC(props) {
           ) {
             if (persons.data['state'] === 'NSW') {
               setShowPostcodeError(false);
+              setShowNoResponsePostcodeError(false);
               setFlow(null);
               setStepNumber(stepNumber + 1);
             } else {
