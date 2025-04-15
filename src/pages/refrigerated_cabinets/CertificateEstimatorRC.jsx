@@ -98,19 +98,6 @@ export default function CertificateEstimatorRC(props) {
           console.log(err);
         });
     }
-
-    if (RF2Brands.length < 1) {
-      RegistryApi.getRF2Brands()
-        .then((res) => {
-          setRF2Brands(res.data);
-          setLoading(false);
-          setRegistryData(true);
-        })
-        .catch((err) => {
-          console.log(err);
-          setRegistryData(false);
-        });
-    }
   }, []);
 
   // For brands
