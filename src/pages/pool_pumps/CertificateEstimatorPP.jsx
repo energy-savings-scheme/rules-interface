@@ -85,19 +85,6 @@ export default function CertificateEstimatorPP(props) {
           console.log(err);
         });
     }
-
-    if (PoolPumpBrands.length < 1) {
-      RegistryApi.getPoolPumpBrands()
-        .then((res) => {
-          setPoolPumpBrands(res.data);
-          setLoading(false);
-          setRegistryData(true);
-        })
-        .catch((err) => {
-          console.log(err);
-          setRegistryData(false);
-        });
-    }
   }, []);
 
   // For brands
