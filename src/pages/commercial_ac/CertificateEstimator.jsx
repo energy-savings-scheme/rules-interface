@@ -92,19 +92,6 @@ export default function CertificateEstimatorHVAC(props) {
           console.log(err);
         });
     }
-
-    if (hvacBrands.length < 1) {
-      RegistryApi.getCommercialHVACBrands()
-        .then((res) => {
-          setHvacBrands(res.data);
-          setLoading(false);
-          setRegistryData(true);
-        })
-        .catch((err) => {
-          console.log(err);
-          setRegistryData(false);
-        });
-    }
   }, []);
 
   useEffect(() => {
