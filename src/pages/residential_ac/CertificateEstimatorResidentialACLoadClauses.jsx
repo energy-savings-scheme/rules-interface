@@ -8,6 +8,7 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
+import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 
 export default function CertificateEstimatorResidentialACLoadClauses(props) {
   const {
@@ -47,6 +48,10 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
     selectedClimateZone,
+    escMinPrice,
+    escMaxPrice,
+    prcMinPrice,
+    prcMaxPrice
   } = props;
 
   const bca_mapping = {
@@ -72,6 +77,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
   const [dependencies, setDependencies] = useState([]);
   const [variableData1, setVariableData1] = useState({});
   const [variableData2, setVariableData2] = useState({});
+  console.log(escMinPrice, escMaxPrice, prcMinPrice, prcMaxPrice)
 
   if (calculationResult2 === null) {
     setCalculationResult2('0');
@@ -356,6 +362,14 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                 width: '80%',
               }}
             >
+              <CertificiatePrice
+                esc_certificates={calculationResult2}
+                prc_certificates={calculationResult}
+                escMinPrice={escMinPrice}
+                escMaxPrice={escMaxPrice}
+                prcMinPrice={prcMinPrice}
+                prcMaxPrice={prcMaxPrice}
+              />
               <div className="nsw-col-md-9" style={{ padding: 'inherit' }}>
                 <Button
                   style={{ float: 'left' }}
