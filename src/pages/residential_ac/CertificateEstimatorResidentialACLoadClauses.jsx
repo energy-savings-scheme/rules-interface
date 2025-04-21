@@ -77,7 +77,6 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
   const [dependencies, setDependencies] = useState([]);
   const [variableData1, setVariableData1] = useState({});
   const [variableData2, setVariableData2] = useState({});
-  console.log(escMinPrice, escMaxPrice, prcMinPrice, prcMaxPrice)
 
   if (calculationResult2 === null) {
     setCalculationResult2('0');
@@ -363,8 +362,8 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
               }}
             >
               <CertificiatePrice
-                esc_certificates={calculationResult2}
-                prc_certificates={calculationResult}
+                prcCertificates={calculationResult}
+                escCertificates={calculationResult2}
                 escMinPrice={escMinPrice}
                 escMaxPrice={escMaxPrice}
                 prcMinPrice={prcMinPrice}

@@ -17,7 +17,7 @@ export default function CertificiatePrice(props) {
 
   return (
     <>
-      {escCertificates > 0 && prcCertificates > 0 && (
+      {(escCertificates > 0 || prcCertificates > 0) && (
         <div>
           <h4 className="nsw-m-bottom-lg">DRAFT HEADING How much is the incentive?</h4>
           <p>
@@ -50,7 +50,7 @@ export default function CertificiatePrice(props) {
                   <div className="nsw-docs__box nsw-docs__box--large">
                     <Alert
                       as="info"
-                      title={`Potential ESCs Incentives $${esc_calculation_min_price} - $${esc_calculation_max_price}*`}
+                      title={`Potential ESCs Incentives $${Math.floor(esc_calculation_min_price)} - $${Math.floor(esc_calculation_max_price)}*`}
                       style={{ marginTop: 0 }}
                     >
                       <p>
@@ -78,7 +78,7 @@ export default function CertificiatePrice(props) {
                   <div className="nsw-docs__box nsw-docs__box--large">
                     <Alert
                       as="info"
-                      title={`Potential PRCs Incentives $${prc_calculation_min_price} - $${prc_calculation_max_price}*`}
+                      title={`Potential PRCs Incentives $${Math.floor(prc_calculation_min_price)} - $${Math.floor(prc_calculation_max_price)}*`}
                       style={{ marginTop: 0 }}
                     >
                       <p>
