@@ -10,10 +10,10 @@ export default function CertificiatePrice(props) {
     prcMaxPrice = 0
   } = props;
 
-  const esc_calculation_min_price = escCertificates * escMinPrice
-  const esc_calculation_max_price = escCertificates * escMaxPrice
-  const prc_calculation_min_price = prcCertificates * prcMinPrice
-  const prc_calculation_max_price = prcCertificates * prcMaxPrice
+  const esc_calculation_min_price = (escCertificates * escMinPrice).toFixed(2)
+  const esc_calculation_max_price = (escCertificates * escMaxPrice).toFixed(2)
+  const prc_calculation_min_price = (prcCertificates * prcMinPrice).toFixed(2)
+  const prc_calculation_max_price = (prcCertificates * prcMaxPrice).toFixed(2)
 
   return (
     <>
@@ -50,7 +50,7 @@ export default function CertificiatePrice(props) {
                   <div className="nsw-docs__box nsw-docs__box--large">
                     <Alert
                       as="info"
-                      title={`Potential ESCs Incentives $${Math.floor(esc_calculation_min_price)} - $${Math.floor(esc_calculation_max_price)}*`}
+                      title={`Potential ESCs Incentives $${esc_calculation_min_price} - $${esc_calculation_max_price}*`}
                       style={{ marginTop: 0 }}
                     >
                       <p>
@@ -78,7 +78,7 @@ export default function CertificiatePrice(props) {
                   <div className="nsw-docs__box nsw-docs__box--large">
                     <Alert
                       as="info"
-                      title={`Potential PRCs Incentives $${Math.floor(prc_calculation_min_price)} - $${Math.floor(prc_calculation_max_price)}*`}
+                      title={`Potential PRCs Incentives $${prc_calculation_min_price} - $${prc_calculation_max_price}*`}
                       style={{ marginTop: 0 }}
                     >
                       <p>
