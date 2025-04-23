@@ -279,10 +279,10 @@ export default function CertificateEstimatorResidentialAC(props) {
     const fetchCertificatePrice = async function () {
       try {
         const response = await RegistryApi.getCertificatePrice()
-        setEscMinPrice(response.data.ESC.min_price)
-        setEscMaxPrice(response.data.ESC.max_price)
-        setPrcMinPrice(response.data.PRC.min_price)
-        setPrcMaxPrice(response.data.PRC.max_price)
+        setEscMinPrice(Number(response.data.ESC.min_price))
+        setEscMaxPrice(Number(response.data.ESC.max_price))
+        setPrcMinPrice(Number(response.data.PRC.min_price))
+        setPrcMaxPrice(Number(response.data.PRC.max_price))
       } catch (e) {
         console.log(e)
       }

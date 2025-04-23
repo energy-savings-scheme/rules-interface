@@ -364,10 +364,10 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
               <CertificiatePrice
                 prcCertificates={calculationResult}
                 escCertificates={calculationResult2}
-                escMinPrice={Number(escMinPrice)}
-                escMaxPrice={Number(escMaxPrice)}
-                prcMinPrice={Number(prcMinPrice)}
-                prcMaxPrice={Number(prcMaxPrice)}
+                escMinPrice={escMinPrice}
+                escMaxPrice={escMaxPrice}
+                prcMinPrice={prcMinPrice}
+                prcMaxPrice={prcMaxPrice}
               />
               <div className="nsw-col-md-9" style={{ padding: 'inherit' }}>
                 <Button
