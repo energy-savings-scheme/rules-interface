@@ -8,6 +8,7 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
+import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 
 export default function CertificateEstimatorResidentialACLoadClauses(props) {
   const {
@@ -47,6 +48,10 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
     selectedClimateZone,
+    escMinPrice,
+    escMaxPrice,
+    prcMinPrice,
+    prcMaxPrice
   } = props;
 
   const bca_mapping = {
@@ -356,6 +361,14 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                 width: '80%',
               }}
             >
+              <CertificiatePrice
+                prcCertificates={calculationResult}
+                escCertificates={calculationResult2}
+                escMinPrice={escMinPrice}
+                escMaxPrice={escMaxPrice}
+                prcMinPrice={prcMinPrice}
+                prcMaxPrice={prcMaxPrice}
+              />
               <div className="nsw-col-md-9" style={{ padding: 'inherit' }}>
                 <Button
                   style={{ float: 'left' }}
