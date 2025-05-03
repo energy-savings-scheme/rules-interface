@@ -10,30 +10,26 @@ export default function CertificiatePrice(props) {
     prcMaxPrice = 0
   } = props;
 
-  const esc_calculation_min_price = (escCertificates * escMinPrice).toFixed(2)
-  const esc_calculation_max_price = (escCertificates * escMaxPrice).toFixed(2)
-  const prc_calculation_min_price = (prcCertificates * prcMinPrice).toFixed(2)
-  const prc_calculation_max_price = (prcCertificates * prcMaxPrice).toFixed(2)
+  const esc_calculation_min_price = Math.floor(escCertificates * escMinPrice)
+  const esc_calculation_max_price = Math.floor(escCertificates * escMaxPrice)
+  const prc_calculation_min_price = Math.floor(prcCertificates * prcMinPrice)
+  const prc_calculation_max_price = Math.floor(prcCertificates * prcMaxPrice)
 
   return (
     <>
       {(escCertificates > 0 || prcCertificates > 0) && (
-        <div>
-          <h4 className="nsw-m-bottom-lg">DRAFT HEADING How much is the incentive?</h4>
+        <div className="nsw-m-bottom-xxl">
+          <h4 style={{marginBottom: '1.25rem'}}>How much is the incentive?</h4>
           <p>
-            DRAFT ONLY Please note that certificate prices can changes daily and this estimate is a
-            guide only. Incentives are calculated by the number of certificates multiplied by the
-            certificate price, then minus administration costs.
-          </p>
-          <p>
-            The actual incentive will vary according to fluctuating certificate prices and
-            administration costs such as:
+            Certificate prices can change daily and this estimate is a
+            guide only. The incentive's will vary due to a number of factors, including:
           </p>
           <ul className="nsw-m-bottom-xl">
+            <li className="nsw-m-top-0">changing certificate prices</li>
+            <li className="nsw-m-top-0">business administration costs</li>
             <li className="nsw-m-top-0">travel and transportation costs</li>
-            <li className="nsw-m-top-0">the model you choose to install</li>
-            <li className="nsw-m-top-0">the complexity of installation and the need for any additional building work
-            </li>
+            <li className="nsw-m-top-0">the model you install</li>
+            <li className="nsw-m-top-0">the complexity of the installation and the need for any extra building work</li>
           </ul>
 
           {escCertificates > 0 && (
@@ -41,9 +37,7 @@ export default function CertificiatePrice(props) {
               <div className="nsw-layout">
                 <div className="nsw-layout__sidebar nsw-layout__sidebar--desktop">
                   <div className="nsw-docs__box nsw-docs__box--large">
-                <span style={{ display: 'block', marginTop: '1rem' }}>
-                  <b>ESCs Certificates {escCertificates}</b>
-                </span>
+                    <h4 style={{marginTop: '1.5rem'}}>ESCs Certificates {escCertificates}</h4>
                   </div>
                 </div>
                 <main className="nsw-layout__main">
@@ -54,7 +48,7 @@ export default function CertificiatePrice(props) {
                       style={{ marginTop: 0 }}
                     >
                       <p>
-                        * Actual incentive amount will vary depending on certificate pricing and
+                        *Actual incentive amount will vary depending on certificate pricing and
                         administrative fees
                       </p>
                     </Alert>
@@ -69,9 +63,7 @@ export default function CertificiatePrice(props) {
               <div className="nsw-layout">
                 <div className="nsw-layout__sidebar nsw-layout__sidebar--desktop">
                   <div className="nsw-docs__box nsw-docs__box--large">
-                <span style={{ display: 'block', marginTop: '1rem' }}>
-                  <b>PRCs Certificates {prcCertificates}</b>
-                </span>
+                    <h4 style={{marginTop: '1.5rem'}}>PRCs Certificates {prcCertificates}</h4>
                   </div>
                 </div>
                 <main className="nsw-layout__main">
@@ -82,7 +74,7 @@ export default function CertificiatePrice(props) {
                       style={{ marginTop: 0 }}
                     >
                       <p>
-                        * Actual incentive amount will vary depending on certificate pricing and
+                        *Actual incentive amount will vary depending on certificate pricing and
                         administrative fees
                       </p>
                     </Alert>

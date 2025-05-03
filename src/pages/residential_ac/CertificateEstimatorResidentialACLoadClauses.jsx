@@ -295,7 +295,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
               </div>
             </div>
             {
-              <Alert as="info" title="ESCs and PRCs" style={{ width: '80%' }}>
+              <Alert as="info" title="ESCs and PRCs" style={{ width: '80%', marginBottom: '7%' }}>
                 <p>
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   Based on the information provided, your ESCs are
@@ -357,7 +357,6 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
               style={{
                 paddingLeft: 'inherit',
                 paddingRight: 'inherit',
-                paddingTop: '30px',
                 width: '80%',
               }}
             >
@@ -369,7 +368,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                 prcMinPrice={prcMinPrice}
                 prcMaxPrice={prcMaxPrice}
               />
-              <div className="nsw-col-md-9" style={{ padding: 'inherit' }}>
+              <div className="nsw-col-md-9">
                 <Button
                   style={{ float: 'left' }}
                   as="dark-outline-solid"
