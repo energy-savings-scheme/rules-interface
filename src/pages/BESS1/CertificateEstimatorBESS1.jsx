@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import OpenFiscaAPI from 'services/openfisca_api';
+import RegistryApi from 'services/registry_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import CertificateEstimatorLoadClausesBESS1 from './CertificateEstimatorLoadClausesBESS1';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
@@ -42,6 +43,8 @@ export default function CertificateEstimatorBESS1(props) {
   const [selectedModel, setSelectedModel] = useState(null);
   const [postcode, setPostcode] = useState(null);
   const [userType, setUserType] = useState('');
+  const [prcMinPrice, setPrcMinPrice] = useState(0);
+  const [prcMaxPrice, setPrcMaxPrice] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -91,6 +94,20 @@ export default function CertificateEstimatorBESS1(props) {
         console.log(err);
       });
   }, [variables, entities]);
+
+  useEffect(() => {
+    const fetchCertificatePrice = async function () {
+      try {
+        const response = await RegistryApi.getCertificatePrice()
+        setPrcMinPrice(Number(response.data.ESC.min_price))
+        setPrcMaxPrice(Number(response.data.ESC.max_price))
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    fetchCertificatePrice()
+  }, []);
 
   return (
     <Fragment>
@@ -201,6 +218,8 @@ export default function CertificateEstimatorBESS1(props) {
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
+              prcMinPrice={prcMinPrice}
+              prcMaxPrice={prcMaxPrice}
             />
           )}
 
@@ -237,6 +256,8 @@ export default function CertificateEstimatorBESS1(props) {
               setShowError={setShowError}
               userType={userType}
               setUserType={setUserType}
+              prcMinPrice={prcMinPrice}
+              prcMaxPrice={prcMaxPrice}
             />
           )}
         </Fragment>

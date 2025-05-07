@@ -10,10 +10,10 @@ export default function CertificiatePrice(props) {
     prcMaxPrice = 0
   } = props;
 
-  const esc_calculation_min_price = Math.floor(escCertificates * escMinPrice)
-  const esc_calculation_max_price = Math.floor(escCertificates * escMaxPrice)
-  const prc_calculation_min_price = Math.floor(prcCertificates * prcMinPrice)
-  const prc_calculation_max_price = Math.floor(prcCertificates * prcMaxPrice)
+  const esc_calculation_min_price = Math.floor(Math.floor(escCertificates) * escMinPrice)
+  const esc_calculation_max_price = Math.floor(Math.floor(escCertificates) * escMaxPrice)
+  const prc_calculation_min_price = Math.floor(Math.floor(prcCertificates) * prcMinPrice)
+  const prc_calculation_max_price = Math.floor(Math.floor(prcCertificates) * prcMaxPrice)
 
   return (
     <>
@@ -36,7 +36,7 @@ export default function CertificiatePrice(props) {
             <div className={ prcCertificates > 0 ? `nsw-container nsw-m-bottom-lg` : ''} style={{ paddingLeft: 0, paddingRight: 0 }}>
               <Alert
                 as="info"
-                title={`Potential ESCs Incentives $${esc_calculation_min_price} - $${esc_calculation_max_price}*`}
+                title={`Potential ESCs incentive $${esc_calculation_min_price} - $${esc_calculation_max_price}*`}
                 style={{ marginTop: 0 }}
               >
                 <p>
@@ -51,7 +51,7 @@ export default function CertificiatePrice(props) {
             <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
               <Alert
                 as="info"
-                title={`Potential PRCs Incentives $${prc_calculation_min_price} - $${prc_calculation_max_price}*`}
+                title={`Potential PRCs incentive $${prc_calculation_min_price} - $${prc_calculation_max_price}*`}
                 style={{ marginTop: 0 }}
               >
                 <p>

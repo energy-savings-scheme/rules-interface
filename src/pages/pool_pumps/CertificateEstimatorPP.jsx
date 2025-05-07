@@ -56,6 +56,10 @@ export default function CertificateEstimatorPP(props) {
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
   const [userType, setUserType] = useState('');
+  const [escMinPrice, setEscMinPrice] = useState(0);
+  const [escMaxPrice, setEscMaxPrice] = useState(0);
+  const [prcMinPrice, setPrcMinPrice] = useState(0);
+  const [prcMaxPrice, setPrcMaxPrice] = useState(0);
 
   useEffect(() => {
     if (annualEnergySavingsNumber < 0) {
@@ -85,6 +89,22 @@ export default function CertificateEstimatorPP(props) {
           console.log(err);
         });
     }
+  }, []);
+
+  useEffect(() => {
+    const fetchCertificatePrice = async function () {
+      try {
+        const response = await RegistryApi.getCertificatePrice()
+        setEscMinPrice(Number(response.data.ESC.min_price))
+        setEscMaxPrice(Number(response.data.ESC.max_price))
+        setPrcMinPrice(Number(response.data.PRC.min_price))
+        setPrcMaxPrice(Number(response.data.PRC.max_price))
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    fetchCertificatePrice()
   }, []);
 
   // For brands
@@ -418,6 +438,10 @@ export default function CertificateEstimatorPP(props) {
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
+              prcMinPrice={prcMinPrice}
+              prcMaxPrice={prcMaxPrice}
             />
           )}
 
@@ -455,6 +479,10 @@ export default function CertificateEstimatorPP(props) {
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
+              prcMinPrice={prcMinPrice}
+              prcMaxPrice={prcMaxPrice}
             />
           )}
 
