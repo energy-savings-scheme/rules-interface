@@ -33,54 +33,32 @@ export default function CertificiatePrice(props) {
           </ul>
 
           {escCertificates > 0 && (
-            <div className="nsw-container nsw-m-bottom-md" style={{ paddingLeft: 0, paddingRight: 0 }}>
-              <div className="nsw-layout">
-                <div className="nsw-layout__sidebar nsw-layout__sidebar--desktop">
-                  <div className="nsw-docs__box nsw-docs__box--large">
-                    <h4 style={{marginTop: '1.5rem'}}>ESCs Certificates {escCertificates}</h4>
-                  </div>
-                </div>
-                <main className="nsw-layout__main">
-                  <div className="nsw-docs__box nsw-docs__box--large">
-                    <Alert
-                      as="info"
-                      title={`Potential ESCs Incentives $${esc_calculation_min_price} - $${esc_calculation_max_price}*`}
-                      style={{ marginTop: 0 }}
-                    >
-                      <p>
-                        *Actual incentive amount will vary depending on certificate pricing and
-                        administrative fees
-                      </p>
-                    </Alert>
-                  </div>
-                </main>
-              </div>
+            <div className="nsw-container nsw-m-bottom-lg" style={{ paddingLeft: 0, paddingRight: 0 }}>
+              <Alert
+                as="info"
+                title={`Potential ESCs Incentives $${esc_calculation_min_price} - $${esc_calculation_max_price}*`}
+                style={{ marginTop: 0 }}
+              >
+                <p>
+                  *Actual incentive amount will vary depending on certificate pricing and
+                  administrative fees
+                </p>
+              </Alert>
             </div>
           )}
 
           {prcCertificates > 0 && (
             <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
-              <div className="nsw-layout">
-                <div className="nsw-layout__sidebar nsw-layout__sidebar--desktop">
-                  <div className="nsw-docs__box nsw-docs__box--large">
-                    <h4 style={{marginTop: '1.5rem'}}>PRCs Certificates {prcCertificates}</h4>
-                  </div>
-                </div>
-                <main className="nsw-layout__main">
-                  <div className="nsw-docs__box nsw-docs__box--large">
-                    <Alert
-                      as="info"
-                      title={`Potential PRCs Incentives $${prc_calculation_min_price} - $${prc_calculation_max_price}*`}
-                      style={{ marginTop: 0 }}
-                    >
-                      <p>
-                        *Actual incentive amount will vary depending on certificate pricing and
-                        administrative fees
-                      </p>
-                    </Alert>
-                  </div>
-                </main>
-              </div>
+              <Alert
+                as="info"
+                title={`Potential PRCs Incentives $${prc_calculation_min_price} - $${prc_calculation_max_price}*`}
+                style={{ marginTop: 0 }}
+              >
+                <p>
+                  *Actual incentive amount will vary depending on certificate pricing and
+                  administrative fees
+                </p>
+              </Alert>
             </div>
           )}
         </div>
