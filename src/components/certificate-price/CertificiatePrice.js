@@ -22,7 +22,7 @@ export default function CertificiatePrice(props) {
           <h4 style={{marginBottom: '1.25rem'}}>How much is the incentive?</h4>
           <p>
             Certificate prices can change daily and this estimate is a
-            guide only. The incentive's will vary due to a number of factors, including:
+            guide only. The incentive will vary due to a number of factors, including:
           </p>
           <ul className="nsw-m-bottom-xl">
             <li className="nsw-m-top-0">changing certificate prices</li>
