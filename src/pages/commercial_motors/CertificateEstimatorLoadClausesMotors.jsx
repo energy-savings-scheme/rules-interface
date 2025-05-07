@@ -10,7 +10,8 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import { updateSegmentCaptureAnalytics } from 'lib/analytics';
+import {updateSegmentCaptureAnalytics} from 'lib/analytics';
+import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 
 export default function CertificateEstimatorLoadClausesMotors(props) {
   const {
@@ -47,6 +48,8 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
     setPeakDemandReductionSavingsNumber,
     userType,
     setUserType,
+    escMinPrice,
+    escMaxPrice,
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -184,7 +187,7 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
         {stepNumber === 2 && !calculationError && !calculationError2 && (
           <Fragment>
             {
-              <Alert as="info" title="ESCs" style={{ width: '80%' }}>
+              <Alert as="info" title="ESCs" style={{ width: '80%', marginBottom: '7%' }}>
                 <p>
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
@@ -228,11 +231,15 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
               style={{
                 paddingLeft: 'inherit',
                 paddingRight: 'inherit',
-                paddingTop: '30px',
                 width: '80%',
               }}
             >
-              <div className="nsw-col-md-9" style={{ padding: 'inherit' }}>
+              <CertificiatePrice
+                escCertificates={calculationResult2}
+                escMinPrice={escMinPrice}
+                escMaxPrice={escMaxPrice}
+              />
+              <div className="nsw-col-md-9" style={{ marginTop: '1.25rem' }}>
                 <Button
                   style={{ float: 'left' }}
                   as="dark-outline-solid"

@@ -53,6 +53,8 @@ export default function CertificateEstimatorWH(props) {
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
   const [userType, setUserType] = useState('');
+  const [escMinPrice, setEscMinPrice] = useState(0);
+  const [escMaxPrice, setEscMaxPrice] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -204,6 +206,20 @@ export default function CertificateEstimatorWH(props) {
         console.log(err);
       });
   }, [postcode]);
+
+  useEffect(() => {
+    const fetchCertificatePrice = async function () {
+      try {
+        const response = await RegistryApi.getCertificatePrice()
+        setEscMinPrice(Number(response.data.ESC.min_price))
+        setEscMaxPrice(Number(response.data.ESC.max_price))
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    fetchCertificatePrice()
+  }, []);
 
   return (
     <Fragment>
@@ -401,6 +417,8 @@ export default function CertificateEstimatorWH(props) {
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
             />
           )}
 
@@ -460,6 +478,8 @@ export default function CertificateEstimatorWH(props) {
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
             />
           )}
 
