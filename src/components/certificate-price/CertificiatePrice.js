@@ -33,7 +33,7 @@ export default function CertificiatePrice(props) {
           </ul>
 
           {escCertificates > 0 && (
-            <div className="nsw-container nsw-m-bottom-lg" style={{ paddingLeft: 0, paddingRight: 0 }}>
+            <div className={ prcCertificates > 0 ? `nsw-container nsw-m-bottom-lg` : ''} style={{ paddingLeft: 0, paddingRight: 0 }}>
               <Alert
                 as="info"
                 title={`Potential ESCs Incentives $${esc_calculation_min_price} - $${esc_calculation_max_price}*`}
