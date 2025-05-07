@@ -10,10 +10,10 @@ export default function CertificiatePrice(props) {
     prcMaxPrice = 0
   } = props;
 
-  const esc_calculation_min_price = Math.floor(escCertificates * escMinPrice)
-  const esc_calculation_max_price = Math.floor(escCertificates * escMaxPrice)
-  const prc_calculation_min_price = Math.floor(prcCertificates * prcMinPrice)
-  const prc_calculation_max_price = Math.floor(prcCertificates * prcMaxPrice)
+  const esc_calculation_min_price = Math.floor(Math.floor(escCertificates) * escMinPrice)
+  const esc_calculation_max_price = Math.floor(Math.floor(escCertificates) * escMaxPrice)
+  const prc_calculation_min_price = Math.floor(Math.floor(prcCertificates) * prcMinPrice)
+  const prc_calculation_max_price = Math.floor(Math.floor(prcCertificates) * prcMaxPrice)
 
   return (
     <>
@@ -22,7 +22,7 @@ export default function CertificiatePrice(props) {
           <h4 style={{marginBottom: '1.25rem'}}>How much is the incentive?</h4>
           <p>
             Certificate prices can change daily and this estimate is a
-            guide only. The incentive's will vary due to a number of factors, including:
+            guide only. The incentive will vary due to a number of factors, including:
           </p>
           <ul className="nsw-m-bottom-xl">
             <li className="nsw-m-top-0">changing certificate prices</li>
@@ -33,54 +33,32 @@ export default function CertificiatePrice(props) {
           </ul>
 
           {escCertificates > 0 && (
-            <div className="nsw-container nsw-m-bottom-md" style={{ paddingLeft: 0, paddingRight: 0 }}>
-              <div className="nsw-layout">
-                <div className="nsw-layout__sidebar nsw-layout__sidebar--desktop">
-                  <div className="nsw-docs__box nsw-docs__box--large">
-                    <h4 style={{marginTop: '1.5rem'}}>ESCs Certificates {escCertificates}</h4>
-                  </div>
-                </div>
-                <main className="nsw-layout__main">
-                  <div className="nsw-docs__box nsw-docs__box--large">
-                    <Alert
-                      as="info"
-                      title={`Potential ESCs Incentives $${esc_calculation_min_price} - $${esc_calculation_max_price}*`}
-                      style={{ marginTop: 0 }}
-                    >
-                      <p>
-                        *Actual incentive amount will vary depending on certificate pricing and
-                        administrative fees
-                      </p>
-                    </Alert>
-                  </div>
-                </main>
-              </div>
+            <div className={ prcCertificates > 0 ? `nsw-container nsw-m-bottom-lg` : ''} style={{ paddingLeft: 0, paddingRight: 0 }}>
+              <Alert
+                as="info"
+                title={`Potential ESCs incentive $${esc_calculation_min_price} - $${esc_calculation_max_price}*`}
+                style={{ marginTop: 0 }}
+              >
+                <p>
+                  *Actual incentive amount will vary depending on certificate pricing and
+                  administrative fees
+                </p>
+              </Alert>
             </div>
           )}
 
           {prcCertificates > 0 && (
             <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
-              <div className="nsw-layout">
-                <div className="nsw-layout__sidebar nsw-layout__sidebar--desktop">
-                  <div className="nsw-docs__box nsw-docs__box--large">
-                    <h4 style={{marginTop: '1.5rem'}}>PRCs Certificates {prcCertificates}</h4>
-                  </div>
-                </div>
-                <main className="nsw-layout__main">
-                  <div className="nsw-docs__box nsw-docs__box--large">
-                    <Alert
-                      as="info"
-                      title={`Potential PRCs Incentives $${prc_calculation_min_price} - $${prc_calculation_max_price}*`}
-                      style={{ marginTop: 0 }}
-                    >
-                      <p>
-                        *Actual incentive amount will vary depending on certificate pricing and
-                        administrative fees
-                      </p>
-                    </Alert>
-                  </div>
-                </main>
-              </div>
+              <Alert
+                as="info"
+                title={`Potential PRCs incentive $${prc_calculation_min_price} - $${prc_calculation_max_price}*`}
+                style={{ marginTop: 0 }}
+              >
+                <p>
+                  *Actual incentive amount will vary depending on certificate pricing and
+                  administrative fees
+                </p>
+              </Alert>
             </div>
           )}
         </div>
