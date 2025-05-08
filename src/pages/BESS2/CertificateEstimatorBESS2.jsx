@@ -99,8 +99,8 @@ export default function CertificateEstimatorBESS2(props) {
     const fetchCertificatePrice = async function () {
       try {
         const response = await RegistryApi.getCertificatePrice()
-        setPrcMinPrice(Number(response.data.ESC.min_price))
-        setPrcMaxPrice(Number(response.data.ESC.max_price))
+        setPrcMinPrice(Number(response.data.PRC.min_price))
+        setPrcMaxPrice(Number(response.data.PRC.max_price))
       } catch (e) {
         console.log(e)
       }
