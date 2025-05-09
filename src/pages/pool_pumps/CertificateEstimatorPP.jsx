@@ -436,6 +436,7 @@ export default function CertificateEstimatorPP(props) {
               setCalculationResult2={setCalculationResult2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
               zone={zone}
               formValues={formValues}
               setFormValues={setFormValues}
