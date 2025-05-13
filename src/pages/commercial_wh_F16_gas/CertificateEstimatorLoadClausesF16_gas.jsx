@@ -143,6 +143,7 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
         if (formItem.name === 'F16_gas_PDRS__postcode') {
           formItem.form_value = postcode;
           formItem.read_only = true;
+          formItem.hide = true;
         }
       });
 
@@ -185,6 +186,10 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
               <div class="nsw-global-alert__wrapper">
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
+                  <p>
+                    {' '}
+                    <b>Postcode: </b> {postcode}{' '}
+                  </p>
                   <p>
                     {' '}
                     <b>Brand: </b> {selectedBrand}{' '}
@@ -250,6 +255,10 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
             <div class="nsw-global-alert__wrapper">
               <div class="nsw-global-alert__content">
                 {/* <div class="nsw-global-alert__title"></div> */}
+                <p>
+                  {' '}
+                  <b>Postcode: </b> {postcode}{' '}
+                </p>
                 <p>
                   {' '}
                   <b>Brand: </b> {selectedBrand}{' '}

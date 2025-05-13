@@ -484,6 +484,7 @@ export default function CertificateEstimatorGasHeatPump(props) {
               setCalculationResult2={setCalculationResult2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
               formValues={formValues}
               setFormValues={setFormValues}
               persistFormValues={persistFormValues}

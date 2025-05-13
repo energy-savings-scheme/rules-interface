@@ -50,6 +50,8 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
     setUserType,
     escMinPrice,
     escMaxPrice,
+    postcode,
+    setPostcode,
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -158,6 +160,7 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
               calculationError2={calculationError2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              setPostcode={setPostcode}
               formValues={formValues}
               setFormValues={setFormValues}
               backAction={(e) => {
@@ -186,6 +189,21 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
 
         {stepNumber === 2 && !calculationError && !calculationError2 && (
           <Fragment>
+            <div
+              className="nsw-global-alert nsw-global-alert--light js-global-alert"
+              role="alert"
+              style={{ width: '80%', marginBottom: '7%' }}
+            >
+              <div className="nsw-global-alert__wrapper">
+                <div className="nsw-global-alert__content">
+                  <p>
+                    {' '}
+                    <b>Postcode: </b> {postcode}{' '}
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {
               <Alert as="info" title="ESCs" style={{ width: '80%', marginBottom: '7%' }}>
                 <p>

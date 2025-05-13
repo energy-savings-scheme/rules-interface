@@ -174,10 +174,12 @@ export default function CertificateEstimatorLoadClauses(props) {
         if (formItem.name === 'HVAC2_PDRSAug24_PDRS__postcode') {
           formItem.form_value = postcode;
           formItem.read_only = true;
+          formItem.hide = true;
         }
         if (formItem.name === 'HVAC2_PDRSAug24_BCA_Climate_Zone') {
           formItem.form_value = bca_mapping[selectedClimateZone];
           formItem.read_only = true;
+          formItem.hide = true;
         }
       });
 
@@ -211,6 +213,15 @@ export default function CertificateEstimatorLoadClauses(props) {
               <div class="nsw-global-alert__wrapper">
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
+                  <p>
+                    {' '}
+                    <b>Postcode: </b> {postcode}{' '}
+                  </p>
+                  <p>
+                    {' '}
+                    <b>BCA Climate Zone: </b>{' '}
+                    {selectedClimateZone.charAt(selectedClimateZone.length - 1)}{' '}
+                  </p>
                   <p>
                     {' '}
                     <b>Brand: </b> {selectedBrand}{' '}
@@ -277,6 +288,15 @@ export default function CertificateEstimatorLoadClauses(props) {
               <div class="nsw-global-alert__wrapper">
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
+                  <p>
+                    {' '}
+                    <b>Postcode: </b> {postcode}{' '}
+                  </p>
+                  <p>
+                    {' '}
+                    <b>BCA Climate Zone: </b>{' '}
+                    {selectedClimateZone.charAt(selectedClimateZone.length - 1)}{' '}
+                  </p>
                   <p>
                     {' '}
                     <b>Brand: </b> {selectedBrand}{' '}
