@@ -187,6 +187,8 @@ export default function CertificateEstimatorMotors(props) {
               setCalculationError2={setCalculationError2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
+              setPostcode={setPostcode}
               persistFormValues={persistFormValues}
               setPersistFormValues={setPersistFormValues}
               formValues={formValues}
@@ -226,6 +228,7 @@ export default function CertificateEstimatorMotors(props) {
               setCalculationResult2={setCalculationResult2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
               formValues={formValues}
               setFormValues={setFormValues}
               persistFormValues={persistFormValues}

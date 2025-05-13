@@ -184,6 +184,8 @@ export default function CertificateEstimatorRefrigerators(props) {
               setCalculationError2={setCalculationError2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
+              setPostcode={setPostcode}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
@@ -223,6 +225,7 @@ export default function CertificateEstimatorRefrigerators(props) {
               setCalculationResult2={setCalculationResult2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
               formValues={formValues}
               setFormValues={setFormValues}
               persistFormValues={persistFormValues}
