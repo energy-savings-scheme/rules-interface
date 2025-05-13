@@ -1,5 +1,5 @@
 import Alert from 'nsw-ds-react/alert/alert';
-import { thousandSeperator} from 'lib/helper';
+import { formatNumber} from 'lib/helper';
 
 export default function CertificiatePrice(props) {
   const {
@@ -37,7 +37,7 @@ export default function CertificiatePrice(props) {
             <div className={ prcCertificates > 0 ? `nsw-container nsw-m-bottom-lg` : ''} style={{ paddingLeft: 0, paddingRight: 0 }}>
               <Alert
                 as="info"
-                title={`Potential ESCs incentive $${thousandSeperator(esc_calculation_min_price)} - $${thousandSeperator(esc_calculation_max_price)}*`}
+                title={`Potential ESCs incentive $${formatNumber(esc_calculation_min_price)} - $${formatNumber(esc_calculation_max_price)}*`}
                 style={{ marginTop: 0 }}
               >
                 <p>
@@ -52,7 +52,7 @@ export default function CertificiatePrice(props) {
             <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
               <Alert
                 as="info"
-                title={`Potential PRCs incentive $${thousandSeperator(prc_calculation_min_price)} - $${thousandSeperator(prc_calculation_max_price)}*`}
+                title={`Potential PRCs incentive $${formatNumber(prc_calculation_min_price)} - $${formatNumber(prc_calculation_max_price)}*`}
                 style={{ marginTop: 0 }}
               >
                 <p>
