@@ -1,5 +1,12 @@
-function thousandSeperator(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+/**
+ * Format a number with commas for readability, and two decimal places.
+ *
+ * @param {number} num
+ * @return {string}
+ */
+function formatNumber(num) {
+  return num.toLocaleString('en-AU', {maximumFractionDigits:2});
 }
 
-export { thousandSeperator };
+export { formatNumber };
