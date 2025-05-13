@@ -162,6 +162,7 @@ export default function CertificateEstimatorLoadClausesPP(props) {
         if (formItem.name === 'SYS2_PDRSAug24_PDRS__postcode') {
           formItem.form_value = postcode;
           formItem.read_only = true;
+          formItem.hide = true;
         }
       });
 
@@ -195,6 +196,10 @@ export default function CertificateEstimatorLoadClausesPP(props) {
               <div class="nsw-global-alert__wrapper">
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
+                  <p>
+                    {' '}
+                    <b>Postcode: </b> {postcode}{' '}
+                  </p>
                   <p>
                     {' '}
                     <b>Brand: </b> {selectedBrand}{' '}
@@ -261,6 +266,10 @@ export default function CertificateEstimatorLoadClausesPP(props) {
               <div class="nsw-global-alert__wrapper">
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
+                  <p>
+                    {' '}
+                    <b>Postcode: </b> {postcode}{' '}
+                  </p>
                   <p>
                     {' '}
                     <b>Brand: </b> {selectedBrand}{' '}
