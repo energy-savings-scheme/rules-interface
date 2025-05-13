@@ -54,6 +54,10 @@ export default function CertificateEstimatorHVAC(props) {
   const [selectedClimateZone, setSelectedClimateZone] = useState('');
   const [dropdownOptionsClimateZone, setDropdownOptionsClimateZone] = useState([]);
   const [userType, setUserType] = useState('');
+  const [escMinPrice, setEscMinPrice] = useState(0);
+  const [escMaxPrice, setEscMaxPrice] = useState(0);
+  const [prcMinPrice, setPrcMinPrice] = useState(0);
+  const [prcMaxPrice, setPrcMaxPrice] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -105,6 +109,22 @@ export default function CertificateEstimatorHVAC(props) {
       setPeakDemandReductionSavingsNumber(0);
     }
   }, [peakDemandReductionSavingsNumber]);
+
+  useEffect(() => {
+    const fetchCertificatePrice = async function () {
+      try {
+        const response = await RegistryApi.getCertificatePrice()
+        setEscMinPrice(Number(response.data.ESC.min_price))
+        setEscMaxPrice(Number(response.data.ESC.max_price))
+        setPrcMinPrice(Number(response.data.PRC.min_price))
+        setPrcMaxPrice(Number(response.data.PRC.max_price))
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    fetchCertificatePrice()
+  }, []);
 
   // For brands
   const populateDropDown = (newOption) => {
@@ -551,6 +571,10 @@ export default function CertificateEstimatorHVAC(props) {
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               selectedClimateZone={selectedClimateZone}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
+              prcMinPrice={prcMinPrice}
+              prcMaxPrice={prcMaxPrice}
             />
           )}
 
@@ -590,6 +614,10 @@ export default function CertificateEstimatorHVAC(props) {
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               selectedClimateZone={selectedClimateZone}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
+              prcMinPrice={prcMinPrice}
+              prcMaxPrice={prcMaxPrice}
             />
           )}
 

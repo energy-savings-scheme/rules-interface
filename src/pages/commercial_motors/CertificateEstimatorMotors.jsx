@@ -3,6 +3,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import Button from 'nsw-ds-react/button/button';
 import OpenFiscaAPI from 'services/openfisca_api';
+import RegistryApi from 'services/registry_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import CertificateEstimatorLoadClausesMotors from './CertificateEstimatorLoadClausesMotors';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
@@ -42,6 +43,8 @@ export default function CertificateEstimatorMotors(props) {
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
   const [userType, setUserType] = useState('');
+  const [escMinPrice, setEscMinPrice] = useState(0);
+  const [escMaxPrice, setEscMaxPrice] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -92,6 +95,20 @@ export default function CertificateEstimatorMotors(props) {
         console.log(err);
       });
   }, [variables, entities]);
+
+  useEffect(() => {
+    const fetchCertificatePrice = async function () {
+      try {
+        const response = await RegistryApi.getCertificatePrice()
+        setEscMinPrice(Number(response.data.ESC.min_price))
+        setEscMaxPrice(Number(response.data.ESC.max_price))
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    fetchCertificatePrice()
+  }, []);
 
   return (
     <Fragment>
@@ -204,6 +221,8 @@ export default function CertificateEstimatorMotors(props) {
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
             />
           )}
 
@@ -241,6 +260,8 @@ export default function CertificateEstimatorMotors(props) {
               setShowError={setShowError}
               userType={userType}
               setUserType={setUserType}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
             />
           )}
 

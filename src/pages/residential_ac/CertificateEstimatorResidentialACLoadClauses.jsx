@@ -388,7 +388,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                 prcMinPrice={prcMinPrice}
                 prcMaxPrice={prcMaxPrice}
               />
-              <div className="nsw-col-md-9">
+              <div className="nsw-col-md-9" style={{marginTop: '1.25rem'}}>
                 <Button
                   style={{ float: 'left' }}
                   as="dark-outline-solid"

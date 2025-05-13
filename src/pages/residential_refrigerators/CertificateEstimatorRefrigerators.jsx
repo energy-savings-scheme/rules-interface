@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import Button from 'nsw-ds-react/button/button';
 import OpenFiscaAPI from 'services/openfisca_api';
+import RegistryApi from 'services/registry_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import CertificateEstimatorLoadClausesRefrigerators from './CertificateEstimatorLoadClausesRefrigerators';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
@@ -42,6 +43,8 @@ export default function CertificateEstimatorRefrigerators(props) {
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
   const [userType, setUserType] = useState('');
+  const [escMinPrice, setEscMinPrice] = useState(0);
+  const [escMaxPrice, setEscMaxPrice] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -90,6 +93,20 @@ export default function CertificateEstimatorRefrigerators(props) {
       .catch((err) => {
         console.log(err);
       });
+  }, []);
+
+  useEffect(() => {
+    const fetchCertificatePrice = async function () {
+      try {
+        const response = await RegistryApi.getCertificatePrice()
+        setEscMinPrice(Number(response.data.ESC.min_price))
+        setEscMaxPrice(Number(response.data.ESC.max_price))
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    fetchCertificatePrice()
   }, []);
 
   return (
@@ -207,6 +224,8 @@ export default function CertificateEstimatorRefrigerators(props) {
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               userType={userType}
               setUserType={setUserType}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
             />
           )}
 
@@ -244,6 +263,8 @@ export default function CertificateEstimatorRefrigerators(props) {
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               userType={userType}
               setUserType={setUserType}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
             />
           )}
 

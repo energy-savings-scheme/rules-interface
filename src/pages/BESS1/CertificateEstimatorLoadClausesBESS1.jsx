@@ -11,6 +11,7 @@ import Alert from 'nsw-ds-react/alert/alert';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
 import { updateSegmentCaptureAnalytics } from 'lib/analytics';
+import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 
 export default function CertificateEstimatorLoadClausesBESS1(props) {
   const {
@@ -51,6 +52,8 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
     setPeakDemandReductionSavingsNumber,
     userType,
     setUserType,
+    prcMinPrice,
+    prcMaxPrice
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -210,7 +213,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
               </div>
             </div>
             {
-              <Alert as="info" title="PRCs" style={{ width: '80%' }}>
+              <Alert as="info" title="PRCs" style={{ width: '80%', marginBottom: '7%' }}>
                 <p>
                   Based on the information provided, your PRCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
@@ -260,11 +263,15 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
               style={{
                 paddingLeft: 'inherit',
                 paddingRight: 'inherit',
-                paddingTop: '30px',
                 width: '80%',
               }}
             >
-              <div className="nsw-col-md-9" style={{ padding: 'inherit' }}>
+              <CertificiatePrice
+                prcCertificates={calculationResult}
+                prcMinPrice={prcMinPrice}
+                prcMaxPrice={prcMaxPrice}
+              />
+              <div className="nsw-col-md-9" style={{ marginBottom: '1.25rem' }}>
                 <Button
                   style={{ float: 'left' }}
                   as="dark-outline-solid"
