@@ -170,7 +170,7 @@ export default function ActivityRequirementsCommercialAC(props) {
           </div>
         )}
 
-        {stepNumber === 2 && (
+        {!IS_DRUPAL_PAGES && stepNumber === 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
               <h2 className="nsw-content-block__title">
