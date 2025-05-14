@@ -16,7 +16,6 @@ export default function FormTextInput(props) {
       className={`${formItem.hide ? 'nsw-display-none' : ''}`}
     >
       <TextInput
-        htmlId={formItem.name}
         style={{ maxWidth: '50%', marginBottom: '4%' }}
         as="input"
         number={['Float', 'Integer'].includes(formItem.value_type)}

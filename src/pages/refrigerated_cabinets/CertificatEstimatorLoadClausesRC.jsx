@@ -9,6 +9,7 @@ import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
+import {RF2_F1_2_ESSJun24_PDRS__postcode} from 'types/openfisca_variables';
 
 export default function CertificateEstimatorLoadClausesRC(props) {
   const {
@@ -130,7 +131,7 @@ export default function CertificateEstimatorLoadClausesRC(props) {
         if (formItem.name === 'RF2_F1_2_ESSJun24_total_energy_consumption') {
           formItem.form_value = metadata['total_energy_consumption'];
         }
-        if (formItem.name === 'RF2_F1_2_ESSJun24_PDRS__postcode') {
+        if (formItem.name === RF2_F1_2_ESSJun24_PDRS__postcode) {
           formItem.form_value = postcode;
           formItem.read_only = true;
           formItem.hide = true;
@@ -181,15 +182,12 @@ export default function CertificateEstimatorLoadClausesRC(props) {
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
                   <p>
-                    {' '}
-                    <b>Postcode: </b> {postcode}{' '}
+                    <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
+                    <b>Brand: </b> {selectedBrand}
                   </p>
                   <p>
-                    {' '}
                     <b>Model: </b> {selectedModel}
                   </p>
                 </div>
@@ -250,15 +248,12 @@ export default function CertificateEstimatorLoadClausesRC(props) {
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
                   <p>
-                    {' '}
-                    <b>Postcode: </b> {postcode}{' '}
+                    <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
+                    <b>Brand: </b> {selectedBrand}
                   </p>
                   <p>
-                    {' '}
                     <b>Model: </b> {selectedModel}
                   </p>
                 </div>

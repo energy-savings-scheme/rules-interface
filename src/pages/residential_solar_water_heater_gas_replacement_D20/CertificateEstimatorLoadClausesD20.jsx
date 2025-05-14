@@ -9,6 +9,7 @@ import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
+import {D20_ESSJun24_PDRS__postcode} from 'types/openfisca_variables';
 
 
 export default function CertificateEstimatorLoadClausesD20(props) {
@@ -133,7 +134,7 @@ export default function CertificateEstimatorLoadClausesD20(props) {
           formItem.form_value = metadata[`Bs_annual_supplementary_energy_zone_${zone}`];
         }
 
-        if (formItem.name === 'D20_ESSJun24_PDRS__postcode') {
+        if (formItem.name === D20_ESSJun24_PDRS__postcode) {
           formItem.form_value = postcode;
           formItem.read_only = true;
           formItem.hide = true;
@@ -180,15 +181,12 @@ export default function CertificateEstimatorLoadClausesD20(props) {
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
                   <p>
-                    {' '}
-                    <b>Postcode: </b> {postcode}{' '}
+                    <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
+                    <b>Brand: </b> {selectedBrand}
                   </p>
                   <p>
-                    {' '}
                     <b>Model: </b> {selectedModel}
                   </p>
                 </div>
@@ -249,15 +247,12 @@ export default function CertificateEstimatorLoadClausesD20(props) {
               <div class="nsw-global-alert__content">
                 {/* <div class="nsw-global-alert__title"></div> */}
                 <p>
-                  {' '}
-                  <b>Postcode: </b> {postcode}{' '}
+                  <b>Postcode: </b> {postcode}
                 </p>
                 <p>
-                  {' '}
-                  <b>Brand: </b> {selectedBrand}{' '}
+                  <b>Brand: </b> {selectedBrand}
                 </p>
                 <p>
-                  {' '}
                   <b>Model: </b> {selectedModel}
                 </p>
               </div>
