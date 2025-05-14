@@ -265,26 +265,6 @@ export default function CertificateEstimatorRefrigerators(props) {
               escMaxPrice={escMaxPrice}
             />
           )}
-
-          {stepNumber === 1 && registryData && postcode && postcode.length === 4 && (
-            <div className="nsw-row" style={{ paddingTop: '30px' }}>
-              <div className="nsw-col" style={{ padding: 'inherit', width: '80%' }}>
-                <Button
-                  as="dark"
-                  onClick={(e) => {
-                    setFlow('forward');
-                    setStepNumber(stepNumber + 1);
-                    updateEstimatorFormAnalytics({
-                      sf_postcode: postcode,
-                    });
-                  }}
-                  style={{ float: 'right' }}
-                >
-                  Next
-                </Button>
-              </div>
-            </div>
-          )}
         </Fragment>
       </div>
       {stepNumber === 2 && (
@@ -300,14 +280,10 @@ export default function CertificateEstimatorRefrigerators(props) {
                   marginBottom: '5%',
                 }}
               >
-                <MoreOptionsCard
-                  options={[
-                    {
-                      title: 'Review eligibility for this activity',
-                      link: '/#residential-refrigeration-activity-requirements',
-                    },
-                  ]}
-                />
+                <MoreOptionsCard options={[{
+                  title: 'Review eligibility for this activity',
+                  link: '/#residential-refrigeration-activity-requirements'
+                }]}/>
               </div>
             </div>
           )}
