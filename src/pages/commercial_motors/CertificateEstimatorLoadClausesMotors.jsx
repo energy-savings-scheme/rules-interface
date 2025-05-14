@@ -197,8 +197,7 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
               <div className="nsw-global-alert__wrapper">
                 <div className="nsw-global-alert__content">
                   <p>
-                    {' '}
-                    <b>Postcode: </b> {postcode}{' '}
+                    <b>Postcode: </b> {postcode}
                   </p>
                 </div>
               </div>
