@@ -9,6 +9,7 @@ import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
+import {HVAC1_PDRSAug24_PDRS__postcode, HVAC1_PDRSAug24_BCA_Climate_Zone} from '../../types/openfisca_variables';
 
 export default function CertificateEstimatorResidentialACLoadClauses(props) {
   const {
@@ -177,13 +178,15 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
         ) {
           formItem.form_value = metadata['Rated ACOP'];
         }
-        if (formItem.name === 'HVAC1_PDRSAug24_PDRS__postcode') {
+        if (formItem.name === HVAC1_PDRSAug24_PDRS__postcode) {
           formItem.form_value = postcode;
           formItem.read_only = true;
+          formItem.hide = true;
         }
-        if (formItem.name === 'HVAC1_PDRSAug24_BCA_Climate_Zone') {
+        if (formItem.name === HVAC1_PDRSAug24_BCA_Climate_Zone) {
           formItem.form_value = bca_mapping[selectedClimateZone];
           formItem.read_only = true;
+          formItem.hide = true;
         }
       });
 
@@ -219,11 +222,15 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
                   <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
+                    <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    {' '}
+                    <b>BCA Climate Zone: </b> {selectedClimateZone.charAt(selectedClimateZone.length - 1)}
+                  </p>
+                  <p>
+                    <b>Brand: </b> {selectedBrand}
+                  </p>
+                  <p>
                     <b>Model: </b> {selectedModel}
                   </p>
                 </div>
@@ -284,11 +291,15 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
                   <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
+                    <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    {' '}
+                    <b>BCA Climate Zone: </b> {selectedClimateZone.charAt(selectedClimateZone.length - 1)}
+                  </p>
+                  <p>
+                    <b>Brand: </b> {selectedBrand}
+                  </p>
+                  <p>
                     <b>Model: </b> {selectedModel}
                   </p>
                 </div>
