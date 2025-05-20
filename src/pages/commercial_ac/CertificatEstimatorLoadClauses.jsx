@@ -289,20 +289,15 @@ export default function CertificateEstimatorLoadClauses(props) {
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
                   <p>
-                    {' '}
-                    <b>Postcode: </b> {postcode}{' '}
+                    <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    {' '}
-                    <b>BCA Climate Zone: </b>{' '}
-                    {selectedClimateZone.charAt(selectedClimateZone.length - 1)}{' '}
+                    <b>BCA Climate Zone: </b> {selectedClimateZone.charAt(selectedClimateZone.length - 1)}{' '}
                   </p>
                   <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
+                    <b>Brand: </b> {selectedBrand}
                   </p>
                   <p>
-                    {' '}
                     <b>Model: </b> {selectedModel}
                   </p>
                 </div>
