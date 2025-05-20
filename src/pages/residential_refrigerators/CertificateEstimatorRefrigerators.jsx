@@ -126,7 +126,7 @@ export default function CertificateEstimatorRefrigerators(props) {
         </div>
       )}
 
-      <div className="nsw-container">
+      <div className="nsw-container" style={{ paddingLeft: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -171,7 +171,7 @@ export default function CertificateEstimatorRefrigerators(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%', marginTop: '3rem' }} />
 
         {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 

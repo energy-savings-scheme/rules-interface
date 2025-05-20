@@ -336,7 +336,7 @@ export default function CertificateEstimatorHVAC(props) {
         </div>
       )}
 
-      <div className="nsw-container">
+      <div className="nsw-container" style={{ paddingLeft: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
@@ -397,7 +397,7 @@ export default function CertificateEstimatorHVAC(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%', marginTop: '3rem' }} />
 
         {stepNumber === 3 && loading && !showError && <SpinnerFullscreen />}
 
@@ -644,7 +644,7 @@ export default function CertificateEstimatorHVAC(props) {
             selectedBrand &&
             selectedModel &&
             userType && (
-              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%' }}>
+              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}>
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"
