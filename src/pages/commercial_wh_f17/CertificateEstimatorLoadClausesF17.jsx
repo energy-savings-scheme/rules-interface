@@ -9,6 +9,7 @@ import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
+import {F17_ESS__postcode} from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
 export default function CertificateEstimatorLoadClausesF17(props) {
@@ -135,9 +136,10 @@ export default function CertificateEstimatorLoadClausesF17(props) {
         // if (formItem.name === 'WH1_WH_capacity_factor') {
         //   formItem.form_value = metadata['WHCap'];
         // }
-        if (formItem.name === 'F17_ESS__postcode') {
+        if (formItem.name === F17_ESS__postcode) {
           formItem.form_value = postcode;
           formItem.read_only = true;
+          formItem.hide = true;
         }
       });
 
@@ -181,11 +183,12 @@ export default function CertificateEstimatorLoadClausesF17(props) {
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
                   <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
+                    <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    {' '}
+                    <b>Brand: </b> {selectedBrand}
+                  </p>
+                  <p>
                     <b>Model: </b> {selectedModel}
                   </p>
                 </div>
@@ -246,11 +249,12 @@ export default function CertificateEstimatorLoadClausesF17(props) {
               <div class="nsw-global-alert__content">
                 {/* <div class="nsw-global-alert__title"></div> */}
                 <p>
-                  {' '}
-                  <b>Brand: </b> {selectedBrand}{' '}
+                  <b>Postcode: </b> {postcode}
                 </p>
                 <p>
-                  {' '}
+                  <b>Brand: </b> {selectedBrand}
+                </p>
+                <p>
                   <b>Model: </b> {selectedModel}
                 </p>
               </div>
