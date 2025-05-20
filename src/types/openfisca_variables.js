@@ -5,6 +5,17 @@ export const BESS1_PDRSAug24_PDRS__postcode = 'BESS1_PDRSAug24_PDRS__postcode';
 export const BESS2_PDRSAug24_PDRS__postcode = 'BESS2_PDRSAug24_PDRS__postcode';
 export const C1_PDRSAug24_PDRS__postcode = 'C1_PDRSAug24_PDRS__postcode';
 export const F7_PDRSAug24_PDRS__postcode = 'F7_PDRSAug24_PDRS__postcode';
+export const RF2_F1_2_ESSJun24_PDRS__postcode = 'RF2_F1_2_ESSJun24_PDRS__postcode';
+export const HVAC2_PDRSAug24_PDRS__postcode = 'HVAC2_PDRSAug24_PDRS__postcode';
+export const D17_ESSJun24_PDRS__postcode = 'D17_ESSJun24_PDRS__postcode';
+export const D19_ESSJun24_PDRS__postcode = 'D19_ESSJun24_PDRS__postcode';
+export const F16_electric_PDRSDec24_PDRS__postcode = 'F16_electric_PDRSDec24_PDRS__postcode';
+export const F16_gas_PDRS__postcode = 'F16_gas_PDRS__postcode';
+export const F17_ESS__postcode = 'F17_ESS__postcode';
+export const SYS2_PDRSAug24_PDRS__postcode = 'SYS2_PDRSAug24_PDRS__postcode';
+export const HVAC1_PDRSAug24_PDRS__postcode = 'HVAC1_PDRSAug24_PDRS__postcode';
+export const D18_ESSJun24_PDRS__postcode = 'D18_ESSJun24_PDRS__postcode';
+export const D20_ESSJun24_PDRS__postcode = 'D20_ESSJun24_PDRS__postcode';
 
 // Calculation
 export const BESS1_V5Nov24_PRC_calculation = 'BESS1_V5Nov24_PRC_calculation';

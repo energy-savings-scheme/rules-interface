@@ -595,6 +595,7 @@ export default function CertificateEstimatorHVAC(props) {
               setCalculationResult2={setCalculationResult2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
               zone={zone}
               formValues={formValues}
               setFormValues={setFormValues}

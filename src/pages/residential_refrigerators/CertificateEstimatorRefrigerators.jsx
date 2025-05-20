@@ -201,6 +201,8 @@ export default function CertificateEstimatorRefrigerators(props) {
               setCalculationError2={setCalculationError2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
+              setPostcode={setPostcode}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
@@ -242,6 +244,7 @@ export default function CertificateEstimatorRefrigerators(props) {
               setCalculationResult2={setCalculationResult2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
               formValues={formValues}
               setFormValues={setFormValues}
               persistFormValues={persistFormValues}
@@ -263,26 +266,6 @@ export default function CertificateEstimatorRefrigerators(props) {
               escMinPrice={escMinPrice}
               escMaxPrice={escMaxPrice}
             />
-          )}
-
-          {stepNumber === 1 && registryData && postcode && postcode.length === 4 && (
-            <div className="nsw-row" style={{ paddingTop: '30px' }}>
-              <div className="nsw-col" style={{ padding: 'inherit', width: '80%' }}>
-                <Button
-                  as="dark"
-                  onClick={(e) => {
-                    setFlow('forward');
-                    setStepNumber(stepNumber + 1);
-                    updateEstimatorFormAnalytics({
-                      sf_postcode: postcode
-                    });
-                  }}
-                  style={{ float: 'right' }}
-                >
-                  Next
-                </Button>
-              </div>
-            </div>
           )}
         </Fragment>
       </div>
