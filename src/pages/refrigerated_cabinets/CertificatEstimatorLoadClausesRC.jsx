@@ -122,6 +122,7 @@ export default function CertificateEstimatorLoadClausesRC(props) {
         if (formItem.name === 'RF2_F1_2_ESSJun24_product_class') {
           formItem.form_value = selectedProductClass;
           formItem.read_only = true;
+          formItem.hide = true;
         }
 
         // if (formItem.name === 'RF2_total_display_area') {
@@ -190,6 +191,9 @@ export default function CertificateEstimatorLoadClausesRC(props) {
                   <p>
                     <b>Model: </b> {selectedModel}
                   </p>
+                  <p>
+                    <b>Product Class: </b> {selectedProductClass}
+                  </p>
                 </div>
               </div>
             </div>
@@ -255,6 +259,9 @@ export default function CertificateEstimatorLoadClausesRC(props) {
                   </p>
                   <p>
                     <b>Model: </b> {selectedModel}
+                  </p>
+                  <p>
+                    <b>Product Class: </b> {selectedProductClass}
                   </p>
                 </div>
               </div>
