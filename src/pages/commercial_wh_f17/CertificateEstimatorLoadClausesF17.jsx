@@ -10,6 +10,7 @@ import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 import {F17_ESS__postcode} from 'types/openfisca_variables';
+import { formatNumber } from 'lib/helper';
 
 export default function CertificateEstimatorLoadClausesF17(props) {
   const {
@@ -269,19 +270,16 @@ export default function CertificateEstimatorLoadClausesF17(props) {
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{Math.floor(calculationResult2)}</b>
+                    <b>{formatNumber(Math.floor(calculationResult2))}</b>
                   </span>
                 </p>
                 <p>
                   Your estimated annual energy savings are{' '}
                   <b>
-                    <b>
-                      {Math.floor(calculationResult2) === 0
-                        ? 0
-                        : Math.round(annualEnergySavingsNumber * 100) / 100}
-                    </b>{' '}
-                    kWh{' '}
-                  </b>
+                    {Math.floor(calculationResult2) === 0
+                      ? 0
+                      : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
+                  </b> kWh
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not
