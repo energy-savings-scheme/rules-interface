@@ -129,7 +129,7 @@ export default function ActivityRequirementsD20(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ marginTop: '1rem' }}>
+      <div className="nsw-container">
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (

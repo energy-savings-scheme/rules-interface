@@ -8,6 +8,12 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import { Alert } from 'nsw-ds-react/alert/alert';
 import OpenFiscaApi from 'services/openfisca_api';
+import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
+import {
+  HVAC2_PDRSAug24_PDRS__postcode,
+  HVAC2_PDRSAug24_BCA_Climate_Zone
+} from 'types/openfisca_variables';
+import { formatNumber } from 'lib/helper';
 
 export default function CertificateEstimatorLoadClauses(props) {
   const {
@@ -47,6 +53,10 @@ export default function CertificateEstimatorLoadClauses(props) {
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
     selectedClimateZone,
+    escMinPrice,
+    escMaxPrice,
+    prcMinPrice,
+    prcMaxPrice
   } = props;
 
   const bca_mapping = {
@@ -166,13 +176,15 @@ export default function CertificateEstimatorLoadClauses(props) {
         ) {
           formItem.form_value = metadata['Rated ACOP'];
         }
-        if (formItem.name === 'HVAC2_PDRSAug24_PDRS__postcode') {
+        if (formItem.name === HVAC2_PDRSAug24_PDRS__postcode) {
           formItem.form_value = postcode;
           formItem.read_only = true;
+          formItem.hide = true;
         }
-        if (formItem.name === 'HVAC2_PDRSAug24_BCA_Climate_Zone') {
+        if (formItem.name === HVAC2_PDRSAug24_BCA_Climate_Zone) {
           formItem.form_value = bca_mapping[selectedClimateZone];
           formItem.read_only = true;
+          formItem.hide = true;
         }
       });
 
@@ -207,11 +219,15 @@ export default function CertificateEstimatorLoadClauses(props) {
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
                   <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
+                    <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    {' '}
+                    <b>BCA Climate Zone: </b> {selectedClimateZone.charAt(selectedClimateZone.length - 1)}
+                  </p>
+                  <p>
+                    <b>Brand: </b> {selectedBrand}
+                  </p>
+                  <p>
                     <b>Model: </b> {selectedModel}
                   </p>
                 </div>
@@ -273,53 +289,51 @@ export default function CertificateEstimatorLoadClauses(props) {
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
                   <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
+                    <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    {' '}
+                    <b>BCA Climate Zone: </b> {selectedClimateZone.charAt(selectedClimateZone.length - 1)}{' '}
+                  </p>
+                  <p>
+                    <b>Brand: </b> {selectedBrand}
+                  </p>
+                  <p>
                     <b>Model: </b> {selectedModel}
                   </p>
                 </div>
               </div>
             </div>
             {
-              <Alert as="info" title="ESCs and PRCs" style={{ width: '80%' }}>
+              <Alert as="info" title="ESCs and PRCs" style={{ width: '80%', marginBottom: '7%' }}>
                 <p>
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{Math.floor(calculationResult2)}</b>
+                    <b>{formatNumber(Math.floor(calculationResult2))}</b>
                   </span>
                   {/* </h4> */}
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   and your PRCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{Math.floor(calculationResult)}</b>
+                    <b>{formatNumber(Math.floor(calculationResult))}</b>
                   </span>
                   {/* </h4> */}
                 </p>
                 <p>
                   Your estimated annual energy savings are{' '}
                   <b>
-                    <b>
-                      {Math.floor(calculationResult2) === 0
-                        ? 0
-                        : Math.round(annualEnergySavingsNumber * 100) / 100}
-                    </b>{' '}
-                    kWh{' '}
-                  </b>
+                    {Math.floor(calculationResult2) === 0
+                      ? 0
+                      : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
+                  </b> kWh
                 </p>
                 <p>
                   Your estimated annual peak demand reduction is{' '}
                   <b>
-                    <b>
-                      {Math.floor(calculationResult) === 0
-                        ? 0
-                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
-                    </b>{' '}
-                    kWh{' '}
-                  </b>
+                    {Math.floor(calculationResult) === 0
+                      ? 0
+                      : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
+                  </b> kWh
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not
@@ -345,11 +359,18 @@ export default function CertificateEstimatorLoadClauses(props) {
               style={{
                 paddingLeft: 'inherit',
                 paddingRight: 'inherit',
-                paddingTop: '30px',
                 width: '80%',
               }}
             >
-              <div className="nsw-col-md-9" style={{ padding: 'inherit' }}>
+              <CertificiatePrice
+                prcCertificates={calculationResult}
+                escCertificates={calculationResult2}
+                escMinPrice={escMinPrice}
+                escMaxPrice={escMaxPrice}
+                prcMinPrice={prcMinPrice}
+                prcMaxPrice={prcMaxPrice}
+              />
+              <div className="nsw-col-md-9" style={{ marginTop: '1.25rem' }}>
                 <Button
                   style={{ float: 'left' }}
                   as="dark-outline-solid"

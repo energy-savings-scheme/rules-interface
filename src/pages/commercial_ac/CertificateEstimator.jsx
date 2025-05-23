@@ -54,6 +54,10 @@ export default function CertificateEstimatorHVAC(props) {
   const [selectedClimateZone, setSelectedClimateZone] = useState('');
   const [dropdownOptionsClimateZone, setDropdownOptionsClimateZone] = useState([]);
   const [userType, setUserType] = useState('');
+  const [escMinPrice, setEscMinPrice] = useState(0);
+  const [escMaxPrice, setEscMaxPrice] = useState(0);
+  const [prcMinPrice, setPrcMinPrice] = useState(0);
+  const [prcMaxPrice, setPrcMaxPrice] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -91,19 +95,6 @@ export default function CertificateEstimatorHVAC(props) {
           console.log(err);
         });
     }
-
-    if (hvacBrands.length < 1) {
-      RegistryApi.getCommercialHVACBrands()
-        .then((res) => {
-          setHvacBrands(res.data);
-          setLoading(false);
-          setRegistryData(true);
-        })
-        .catch((err) => {
-          console.log(err);
-          setRegistryData(false);
-        });
-    }
   }, []);
 
   useEffect(() => {
@@ -117,6 +108,22 @@ export default function CertificateEstimatorHVAC(props) {
       setPeakDemandReductionSavingsNumber(0);
     }
   }, [peakDemandReductionSavingsNumber]);
+
+  useEffect(() => {
+    const fetchCertificatePrice = async function () {
+      try {
+        const response = await RegistryApi.getCertificatePrice()
+        setEscMinPrice(Number(response.data.ESC.min_price))
+        setEscMaxPrice(Number(response.data.ESC.max_price))
+        setPrcMinPrice(Number(response.data.PRC.min_price))
+        setPrcMaxPrice(Number(response.data.PRC.max_price))
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    fetchCertificatePrice()
+  }, []);
 
   // For brands
   const populateDropDown = (newOption) => {
@@ -169,6 +176,7 @@ export default function CertificateEstimatorHVAC(props) {
           ) {
             if (persons.data['state'] === 'NSW') {
               setShowPostcodeError(false);
+              setShowNoResponsePostcodeError(false);
               setFlow(null);
               setStepNumber(stepNumber + 1);
             } else {
@@ -327,7 +335,7 @@ export default function CertificateEstimatorHVAC(props) {
         </div>
       )}
 
-      <div className="nsw-container">
+      <div className="nsw-container" style={{ paddingLeft: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
@@ -388,7 +396,7 @@ export default function CertificateEstimatorHVAC(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%', marginTop: '3rem' }} />
 
         {stepNumber === 3 && loading && !showError && <SpinnerFullscreen />}
 
@@ -562,6 +570,10 @@ export default function CertificateEstimatorHVAC(props) {
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               selectedClimateZone={selectedClimateZone}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
+              prcMinPrice={prcMinPrice}
+              prcMaxPrice={prcMaxPrice}
             />
           )}
 
@@ -582,6 +594,7 @@ export default function CertificateEstimatorHVAC(props) {
               setCalculationResult2={setCalculationResult2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
               zone={zone}
               formValues={formValues}
               setFormValues={setFormValues}
@@ -600,6 +613,10 @@ export default function CertificateEstimatorHVAC(props) {
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               selectedClimateZone={selectedClimateZone}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
+              prcMinPrice={prcMinPrice}
+              prcMaxPrice={prcMaxPrice}
             />
           )}
 
@@ -627,7 +644,7 @@ export default function CertificateEstimatorHVAC(props) {
             selectedBrand &&
             selectedModel &&
             userType && (
-              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%' }}>
+              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}>
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"

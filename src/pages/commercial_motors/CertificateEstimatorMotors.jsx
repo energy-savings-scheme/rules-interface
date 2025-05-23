@@ -3,6 +3,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import Button from 'nsw-ds-react/button/button';
 import OpenFiscaAPI from 'services/openfisca_api';
+import RegistryApi from 'services/registry_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import CertificateEstimatorLoadClausesMotors from './CertificateEstimatorLoadClausesMotors';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
@@ -42,6 +43,8 @@ export default function CertificateEstimatorMotors(props) {
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
   const [userType, setUserType] = useState('');
+  const [escMinPrice, setEscMinPrice] = useState(0);
+  const [escMaxPrice, setEscMaxPrice] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -93,6 +96,20 @@ export default function CertificateEstimatorMotors(props) {
       });
   }, [variables, entities]);
 
+  useEffect(() => {
+    const fetchCertificatePrice = async function () {
+      try {
+        const response = await RegistryApi.getCertificatePrice()
+        setEscMinPrice(Number(response.data.ESC.min_price))
+        setEscMaxPrice(Number(response.data.ESC.max_price))
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    fetchCertificatePrice()
+  }, []);
+
   return (
     <Fragment>
       {!IS_DRUPAL_PAGES && (
@@ -110,7 +127,7 @@ export default function CertificateEstimatorMotors(props) {
         </div>
       )}
 
-      <div className="nsw-container">
+      <div className="nsw-container" style={{ paddingLeft: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -151,7 +168,7 @@ export default function CertificateEstimatorMotors(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%', marginTop: '3rem' }} />
 
         {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
@@ -187,6 +204,8 @@ export default function CertificateEstimatorMotors(props) {
               setCalculationError2={setCalculationError2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
+              setPostcode={setPostcode}
               persistFormValues={persistFormValues}
               setPersistFormValues={setPersistFormValues}
               formValues={formValues}
@@ -202,6 +221,8 @@ export default function CertificateEstimatorMotors(props) {
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
             />
           )}
 
@@ -226,6 +247,7 @@ export default function CertificateEstimatorMotors(props) {
               setCalculationResult2={setCalculationResult2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
               formValues={formValues}
               setFormValues={setFormValues}
               persistFormValues={persistFormValues}
@@ -238,24 +260,9 @@ export default function CertificateEstimatorMotors(props) {
               setShowError={setShowError}
               userType={userType}
               setUserType={setUserType}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
             />
-          )}
-
-          {stepNumber === 1 && registryData && postcode && postcode.length === 4 && (
-            <div className="nsw-row" style={{ paddingTop: '30px' }}>
-              <div className="nsw-col" style={{ padding: 'inherit', width: '80%' }}>
-                <Button
-                  as="dark"
-                  onClick={(e) => {
-                    setFlow('forward');
-                    setStepNumber(stepNumber + 1);
-                  }}
-                  style={{ float: 'right' }}
-                >
-                  Next
-                </Button>
-              </div>
-            </div>
           )}
         </Fragment>
       </div>
