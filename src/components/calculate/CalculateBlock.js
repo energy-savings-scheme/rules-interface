@@ -57,6 +57,7 @@ export default function CalculateBlock(props) {
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
+    setPostcode,
   } = props;
 
   useEffect(() => {
@@ -701,6 +702,7 @@ export default function CalculateBlock(props) {
       setCalculationError2={setCalculationError2}
       stepNumber={stepNumber}
       setStepNumber={setStepNumber}
+      setPostcode={setPostcode}
       dependencies={dependencies}
       workflow={workflow}
       selectedBrand={selectedBrand}

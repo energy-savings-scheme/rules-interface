@@ -8,6 +8,9 @@ import CalculateBlock from 'components/calculate/CalculateBlock';
 import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
+import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
+import {D17_ESSJun24_PDRS__postcode} from 'types/openfisca_variables';
+import { formatNumber } from 'lib/helper';
 
 export default function CertificateEstimatorLoadClausesD17(props) {
   const {
@@ -46,6 +49,8 @@ export default function CertificateEstimatorLoadClausesD17(props) {
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
+    escMinPrice,
+    escMaxPrice,
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -132,9 +137,10 @@ export default function CertificateEstimatorLoadClausesD17(props) {
           formItem.form_value = metadata[`Bs_annual_supplementary_energy_zone_${zone}`];
         }
 
-        if (formItem.name === 'D17_ESSJun24_PDRS__postcode') {
+        if (formItem.name === D17_ESSJun24_PDRS__postcode) {
           formItem.form_value = postcode;
           formItem.read_only = true;
+          formItem.hide = true;
         }
       });
 
@@ -178,11 +184,12 @@ export default function CertificateEstimatorLoadClausesD17(props) {
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
                   <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
+                    <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    {' '}
+                    <b>Brand: </b> {selectedBrand}
+                  </p>
+                  <p>
                     <b>Model: </b> {selectedModel}
                   </p>
                 </div>
@@ -243,11 +250,12 @@ export default function CertificateEstimatorLoadClausesD17(props) {
               <div class="nsw-global-alert__content">
                 {/* <div class="nsw-global-alert__title"></div> */}
                 <p>
-                  {' '}
-                  <b>Brand: </b> {selectedBrand}{' '}
+                  <b>Postcode: </b> {postcode}
                 </p>
                 <p>
-                  {' '}
+                  <b>Brand: </b> {selectedBrand}
+                </p>
+                <p>
                   <b>Model: </b> {selectedModel}
                 </p>
               </div>
@@ -258,25 +266,21 @@ export default function CertificateEstimatorLoadClausesD17(props) {
         {stepNumber === 3 && !calculationError && !calculationError2 && (
           <Fragment>
             {
-              <Alert as="info" title="ESCs" style={{ width: '80%' }}>
+              <Alert as="info" title="ESCs" style={{ width: '80%', marginBottom: '7%' }}>
                 <p>
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{Math.floor(calculationResult2)}</b>
+                    <b>{formatNumber(Math.floor(calculationResult2))}</b>
                   </span>
                 </p>
                 <p>
                   Your estimated annual energy savings are{' '}
                   <b>
-                    <b>
-                      {' '}
-                      {Math.floor(calculationResult2) === 0
-                        ? 0
-                        : Math.round(annualEnergySavingsNumber * 100) / 100}
-                    </b>{' '}
-                    kWh{' '}
-                  </b>
+                    {Math.floor(calculationResult2) === 0
+                      ? 0
+                      : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
+                  </b> kWh
                 </p>
                 <p>
                   As this activity is only eligible for the Energy Savings Scheme, it generates
@@ -308,11 +312,15 @@ export default function CertificateEstimatorLoadClausesD17(props) {
               style={{
                 paddingLeft: 'inherit',
                 paddingRight: 'inherit',
-                paddingTop: '30px',
                 width: '80%',
               }}
             >
-              <div className="nsw-col-md-9" style={{ padding: 'inherit' }}>
+              <CertificiatePrice
+                escCertificates={calculationResult2}
+                escMinPrice={escMinPrice}
+                escMaxPrice={escMaxPrice}
+              />
+              <div className="nsw-col-md-9" style={{ marginTop: '1.25rem' }}>
                 <Button
                   style={{ float: 'left' }}
                   as="dark-outline-solid"

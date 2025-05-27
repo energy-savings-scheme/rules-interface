@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import OpenFiscaAPI from 'services/openfisca_api';
+import RegistryApi from 'services/registry_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import CertificateEstimatorLoadClausesBESS2 from './CertificateEstimatorLoadClausesBESS2';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
@@ -42,6 +43,8 @@ export default function CertificateEstimatorBESS2(props) {
   const [selectedModel, setSelectedModel] = useState(null);
   const [postcode, setPostcode] = useState(null);
   const [userType, setUserType] = useState('');
+  const [prcMinPrice, setPrcMinPrice] = useState(0);
+  const [prcMaxPrice, setPrcMaxPrice] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -92,6 +95,20 @@ export default function CertificateEstimatorBESS2(props) {
       });
   }, [variables, entities]);
 
+  useEffect(() => {
+    const fetchCertificatePrice = async function () {
+      try {
+        const response = await RegistryApi.getCertificatePrice()
+        setPrcMinPrice(Number(response.data.PRC.min_price))
+        setPrcMaxPrice(Number(response.data.PRC.max_price))
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    fetchCertificatePrice()
+  }, []);
+
   return (
     <Fragment>
       {!IS_DRUPAL_PAGES && (
@@ -109,7 +126,7 @@ export default function CertificateEstimatorBESS2(props) {
         </div>
       )}
 
-      <div className="nsw-container">
+      <div className="nsw-container" style={{ paddingLeft: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -147,7 +164,7 @@ export default function CertificateEstimatorBESS2(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%', marginTop: '3rem' }} />
 
         {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
@@ -190,6 +207,7 @@ export default function CertificateEstimatorBESS2(props) {
               selectedBrand={selectedBrand}
               selectedModel={selectedModel}
               postcode={postcode}
+              setPostcode={setPostcode}
               flow={flow}
               setFlow={setFlow}
               loading={loading}
@@ -201,6 +219,8 @@ export default function CertificateEstimatorBESS2(props) {
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
+              prcMinPrice={prcMinPrice}
+              prcMaxPrice={prcMaxPrice}
             />
           )}
 
@@ -225,6 +245,7 @@ export default function CertificateEstimatorBESS2(props) {
               setCalculationResult2={setCalculationResult2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
               formValues={formValues}
               setFormValues={setFormValues}
               persistFormValues={persistFormValues}
@@ -237,6 +258,8 @@ export default function CertificateEstimatorBESS2(props) {
               setShowError={setShowError}
               userType={userType}
               setUserType={setUserType}
+              prcMinPrice={prcMinPrice}
+              prcMaxPrice={prcMaxPrice}
             />
           )}
         </Fragment>

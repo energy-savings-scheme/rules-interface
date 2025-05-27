@@ -132,7 +132,7 @@ export default function ActivityRequirementsWH1(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ marginTop: '1rem' }}>
+      <div className="nsw-container" style={{ paddingLeft: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (

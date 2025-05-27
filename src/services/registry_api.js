@@ -212,6 +212,13 @@ function getPostcodeValidation(postcode) {
   });
 }
 
+function getCertificatePrice() {
+  return RegistryApiBase({
+    url: '/certificate-price',
+    method: 'GET',
+  })
+}
+
 const RegistryApi = {
   getCommercialHVACBrands,
   getCommercialHVACLastModified,
@@ -242,6 +249,7 @@ const RegistryApi = {
   getResidentialSolarBatteryBrands,
   getResidentialSolarBatteryModels,
   getResidentialSolarBatteryMetadata,
+  getCertificatePrice,
 };
 
 export default RegistryApi;

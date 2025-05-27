@@ -137,7 +137,7 @@ export default function BaseEligibility(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ marginTop: '1rem' }}>
+      <div className="nsw-container" style={{ paddingLeft: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -175,7 +175,7 @@ export default function BaseEligibility(props) {
           </div>
         )}
 
-        {stepNumber === 2 && (
+        {!IS_DRUPAL_PAGES && stepNumber === 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <h2 className="nsw-content-block__title">Core eligibility requirements</h2>

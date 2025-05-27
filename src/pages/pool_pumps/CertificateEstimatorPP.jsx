@@ -56,6 +56,10 @@ export default function CertificateEstimatorPP(props) {
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
   const [userType, setUserType] = useState('');
+  const [escMinPrice, setEscMinPrice] = useState(0);
+  const [escMaxPrice, setEscMaxPrice] = useState(0);
+  const [prcMinPrice, setPrcMinPrice] = useState(0);
+  const [prcMaxPrice, setPrcMaxPrice] = useState(0);
 
   useEffect(() => {
     if (annualEnergySavingsNumber < 0) {
@@ -85,19 +89,22 @@ export default function CertificateEstimatorPP(props) {
           console.log(err);
         });
     }
+  }, []);
 
-    if (PoolPumpBrands.length < 1) {
-      RegistryApi.getPoolPumpBrands()
-        .then((res) => {
-          setPoolPumpBrands(res.data);
-          setLoading(false);
-          setRegistryData(true);
-        })
-        .catch((err) => {
-          console.log(err);
-          setRegistryData(false);
-        });
+  useEffect(() => {
+    const fetchCertificatePrice = async function () {
+      try {
+        const response = await RegistryApi.getCertificatePrice()
+        setEscMinPrice(Number(response.data.ESC.min_price))
+        setEscMaxPrice(Number(response.data.ESC.max_price))
+        setPrcMinPrice(Number(response.data.PRC.min_price))
+        setPrcMaxPrice(Number(response.data.PRC.max_price))
+      } catch (e) {
+        console.log(e)
+      }
     }
+
+    fetchCertificatePrice()
   }, []);
 
   // For brands
@@ -147,6 +154,7 @@ export default function CertificateEstimatorPP(props) {
           ) {
             if (persons.data['state'] === 'NSW') {
               setShowPostcodeError(false);
+              setShowNoResponsePostcodeError(false);
               setFlow(null);
               setStepNumber(stepNumber + 1);
             } else {
@@ -225,7 +233,7 @@ export default function CertificateEstimatorPP(props) {
         </div>
       )}
 
-      <div className="nsw-container">
+      <div className="nsw-container" style={{ paddingLeft: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
@@ -282,7 +290,7 @@ export default function CertificateEstimatorPP(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%', marginTop: '3rem' }} />
 
         {stepNumber === 3 && loading && !showError && <SpinnerFullscreen />}
 
@@ -430,6 +438,10 @@ export default function CertificateEstimatorPP(props) {
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
+              prcMinPrice={prcMinPrice}
+              prcMaxPrice={prcMaxPrice}
             />
           )}
 
@@ -448,6 +460,7 @@ export default function CertificateEstimatorPP(props) {
               setCalculationResult2={setCalculationResult2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
               zone={zone}
               formValues={formValues}
               setFormValues={setFormValues}
@@ -467,6 +480,10 @@ export default function CertificateEstimatorPP(props) {
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
+              prcMinPrice={prcMinPrice}
+              prcMaxPrice={prcMaxPrice}
             />
           )}
 
@@ -494,7 +511,7 @@ export default function CertificateEstimatorPP(props) {
             selectedBrand &&
             selectedModel &&
             userType && (
-              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%' }}>
+              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}>
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"

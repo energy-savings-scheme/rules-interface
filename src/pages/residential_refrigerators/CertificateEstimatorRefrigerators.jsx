@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
 import Button from 'nsw-ds-react/button/button';
 import OpenFiscaAPI from 'services/openfisca_api';
+import RegistryApi from 'services/registry_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import CertificateEstimatorLoadClausesRefrigerators from './CertificateEstimatorLoadClausesRefrigerators';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
@@ -40,6 +41,8 @@ export default function CertificateEstimatorRefrigerators(props) {
   const [annualEnergySavingsNumber, setAnnualEnergySavingsNumber] = useState(0);
   const [peakDemandReductionSavingsNumber, setPeakDemandReductionSavingsNumber] = useState(0);
   const [userType, setUserType] = useState('');
+  const [escMinPrice, setEscMinPrice] = useState(0);
+  const [escMaxPrice, setEscMaxPrice] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -90,6 +93,20 @@ export default function CertificateEstimatorRefrigerators(props) {
       });
   }, []);
 
+  useEffect(() => {
+    const fetchCertificatePrice = async function () {
+      try {
+        const response = await RegistryApi.getCertificatePrice()
+        setEscMinPrice(Number(response.data.ESC.min_price))
+        setEscMaxPrice(Number(response.data.ESC.max_price))
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    fetchCertificatePrice()
+  }, []);
+
   return (
     <Fragment>
       {!IS_DRUPAL_PAGES && (
@@ -107,7 +124,7 @@ export default function CertificateEstimatorRefrigerators(props) {
         </div>
       )}
 
-      <div className="nsw-container">
+      <div className="nsw-container" style={{ paddingLeft: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -152,7 +169,7 @@ export default function CertificateEstimatorRefrigerators(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%', marginTop: '3rem' }} />
 
         {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
@@ -182,6 +199,8 @@ export default function CertificateEstimatorRefrigerators(props) {
               setCalculationError2={setCalculationError2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
+              setPostcode={setPostcode}
               backAction={(e) => {
                 setStepNumber(stepNumber - 1);
               }}
@@ -203,6 +222,8 @@ export default function CertificateEstimatorRefrigerators(props) {
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               userType={userType}
               setUserType={setUserType}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
             />
           )}
 
@@ -221,6 +242,7 @@ export default function CertificateEstimatorRefrigerators(props) {
               setCalculationResult2={setCalculationResult2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
               formValues={formValues}
               setFormValues={setFormValues}
               persistFormValues={persistFormValues}
@@ -239,27 +261,9 @@ export default function CertificateEstimatorRefrigerators(props) {
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
               userType={userType}
               setUserType={setUserType}
+              escMinPrice={escMinPrice}
+              escMaxPrice={escMaxPrice}
             />
-          )}
-
-          {stepNumber === 1 && registryData && postcode && postcode.length === 4 && (
-            <div className="nsw-row" style={{ paddingTop: '30px' }}>
-              <div className="nsw-col" style={{ padding: 'inherit', width: '80%' }}>
-                <Button
-                  as="dark"
-                  onClick={(e) => {
-                    setFlow('forward');
-                    setStepNumber(stepNumber + 1);
-                    updateEstimatorFormAnalytics({
-                      sf_postcode: postcode,
-                    });
-                  }}
-                  style={{ float: 'right' }}
-                >
-                  Next
-                </Button>
-              </div>
-            </div>
           )}
         </Fragment>
       </div>
@@ -276,14 +280,10 @@ export default function CertificateEstimatorRefrigerators(props) {
                   marginBottom: '5%',
                 }}
               >
-                <MoreOptionsCard
-                  options={[
-                    {
-                      title: 'Review eligibility for this activity',
-                      link: '/#residential-refrigeration-activity-requirements',
-                    },
-                  ]}
-                />
+                <MoreOptionsCard options={[{
+                  title: 'Review eligibility for this activity',
+                  link: '/#residential-refrigeration-activity-requirements'
+                }]}/>
               </div>
             </div>
           )}
