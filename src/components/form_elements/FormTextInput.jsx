@@ -13,7 +13,7 @@ export default function FormTextInput(props) {
       label={formItem.metadata.label} // helper text (secondary label)
       error="Invalid value!" // error text if invalid
       status={formItem.invalid && 'invalid'} // if `true` renders invalid formatting
-      className={`${formItem.hide ? 'nsw-display-none' : ''}`}
+      style={formItem.hide ? { display: 'none' } : {}}
     >
       <TextInput
         style={{ maxWidth: '50%', marginBottom: '4%' }}
