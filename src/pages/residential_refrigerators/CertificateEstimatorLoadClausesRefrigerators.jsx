@@ -13,6 +13,7 @@ import { FormGroup, Select } from '../../nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
 import { updateSegmentCaptureAnalytics } from 'lib/analytics';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
+import { formatNumber } from 'lib/helper';
 
 export default function CertificateEstimatorLoadClausesRefrigerators(props) {
   const {
@@ -22,6 +23,8 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
     entities,
     setStepNumber,
     stepNumber,
+    postcode,
+    setPostcode,
     metadata,
     calculationError,
     calculationError2,
@@ -151,6 +154,7 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
               calculationError2={calculationError2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              setPostcode={setPostcode}
               formValues={formValues}
               setFormValues={setFormValues}
               backAction={(e) => {
@@ -179,24 +183,34 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
 
         {stepNumber === 2 && !calculationError && !calculationError2 && (
           <Fragment>
+            <div
+              className="nsw-global-alert nsw-global-alert--light js-global-alert"
+              role="alert"
+              style={{ width: '80%', marginBottom: '7%' }}
+            >
+              <div className="nsw-global-alert__wrapper">
+                <div className="nsw-global-alert__content">
+                  <p>
+                    <b>Postcode: </b> {postcode}
+                  </p>
+                </div>
+              </div>
+            </div>
             {
               <Alert as="info" title="ESCs" style={{ width: '80%', marginBottom: '7%' }}>
                 <p>
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{Math.floor(calculationResult2)}</b>
+                    <b>{formatNumber(Math.floor(calculationResult2))}</b>
                   </span>
                 </p>
                 <p>
                   Your estimated annual energy savings are{' '}
                   <b>
-                    <b>
-                      {Math.floor(calculationResult2) === 0
-                        ? 0
-                        : Math.round(annualEnergySavingsNumber * 100) / 100}
-                    </b>{' '}
-                    kWh{' '}
-                  </b>
+                    {Math.floor(calculationResult2) === 0
+                      ? 0
+                      : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
+                  </b> kWh
                 </p>
                 <p>
                   As this activity is only eligible for the Energy Savings Scheme, it generates

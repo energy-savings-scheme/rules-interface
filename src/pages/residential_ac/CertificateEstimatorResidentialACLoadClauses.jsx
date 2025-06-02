@@ -9,6 +9,8 @@ import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
+import {HVAC1_PDRSAug24_PDRS__postcode, HVAC1_PDRSAug24_BCA_Climate_Zone} from '../../types/openfisca_variables';
+import { formatNumber } from 'lib/helper';
 
 export default function CertificateEstimatorResidentialACLoadClauses(props) {
   const {
@@ -177,13 +179,15 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
         ) {
           formItem.form_value = metadata['Rated ACOP'];
         }
-        if (formItem.name === 'HVAC1_PDRSAug24_PDRS__postcode') {
+        if (formItem.name === HVAC1_PDRSAug24_PDRS__postcode) {
           formItem.form_value = postcode;
           formItem.read_only = true;
+          formItem.hide = true;
         }
-        if (formItem.name === 'HVAC1_PDRSAug24_BCA_Climate_Zone') {
+        if (formItem.name === HVAC1_PDRSAug24_BCA_Climate_Zone) {
           formItem.form_value = bca_mapping[selectedClimateZone];
           formItem.read_only = true;
+          formItem.hide = true;
         }
       });
 
@@ -219,11 +223,15 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
                   <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
+                    <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    {' '}
+                    <b>BCA Climate Zone: </b> {selectedClimateZone.charAt(selectedClimateZone.length - 1)}
+                  </p>
+                  <p>
+                    <b>Brand: </b> {selectedBrand}
+                  </p>
+                  <p>
                     <b>Model: </b> {selectedModel}
                   </p>
                 </div>
@@ -284,11 +292,15 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                 <div class="nsw-global-alert__content">
                   {/* <div class="nsw-global-alert__title"></div> */}
                   <p>
-                    {' '}
-                    <b>Brand: </b> {selectedBrand}{' '}
+                    <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    {' '}
+                    <b>BCA Climate Zone: </b> {selectedClimateZone.charAt(selectedClimateZone.length - 1)}
+                  </p>
+                  <p>
+                    <b>Brand: </b> {selectedBrand}
+                  </p>
+                  <p>
                     <b>Model: </b> {selectedModel}
                   </p>
                 </div>
@@ -300,37 +312,31 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{Math.floor(calculationResult2)}</b>
+                    <b>{formatNumber(Math.floor(calculationResult2))}</b>
                   </span>
                   {/* </h4> */}
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   and your PRCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{Math.floor(calculationResult)}</b>
+                    <b>{formatNumber(Math.floor(calculationResult))}</b>
                   </span>
                   {/* </h4> */}
                 </p>
                 <p>
                   Your estimated annual energy savings are{' '}
                   <b>
-                    <b>
-                      {Math.floor(calculationResult2) === 0
-                        ? 0
-                        : Math.round(annualEnergySavingsNumber * 100) / 100}
-                    </b>{' '}
-                    kWh{' '}
-                  </b>
+                    {Math.floor(calculationResult2) === 0
+                      ? 0
+                      : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
+                  </b> kWh
                 </p>
                 <p>
                   Your estimated annual peak demand reduction is{' '}
                   <b>
-                    <b>
-                      {Math.floor(calculationResult) === 0
-                        ? 0
-                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
-                    </b>{' '}
-                    kWh{' '}
-                  </b>
+                    {Math.floor(calculationResult) === 0
+                      ? 0
+                      : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
+                  </b> kWh
                 </p>
 
                 <p>

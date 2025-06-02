@@ -70,6 +70,7 @@ export default function CalculateForm(props) {
     showError,
     setShowError,
     postcode,
+    setPostcode,
     annualEnergySavings,
     peakDemandReductionSavings,
     annualEnergySavingsNumber,
@@ -365,6 +366,7 @@ export default function CalculateForm(props) {
                     setShowPostcodeError(false);
                     setFlow(null);
                     setStepNumber(stepNumber + 1);
+                    setPostcode(variable.form_value);
                     updatePostCodeAnalytics(variable.form_value);
                     submitEstimatorFormAnalytics();
                   } else {

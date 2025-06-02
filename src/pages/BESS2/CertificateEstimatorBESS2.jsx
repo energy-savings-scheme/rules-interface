@@ -126,7 +126,7 @@ export default function CertificateEstimatorBESS2(props) {
         </div>
       )}
 
-      <div className="nsw-container">
+      <div className="nsw-container" style={{ paddingLeft: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -164,7 +164,7 @@ export default function CertificateEstimatorBESS2(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%', marginTop: '3rem' }} />
 
         {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
@@ -207,6 +207,7 @@ export default function CertificateEstimatorBESS2(props) {
               selectedBrand={selectedBrand}
               selectedModel={selectedModel}
               postcode={postcode}
+              setPostcode={setPostcode}
               flow={flow}
               setFlow={setFlow}
               loading={loading}
@@ -244,6 +245,7 @@ export default function CertificateEstimatorBESS2(props) {
               setCalculationResult2={setCalculationResult2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              postcode={postcode}
               formValues={formValues}
               setFormValues={setFormValues}
               persistFormValues={persistFormValues}

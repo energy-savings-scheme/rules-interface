@@ -12,6 +12,7 @@ import { FormGroup, Select } from 'nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
 import { updateSegmentCaptureAnalytics } from 'lib/analytics';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
+import { formatNumber } from 'lib/helper';
 
 export default function CertificateEstimatorLoadClausesBESS1(props) {
   const {
@@ -33,6 +34,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
     selectedBrand,
     selectedModel,
     postcode,
+    setPostcode,
     flow,
     setFlow,
     persistFormValues,
@@ -168,6 +170,7 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
               calculationError2={calculationError2}
               stepNumber={stepNumber}
               setStepNumber={setStepNumber}
+              setPostcode={setPostcode}
               formValues={formValues}
               setFormValues={setFormValues}
               backAction={(e) => {
@@ -196,25 +199,34 @@ export default function CertificateEstimatorLoadClausesBESS1(props) {
 
         {stepNumber === 2 && !calculationError && !calculationError2 && (
           <Fragment>
+            <div
+              className="nsw-global-alert nsw-global-alert--light js-global-alert"
+              role="alert"
+              style={{ width: '80%', marginBottom: '7%' }}
+            >
+              <div className="nsw-global-alert__wrapper">
+                <div className="nsw-global-alert__content">
+                  <p>
+                    <b>Postcode: </b> {postcode}
+                  </p>
+                </div>
+              </div>
+            </div>
             {
               <Alert as="info" title="PRCs" style={{ width: '80%', marginBottom: '7%' }}>
                 <p>
                   Based on the information provided, your PRCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{Math.floor(calculationResult)}</b>
+                    <b>{formatNumber(Math.floor(calculationResult))}</b>
                   </span>
                 </p>
                 <p>
                   Your estimated annual contribution to reducing peak summer energy demand is{' '}
                   <b>
-                    <b>
-                      {' '}
-                      {Math.floor(calculationResult) === 0
-                        ? 0
-                        : Math.round(peakDemandReductionSavingsNumber * 100) / 100}
-                    </b>{' '}
-                    kWh{' '}
-                  </b>
+                    {Math.floor(calculationResult) === 0
+                      ? 0
+                      : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
+                  </b> kWh
                 </p>
                 <p>
                   As this activity is only eligible for the Peak Demand Reduction Scheme, it
