@@ -285,7 +285,7 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> kWh
+                  </b> MWh
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not
