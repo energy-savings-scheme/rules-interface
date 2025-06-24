@@ -29,7 +29,7 @@ jobs:
 
       - name: Install tools
         run: |
-          curl -sL https://aka.ms/downloadazcopy-v10-linux | tar -xz
+          curl -L https://aka.ms/downloadazcopy-v10-linux | tar -xz
           sudo cp ./azcopy_linux_amd64*/azcopy /usr/local/bin/
 
       - name: Build website
