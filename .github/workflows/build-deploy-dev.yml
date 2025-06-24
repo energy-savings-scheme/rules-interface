@@ -27,6 +27,11 @@ jobs:
       - name: Install Yarn
         run: npm install -g yarn
 
+      - name: Install tools
+        run: |
+          curl -sL https://aka.ms/downloadazcopy-v10-linux | tar -xz
+          sudo cp ./azcopy_linux_amd64*/azcopy /usr/local/bin/
+
       - name: Build website
         run: |
           # Install all npm packages
@@ -56,7 +61,19 @@ jobs:
           # Copy poc acp list folder
           cp -R ./poc_acp/* ./build/dist/latest/
 
-      - name: Setup AzCopy
-        uses: azure/setup-azcopy@v2
-        with:
-          version: '10.25.1'
+
+      - name: Deploy to Azure
+        run: |
+          # Use azcopy to sync files, setting the Cache-Control header
+          # The --recursive flag copies subdirectories and their files
+          # The --overwrite=true ensures new files replace old ones
+          # The --sas "..." is your SAS URL for authentication
+          # The --cache-control "max-age=0, must-revalidate" is the key part
+          # azcopy copy "build/dist/latest/*" "${{ secrets.DEPLOY_SAS_URL_TESTING }}/dist/latest/" --recursive --overwrite=true --cache-control "max-age=0, must-revalidate"
+
+          # echo "Deployment to Azure Storage 'latest' directory completed with Cache-Control: max-age=0, must-revalidate"
+
+          # Optional: Deploy the versioned directory as well (if you want to keep historical versions with the same cache control)
+          azcopy copy "build/dist/${{ env.REACT_APP_BUILD_VERSION }}" "${{ secrets.DEPLOY_SAS_URL_TESTING }}/dist/${{ env.REACT_APP_BUILD_VERSION }}" --recursive --overwrite=true --cache-control "max-age=0, must-revalidate"
+
+          # echo "Deployment to Azure Storage versioned directory completed with Cache-Control: max-age=0, must-revalidate"
