@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - nonprod
+      - feature/DG22-2386-hookup-RF2-conditional-questions
 
 env:
   REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_DEV }}'
