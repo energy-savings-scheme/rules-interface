@@ -60,27 +60,3 @@ jobs:
         uses: azure/setup-azcopy@v2
         with:
           version: '10.25.1'
-
-      - name: Deploy to Azure
-        run: |
-          # Use azcopy to sync files, setting the Cache-Control header
-          # The --recursive flag copies subdirectories and their files
-          # The --overwrite=true ensures new files replace old ones
-          # The --sas "..." is your SAS URL for authentication
-          # The --cache-control "max-age=0, must-revalidate" is the key part
-          # azcopy copy "build/dist/latest/*" "${{ secrets.DEPLOY_SAS_URL_TESTING }}/dist/latest/" --recursive --overwrite=true --cache-control "max-age=0, must-revalidate"
-  
-          # echo "Deployment to Azure Storage 'latest' directory completed with Cache-Control: max-age=0, must-revalidate"
-  
-          # Optional: Deploy the versioned directory as well (if you want to keep historical versions with the same cache control)
-          azcopy copy "build/dist/${{ env.REACT_APP_BUILD_VERSION }}" "${{ secrets.DEPLOY_SAS_URL_TESTING }}/dist/${{ env.REACT_APP_BUILD_VERSION }}" --recursive --overwrite=true --cache-control "max-age=0, must-revalidate"
-  
-          # echo "Deployment to Azure Storage versioned directory completed with Cache-Control: max-age=0, must-revalidate"
-
-
-#      - name: Deploy to Azure
-#        uses: TravisSpomer/deploy-to-azure-storage@v1.4.0
-#        with:
-#          source-path: build
-#          cleanup: false
-#          sas-url: ${{ secrets.DEPLOY_SAS_URL_TESTING }}
