@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - nonprod
+      - feature/DG22-2386-hookup-RF2-conditional-questions
 
 env:
   REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_DEV }}'
@@ -26,16 +26,6 @@ jobs:
 
       - name: Install Yarn
         run: npm install -g yarn
-
-#      - name: Install tools
-#        run: |
-#          if ! command -v azcopy &> /dev/null
-#          then
-#            echo "azcopy not found, installing..."
-#            curl -L https://aka.ms/downloadazcopy-v10-linux | \
-#            sudo tar --strip-components=1 -C /usr/local/bin/ --no-same-owner --exclude=*.txt -xzvf -
-#            sudo ln -s /usr/local/bin/azcopy /usr/local/bin/azcopy10
-#          fi
 
       - name: Build website
         run: |
