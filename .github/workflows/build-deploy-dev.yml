@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - feature/DG22-2386-hookup-RF2-conditional-questions
+      - nonprod
 
 env:
   REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_DEV }}'
@@ -29,7 +29,7 @@ jobs:
 
       - name: Install tools
         run: |
-          curl -L -o azcopy.tar.gz https://aka.ms/downloadazcopy-v10-linux
+          wget -O azcopy.tar.gz https://aka.ms/downloadazcopy-v10-linux
           tar -xf azcopy.tar.gz
           sudo cp ./azcopy_linux_amd64_*/azcopy /usr/local/bin/
           azcopy --version
@@ -63,19 +63,10 @@ jobs:
           # Copy poc acp list folder
           cp -R ./poc_acp/* ./build/dist/latest/
 
-
       - name: Deploy to Azure
-        run: |
-          # Use azcopy to sync files, setting the Cache-Control header
-          # The --recursive flag copies subdirectories and their files
-          # The --overwrite=true ensures new files replace old ones
-          # The --sas "..." is your SAS URL for authentication
-          # The --cache-control "max-age=0, must-revalidate" is the key part
-          # azcopy copy "build/dist/latest/*" "${{ secrets.DEPLOY_SAS_URL_TESTING }}/dist/latest/" --recursive --overwrite=true --cache-control "max-age=0, must-revalidate"
+        uses: TravisSpomer/deploy-to-azure-storage@v1.4.0
+        with:
+          source-path: build
+          cleanup: false
+          sas-url: ${{ secrets.DEPLOY_SAS_URL_TESTING }}
 
-          # echo "Deployment to Azure Storage 'latest' directory completed with Cache-Control: max-age=0, must-revalidate"
-
-          # Optional: Deploy the versioned directory as well (if you want to keep historical versions with the same cache control)
-          azcopy copy "build/dist/${{ env.REACT_APP_BUILD_VERSION }}" "${{ secrets.DEPLOY_SAS_URL_TESTING }}/dist/${{ env.REACT_APP_BUILD_VERSION }}" --recursive --overwrite=true --cache-control "max-age=0, must-revalidate"
-
-          # echo "Deployment to Azure Storage versioned directory completed with Cache-Control: max-age=0, must-revalidate"
