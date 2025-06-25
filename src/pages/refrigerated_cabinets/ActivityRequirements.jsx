@@ -10,6 +10,7 @@ import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import {
   RF2_F1_2_ESSJun24_installation_replacement_final_activity_eligibility,
   RF2_F1_2_ESSJun24_EEI_under_51,
+  RF2_F1_2_ESSJun24_GEMS_product_class_5,
 } from 'types/openfisca_variables';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
@@ -102,16 +103,17 @@ export default function ActivityRequirementsRF2(props) {
     formValues
       .filter((x) => x.hide === false)
       .map((child) => {
-        if (
-          child.form_value !== child.default_value &&
-          new_arr.find((o) => o.name === child.name) === undefined &&
-          child.value_type === 'Boolean'
-        )
-          new_arr.push(child);
-        else if (child.form_value !== child.default_value && child.value_type === 'String') {
-          new_arr.push(child);
+        if (child.value_type === 'Boolean') {
+          if (child.form_value === false) {
+            new_arr.push(child);
+          }
+        } else if (child.value_type === 'String') {
+          if (child.form_value !== child.default_value) {
+            new_arr.push(child);
+          }
         }
       });
+    console.log(new_arr);
     setClausesForm(new_arr);
   }, [stepNumber]);
 
