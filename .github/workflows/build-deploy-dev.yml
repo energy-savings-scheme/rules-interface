@@ -72,4 +72,3 @@ jobs:
           source-path: build
           cleanup: false
           sas-url: ${{ secrets.DEPLOY_SAS_URL_TESTING }}
-
