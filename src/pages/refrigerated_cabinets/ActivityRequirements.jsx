@@ -10,7 +10,6 @@ import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import {
   RF2_F1_2_ESSJun24_installation_replacement_final_activity_eligibility,
   RF2_F1_2_ESSJun24_EEI_under_51,
-  RF2_F1_2_ESSJun24_GEMS_product_class_5,
 } from 'types/openfisca_variables';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
