@@ -113,7 +113,6 @@ export default function ActivityRequirementsRF2(props) {
           }
         }
       });
-    console.log(new_arr);
     setClausesForm(new_arr);
   }, [stepNumber]);
 
