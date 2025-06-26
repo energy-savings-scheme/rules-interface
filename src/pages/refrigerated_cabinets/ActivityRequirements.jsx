@@ -9,6 +9,7 @@ import LoadClausesRF2 from './LoadClauses';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import {
   RF2_F1_2_ESSJun24_installation_replacement_final_activity_eligibility,
+  RF2_F1_2_ESSJun24_EEI_under_51,
 } from 'types/openfisca_variables';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
@@ -73,6 +74,10 @@ export default function ActivityRequirementsRF2(props) {
       });
 
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
+
+      const names = [
+        RF2_F1_2_ESSJun24_EEI_under_51,
+      ];
 
       dep_arr = array.filter((item) => names.includes(item.name));
       array.find((item) => {
