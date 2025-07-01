@@ -277,7 +277,7 @@ export default function CertificateEstimatorLoadClausesD20(props) {
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> kWh
+                  </b> MWh
                 </p>
                 <p>
                   As this activity is only eligible for the Energy Savings Scheme, it generates
