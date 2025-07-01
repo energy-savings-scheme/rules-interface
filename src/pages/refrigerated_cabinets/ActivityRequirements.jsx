@@ -7,10 +7,6 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesRF2 from './LoadClauses';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
-import {
-  RF2_F1_2_ESSJun24_installation_replacement_final_activity_eligibility,
-  RF2_F1_2_ESSJun24_EEI_under_51,
-} from 'types/openfisca_variables';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
 import {
@@ -30,7 +26,7 @@ export default function ActivityRequirementsRF2(props) {
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    RF2_F1_2_ESSJun24_installation_replacement_final_activity_eligibility,
+    'RF2_F1_2_ESSJun24_installation_replacement_final_activity_eligibility',
   );
   const [variable, setVariable] = useState({});
   const [clausesForm, setClausesForm] = useState([]);
@@ -76,7 +72,10 @@ export default function ActivityRequirementsRF2(props) {
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
 
       const names = [
-        RF2_F1_2_ESSJun24_EEI_under_51,
+        'RF2_installation',
+        'RF2_EEI_under_51',
+        'RF2_EEI_under_81',
+        'RF2_legal_disposal',
       ];
 
       dep_arr = array.filter((item) => names.includes(item.name));
