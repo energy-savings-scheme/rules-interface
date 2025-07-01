@@ -101,14 +101,14 @@ export default function ActivityRequirementsRF2(props) {
     formValues
       .filter((x) => x.hide === false)
       .map((child) => {
-        if (child.value_type === 'Boolean') {
-          if (child.form_value === false) {
-            new_arr.push(child);
-          }
-        } else if (child.value_type === 'String') {
-          if (child.form_value !== child.default_value) {
-            new_arr.push(child);
-          }
+        if (
+          child.form_value !== child.default_value &&
+          new_arr.find((o) => o.name === child.name) === undefined &&
+          child.value_type === 'Boolean'
+        )
+          new_arr.push(child);
+        else if (child.form_value !== child.default_value && child.value_type === 'String') {
+          new_arr.push(child);
         }
       });
     setClausesForm(new_arr);
