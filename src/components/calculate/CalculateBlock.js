@@ -15,9 +15,6 @@ import {
   SYS2_PDRSAug24_new_installation_or_replacement,
   HVAC1_PDRSAug24_new_installation_or_replacement,
   HVAC2_new_installation_or_replacement,
-  RF2_F1_2_ESSJun24_GEMS_product_class_5,
-  RF2_F1_2_ESSJun24_EEI_under_51,
-  RF2_F1_2_ESSJun24_EEI_under_81,
 } from 'types/openfisca_variables';
 
 export default function CalculateBlock(props) {
@@ -337,13 +334,13 @@ export default function CalculateBlock(props) {
         }
       }
 
-      if (formItem.name === RF2_F1_2_ESSJun24_GEMS_product_class_5) {
+      if (formItem.name === 'RF2_GEMS_product_class_5') {
         if (e.target.value === 'true') {
-          formValues.find((v) => v.name === RF2_F1_2_ESSJun24_EEI_under_51).hide = false;
-          formValues.find((v) => v.name === RF2_F1_2_ESSJun24_EEI_under_81).hide = true;
+          formValues.find((v) => v.name === 'RF2_EEI_under_51').hide = false;
+          formValues.find((v) => v.name === 'RF2_EEI_under_81').hide = true;
         } else {
-          formValues.find((v) => v.name === RF2_F1_2_ESSJun24_EEI_under_51).hide = true;
-          formValues.find((v) => v.name === RF2_F1_2_ESSJun24_EEI_under_81).hide = false;
+          formValues.find((v) => v.name === 'RF2_EEI_under_51').hide = true;
+          formValues.find((v) => v.name === 'RF2_EEI_under_81').hide = false;
         }
       }
 
