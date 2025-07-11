@@ -278,18 +278,17 @@ export default function CertificateEstimatorResidentialAC(props) {
   useEffect(() => {
     const fetchCertificatePrice = async function () {
       try {
-        const response = await RegistryApi.getCertificatePrice()
-        setEscMinPrice(Number(response.data.ESC.min_price))
-        setEscMaxPrice(Number(response.data.ESC.max_price))
-        setPrcMinPrice(Number(response.data.PRC.min_price))
-        setPrcMaxPrice(Number(response.data.PRC.max_price))
+        const response = await RegistryApi.getCertificatePrice();
+        setEscMinPrice(Number(response.data.ESC.min_price));
+        setEscMaxPrice(Number(response.data.ESC.max_price));
+        setPrcMinPrice(Number(response.data.PRC.min_price));
+        setPrcMaxPrice(Number(response.data.PRC.max_price));
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
+    };
 
-    }
-
-    fetchCertificatePrice()
+    fetchCertificatePrice();
   }, []);
 
   return (
@@ -342,7 +341,11 @@ export default function CertificateEstimatorResidentialAC(props) {
               <p className="nsw-content-block__copy">
                 Where possible, residential and small business air conditioner specifications are
                 automatically updated at the end of each week from the{' '}
-                <a href="https://reg.energyrating.gov.au/comparator/product_types/" target="_blank" rel="noreferrer">
+                <a
+                  href="https://reg.energyrating.gov.au/comparator/product_types/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Greenhouse & Energy Minimum Standards (GEMS) Registry
                 </a>{' '}
                 based on brand and model, but you may also enter your own values.
@@ -481,7 +484,10 @@ export default function CertificateEstimatorResidentialAC(props) {
                         required
                       />
                     </FormGroup>
-                    <p data-ui-name="registry-update" style={{ fontSize: '14px', marginBottom: '2%' }}>
+                    <p
+                      data-ui-name="registry-update"
+                      style={{ fontSize: '14px', marginBottom: '2%' }}
+                    >
                       {' '}
                       Updated from product registry: {lastModified}
                     </p>
@@ -614,7 +620,10 @@ export default function CertificateEstimatorResidentialAC(props) {
             selectedBrand &&
             selectedModel &&
             userType && (
-              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}>
+              <div
+                className="nsw-row"
+                style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}
+              >
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     data-ui-name="next"

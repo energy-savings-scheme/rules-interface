@@ -9,7 +9,10 @@ import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
-import {HVAC1_PDRSAug24_PDRS__postcode, HVAC1_PDRSAug24_BCA_Climate_Zone} from '../../types/openfisca_variables';
+import {
+  HVAC1_PDRSAug24_PDRS__postcode,
+  HVAC1_PDRSAug24_BCA_Climate_Zone,
+} from '../../types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
 export default function CertificateEstimatorResidentialACLoadClauses(props) {
@@ -53,7 +56,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
     escMinPrice,
     escMaxPrice,
     prcMinPrice,
-    prcMaxPrice
+    prcMaxPrice,
   } = props;
 
   const bca_mapping = {
@@ -226,7 +229,8 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                     <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    <b>BCA Climate Zone: </b> {selectedClimateZone.charAt(selectedClimateZone.length - 1)}
+                    <b>BCA Climate Zone: </b>{' '}
+                    {selectedClimateZone.charAt(selectedClimateZone.length - 1)}
                   </p>
                   <p>
                     <b>Brand: </b> {selectedBrand}
@@ -295,7 +299,8 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                     <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    <b>BCA Climate Zone: </b> {selectedClimateZone.charAt(selectedClimateZone.length - 1)}
+                    <b>BCA Climate Zone: </b>{' '}
+                    {selectedClimateZone.charAt(selectedClimateZone.length - 1)}
                   </p>
                   <p>
                     <b>Brand: </b> {selectedBrand}
@@ -328,7 +333,8 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> MWh
+                  </b>{' '}
+                  MWh
                 </p>
                 <p>
                   Your estimated annual peak demand reduction is{' '}
@@ -336,7 +342,8 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                     {Math.floor(calculationResult) === 0
                       ? 0
                       : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
-                  </b> kWh
+                  </b>{' '}
+                  kWh
                 </p>
 
                 <p>
@@ -374,7 +381,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                 prcMinPrice={prcMinPrice}
                 prcMaxPrice={prcMaxPrice}
               />
-              <div className="nsw-col-md-9" style={{marginTop: '1.25rem'}}>
+              <div className="nsw-col-md-9" style={{ marginTop: '1.25rem' }}>
                 <Button
                   style={{ float: 'left' }}
                   as="dark-outline-solid"
