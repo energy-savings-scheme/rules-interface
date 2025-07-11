@@ -408,7 +408,7 @@ export default function CalculateForm(props) {
   };
 
   return (
-    <form onSubmit={handleCalculate}>
+    <form data-ui-name="calculate-form" onSubmit={handleCalculate}>
       <div className="nsw-content-block">
         <div className="nsw-content-block__content">
           {workflow === Workflow.CERTIFICATES &&
@@ -486,7 +486,7 @@ export default function CalculateForm(props) {
           </div>
 
           <div className="nsw-col-md-3">
-            <Button as="dark" type="submit" style={{ float: 'right' }}>
+            <Button data-ui-name="next" as="dark" type="submit" style={{ float: 'right' }}>
               {loading ? (
                 <Spinner animation="border" role="status" size="lg">
                   <span className="sr-only">Loading...</span>

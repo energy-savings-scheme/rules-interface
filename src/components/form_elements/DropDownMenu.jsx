@@ -25,6 +25,7 @@ export default function DropDownMenu(props) {
       status={formItem.invalid && 'invalid'} // if `true` renders invalid formatting
     >
       <Select
+        data-ui-name={formItem.name}
         style={{ maxWidth: '50%', marginBottom: '4%' }}
         options={possibleValues}
         onChange={setItemValue}

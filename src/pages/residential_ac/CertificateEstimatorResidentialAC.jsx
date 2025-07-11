@@ -342,7 +342,7 @@ export default function CertificateEstimatorResidentialAC(props) {
               <p className="nsw-content-block__copy">
                 Where possible, residential and small business air conditioner specifications are
                 automatically updated at the end of each week from the{' '}
-                <a href="https://reg.energyrating.gov.au/comparator/product_types/" target="_blank">
+                <a href="https://reg.energyrating.gov.au/comparator/product_types/" target="_blank" rel="noreferrer">
                   Greenhouse & Energy Minimum Standards (GEMS) Registry
                 </a>{' '}
                 based on brand and model, but you may also enter your own values.
@@ -380,7 +380,7 @@ export default function CertificateEstimatorResidentialAC(props) {
                   <br></br>
                   <br></br>
                   <br></br>
-                  <div className="nsw-content-block__content">
+                  <div data-ui-name="initial-form" className="nsw-content-block__content">
                     <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
                       <b>Please answer the following questions to calculate your ESCs and PRCs</b>
                     </h5>
@@ -392,6 +392,7 @@ export default function CertificateEstimatorResidentialAC(props) {
                     >
                       <Select
                         htmlId="user-type"
+                        data-ui-name="user-type"
                         style={{ maxWidth: '50%' }}
                         options={USER_TYPE_OPTIONS}
                         onChange={(e) => {
@@ -408,6 +409,7 @@ export default function CertificateEstimatorResidentialAC(props) {
                       errorText="Invalid value!" // error text if invalid
                     >
                       <TextInput
+                        data-ui-name="postcode"
                         style={{ maxWidth: '50%' }}
                         as="input"
                         type="number"
@@ -434,6 +436,7 @@ export default function CertificateEstimatorResidentialAC(props) {
                         errorText="Invalid value!" // error text if invalid
                       >
                         <Select
+                          data-ui-name="bca-climate-zone"
                           style={{ maxWidth: '50%' }}
                           options={dropdownOptionsClimateZone}
                           onChange={(e) => {
@@ -450,6 +453,7 @@ export default function CertificateEstimatorResidentialAC(props) {
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
+                        data-ui-name="brand"
                         style={{ maxWidth: '50%' }}
                         options={dropdownOptions}
                         onChange={(e) => {
@@ -467,6 +471,7 @@ export default function CertificateEstimatorResidentialAC(props) {
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
+                        data-ui-name="model"
                         style={{ maxWidth: '50%' }}
                         options={dropdownOptionsModels}
                         onChange={(e) => {
@@ -476,7 +481,7 @@ export default function CertificateEstimatorResidentialAC(props) {
                         required
                       />
                     </FormGroup>
-                    <p style={{ fontSize: '14px', marginBottom: '2%' }}>
+                    <p data-ui-name="registry-update" style={{ fontSize: '14px', marginBottom: '2%' }}>
                       {' '}
                       Updated from product registry: {lastModified}
                     </p>
@@ -612,6 +617,7 @@ export default function CertificateEstimatorResidentialAC(props) {
               <div className="nsw-row" style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}>
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
+                    data-ui-name="next"
                     as="dark"
                     onClick={(e) => {
                       validatePostcode(postcode);

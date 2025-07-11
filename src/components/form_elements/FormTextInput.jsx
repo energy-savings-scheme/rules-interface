@@ -16,6 +16,7 @@ export default function FormTextInput(props) {
       style={formItem.hide ? { display: 'none' } : {}}
     >
       <TextInput
+        data-ui-name={formItem.name}
         style={{ maxWidth: '50%', marginBottom: '4%' }}
         as="input"
         number={['Float', 'Integer'].includes(formItem.value_type)}
