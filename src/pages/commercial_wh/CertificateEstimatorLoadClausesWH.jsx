@@ -125,9 +125,6 @@ export default function CertificateEstimatorLoadClausesWH(props) {
         if (formItem.name === 'F16_electric_PDRSDec24_HP_capacity_factor') {
           formItem.form_value = metadata[`HPCap`];
         }
-        if (formItem.name === 'F16_electric_PDRSDec24_WH_capacity_factor') {
-          formItem.form_value = metadata[`WHCap`];
-        }
         if (formItem.name === 'F16_electric_PDRSDec24_HP_elec') {
           formItem.form_value = metadata[`HPElec_zone_${zone}`];
         }
