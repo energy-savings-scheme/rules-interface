@@ -9,7 +9,11 @@ import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
-import {F16_gas_PDRS__postcode} from 'types/openfisca_variables';
+import {
+  F16_gas_PDRS__postcode,
+  F16_gas_number_of_heat_pumps,
+  F16_gas_total_heat_pump_thermal_capacity
+} from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
 export default function CertificateEstimatorLoadClausesF16_gas(props) {
@@ -128,6 +132,16 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
         }
         if (formItem.name === 'F16_gas_HP_gas') {
           formItem.form_value = metadata[`HPGas_zone_${zone}`];
+        }
+
+        if (formItem.name === F16_gas_number_of_heat_pumps) {
+          formItem.form_value = metadata['number_of_heat_pumps'];
+          formItem.hide = true
+        }
+
+        if (formItem.name === F16_gas_total_heat_pump_thermal_capacity) {
+          formItem.form_value = metadata['total_heat_pump_thermal_capacity'];
+          formItem.hide = true
         }
 
         if (formItem.name === F16_gas_PDRS__postcode) {
