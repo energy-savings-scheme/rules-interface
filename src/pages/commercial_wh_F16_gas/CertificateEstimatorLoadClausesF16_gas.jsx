@@ -12,7 +12,11 @@ import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 import {
   F16_gas_PDRS__postcode,
   F16_gas_number_of_heat_pumps,
-  F16_gas_total_heat_pump_thermal_capacity
+  F16_gas_total_heat_pump_thermal_capacity,
+  F16_gas_com_peak_load,
+  F16_gas_HP_capacity_factor,
+  F16_gas_HP_elec,
+  F16_gas_HP_gas
 } from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
@@ -119,18 +123,18 @@ export default function CertificateEstimatorLoadClausesF16_gas(props) {
       array2.forEach((item) => addElement(array1, item));
 
       array1.map((formItem) => {
-        if (formItem.name === 'F16_gas_com_peak_load') {
+        if (formItem.name === F16_gas_com_peak_load) {
           formItem.form_value = metadata[`ComPkLoad_zone_${zone}`];
         }
 
-        if (formItem.name === 'F16_gas_HP_capacity_factor') {
+        if (formItem.name === F16_gas_HP_capacity_factor) {
           formItem.form_value = metadata['HPCap'];
         }
 
-        if (formItem.name === 'F16_gas_HP_elec') {
+        if (formItem.name === F16_gas_HP_elec) {
           formItem.form_value = metadata[`HPElec_zone_${zone}`];
         }
-        if (formItem.name === 'F16_gas_HP_gas') {
+        if (formItem.name === F16_gas_HP_gas) {
           formItem.form_value = metadata[`HPGas_zone_${zone}`];
         }
 
