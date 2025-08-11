@@ -72,6 +72,10 @@ export const F16_electric_PDRSDec24__storage_volume = 'F16_electric_PDRSDec24__s
 export const F16_electric_PDRSDec24__certified = 'F16_electric_PDRSDec24__certified';
 export const F16_electric_PDRSDec24_number_of_heat_pumps = 'F16_electric_PDRSDec24_number_of_heat_pumps';
 export const F16_electric_PDRSDec24_total_heat_pump_thermal_capacity = 'F16_electric_PDRSDec24_total_heat_pump_thermal_capacity';
+export const F16_electric_PDRSDec24_com_peak_load = 'F16_electric_PDRSDec24_com_peak_load';
+export const F16_electric_PDRSDec24_HP_capacity_factor = 'F16_electric_PDRSDec24_HP_capacity_factor';
+export const F16_electric_PDRSDec24_HP_elec = 'F16_electric_PDRSDec24_HP_elec';
+export const F16_electric_PDRSDec24_HP_gas = 'F16_electric_PDRSDec24_HP_gas';
 
 export const F16_electric_PDRSDec24_ESC_calculation = 'F16_electric_PDRSDec24_ESC_calculation';
 export const WH1_F16_electric_PDRSAug24_PRC_calculation =
@@ -79,13 +83,24 @@ export const WH1_F16_electric_PDRSAug24_PRC_calculation =
 export const F16_electric_PDRSDec24_energy_savings = 'F16_electric_PDRSDec24_energy_savings';
 export const WH1_F16_electric_PDRSAug24_peak_demand_annual_savings =
   'WH1_F16_electric_PDRSAug24_peak_demand_annual_savings';
+export const WH1_F16_electric_PDRSAug24_annual_energy_savings = 'WH1_F16_electric_PDRSAug24_annual_energy_savings';
+export const WH1_F16_electric_PDRSAug24_volumetric_capacity = 'WH1_F16_electric_PDRSAug24_volumetric_capacity';
+
+// Water heater gas
 export const F16_gas_ESC_calculation = 'F16_gas_ESC_calculation';
 export const F16_gas_number_of_heat_pumps = 'F16_gas_number_of_heat_pumps';
 export const F16_gas_total_heat_pump_thermal_capacity = 'F16_gas_total_heat_pump_thermal_capacity';
+export const F16_gas_com_peak_load = 'F16_gas_com_peak_load';
+export const F16_gas_HP_capacity_factor = 'F16_gas_HP_capacity_factor';
+export const F16_gas_HP_elec = 'F16_gas_HP_elec';
+export const F16_gas_HP_gas = 'F16_gas_HP_gas';
 
 // Water heater F17
 export const F17_number_of_heat_pumps = 'F17_number_of_heat_pumps';
 export const F17_total_heat_pump_thermal_capacity = 'F17_total_heat_pump_thermal_capacity';
+export const F17_com_peak_load = 'F17_com_peak_load';
+export const F17_HP_elec = 'F17_HP_elec';
+export const F17_HP_gas = 'F17_HP_gas';
 
 // COMMERCIAL MOTOR
 export const F7_PDRSAug24_ESC_calculation = 'F7_PDRSAug24_ESC_calculation';

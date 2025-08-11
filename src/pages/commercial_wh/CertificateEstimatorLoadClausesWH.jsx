@@ -12,7 +12,13 @@ import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 import {
   F16_electric_PDRSDec24_PDRS__postcode,
   F16_electric_PDRSDec24_number_of_heat_pumps,
-  F16_electric_PDRSDec24_total_heat_pump_thermal_capacity
+  F16_electric_PDRSDec24_total_heat_pump_thermal_capacity,
+  F16_electric_PDRSDec24_com_peak_load,
+  F16_electric_PDRSDec24_HP_capacity_factor,
+  F16_electric_PDRSDec24_HP_elec,
+  F16_electric_PDRSDec24_HP_gas,
+  WH1_F16_electric_PDRSAug24_annual_energy_savings,
+  WH1_F16_electric_PDRSAug24_volumetric_capacity
 } from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
@@ -120,19 +126,19 @@ export default function CertificateEstimatorLoadClausesWH(props) {
       array2.forEach((item) => addElement(array1, item));
 
       array1.map((formItem) => {
-        if (formItem.name === 'WH1_F16_electric_PDRSAug24_annual_energy_savings') {
+        if (formItem.name === WH1_F16_electric_PDRSAug24_annual_energy_savings) {
           formItem.form_value = metadata[`annual_energy_savings_${zone}`];
         }
-        if (formItem.name === 'F16_electric_PDRSDec24_com_peak_load') {
+        if (formItem.name === F16_electric_PDRSDec24_com_peak_load) {
           formItem.form_value = metadata[`ComPkLoad_zone_${zone}`];
         }
-        if (formItem.name === 'F16_electric_PDRSDec24_HP_capacity_factor') {
+        if (formItem.name === F16_electric_PDRSDec24_HP_capacity_factor) {
           formItem.form_value = metadata[`HPCap`];
         }
-        if (formItem.name === 'F16_electric_PDRSDec24_HP_elec') {
+        if (formItem.name === F16_electric_PDRSDec24_HP_elec) {
           formItem.form_value = metadata[`HPElec_zone_${zone}`];
         }
-        if (formItem.name === 'F16_electric_PDRSDec24_HP_gas') {
+        if (formItem.name === F16_electric_PDRSDec24_HP_gas) {
           formItem.form_value = metadata[`HPGas_zone_${zone}`];
         }
         if (formItem.name === F16_electric_PDRSDec24_number_of_heat_pumps) {
@@ -143,7 +149,7 @@ export default function CertificateEstimatorLoadClausesWH(props) {
           formItem.form_value = metadata['total_heat_pump_thermal_capacity']
           formItem.hide = true;
         }
-        if (formItem.name === 'WH1_F16_electric_PDRSAug24_volumetric_capacity') {
+        if (formItem.name === WH1_F16_electric_PDRSAug24_volumetric_capacity) {
           formItem.form_value = metadata['volumetric capacity'];
         }
 
