@@ -12,7 +12,10 @@ import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 import {
   F17_ESS__postcode,
   F17_number_of_heat_pumps,
-  F17_total_heat_pump_thermal_capacity
+  F17_total_heat_pump_thermal_capacity,
+  F17_com_peak_load,
+  F17_HP_elec,
+  F17_HP_gas
 } from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
@@ -124,16 +127,16 @@ export default function CertificateEstimatorLoadClausesF17(props) {
         // if (formItem.name === 'WH1_annual_energy_savings') {
         //   formItem.form_value = metadata[`annual_energy_savings_${zone}`];
         // }
-        if (formItem.name === 'F17_com_peak_load') {
+        if (formItem.name === F17_com_peak_load) {
           formItem.form_value = metadata[`ComPkLoad_zone_${zone}`];
         }
         // if (formItem.name === 'WH1_HP_capacity_factor') {
         //   formItem.form_value = metadata['HPCap'];
         // }
-        if (formItem.name === 'F17_HP_elec') {
+        if (formItem.name === F17_HP_elec) {
           formItem.form_value = metadata[`HPElec_zone_${zone}`];
         }
-        if (formItem.name === 'F17_HP_gas') {
+        if (formItem.name === F17_HP_gas) {
           formItem.form_value = metadata[`HPGas_zone_${zone}`];
         }
         if (formItem.name === F17_number_of_heat_pumps) {
