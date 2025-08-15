@@ -76,17 +76,6 @@ export default function CertificateEstimatorRC(props) {
 
     setProductClassOptions([
       { value: '', text: 'Please select product class' },
-      { value: 'Class 1', text: 'Class 1' },
-      { value: 'Class 2', text: 'Class 2' },
-      { value: 'Class 3', text: 'Class 3' },
-      { value: 'Class 4', text: 'Class 4' },
-      { value: 'Class 5', text: 'Class 5' },
-      { value: 'Class 6', text: 'Class 6' },
-      { value: 'Class 7', text: 'Class 7' },
-      { value: 'Class 8', text: 'Class 8' },
-      { value: 'Class 9', text: 'Class 9' },
-      { value: 'Class 10', text: 'Class 10' },
-      { value: 'Class 11', text: 'Class 11' },
       { value: 'Class 12', text: 'Class 12' },
       { value: 'Class 13', text: 'Class 13' },
       { value: 'Class 14', text: 'Class 14' },
@@ -206,6 +195,7 @@ export default function CertificateEstimatorRC(props) {
     RegistryApi.getRF2ModelsMetadata(payload)
       .then((res) => {
         setMetadata(res.data);
+        setSelectedProductClass(`Class ${res.data.product_class_number}`);
       })
       .catch((err) => {
         console.log(err);
@@ -375,6 +365,7 @@ export default function CertificateEstimatorRC(props) {
                         onChange={(e) => {
                           setSelectedBrand(RF2Brands.find((item) => item === e.target.value));
                           setSelectedModel('');
+                          setSelectedProductClass('')
                         }}
                         value={selectedBrand}
                         required
