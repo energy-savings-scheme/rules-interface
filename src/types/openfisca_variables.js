@@ -94,6 +94,10 @@ export const F16_gas_com_peak_load = 'F16_gas_com_peak_load';
 export const F16_gas_HP_capacity_factor = 'F16_gas_HP_capacity_factor';
 export const F16_gas_HP_elec = 'F16_gas_HP_elec';
 export const F16_gas_HP_gas = 'F16_gas_HP_gas';
+export const F16_gas_split_system = 'F16_gas_split_system';
+export const F16_gas_safety_requirement = 'F16_gas_safety_requirement';
+export const F16_gas_storage_volume = 'F16_gas_storage_volume';
+export const F16_gas_certified = 'F16_gas_certified';
 
 // Water heater F17
 export const F17_number_of_heat_pumps = 'F17_number_of_heat_pumps';
