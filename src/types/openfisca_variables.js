@@ -112,10 +112,3 @@ export const SYS2_PDRSAug24_new_installation_or_replacement = 'SYS2_PDRSAug24_ne
 
 // CORE ELIGIBILITY
 export const ESS__PDRS__ACP_base_scheme_eligibility = 'ESS__PDRS__ACP_base_scheme_eligibility';
-
-// REFRIGERATED CABINETS ELIGIBILITY
-export const RF2_F1_2_ESSJun24_installation_replacement_final_activity_eligibility =
-  'RF2_F1_2_ESSJun24_installation_replacement_final_activity_eligibility';
-export const RF2_F1_2_ESSJun24_GEMS_product_class_5 = 'RF2_F1_2_ESSJun24_GEMS_product_class_5';
-export const RF2_F1_2_ESSJun24_EEI_under_51 = 'RF2_F1_2_ESSJun24_EEI_under_51';
-export const RF2_F1_2_ESSJun24_EEI_under_81 = 'RF2_F1_2_ESSJun24_EEI_under_81';
