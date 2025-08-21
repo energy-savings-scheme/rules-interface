@@ -12,6 +12,8 @@ import {
   BESS1_PDRSDec24_smoke_alarm,
   F16_electric_PDRSDec24__storage_volume,
   F16_electric_PDRSDec24__certified,
+  F16_electric_PDRSDec24__split_system,
+  F16_electric_PDRSDec24__safety_requirement,
   SYS2_PDRSAug24_new_installation_or_replacement,
   HVAC1_PDRSAug24_new_installation_or_replacement,
   HVAC2_new_installation_or_replacement,
@@ -212,6 +214,15 @@ export default function CalculateBlock(props) {
       formItem.form_value === false
     ) {
       formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = true;
+    }
+
+    if (formItem.name === F16_electric_PDRSDec24__split_system && formItem.form_value === true) {
+      formValues.find((v) => v.name === F16_electric_PDRSDec24__safety_requirement).hide = false;
+    } else if (
+      formItem.name === F16_electric_PDRSDec24__split_system &&
+      formItem.form_value === false
+    ) {
+      formValues.find((v) => v.name === F16_electric_PDRSDec24__safety_requirement).hide = true;
     }
 
     if (formItem.name === SYS2_PDRSAug24_new_installation_or_replacement ||
