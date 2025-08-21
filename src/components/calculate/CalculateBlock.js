@@ -18,6 +18,8 @@ import {
   RF2_F1_2_ESSJun24_GEMS_product_class_5,
   RF2_F1_2_ESSJun24_EEI_under_51,
   RF2_F1_2_ESSJun24_EEI_under_81,
+  D17_ESSJun24_split_system,
+  D17_ESSJun24_safety_requirement
 } from 'types/openfisca_variables';
 
 export default function CalculateBlock(props) {
@@ -203,6 +205,12 @@ export default function CalculateBlock(props) {
       formValues.find(
         (v) => v.name === 'HVAC2_installed_centralised_system_common_area_BCA_Class2_building',
       ).hide = true;
+    }
+
+    if (formItem.name === D17_ESSJun24_split_system && formItem.form_value === true) {
+      formValues.find((v) => v.name === D17_ESSJun24_safety_requirement).hide = false;
+    } else if (formItem.name === D17_ESSJun24_split_system && formItem.form_value === false) {
+      formValues.find((v) => v.name === D17_ESSJun24_safety_requirement).hide = true;
     }
 
     if (formItem.name === F16_electric_PDRSDec24__storage_volume && formItem.form_value === true) {

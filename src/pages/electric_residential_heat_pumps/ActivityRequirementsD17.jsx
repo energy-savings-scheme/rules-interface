@@ -14,6 +14,10 @@ import {
   updateSegmentCaptureAnalytics,
   clearSearchCaptureAnalytics
 } from 'lib/analytics';
+import {
+  D17_ESSJun24_split_system,
+  D17_ESSJun24_safety_requirement
+} from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
 import {BASE_RESIDENTIAL_ELECTRIC_HEAT_PUMP_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
@@ -72,13 +76,7 @@ export default function ActivityRequirementsD17(props) {
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
 
       const names = [
-        'HVAC2_equipment_replaced',
-        'HVAC2_installed_centralised_system_common_area_BCA_Class2_building',
-        'HVAC2_AEER_greater_than_minimum',
-        'HVAC2_TCPSF_greater_than_minimum',
-        'HVAC2_HSPF_mixed_eligible',
-        'HVAC2_HSPF_cold_eligible',
-        'HVAC2_ACOP_eligible',
+        D17_ESSJun24_safety_requirement,
       ];
 
       dep_arr = array.filter((item) => names.includes(item.name));
@@ -98,6 +96,9 @@ export default function ActivityRequirementsD17(props) {
 
   useEffect(() => {
     let new_arr = [];
+    const excludeClauses = [
+      D17_ESSJun24_split_system,
+    ];
 
     formValues
       .filter((x) => x.hide === false)
@@ -105,7 +106,8 @@ export default function ActivityRequirementsD17(props) {
         if (
           child.form_value !== child.default_value &&
           new_arr.find((o) => o.name === child.name) === undefined &&
-          child.value_type === 'Boolean'
+          child.value_type === 'Boolean' &&
+          !excludeClauses.includes(child.name)
         )
           new_arr.push(child);
       });

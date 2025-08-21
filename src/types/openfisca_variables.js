@@ -60,6 +60,9 @@ export const BESS1_PDRSDec24_inverter_warranty_length_eligible =
 export const BESS2_V5Nov24_usable_battery_capacity = 'BESS2_V5Nov24_usable_battery_capacity';
 
 export const D17_ESSJun24_ESC_calculation = 'D17_ESSJun24_ESC_calculation';
+export const D17_ESSJun24_split_system = 'D17_ESSJun24_split_system';
+export const D17_ESSJun24_safety_requirement = 'D17_ESSJun24_safety_requirement';
+
 export const D18_ESSJun24_ESC_calculation = 'D18_ESSJun24_ESC_calculation';
 export const D19_ESSJun24_ESC_calculation = 'D19_ESSJun24_ESC_calculation';
 export const D20_ESSJun24_ESC_calculation = 'D20_ESSJun24_ESC_calculation';
