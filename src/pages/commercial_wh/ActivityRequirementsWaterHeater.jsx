@@ -9,6 +9,8 @@ import LoadClausesWH1 from './LoadClausesWh';
 import {
   F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility,
   F16_electric_PDRSDec24__certified,
+  F16_electric_PDRSDec24__split_system,
+  F16_electric_PDRSDec24__safety_requirement
 } from 'types/openfisca_variables';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
@@ -77,7 +79,7 @@ export default function ActivityRequirementsWH1(props) {
 
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
 
-      const names = [F16_electric_PDRSDec24__certified];
+      const names = [F16_electric_PDRSDec24__certified, F16_electric_PDRSDec24__safety_requirement];
 
       dep_arr = array.filter((item) => names.includes(item.name));
 
@@ -99,6 +101,9 @@ export default function ActivityRequirementsWH1(props) {
 
   useEffect(() => {
     let new_arr = [];
+    const excludeClauses = [
+      F16_electric_PDRSDec24__split_system
+    ]
 
     formValues
       .filter((x) => x.hide === false)
@@ -106,7 +111,9 @@ export default function ActivityRequirementsWH1(props) {
         if (
           (child.form_value !== child.default_value &&
             new_arr.find((o) => o.name === child.name) === undefined &&
-            child.value_type === 'Boolean') ||
+            child.value_type === 'Boolean' && 
+            !excludeClauses.includes(child.name)
+          ) ||
           child.value_type === 'String'
         )
           new_arr.push(child);
