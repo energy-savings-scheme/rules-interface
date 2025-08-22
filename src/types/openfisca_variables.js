@@ -109,6 +109,9 @@ export const F7_PDRSAug24_energy_savings = 'F7_PDRSAug24_energy_savings';
 // POOL PUMPS
 export const SYS2_PDRSAug24_replacement_final_activity_eligibility = 'SYS2_PDRSAug24_replacement_final_activity_eligibility';
 export const SYS2_PDRSAug24_new_installation_or_replacement = 'SYS2_PDRSAug24_new_installation_or_replacement';
+export const SYS2_PDRSAug24_maximum_tested_input_power = 'SYS2_PDRSAug24_maximum_tested_input_power';
+export const SYS2_PDRSAug24_daily_run_time = 'SYS2_PDRSAug24_daily_run_time';
+export const SYS2_PDRSAug24_projected_annual_energy_consumption = 'SYS2_PDRSAug24_projected_annual_energy_consumption';
 
 // CORE ELIGIBILITY
 export const ESS__PDRS__ACP_base_scheme_eligibility = 'ESS__PDRS__ACP_base_scheme_eligibility';
