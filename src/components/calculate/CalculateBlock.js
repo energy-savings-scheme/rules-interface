@@ -205,8 +205,16 @@ export default function CalculateBlock(props) {
     }
 
     if (formItem.name === D17_ESSJun24_split_system && formItem.form_value === true) {
-      formValues.find((v) => v.name === D17_ESSJun24_safety_requirement).hide = false;
+      const field_safety_requirement = formValues.find((v) => v.name === D17_ESSJun24_safety_requirement);
+      if (field_safety_requirement !== undefined) {
+        field.hide = false;
+      }
     } else if (formItem.name === D17_ESSJun24_split_system && formItem.form_value === false) {
+      const field_safety_requirement = formValues.find((v) => v.name === D17_ESSJun24_safety_requirement);
+      if (field_safety_requirement !== undefined) {
+        field.hide = true;
+      }
+    }
       formValues.find((v) => v.name === D17_ESSJun24_safety_requirement).hide = true;
     }
 
