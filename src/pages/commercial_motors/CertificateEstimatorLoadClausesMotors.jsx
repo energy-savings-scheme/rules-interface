@@ -139,7 +139,7 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
                 options={USER_TYPE_OPTIONS}
                 onChange={(e) => {
                   setUserType(e.target.value);
-                  updateSegmentCaptureAnalytics(e.target.value)
+                  updateSegmentCaptureAnalytics(e.target.value);
                 }}
                 value={userType}
                 required

@@ -10,16 +10,16 @@ import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import {BASE_RESIDENTIAL_ELECTRIC_SOLAR_WH_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_RESIDENTIAL_ELECTRIC_SOLAR_WH_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSearchCaptureAnalytics,
-  updateSegmentCaptureAnalytics
+  updateSegmentCaptureAnalytics,
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
-import {D18_ESSJun24_ESC_calculation} from 'types/openfisca_variables';
+import { D18_ESSJun24_ESC_calculation } from 'types/openfisca_variables';
 
 export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
   const { entities, variables, brands } = props;
@@ -510,7 +510,7 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
                     onClick={(e) => {
                       validatePostcode(postcode);
                       updateSearchCaptureAnalytics(postcode, selectedBrand, selectedModel);
-                      updateSegmentCaptureAnalytics(userType)
+                      updateSegmentCaptureAnalytics(userType);
                     }}
                   >
                     Next
@@ -533,10 +533,14 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
                   marginBottom: '5%',
                 }}
               >
-                <MoreOptionsCard options={[{
-                  title: 'Review eligibility for this activity',
-                  link: '/#residential-solar-water-heater-activity-requirements'
-                }]}/>
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#residential-solar-water-heater-activity-requirements',
+                    },
+                  ]}
+                />
               </div>
             </div>
           )}

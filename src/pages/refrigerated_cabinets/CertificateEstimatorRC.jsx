@@ -10,12 +10,12 @@ import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import {BASE_COMMERCIAL_REFRIGERATED_CABINET_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_COMMERCIAL_REFRIGERATED_CABINET_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSearchCaptureAnalytics,
-  updateSegmentCaptureAnalytics
+  updateSegmentCaptureAnalytics,
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
@@ -567,10 +567,14 @@ export default function CertificateEstimatorRC(props) {
                   marginBottom: '5%',
                 }}
               >
-                <MoreOptionsCard options={[{
-                  title: 'Review eligibility for this activity',
-                  link: '/#refrigerated-cabinet-activity-requirements'
-                }]}/>
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#refrigerated-cabinet-activity-requirements',
+                    },
+                  ]}
+                />
               </div>
             </div>
           )}
