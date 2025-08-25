@@ -204,14 +204,11 @@ export default function CalculateBlock(props) {
       ).hide = true;
     }
 
-    if (formItem.name === D17_ESSJun24_split_system && formItem.form_value === true) {
+    if (formItem.name === D17_ESSJun24_split_system) {
       const field_safety_requirement = formValues.find((v) => v.name === D17_ESSJun24_safety_requirement);
-      if (field_safety_requirement !== undefined) {
+      if (field_safety_requirement !== undefined && formItem.form_value === true) {
         field_safety_requirement.hide = false;
-      }
-    } else if (formItem.name === D17_ESSJun24_split_system && formItem.form_value === false) {
-      const field_safety_requirement = formValues.find((v) => v.name === D17_ESSJun24_safety_requirement);
-      if (field_safety_requirement !== undefined) {
+      } else if (field_safety_requirement !== undefined && formItem.form_value === false) {
         field_safety_requirement.hide = true;
       }
     }
