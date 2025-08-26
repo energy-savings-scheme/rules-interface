@@ -110,6 +110,10 @@ export const F17_total_heat_pump_thermal_capacity = 'F17_total_heat_pump_thermal
 export const F17_com_peak_load = 'F17_com_peak_load';
 export const F17_HP_elec = 'F17_HP_elec';
 export const F17_HP_gas = 'F17_HP_gas';
+export const F17_storage_volume = 'F17_storage_volume';
+export const F17_certified = 'F17_certified';
+export const F17_split_system = 'F17_split_system';
+export const F17_safety_requirement = 'F17_safety_requirement';
 
 // COMMERCIAL MOTOR
 export const F7_PDRSAug24_ESC_calculation = 'F7_PDRSAug24_ESC_calculation';
