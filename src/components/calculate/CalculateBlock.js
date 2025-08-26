@@ -12,6 +12,8 @@ import {
   BESS1_PDRSDec24_smoke_alarm,
   F16_electric_PDRSDec24__storage_volume,
   F16_electric_PDRSDec24__certified,
+  F16_electric_PDRSDec24__split_system,
+  F16_electric_PDRSDec24__safety_requirement,
   F16_gas_split_system,
   F16_gas_safety_requirement,
   F16_gas_storage_volume,
@@ -213,6 +215,15 @@ export default function CalculateBlock(props) {
       formItem.form_value === false
     ) {
       formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = true;
+    }
+
+    if (formItem.name === F16_electric_PDRSDec24__split_system && formItem.form_value === true) {
+      formValues.find((v) => v.name === F16_electric_PDRSDec24__safety_requirement).hide = false;
+    } else if (
+      formItem.name === F16_electric_PDRSDec24__split_system &&
+      formItem.form_value === false
+    ) {
+      formValues.find((v) => v.name === F16_electric_PDRSDec24__safety_requirement).hide = true;
     }
 
     if (formItem.name === F16_gas_split_system && formItem.form_value === true) {

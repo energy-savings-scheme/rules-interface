@@ -78,6 +78,8 @@ export const F16_electric_PDRSDec24_HP_elec = 'F16_electric_PDRSDec24_HP_elec';
 export const F16_electric_PDRSDec24_HP_gas = 'F16_electric_PDRSDec24_HP_gas';
 
 export const F16_electric_PDRSDec24_ESC_calculation = 'F16_electric_PDRSDec24_ESC_calculation';
+export const F16_electric_PDRSDec24__safety_requirement = 'F16_electric_PDRSDec24__safety_requirement';
+export const F16_electric_PDRSDec24__split_system = 'F16_electric_PDRSDec24__split_system';
 export const WH1_F16_electric_PDRSAug24_PRC_calculation =
   'WH1_F16_electric_PDRSAug24_PRC_calculation';
 export const F16_electric_PDRSDec24_energy_savings = 'F16_electric_PDRSDec24_energy_savings';
