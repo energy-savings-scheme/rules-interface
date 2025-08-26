@@ -12,9 +12,17 @@ import {
   BESS1_PDRSDec24_smoke_alarm,
   F16_electric_PDRSDec24__storage_volume,
   F16_electric_PDRSDec24__certified,
+  F16_electric_PDRSDec24__split_system,
+  F16_electric_PDRSDec24__safety_requirement,
+  F16_gas_split_system,
+  F16_gas_safety_requirement,
+  F16_gas_storage_volume,
+  F16_gas_certified,
   SYS2_PDRSAug24_new_installation_or_replacement,
   HVAC1_PDRSAug24_new_installation_or_replacement,
   HVAC2_new_installation_or_replacement,
+  D17_ESSJun24_split_system,
+  D17_ESSJun24_safety_requirement
 } from 'types/openfisca_variables';
 
 export default function CalculateBlock(props) {
@@ -202,6 +210,15 @@ export default function CalculateBlock(props) {
       ).hide = true;
     }
 
+    if (formItem.name === D17_ESSJun24_split_system) {
+      const field_safety_requirement = formValues.find((v) => v.name === D17_ESSJun24_safety_requirement);
+      if (field_safety_requirement !== undefined && formItem.form_value === true) {
+        field_safety_requirement.hide = false;
+      } else if (field_safety_requirement !== undefined && formItem.form_value === false) {
+        field_safety_requirement.hide = true;
+      }
+    }
+
     if (formItem.name === F16_electric_PDRSDec24__storage_volume && formItem.form_value === true) {
       formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = false;
     } else if (
@@ -209,6 +226,27 @@ export default function CalculateBlock(props) {
       formItem.form_value === false
     ) {
       formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = true;
+    }
+
+    if (formItem.name === F16_electric_PDRSDec24__split_system && formItem.form_value === true) {
+      formValues.find((v) => v.name === F16_electric_PDRSDec24__safety_requirement).hide = false;
+    } else if (
+      formItem.name === F16_electric_PDRSDec24__split_system &&
+      formItem.form_value === false
+    ) {
+      formValues.find((v) => v.name === F16_electric_PDRSDec24__safety_requirement).hide = true;
+    }
+
+    if (formItem.name === F16_gas_split_system && formItem.form_value === true) {
+      formValues.find((v) => v.name === F16_gas_safety_requirement).hide = false;
+    } else if (formItem.name === F16_gas_split_system && formItem.form_value === false) {
+      formValues.find((v) => v.name === F16_gas_safety_requirement).hide = true;
+    }
+
+    if (formItem.name === F16_gas_storage_volume && formItem.form_value === true) {
+      formValues.find((v) => v.name === F16_gas_certified).hide = false;
+    } else if (formItem.name === F16_gas_storage_volume && formItem.form_value === false) {
+      formValues.find((v) => v.name === F16_gas_certified).hide = true;
     }
 
     if (formItem.name === SYS2_PDRSAug24_new_installation_or_replacement ||

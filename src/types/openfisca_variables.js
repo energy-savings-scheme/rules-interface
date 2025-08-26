@@ -60,6 +60,9 @@ export const BESS1_PDRSDec24_inverter_warranty_length_eligible =
 export const BESS2_V5Nov24_usable_battery_capacity = 'BESS2_V5Nov24_usable_battery_capacity';
 
 export const D17_ESSJun24_ESC_calculation = 'D17_ESSJun24_ESC_calculation';
+export const D17_ESSJun24_split_system = 'D17_ESSJun24_split_system';
+export const D17_ESSJun24_safety_requirement = 'D17_ESSJun24_safety_requirement';
+
 export const D18_ESSJun24_ESC_calculation = 'D18_ESSJun24_ESC_calculation';
 export const D19_ESSJun24_ESC_calculation = 'D19_ESSJun24_ESC_calculation';
 export const D20_ESSJun24_ESC_calculation = 'D20_ESSJun24_ESC_calculation';
@@ -78,6 +81,8 @@ export const F16_electric_PDRSDec24_HP_elec = 'F16_electric_PDRSDec24_HP_elec';
 export const F16_electric_PDRSDec24_HP_gas = 'F16_electric_PDRSDec24_HP_gas';
 
 export const F16_electric_PDRSDec24_ESC_calculation = 'F16_electric_PDRSDec24_ESC_calculation';
+export const F16_electric_PDRSDec24__safety_requirement = 'F16_electric_PDRSDec24__safety_requirement';
+export const F16_electric_PDRSDec24__split_system = 'F16_electric_PDRSDec24__split_system';
 export const WH1_F16_electric_PDRSAug24_PRC_calculation =
   'WH1_F16_electric_PDRSAug24_PRC_calculation';
 export const F16_electric_PDRSDec24_energy_savings = 'F16_electric_PDRSDec24_energy_savings';
@@ -94,6 +99,10 @@ export const F16_gas_com_peak_load = 'F16_gas_com_peak_load';
 export const F16_gas_HP_capacity_factor = 'F16_gas_HP_capacity_factor';
 export const F16_gas_HP_elec = 'F16_gas_HP_elec';
 export const F16_gas_HP_gas = 'F16_gas_HP_gas';
+export const F16_gas_split_system = 'F16_gas_split_system';
+export const F16_gas_safety_requirement = 'F16_gas_safety_requirement';
+export const F16_gas_storage_volume = 'F16_gas_storage_volume';
+export const F16_gas_certified = 'F16_gas_certified';
 
 // Water heater F17
 export const F17_number_of_heat_pumps = 'F17_number_of_heat_pumps';
