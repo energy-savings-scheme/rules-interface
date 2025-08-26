@@ -14,6 +14,10 @@ import {
   F16_electric_PDRSDec24__certified,
   F16_electric_PDRSDec24__split_system,
   F16_electric_PDRSDec24__safety_requirement,
+  F16_gas_split_system,
+  F16_gas_safety_requirement,
+  F16_gas_storage_volume,
+  F16_gas_certified,
   SYS2_PDRSAug24_new_installation_or_replacement,
   HVAC1_PDRSAug24_new_installation_or_replacement,
   HVAC2_new_installation_or_replacement,
@@ -220,6 +224,18 @@ export default function CalculateBlock(props) {
       formItem.form_value === false
     ) {
       formValues.find((v) => v.name === F16_electric_PDRSDec24__safety_requirement).hide = true;
+    }
+
+    if (formItem.name === F16_gas_split_system && formItem.form_value === true) {
+      formValues.find((v) => v.name === F16_gas_safety_requirement).hide = false;
+    } else if (formItem.name === F16_gas_split_system && formItem.form_value === false) {
+      formValues.find((v) => v.name === F16_gas_safety_requirement).hide = true;
+    }
+
+    if (formItem.name === F16_gas_storage_volume && formItem.form_value === true) {
+      formValues.find((v) => v.name === F16_gas_certified).hide = false;
+    } else if (formItem.name === F16_gas_storage_volume && formItem.form_value === false) {
+      formValues.find((v) => v.name === F16_gas_certified).hide = true;
     }
 
     if (formItem.name === SYS2_PDRSAug24_new_installation_or_replacement ||
