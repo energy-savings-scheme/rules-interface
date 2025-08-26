@@ -18,6 +18,10 @@ import {
   F16_gas_safety_requirement,
   F16_gas_storage_volume,
   F16_gas_certified,
+  F17_storage_volume,
+  F17_certified,
+  F17_split_system,
+  F17_safety_requirement,
   SYS2_PDRSAug24_new_installation_or_replacement,
   HVAC1_PDRSAug24_new_installation_or_replacement,
   HVAC2_new_installation_or_replacement,
@@ -236,6 +240,24 @@ export default function CalculateBlock(props) {
       formValues.find((v) => v.name === F16_gas_certified).hide = false;
     } else if (formItem.name === F16_gas_storage_volume && formItem.form_value === false) {
       formValues.find((v) => v.name === F16_gas_certified).hide = true;
+    }
+
+    if (formItem.name === F17_split_system) {
+      const field_safety_requirement = formValues.find((v) => v.name === F17_safety_requirement);
+      if (field_safety_requirement !== undefined && formItem.form_value === true) {
+        field_safety_requirement.hide = false;
+      } else if (field_safety_requirement !== undefined && formItem.form_value === false) {
+        field_safety_requirement.hide = true;
+      }
+    }
+
+    if (formItem.name === F17_storage_volume) {
+      const field_certified = formValues.find((v) => v.name === F17_certified);
+      if (field_certified !== undefined && formItem.form_value === true) {
+        field_certified.hide = false;
+      } else if (field_certified !== undefined && formItem.form_value === false) {
+        field_certified.hide = true;
+      }
     }
 
     if (formItem.name === SYS2_PDRSAug24_new_installation_or_replacement ||
@@ -582,14 +604,6 @@ export default function CalculateBlock(props) {
           removeItem(formValues, 'F7_PDRSAug24_existing_equipment_rated_output');
           removeItem(formValues, 'F7_PDRSAug24_existing_equipment_motor_frequency');
           removeItem(formValues, 'F7_PDRSAug24_existing_equipment_no_of_poles');
-        }
-      }
-
-      if (formItem.name === 'F17_storage_volume') {
-        if (e.target.value === 'less_than_or_equal_to_700_L') {
-          formValues.find((v) => v.name === 'F17_certified').hide = false;
-        } else {
-          formValues.find((v) => v.name === 'F17_certified').hide = true;
         }
       }
 
