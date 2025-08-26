@@ -112,6 +112,7 @@ export const SYS2_PDRSAug24_new_installation_or_replacement = 'SYS2_PDRSAug24_ne
 export const SYS2_PDRSAug24_maximum_tested_input_power = 'SYS2_PDRSAug24_maximum_tested_input_power';
 export const SYS2_PDRSAug24_daily_run_time = 'SYS2_PDRSAug24_daily_run_time';
 export const SYS2_PDRSAug24_projected_annual_energy_consumption = 'SYS2_PDRSAug24_projected_annual_energy_consumption';
+export const SYS2_PDRSAug24_nameplate_input_power = 'SYS2_PDRSAug24_nameplate_input_power';
 
 // CORE ELIGIBILITY
 export const ESS__PDRS__ACP_base_scheme_eligibility = 'ESS__PDRS__ACP_base_scheme_eligibility';

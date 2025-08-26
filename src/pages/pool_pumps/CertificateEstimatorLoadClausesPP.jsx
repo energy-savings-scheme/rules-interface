@@ -13,7 +13,8 @@ import {
   SYS2_PDRSAug24_PDRS__postcode,
   SYS2_PDRSAug24_maximum_tested_input_power,
   SYS2_PDRSAug24_daily_run_time,
-  SYS2_PDRSAug24_projected_annual_energy_consumption
+  SYS2_PDRSAug24_projected_annual_energy_consumption,
+  SYS2_PDRSAug24_nameplate_input_power
 } from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
@@ -152,6 +153,13 @@ export default function CertificateEstimatorLoadClausesPP(props) {
           };
 
           formItem.form_value = dic[metadata['star_rating']];
+        }
+
+        // SYS2_PDRSAug24_nameplate_input_power didn't exist in openfisca anymore
+        // but it still exist on djangoAPI, so we need to hide it for now.
+        //TODO: remove this when SYS2_PDRSAug24_nameplate_input_power is removed from djangoAPI
+        if (formItem.name === SYS2_PDRSAug24_nameplate_input_power) {
+          formItem.hide = true;
         }
 
         if (formItem.name === SYS2_PDRSAug24_maximum_tested_input_power) {
