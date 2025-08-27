@@ -9,7 +9,12 @@ import Button from 'nsw-ds-react/button/button';
 import { Alert } from 'nsw-ds-react/alert/alert';
 import OpenFiscaApi from 'services/openfisca_api';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
-import {SYS2_PDRSAug24_PDRS__postcode} from 'types/openfisca_variables';
+import {
+  SYS2_PDRSAug24_PDRS__postcode,
+  SYS2_PDRSAug24_maximum_tested_input_power,
+  SYS2_PDRSAug24_daily_run_time,
+  SYS2_PDRSAug24_projected_annual_energy_consumption
+} from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
 export default function CertificateEstimatorLoadClausesPP(props) {
@@ -149,15 +154,15 @@ export default function CertificateEstimatorLoadClausesPP(props) {
           formItem.form_value = dic[metadata['star_rating']];
         }
 
-        if (formItem.name === 'SYS2_PDRSAug24_nameplate_input_power') {
+        if (formItem.name === SYS2_PDRSAug24_maximum_tested_input_power) {
           formItem.form_value = metadata['input_power'];
         }
 
-        if (formItem.name === 'SYS2_PDRSAug24_daily_run_time') {
+        if (formItem.name === SYS2_PDRSAug24_daily_run_time) {
           formItem.form_value = metadata['daily_run_time'];
         }
 
-        if (formItem.name === 'SYS2_PDRSAug24_projected_annual_energy_consumption') {
+        if (formItem.name === SYS2_PDRSAug24_projected_annual_energy_consumption) {
           formItem.form_value = metadata['labelled_energy_consumption'];
         }
 
