@@ -22,7 +22,11 @@ import {
   HVAC1_PDRSAug24_new_installation_or_replacement,
   HVAC2_new_installation_or_replacement,
   D17_ESSJun24_split_system,
-  D17_ESSJun24_safety_requirement
+  D17_ESSJun24_safety_requirement,
+  RF2_F1_2_ESSJun24_equipment_replaced,
+  RF2_F1_2_ESSJun24_same_product_class,
+  RF2_F1_2_ESSJun24_qualified_install_removal,
+  RF2_F1_2_ESSJun24_legal_disposal
 } from 'types/openfisca_variables';
 
 export default function CalculateBlock(props) {
@@ -152,18 +156,25 @@ export default function CalculateBlock(props) {
       }
     }
 
-    if (
-      formItem.name === 'RF2_equipment_replaced' &&
-      (formItem.form_value === false || formItem.default_value === false)
-    ) {
-      formValues.find((v) => v.name === 'RF2_installation').hide = false;
-      formValues.find((v) => v.name === 'RF2_legal_disposal').hide = true;
-    } else if (
-      formItem.name === 'RF2_equipment_replaced' &&
-      (formItem.form_value === true || formItem.default_value === true)
-    ) {
-      formValues.find((v) => v.name === 'RF2_installation').hide = true;
-      formValues.find((v) => v.name === 'RF2_legal_disposal').hide = false;
+    if (formItem.name === RF2_F1_2_ESSJun24_equipment_replaced) {
+      const question_replacements = [
+        RF2_F1_2_ESSJun24_same_product_class,
+        RF2_F1_2_ESSJun24_qualified_install_removal,
+        RF2_F1_2_ESSJun24_legal_disposal,
+      ]
+      if (formItem.form_value === false) {
+        formValues.forEach(field => {
+          if (question_replacements.includes(field.name)) {
+            field.hide = true
+          }
+        })
+      } else if (formItem.form_value === true) {
+        formValues.forEach(field => {
+          if (question_replacements.includes(field.name)) {
+            field.hide = false
+          }
+        })
+      }
     }
 
     if (

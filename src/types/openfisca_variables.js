@@ -119,5 +119,13 @@ export const F7_PDRSAug24_energy_savings = 'F7_PDRSAug24_energy_savings';
 export const SYS2_PDRSAug24_replacement_final_activity_eligibility = 'SYS2_PDRSAug24_replacement_final_activity_eligibility';
 export const SYS2_PDRSAug24_new_installation_or_replacement = 'SYS2_PDRSAug24_new_installation_or_replacement';
 
+// REFRIGERATED CABINET
+export const RF2_F1_2_ESSJun24_equipment_replaced = 'RF2_F1_2_ESSJun24_equipment_replaced';
+export const RF2_F1_2_ESSJun24_same_product_class = 'RF2_F1_2_ESSJun24_same_product_class';
+export const RF2_F1_2_ESSJun24_qualified_install_removal = 'RF2_F1_2_ESSJun24_qualified_install_removal';
+export const RF2_F1_2_ESSJun24_legal_disposal = 'RF2_F1_2_ESSJun24_legal_disposal';
+export const RF2_F1_2_ESSJun24_display_sides = 'RF2_F1_2_ESSJun24_display_sides';
+
+
 // CORE ELIGIBILITY
 export const ESS__PDRS__ACP_base_scheme_eligibility = 'ESS__PDRS__ACP_base_scheme_eligibility';
