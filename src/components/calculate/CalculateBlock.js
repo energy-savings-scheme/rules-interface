@@ -21,6 +21,8 @@ import {
   SYS2_PDRSAug24_new_installation_or_replacement,
   HVAC1_PDRSAug24_new_installation_or_replacement,
   HVAC2_new_installation_or_replacement,
+  D17_ESSJun24_split_system,
+  D17_ESSJun24_safety_requirement
 } from 'types/openfisca_variables';
 
 export default function CalculateBlock(props) {
@@ -206,6 +208,15 @@ export default function CalculateBlock(props) {
       formValues.find(
         (v) => v.name === 'HVAC2_installed_centralised_system_common_area_BCA_Class2_building',
       ).hide = true;
+    }
+
+    if (formItem.name === D17_ESSJun24_split_system) {
+      const field_safety_requirement = formValues.find((v) => v.name === D17_ESSJun24_safety_requirement);
+      if (field_safety_requirement !== undefined && formItem.form_value === true) {
+        field_safety_requirement.hide = false;
+      } else if (field_safety_requirement !== undefined && formItem.form_value === false) {
+        field_safety_requirement.hide = true;
+      }
     }
 
     if (formItem.name === F16_electric_PDRSDec24__storage_volume && formItem.form_value === true) {
