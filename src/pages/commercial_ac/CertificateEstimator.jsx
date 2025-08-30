@@ -239,13 +239,13 @@ export default function CertificateEstimatorHVAC(props) {
   }, [selectedBrand]);
 
   useEffect(() => {
-    if (parseInt(calculationResult) === 0) {
+    if (parseInt(calculationResult2) === 0) {
       setAnnualEnergySavingsNumber(0);
     }
   }, [calculationResult]);
 
   useEffect(() => {
-    if (parseInt(calculationResult2) === 0) {
+    if (parseInt(calculationResult) === 0) {
       setPeakDemandReductionSavingsNumber(0);
     }
   }, [calculationResult2]);
