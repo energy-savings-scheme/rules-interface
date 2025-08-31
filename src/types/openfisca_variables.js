@@ -71,6 +71,10 @@ export const D19_ESSJun24_ESC_calculation = 'D19_ESSJun24_ESC_calculation';
 export const D20_ESSJun24_ESC_calculation = 'D20_ESSJun24_ESC_calculation';
 export const F17_ESC_calculation = 'F17_ESC_calculation';
 
+// Water heater D19
+export const D19_ESSJun24_split_system = 'D19_ESSJun24_split_system';
+export const D19_ESSJun24_safety_requirement = 'D19_ESSJun24_safety_requirement';
+
 // Water heater electric (F16)
 export const F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility =
   'F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility';
