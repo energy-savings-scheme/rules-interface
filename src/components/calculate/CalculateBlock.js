@@ -28,7 +28,13 @@ import {
   D17_ESSJun24_split_system,
   D17_ESSJun24_safety_requirement,
   D19_ESSJun24_split_system,
-  D19_ESSJun24_safety_requirement
+  D19_ESSJun24_safety_requirement,
+  RF2_F1_2_ESSJun24_equipment_replaced,
+  RF2_F1_2_ESSJun24_same_product_class,
+  RF2_F1_2_ESSJun24_qualified_install_removal,
+  RF2_F1_2_ESSJun24_legal_disposal,
+  RF2_F1_2_ESSJun24_EEI_under_77,
+  RF2_F1_2_ESSJun24_EEI_under_81
 } from 'types/openfisca_variables';
 
 export default function CalculateBlock(props) {
@@ -156,20 +162,6 @@ export default function CalculateBlock(props) {
         removeItem(formValues, 'F7_PDRSAug24_existing_equipment_motor_frequency');
         removeItem(formValues, 'F7_PDRSAug24_existing_equipment_no_of_poles');
       }
-    }
-
-    if (
-      formItem.name === 'RF2_equipment_replaced' &&
-      (formItem.form_value === false || formItem.default_value === false)
-    ) {
-      formValues.find((v) => v.name === 'RF2_installation').hide = false;
-      formValues.find((v) => v.name === 'RF2_legal_disposal').hide = true;
-    } else if (
-      formItem.name === 'RF2_equipment_replaced' &&
-      (formItem.form_value === true || formItem.default_value === true)
-    ) {
-      formValues.find((v) => v.name === 'RF2_installation').hide = true;
-      formValues.find((v) => v.name === 'RF2_legal_disposal').hide = false;
     }
 
     if (
@@ -395,22 +387,43 @@ export default function CalculateBlock(props) {
         }
       }
 
-      // cooling capacity path
-      if (formItem.name === 'RF2_equipment_replaced') {
-        if (e.target.value === 'true') {
-          formValues.find((v) => v.name === 'RF2_installation').hide = true;
-        } else {
-          formValues.find((v) => v.name === 'RF2_installation').hide = false;
-        }
-      }
-
-      if (formItem.name === 'RF2_GEMS_product_class_5') {
-        if (e.target.value === 'true') {
-          formValues.find((v) => v.name === 'RF2_EEI_under_51').hide = false;
-          formValues.find((v) => v.name === 'RF2_EEI_under_81').hide = true;
-        } else {
-          formValues.find((v) => v.name === 'RF2_EEI_under_51').hide = true;
-          formValues.find((v) => v.name === 'RF2_EEI_under_81').hide = false;
+      if (formItem.name === RF2_F1_2_ESSJun24_equipment_replaced) {
+        const question_replacements = [
+          RF2_F1_2_ESSJun24_same_product_class,
+          RF2_F1_2_ESSJun24_qualified_install_removal,
+          RF2_F1_2_ESSJun24_legal_disposal,
+        ]
+        // New installation
+        if (e.target.value === 'false') {
+          formValues.forEach(field => {
+            // Hide all questions replacement
+            if (question_replacements.includes(field.name)) {
+              field.hide = true
+            }
+            // Hide question EEI under 81 and show question EEI under 77
+            if (field.name === RF2_F1_2_ESSJun24_EEI_under_77) {
+              field.hide = false
+            }
+            if (field.name === RF2_F1_2_ESSJun24_EEI_under_81) {
+              field.hide = true
+            }
+          })
+          
+        // Replacement
+        } else if (e.target.value === 'true') {
+          formValues.forEach(field => {
+            // Show all questions replacement
+            if (question_replacements.includes(field.name)) {
+              field.hide = false
+            }
+            // Hide question EEI under 77 and show question EEI under 81
+            if (field.name === RF2_F1_2_ESSJun24_EEI_under_77) {
+              field.hide = true
+            }
+            if (field.name === RF2_F1_2_ESSJun24_EEI_under_81) {
+              field.hide = false
+            }
+          })
         }
       }
 

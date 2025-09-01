@@ -131,5 +131,16 @@ export const SYS2_PDRSAug24_daily_run_time = 'SYS2_PDRSAug24_daily_run_time';
 export const SYS2_PDRSAug24_projected_annual_energy_consumption = 'SYS2_PDRSAug24_projected_annual_energy_consumption';
 export const SYS2_PDRSAug24_nameplate_input_power = 'SYS2_PDRSAug24_nameplate_input_power';
 
+// REFRIGERATED CABINET
+export const RF2_F1_2_ESSJun24_equipment_replaced = 'RF2_F1_2_ESSJun24_equipment_replaced';
+export const RF2_F1_2_ESSJun24_same_product_class = 'RF2_F1_2_ESSJun24_same_product_class';
+export const RF2_F1_2_ESSJun24_qualified_install_removal = 'RF2_F1_2_ESSJun24_qualified_install_removal';
+export const RF2_F1_2_ESSJun24_legal_disposal = 'RF2_F1_2_ESSJun24_legal_disposal';
+export const RF2_F1_2_ESSJun24_display_sides = 'RF2_F1_2_ESSJun24_display_sides';
+export const RF2_F1_2_ESSJun24_GEMS_product_class_5 = 'RF2_F1_2_ESSJun24_GEMS_product_class_5';
+export const RF2_F1_2_ESSJun24_EEI_under_51 = 'RF2_F1_2_ESSJun24_EEI_under_51';
+export const RF2_F1_2_ESSJun24_EEI_under_77 = 'RF2_F1_2_ESSJun24_EEI_under_77';
+export const RF2_F1_2_ESSJun24_EEI_under_81 = 'RF2_F1_2_ESSJun24_EEI_under_81';
+
 // CORE ELIGIBILITY
 export const ESS__PDRS__ACP_base_scheme_eligibility = 'ESS__PDRS__ACP_base_scheme_eligibility';
