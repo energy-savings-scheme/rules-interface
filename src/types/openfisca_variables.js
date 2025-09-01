@@ -68,6 +68,10 @@ export const D19_ESSJun24_ESC_calculation = 'D19_ESSJun24_ESC_calculation';
 export const D20_ESSJun24_ESC_calculation = 'D20_ESSJun24_ESC_calculation';
 export const F17_ESC_calculation = 'F17_ESC_calculation';
 
+// Water heater D19
+export const D19_ESSJun24_split_system = 'D19_ESSJun24_split_system';
+export const D19_ESSJun24_safety_requirement = 'D19_ESSJun24_safety_requirement';
+
 // Water heater electric (F16)
 export const F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility =
   'F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility';
@@ -110,6 +114,10 @@ export const F17_total_heat_pump_thermal_capacity = 'F17_total_heat_pump_thermal
 export const F17_com_peak_load = 'F17_com_peak_load';
 export const F17_HP_elec = 'F17_HP_elec';
 export const F17_HP_gas = 'F17_HP_gas';
+export const F17_storage_volume = 'F17_storage_volume';
+export const F17_certified = 'F17_certified';
+export const F17_split_system = 'F17_split_system';
+export const F17_safety_requirement = 'F17_safety_requirement';
 
 // COMMERCIAL MOTOR
 export const F7_PDRSAug24_ESC_calculation = 'F7_PDRSAug24_ESC_calculation';
@@ -118,6 +126,10 @@ export const F7_PDRSAug24_energy_savings = 'F7_PDRSAug24_energy_savings';
 // POOL PUMPS
 export const SYS2_PDRSAug24_replacement_final_activity_eligibility = 'SYS2_PDRSAug24_replacement_final_activity_eligibility';
 export const SYS2_PDRSAug24_new_installation_or_replacement = 'SYS2_PDRSAug24_new_installation_or_replacement';
+export const SYS2_PDRSAug24_maximum_tested_input_power = 'SYS2_PDRSAug24_maximum_tested_input_power';
+export const SYS2_PDRSAug24_daily_run_time = 'SYS2_PDRSAug24_daily_run_time';
+export const SYS2_PDRSAug24_projected_annual_energy_consumption = 'SYS2_PDRSAug24_projected_annual_energy_consumption';
+export const SYS2_PDRSAug24_nameplate_input_power = 'SYS2_PDRSAug24_nameplate_input_power';
 
 // REFRIGERATED CABINET
 export const RF2_F1_2_ESSJun24_equipment_replaced = 'RF2_F1_2_ESSJun24_equipment_replaced';
