@@ -15,6 +15,12 @@ import {
   updateSegmentCaptureAnalytics,
   clearSearchCaptureAnalytics
 } from 'lib/analytics';
+import { 
+  RF2_F1_2_ESSJun24_equipment_replaced,
+  RF2_F1_2_ESSJun24_GEMS_product_class_5,
+  RF2_F1_2_ESSJun24_EEI_under_51,
+  RF2_F1_2_ESSJun24_EEI_under_77
+} from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
 import {BASE_COMMERCIAL_REFRIGERATED_CABINET_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
@@ -72,15 +78,15 @@ export default function ActivityRequirementsRF2(props) {
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
 
       const names = [
-        'RF2_installation',
-        'RF2_EEI_under_51',
-        'RF2_EEI_under_81',
-        'RF2_legal_disposal',
+        RF2_F1_2_ESSJun24_GEMS_product_class_5,
+        RF2_F1_2_ESSJun24_EEI_under_51,
+        RF2_F1_2_ESSJun24_EEI_under_77
       ];
 
       dep_arr = array.filter((item) => names.includes(item.name));
       array.find((item) => {
         if (names.includes(item.name)) {
+          console.log(`item name: ${item.name}`);
           item.hide = true;
         }
       });
@@ -97,6 +103,9 @@ export default function ActivityRequirementsRF2(props) {
 
   useEffect(() => {
     let new_arr = [];
+    const excludeClauses = [
+      RF2_F1_2_ESSJun24_equipment_replaced // replacement or new installation are now eligible
+    ]
 
     formValues
       .filter((x) => x.hide === false)
@@ -104,10 +113,9 @@ export default function ActivityRequirementsRF2(props) {
         if (
           child.form_value !== child.default_value &&
           new_arr.find((o) => o.name === child.name) === undefined &&
-          child.value_type === 'Boolean'
-        )
-          new_arr.push(child);
-        else if (child.form_value !== child.default_value && child.value_type === 'String') {
+          child.value_type === 'Boolean' &&
+          !excludeClauses.includes(child.name)
+        ) {
           new_arr.push(child);
         }
       });
