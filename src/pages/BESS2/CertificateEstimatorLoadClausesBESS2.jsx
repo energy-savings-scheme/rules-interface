@@ -226,7 +226,7 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
                     {Math.floor(calculationResult) === 0
                       ? 0
                       : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
-                  </b> kWh
+                  </b> kW
                 </p>
                 <p>
                   As this activity is only eligible for the Peak Demand Reduction Scheme, it
