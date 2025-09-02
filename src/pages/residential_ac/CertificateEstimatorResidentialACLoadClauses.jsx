@@ -336,7 +336,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                     {Math.floor(calculationResult) === 0
                       ? 0
                       : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
-                  </b> kWh
+                  </b> kW
                 </p>
 
                 <p>
