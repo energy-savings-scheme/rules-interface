@@ -320,7 +320,7 @@ export default function CertificateEstimatorLoadClausesPP(props) {
                     {Math.floor(calculationResult) === 0
                       ? 0
                       : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
-                  </b> kWh
+                  </b> kW
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not
