@@ -262,11 +262,12 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
                 width: '80%',
               }}
             >
-              <CertificiatePrice
+              {/* Temporary hide Certificate Price for now to prevent misinterpretation and misuse */}
+              {/* <CertificiatePrice
                 prcCertificates={calculationResult}
                 prcMinPrice={prcMinPrice}
                 prcMaxPrice={prcMaxPrice}
-              />
+              /> */}
               <div className="nsw-col-md-9" style={{ marginBottom: '1.25rem' }}>
                 <Button
                   style={{ float: 'left' }}
