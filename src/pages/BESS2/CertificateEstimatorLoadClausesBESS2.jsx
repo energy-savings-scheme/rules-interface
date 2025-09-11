@@ -226,7 +226,7 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
                     {Math.floor(calculationResult) === 0
                       ? 0
                       : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
-                  </b> kWh
+                  </b> kW
                 </p>
                 <p>
                   As this activity is only eligible for the Peak Demand Reduction Scheme, it
@@ -262,11 +262,12 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
                 width: '80%',
               }}
             >
-              <CertificiatePrice
+              {/* Temporary hide Certificate Price for now to prevent misinterpretation and misuse */}
+              {/* <CertificiatePrice
                 prcCertificates={calculationResult}
                 prcMinPrice={prcMinPrice}
                 prcMaxPrice={prcMaxPrice}
-              />
+              /> */}
               <div className="nsw-col-md-9" style={{ marginBottom: '1.25rem' }}>
                 <Button
                   style={{ float: 'left' }}
