@@ -79,25 +79,33 @@ export function clearSearchCaptureAnalytics() {
   delete feedbackFormAnalytics.values.sf_model
 }
 
-export function submitEstimatorFormAnalytics() {
-  RegistryApi.sendToGoogleAnalytics({
-    client_id: getClientID(),
-    event: estimatorFormAnalytics.event,
-    params: {
-      ...estimatorFormAnalytics.values,
-      submittedAt: moment().utc().format()
-    }
-  })
+export async function submitEstimatorFormAnalytics() {
+  try {
+    await RegistryApi.sendToGoogleAnalytics({
+      client_id: getClientID(),
+      event: estimatorFormAnalytics.event,
+      params: {
+        ...estimatorFormAnalytics.values,
+        submittedAt: moment().utc().format()
+      }
+    })
+  } catch(err) {
+    console.log(err.data.error)
+  }
 }
 
-export function submitFeedbackFormAnalytics(isHelpful) {
-  RegistryApi.sendToGoogleAnalytics({
-    client_id: getClientID(),
-    event: feedbackFormAnalytics.event,
-    params: {
-      ...feedbackFormAnalytics.values,
-      sf_isHelpful: isHelpful,
-      submittedAt: moment().utc().format()
-    }
-  })
+export async function submitFeedbackFormAnalytics(isHelpful) {
+  try {
+    await RegistryApi.sendToGoogleAnalytics({
+      client_id: getClientID(),
+      event: feedbackFormAnalytics.event,
+      params: {
+        ...feedbackFormAnalytics.values,
+        sf_isHelpful: isHelpful,
+        submittedAt: moment().utc().format()
+      }
+    })
+  } catch (err) {
+    console.log(err.data.error)
+  }
 }
