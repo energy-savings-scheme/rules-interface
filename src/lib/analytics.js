@@ -1,4 +1,5 @@
 import moment from 'moment'
+import RegistryApi from 'services/registry_api'
 
 class FormAnalytics {
   constructor(event) {
@@ -9,6 +10,19 @@ class FormAnalytics {
   updateData(values) {
     Object.assign(this.values, values)
   }
+}
+
+function getClientID() {
+  const cookieMatch = document.cookie.match(/_ga=([^;]*)/);
+  if (cookieMatch && cookieMatch[1]) {
+    const raw = cookieMatch[1];
+    const parts = raw.split('.');
+    if (parts.length >= 2) {
+      // The last two parts are the client ID: a unique ID and a timestamp
+      return parts[2] + '.' + parts[3];
+    }
+  }
+  return null; 
 }
 
 const estimatorFormAnalytics = new FormAnalytics('SafeguardSubmission')
@@ -66,24 +80,24 @@ export function clearSearchCaptureAnalytics() {
 }
 
 export function submitEstimatorFormAnalytics() {
-  window.dataLayer = window.dataLayer || [];
-  const submittedData = {
-    ...estimatorFormAnalytics.values,
+  RegistryApi.sendToGoogleAnalytics({
+    client_id: getClientID(),
     event: estimatorFormAnalytics.event,
-    submittedAt: moment().utc().format()
-  }
-  window.dataLayer.push(submittedData);
-  console.log(`Estimator form analytics: ${JSON.stringify(submittedData)}`)
+    params: {
+      ...estimatorFormAnalytics.values,
+      submittedAt: moment().utc().format()
+    }
+  })
 }
 
 export function submitFeedbackFormAnalytics(isHelpful) {
-  window.dataLayer = window.dataLayer || [];
-  const submittedData = {
-    ...feedbackFormAnalytics.values,
+  RegistryApi.sendToGoogleAnalytics({
+    client_id: getClientID(),
     event: feedbackFormAnalytics.event,
-    sf_isHelpful: isHelpful,
-    submittedAt: moment().utc().format()
-  }
-  window.dataLayer.push(submittedData);
-  console.log(`Feedback form analytics: ${JSON.stringify(submittedData)}`)
+    params: {
+      ...feedbackFormAnalytics.values,
+      sf_isHelpful: isHelpful,
+      submittedAt: moment().utc().format()
+    }
+  })
 }

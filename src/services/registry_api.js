@@ -219,6 +219,14 @@ function getCertificatePrice() {
   })
 }
 
+function sendToGoogleAnalytics(payload) {
+  return RegistryApiBase({
+    url: '/send-google-analytic',
+    method: 'POST',
+    data: payload
+  })
+}
+
 const RegistryApi = {
   getCommercialHVACBrands,
   getCommercialHVACLastModified,
@@ -250,6 +258,7 @@ const RegistryApi = {
   getResidentialSolarBatteryModels,
   getResidentialSolarBatteryMetadata,
   getCertificatePrice,
+  sendToGoogleAnalytics
 };
 
 export default RegistryApi;
