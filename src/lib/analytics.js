@@ -1,4 +1,5 @@
 import moment from 'moment';
+import RegistryApi from 'services/registry_api';
 
 class FormAnalytics {
   constructor(event) {
@@ -11,8 +12,21 @@ class FormAnalytics {
   }
 }
 
-const estimatorFormAnalytics = new FormAnalytics('SafeguardSubmission');
-const feedbackFormAnalytics = new FormAnalytics('SafeguardFeedback');
+function getClientID() {
+  const cookieMatch = document.cookie.match(/_ga=([^;]*)/);
+  if (cookieMatch && cookieMatch[1]) {
+    const raw = cookieMatch[1];
+    const parts = raw.split('.');
+    if (parts.length >= 2) {
+      // The last two parts are the client ID: a unique ID and a timestamp
+      return parts[2] + '.' + parts[3];
+    }
+  }
+  return null; 
+}
+
+const estimatorFormAnalytics = new FormAnalytics('SafeguardSubmission')
+const feedbackFormAnalytics = new FormAnalytics('SafeguardFeedback')
 
 export function updateEstimatorFormAnalytics(values) {
   estimatorFormAnalytics.updateData(values);
@@ -65,25 +79,33 @@ export function clearSearchCaptureAnalytics() {
   delete feedbackFormAnalytics.values.sf_model;
 }
 
-export function submitEstimatorFormAnalytics() {
-  window.dataLayer = window.dataLayer || [];
-  const submittedData = {
-    ...estimatorFormAnalytics.values,
-    event: estimatorFormAnalytics.event,
-    submittedAt: moment().utc().format(),
-  };
-  window.dataLayer.push(submittedData);
-  console.log(`Estimator form analytics: ${JSON.stringify(submittedData)}`);
+export async function submitEstimatorFormAnalytics() {
+  try {
+    await RegistryApi.sendToGoogleAnalytics({
+      client_id: getClientID(),
+      event: estimatorFormAnalytics.event,
+      params: {
+        ...estimatorFormAnalytics.values,
+        submittedAt: moment().utc().format()
+      }
+    })
+  } catch(err) {
+    console.log(err.data.error)
+  }
 }
 
-export function submitFeedbackFormAnalytics(isHelpful) {
-  window.dataLayer = window.dataLayer || [];
-  const submittedData = {
-    ...feedbackFormAnalytics.values,
-    event: feedbackFormAnalytics.event,
-    sf_isHelpful: isHelpful,
-    submittedAt: moment().utc().format(),
-  };
-  window.dataLayer.push(submittedData);
-  console.log(`Feedback form analytics: ${JSON.stringify(submittedData)}`);
+export async function submitFeedbackFormAnalytics(isHelpful) {
+  try {
+    await RegistryApi.sendToGoogleAnalytics({
+      client_id: getClientID(),
+      event: feedbackFormAnalytics.event,
+      params: {
+        ...feedbackFormAnalytics.values,
+        sf_isHelpful: isHelpful,
+        submittedAt: moment().utc().format()
+      }
+    })
+  } catch (err) {
+    console.log(err.data.error)
+  }
 }
