@@ -221,7 +221,7 @@ function getCertificatePrice() {
 
 function sendToGoogleAnalytics(payload) {
   return RegistryApiBase({
-    url: '/send-google-analytic',
+    url: '/collect-data',
     method: 'POST',
     data: payload
   })
