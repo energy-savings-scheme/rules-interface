@@ -386,9 +386,9 @@ export default function CertificateEstimatorResidentialAC(props) {
                     </h5>
 
                     <FormGroup
+                      htmlId="user-type"
                       label="What is your interest in the scheme?"
                       helper="Select the option that best describes you"
-                      htmlId="user-type"
                     >
                       <Select
                         htmlId="user-type"
@@ -403,11 +403,13 @@ export default function CertificateEstimatorResidentialAC(props) {
                     </FormGroup>
 
                     <FormGroup
+                      htmlId="postcode"
                       label="Postcode"
                       helper="Postcode where the installation has taken place" // helper text (secondary label)
                       errorText="Invalid value!" // error text if invalid
                     >
                       <TextInput
+                        htmlId="postcode"
                         style={{ maxWidth: '50%' }}
                         as="input"
                         type="number"
@@ -422,18 +424,20 @@ export default function CertificateEstimatorResidentialAC(props) {
 
                     {postcode && postcode.length === 4 && (
                       <FormGroup
+                        htmlId="climate-zone"
                         label="BCA Climate Zone"
                         helper={
                           <span
                             dangerouslySetInnerHTML={{
                               __html:
-                                'Certain postcodes can belong to multiple climate zones, check your <a href="https://www.abcb.gov.au/resources/climate-zone-map" target="_blank">BCA Climate Zone on the map</a>',
+                                'Certain postcodes can belong to multiple climate zones, check your <a href="https://www.abcb.gov.au/abcb-climate-map" target="_blank">BCA Climate Zone on the map</a>',
                             }}
                           />
                         } // primary question text
                         errorText="Invalid value!" // error text if invalid
                       >
                         <Select
+                          htmlId="climate-zone"
                           style={{ maxWidth: '50%' }}
                           options={dropdownOptionsClimateZone}
                           onChange={(e) => {
@@ -445,11 +449,13 @@ export default function CertificateEstimatorResidentialAC(props) {
                       </FormGroup>
                     )}
                     <FormGroup
+                      htmlId="brand"
                       label="Brand"
                       helper="Select residential air conditioner brand" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
+                        htmlId="brand"
                         style={{ maxWidth: '50%' }}
                         options={dropdownOptions}
                         onChange={(e) => {
@@ -462,11 +468,13 @@ export default function CertificateEstimatorResidentialAC(props) {
                     </FormGroup>
 
                     <FormGroup
+                      htmlId="model"
                       label="Model"
                       helper="Select residential air conditioner model" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
+                        htmlId="model"
                         style={{ maxWidth: '50%' }}
                         options={dropdownOptionsModels}
                         onChange={(e) => {

@@ -137,9 +137,9 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
             </h5>
 
             <FormGroup
+              htmlId="user-type"
               label="What is your interest in the scheme?"
               helper="Select the option that best describes you"
-              htmlId="user-type"
             >
               <Select
                 htmlId="user-type"
@@ -221,7 +221,7 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
                   </span>
                 </p>
                 <p>
-                  Your estimated annual contribution to reducing peak summer energy demand is{' '}
+                  Your estimated contribution to reducing peak summer energy demand over the lifetime of the equipment is{' '}
                   <b>
                     {Math.floor(calculationResult) === 0
                       ? 0

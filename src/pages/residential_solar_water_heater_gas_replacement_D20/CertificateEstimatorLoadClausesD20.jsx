@@ -272,7 +272,7 @@ export default function CertificateEstimatorLoadClausesD20(props) {
                   </span>
                 </p>
                 <p>
-                  Your estimated annual energy savings are{' '}
+                  Your estimated energy savings over the lifetime of the equipment are{' '}
                   <b>
                     {Math.floor(calculationResult2) === 0
                       ? 0
