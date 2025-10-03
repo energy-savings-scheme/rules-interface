@@ -9,6 +9,7 @@ export default function FormTextInput(props) {
 
   return (
     <FormGroup
+      htmlId={formItem.name}
       helper={<span dangerouslySetInnerHTML={{ __html: formItem.metadata.display_question }} />} // primary label with URL
       label={formItem.metadata.label} // helper text (secondary label)
       error="Invalid value!" // error text if invalid
@@ -16,6 +17,7 @@ export default function FormTextInput(props) {
       style={formItem.hide ? { display: 'none' } : {}}
     >
       <TextInput
+        htmlId={formItem.name}
         style={{ maxWidth: '50%', marginBottom: '4%' }}
         as="input"
         number={['Float', 'Integer'].includes(formItem.value_type)}
