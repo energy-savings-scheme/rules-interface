@@ -320,7 +320,7 @@ export default function CertificateEstimatorLoadClauses(props) {
                   {/* </h4> */}
                 </p>
                 <p>
-                  Your estimated energy savings over the lifetime of the equipment is{' '}
+                  Your estimated energy savings over the lifetime of the equipment are{' '}
                   <b>
                     {Math.floor(calculationResult2) === 0
                       ? 0
