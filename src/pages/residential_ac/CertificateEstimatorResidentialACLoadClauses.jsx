@@ -53,7 +53,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
     escMinPrice,
     escMaxPrice,
     prcMinPrice,
-    prcMaxPrice
+    prcMaxPrice,
   } = props;
 
   const bca_mapping = {
@@ -312,19 +312,19 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{formatNumber(Math.floor(calculationResult2))}</b>
+                    <b data-ui-name="esc">{formatNumber(Math.floor(calculationResult2))}</b>
                   </span>
                   {/* </h4> */}
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   and your PRCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{formatNumber(Math.floor(calculationResult))}</b>
+                    <b data-ui-name="prc">{formatNumber(Math.floor(calculationResult))}</b>
                   </span>
                   {/* </h4> */}
                 </p>
                 <p>
                   Your estimated energy savings over the lifetime of the equipment are{' '}
-                  <b>
+                  <b data-ui-name="aes">
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
@@ -332,8 +332,8 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                 </p>
                 <p>
                   Your estimated peak demand reduction over the lifetime of the equipment is{' '}
-                  <b>
-                    {Math.floor(calculationResult) === 0
+                  <b data-ui-name="apdr">
+                  {Math.floor(calculationResult) === 0
                       ? 0
                       : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
                   </b> kW

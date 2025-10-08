@@ -11,7 +11,7 @@ import OpenFiscaApi from 'services/openfisca_api';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 import {
   HVAC2_PDRSAug24_PDRS__postcode,
-  HVAC2_PDRSAug24_BCA_Climate_Zone
+  HVAC2_PDRSAug24_BCA_Climate_Zone,
 } from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
@@ -56,7 +56,7 @@ export default function CertificateEstimatorLoadClauses(props) {
     escMinPrice,
     escMaxPrice,
     prcMinPrice,
-    prcMaxPrice
+    prcMaxPrice,
   } = props;
 
   const bca_mapping = {

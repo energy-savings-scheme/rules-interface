@@ -10,7 +10,7 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import {updateSegmentCaptureAnalytics} from 'lib/analytics';
+import { updateSegmentCaptureAnalytics } from 'lib/analytics';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 import { formatNumber } from 'lib/helper';
 
@@ -218,7 +218,8 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> MWh
+                  </b>{' '}
+                  MWh
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not

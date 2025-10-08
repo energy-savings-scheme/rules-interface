@@ -53,7 +53,7 @@ export default function CertificateEstimatorLoadClausesRC(props) {
     escMinPrice,
     escMaxPrice,
     prcMinPrice,
-    prcMaxPrice
+    prcMaxPrice,
   } = props;
 
   useEffect(() => {
