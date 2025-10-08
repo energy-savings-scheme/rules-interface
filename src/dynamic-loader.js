@@ -112,5 +112,4 @@ function loadEstimator() {
   return loadScript(scriptUrl);
 }
 
-// in this case filename declaration is in Drupal Page.
 loadEstimator();
