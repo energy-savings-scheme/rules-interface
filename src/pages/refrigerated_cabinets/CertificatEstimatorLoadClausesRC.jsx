@@ -284,7 +284,7 @@ export default function CertificateEstimatorLoadClausesRC(props) {
                   {/* </h4> */}
                 </p>
                 <p>
-                  Your estimated annual energy savings are{' '}
+                  Your estimated energy savings over the lifetime of the equipment are{' '}
                   <b>
                     {Math.floor(calculationResult2) === 0
                       ? 0
@@ -292,7 +292,7 @@ export default function CertificateEstimatorLoadClausesRC(props) {
                   </b> MWh
                 </p>
                 <p>
-                  Your estimated annual peak demand reduction is{' '}
+                  Your estimated peak demand reduction over the lifetime of the equipment is{' '}
                   <b>
                     {Math.floor(calculationResult) === 0
                       ? 0

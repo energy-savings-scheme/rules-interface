@@ -20,14 +20,14 @@ export default function FormTextInput(props) {
         htmlId={formItem.name}
         style={{ maxWidth: '50%', marginBottom: '4%' }}
         as="input"
-        number={['Float', 'Integer'].includes(formItem.value_type)}
-        type={['Float', 'Integer'].includes(formItem.value_type) ? 'number' : 'text'}
+        number={['Float', 'Int'].includes(formItem.value_type)}
+        type={['Float', 'Int'].includes(formItem.value_type) ? 'number' : 'text'}
         placeholder="Enter value"
         value={formItem.form_value}
         onChange={setItemValue}
         required
         readOnly={formItem.read_only ? true : false}
-        min={['Float', 'Integer'].includes(formItem.value_type) ? '0' : '0'} // Set min to 0 for Float and Integer types
+        min={['Float', 'Int'].includes(formItem.value_type) ? '0' : '0'} // Set min to 0 for Float and Integer types
       />
     </FormGroup>
   );
