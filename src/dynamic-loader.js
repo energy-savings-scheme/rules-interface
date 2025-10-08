@@ -53,7 +53,7 @@ function getFilenameFromPath() {
   const fullPath = window.location.pathname
   if (fullPath) {
     const path = fullPath.split('/').at(-1)
-    filename = pathToFilename(path)
+    filename = pathToFilename[path]
   }
 
   return filename
