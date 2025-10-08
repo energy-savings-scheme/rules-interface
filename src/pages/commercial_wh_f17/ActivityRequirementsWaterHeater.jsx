@@ -19,7 +19,7 @@ import {
   F17_certified,
   F17_safety_requirement,
   F17_split_system,
-  F17_storage_volume
+  F17_storage_volume,
 } from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
@@ -99,7 +99,7 @@ export default function ActivityRequirementsF17(props) {
 
   useEffect(() => {
     let new_arr = [];
-    const excludeClauses = [F17_split_system, F17_storage_volume]
+    const excludeClauses = [F17_split_system, F17_storage_volume];
 
     formValues
       .filter((x) => x.hide === false)

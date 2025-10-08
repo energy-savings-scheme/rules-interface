@@ -15,7 +15,7 @@ import {
   F17_total_heat_pump_thermal_capacity,
   F17_com_peak_load,
   F17_HP_elec,
-  F17_HP_gas
+  F17_HP_gas,
 } from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
@@ -294,7 +294,8 @@ export default function CertificateEstimatorLoadClausesF17(props) {
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> MWh
+                  </b>{' '}
+                  MWh
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not

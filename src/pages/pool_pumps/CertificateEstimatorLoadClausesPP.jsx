@@ -14,7 +14,7 @@ import {
   SYS2_PDRSAug24_maximum_tested_input_power,
   SYS2_PDRSAug24_daily_run_time,
   SYS2_PDRSAug24_projected_annual_energy_consumption,
-  SYS2_PDRSAug24_nameplate_input_power
+  SYS2_PDRSAug24_nameplate_input_power,
 } from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
@@ -312,7 +312,8 @@ export default function CertificateEstimatorLoadClausesPP(props) {
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> MWh
+                  </b>{' '}
+                  MWh
                 </p>
                 <p>
                   Your estimated peak demand reduction over the lifetime of the equipment is{' '}
@@ -320,7 +321,8 @@ export default function CertificateEstimatorLoadClausesPP(props) {
                     {Math.floor(calculationResult) === 0
                       ? 0
                       : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
-                  </b> kW
+                  </b>{' '}
+                  kW
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not
@@ -349,7 +351,7 @@ export default function CertificateEstimatorLoadClausesPP(props) {
                 width: '80%',
               }}
             >
-               <CertificiatePrice
+              <CertificiatePrice
                 prcCertificates={calculationResult}
                 escCertificates={calculationResult2}
                 escMinPrice={escMinPrice}

@@ -222,7 +222,8 @@ export default function CertificateEstimatorLoadClauses(props) {
                     <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    <b>BCA Climate Zone: </b> {selectedClimateZone.charAt(selectedClimateZone.length - 1)}
+                    <b>BCA Climate Zone: </b>{' '}
+                    {selectedClimateZone.charAt(selectedClimateZone.length - 1)}
                   </p>
                   <p>
                     <b>Brand: </b> {selectedBrand}
@@ -292,7 +293,8 @@ export default function CertificateEstimatorLoadClauses(props) {
                     <b>Postcode: </b> {postcode}
                   </p>
                   <p>
-                    <b>BCA Climate Zone: </b> {selectedClimateZone.charAt(selectedClimateZone.length - 1)}{' '}
+                    <b>BCA Climate Zone: </b>{' '}
+                    {selectedClimateZone.charAt(selectedClimateZone.length - 1)}{' '}
                   </p>
                   <p>
                     <b>Brand: </b> {selectedBrand}
@@ -325,7 +327,8 @@ export default function CertificateEstimatorLoadClauses(props) {
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> MWh
+                  </b>{' '}
+                  MWh
                 </p>
                 <p>
                   Your estimated peak demand reduction over the lifetime of the equipment is{' '}
@@ -333,7 +336,8 @@ export default function CertificateEstimatorLoadClauses(props) {
                     {Math.floor(calculationResult) === 0
                       ? 0
                       : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
-                  </b> kW
+                  </b>{' '}
+                  kW
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not

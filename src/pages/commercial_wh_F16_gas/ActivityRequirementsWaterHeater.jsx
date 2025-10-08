@@ -19,7 +19,7 @@ import {
   F16_gas_safety_requirement,
   F16_gas_split_system,
   F16_gas_storage_volume,
-  F16_gas_certified
+  F16_gas_certified,
 } from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
@@ -99,10 +99,7 @@ export default function ActivityRequirementsF16_gas(props) {
 
   useEffect(() => {
     let new_arr = [];
-    const excludeClauses = [
-      F16_gas_split_system,
-      F16_gas_storage_volume
-    ]
+    const excludeClauses = [F16_gas_split_system, F16_gas_storage_volume];
 
     formValues
       .filter((x) => x.hide === false)

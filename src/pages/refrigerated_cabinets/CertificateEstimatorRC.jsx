@@ -116,17 +116,17 @@ export default function CertificateEstimatorRC(props) {
   useEffect(() => {
     const fetchCertificatePrice = async function () {
       try {
-        const response = await RegistryApi.getCertificatePrice()
-        setEscMinPrice(Number(response.data.ESC.min_price))
-        setEscMaxPrice(Number(response.data.ESC.max_price))
-        setPrcMinPrice(Number(response.data.PRC.min_price))
-        setPrcMaxPrice(Number(response.data.PRC.max_price))
+        const response = await RegistryApi.getCertificatePrice();
+        setEscMinPrice(Number(response.data.ESC.min_price));
+        setEscMaxPrice(Number(response.data.ESC.max_price));
+        setPrcMinPrice(Number(response.data.PRC.min_price));
+        setPrcMaxPrice(Number(response.data.PRC.max_price));
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
-    }
+    };
 
-    fetchCertificatePrice()
+    fetchCertificatePrice();
   }, []);
 
   if (lastModified.length == 0) {
@@ -369,7 +369,7 @@ export default function CertificateEstimatorRC(props) {
                         onChange={(e) => {
                           setSelectedBrand(RF2Brands.find((item) => item === e.target.value));
                           setSelectedModel('');
-                          setSelectedProductClass('')
+                          setSelectedProductClass('');
                         }}
                         value={selectedBrand}
                         required
@@ -545,7 +545,10 @@ export default function CertificateEstimatorRC(props) {
             selectedModel &&
             selectedProductClass &&
             userType && (
-              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}>
+              <div
+                className="nsw-row"
+                style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}
+              >
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"
