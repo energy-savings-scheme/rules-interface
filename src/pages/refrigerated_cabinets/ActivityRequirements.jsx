@@ -15,11 +15,11 @@ import {
   updateSegmentCaptureAnalytics,
   clearSearchCaptureAnalytics,
 } from 'lib/analytics';
-import { 
+import {
   RF2_F1_2_ESSJun24_equipment_replaced,
   RF2_F1_2_ESSJun24_GEMS_product_class_5,
   RF2_F1_2_ESSJun24_EEI_under_51,
-  RF2_F1_2_ESSJun24_EEI_under_77
+  RF2_F1_2_ESSJun24_EEI_under_77,
 } from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
@@ -80,7 +80,7 @@ export default function ActivityRequirementsRF2(props) {
       const names = [
         RF2_F1_2_ESSJun24_GEMS_product_class_5,
         RF2_F1_2_ESSJun24_EEI_under_51,
-        RF2_F1_2_ESSJun24_EEI_under_77
+        RF2_F1_2_ESSJun24_EEI_under_77,
       ];
 
       dep_arr = array.filter((item) => names.includes(item.name));
@@ -104,8 +104,8 @@ export default function ActivityRequirementsRF2(props) {
   useEffect(() => {
     let new_arr = [];
     const excludeClauses = [
-      RF2_F1_2_ESSJun24_equipment_replaced // replacement or new installation are now eligible
-    ]
+      RF2_F1_2_ESSJun24_equipment_replaced, // replacement or new installation are now eligible
+    ];
 
     formValues
       .filter((x) => x.hide === false)

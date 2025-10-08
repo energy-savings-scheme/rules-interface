@@ -278,18 +278,17 @@ export default function CertificateEstimatorResidentialAC(props) {
   useEffect(() => {
     const fetchCertificatePrice = async function () {
       try {
-        const response = await RegistryApi.getCertificatePrice()
-        setEscMinPrice(Number(response.data.ESC.min_price))
-        setEscMaxPrice(Number(response.data.ESC.max_price))
-        setPrcMinPrice(Number(response.data.PRC.min_price))
-        setPrcMaxPrice(Number(response.data.PRC.max_price))
+        const response = await RegistryApi.getCertificatePrice();
+        setEscMinPrice(Number(response.data.ESC.min_price));
+        setEscMaxPrice(Number(response.data.ESC.max_price));
+        setPrcMinPrice(Number(response.data.PRC.min_price));
+        setPrcMaxPrice(Number(response.data.PRC.max_price));
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
+    };
 
-    }
-
-    fetchCertificatePrice()
+    fetchCertificatePrice();
   }, []);
 
   return (
@@ -380,18 +379,19 @@ export default function CertificateEstimatorResidentialAC(props) {
                   <br></br>
                   <br></br>
                   <br></br>
-                  <div className="nsw-content-block__content">
+                  <div data-ui-name="initial-form" className="nsw-content-block__content">
                     <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
                       <b>Please answer the following questions to calculate your ESCs and PRCs</b>
                     </h5>
 
                     <FormGroup
+                      htmlId="user-type"
                       label="What is your interest in the scheme?"
                       helper="Select the option that best describes you"
-                      htmlId="user-type"
                     >
                       <Select
                         htmlId="user-type"
+                        data-ui-name="user-type"
                         style={{ maxWidth: '50%' }}
                         options={USER_TYPE_OPTIONS}
                         onChange={(e) => {
@@ -403,11 +403,14 @@ export default function CertificateEstimatorResidentialAC(props) {
                     </FormGroup>
 
                     <FormGroup
+                      htmlId="postcode"
                       label="Postcode"
                       helper="Postcode where the installation has taken place" // helper text (secondary label)
                       errorText="Invalid value!" // error text if invalid
                     >
                       <TextInput
+                        htmlId="postcode"
+                        data-ui-name="postcode"
                         style={{ maxWidth: '50%' }}
                         as="input"
                         type="number"
@@ -422,18 +425,21 @@ export default function CertificateEstimatorResidentialAC(props) {
 
                     {postcode && postcode.length === 4 && (
                       <FormGroup
+                        htmlId="climate-zone"
                         label="BCA Climate Zone"
                         helper={
                           <span
                             dangerouslySetInnerHTML={{
                               __html:
-                                'Certain postcodes can belong to multiple climate zones, check your <a href="https://www.abcb.gov.au/resources/climate-zone-map" target="_blank">BCA Climate Zone on the map</a>',
+                                'Certain postcodes can belong to multiple climate zones, check your <a href="https://www.abcb.gov.au/abcb-climate-map" target="_blank">BCA Climate Zone on the map</a>',
                             }}
                           />
                         } // primary question text
                         errorText="Invalid value!" // error text if invalid
                       >
                         <Select
+                          htmlId="climate-zone"
+                          data-ui-name="bca-climate-zone"
                           style={{ maxWidth: '50%' }}
                           options={dropdownOptionsClimateZone}
                           onChange={(e) => {
@@ -445,11 +451,14 @@ export default function CertificateEstimatorResidentialAC(props) {
                       </FormGroup>
                     )}
                     <FormGroup
+                      htmlId="brand"
                       label="Brand"
                       helper="Select residential air conditioner brand" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
+                        htmlId="brand"
+                        data-ui-name="brand"
                         style={{ maxWidth: '50%' }}
                         options={dropdownOptions}
                         onChange={(e) => {
@@ -462,11 +471,14 @@ export default function CertificateEstimatorResidentialAC(props) {
                     </FormGroup>
 
                     <FormGroup
+                      htmlId="model"
                       label="Model"
                       helper="Select residential air conditioner model" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
+                        htmlId="model"
+                        data-ui-name="model"
                         style={{ maxWidth: '50%' }}
                         options={dropdownOptionsModels}
                         onChange={(e) => {
@@ -476,7 +488,10 @@ export default function CertificateEstimatorResidentialAC(props) {
                         required
                       />
                     </FormGroup>
-                    <p style={{ fontSize: '14px', marginBottom: '2%' }}>
+                    <p
+                      data-ui-name="registry-update"
+                      style={{ fontSize: '14px', marginBottom: '2%' }}
+                    >
                       {' '}
                       Updated from product registry: {lastModified}
                     </p>
@@ -609,9 +624,13 @@ export default function CertificateEstimatorResidentialAC(props) {
             selectedBrand &&
             selectedModel &&
             userType && (
-              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}>
+              <div
+                className="nsw-row"
+                style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}
+              >
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
+                    data-ui-name="next"
                     as="dark"
                     onClick={(e) => {
                       validatePostcode(postcode);

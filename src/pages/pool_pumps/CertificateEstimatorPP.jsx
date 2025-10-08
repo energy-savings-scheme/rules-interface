@@ -94,17 +94,17 @@ export default function CertificateEstimatorPP(props) {
   useEffect(() => {
     const fetchCertificatePrice = async function () {
       try {
-        const response = await RegistryApi.getCertificatePrice()
-        setEscMinPrice(Number(response.data.ESC.min_price))
-        setEscMaxPrice(Number(response.data.ESC.max_price))
-        setPrcMinPrice(Number(response.data.PRC.min_price))
-        setPrcMaxPrice(Number(response.data.PRC.max_price))
+        const response = await RegistryApi.getCertificatePrice();
+        setEscMinPrice(Number(response.data.ESC.min_price));
+        setEscMaxPrice(Number(response.data.ESC.max_price));
+        setPrcMinPrice(Number(response.data.PRC.min_price));
+        setPrcMaxPrice(Number(response.data.PRC.max_price));
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
-    }
+    };
 
-    fetchCertificatePrice()
+    fetchCertificatePrice();
   }, []);
 
   // For brands
@@ -314,9 +314,9 @@ export default function CertificateEstimatorPP(props) {
                     </h5>
 
                     <FormGroup
+                      htmlId="user-type"
                       label="What is your interest in the scheme?"
                       helper="Select the option that best describes you"
-                      htmlId="user-type"
                     >
                       <Select
                         htmlId="user-type"
@@ -331,11 +331,13 @@ export default function CertificateEstimatorPP(props) {
                     </FormGroup>
 
                     <FormGroup
+                      htmlId="postcode"
                       label="Postcode"
                       helper="Postcode where the installation has taken place" // helper text (secondary label)
                       errorText="Invalid value!" // error text if invalid
                     >
                       <TextInput
+                        htmlId="postcode"
                         style={{ maxWidth: '50%', marginBottom: '1%' }}
                         as="input"
                         type="number"
@@ -348,11 +350,13 @@ export default function CertificateEstimatorPP(props) {
                       />
                     </FormGroup>
                     <FormGroup
+                      htmlId="brand"
                       label="Brand"
                       helper="Select pool pump brand" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
+                        htmlId="brand"
                         style={{ maxWidth: '50%', marginBottom: '1%' }}
                         options={dropdownOptions}
                         onChange={(e) => {
@@ -365,11 +369,13 @@ export default function CertificateEstimatorPP(props) {
                     </FormGroup>
 
                     <FormGroup
+                      htmlId="model"
                       label="Model"
                       helper="Select pool pump model" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
+                        htmlId="model"
                         style={{ maxWidth: '50%' }}
                         options={dropdownOptionsModels}
                         onChange={(e) => {
@@ -511,7 +517,10 @@ export default function CertificateEstimatorPP(props) {
             selectedBrand &&
             selectedModel &&
             userType && (
-              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}>
+              <div
+                className="nsw-row"
+                style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}
+              >
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"

@@ -204,15 +204,15 @@ export default function CertificateEstimatorF17(props) {
   useEffect(() => {
     const fetchCertificatePrice = async function () {
       try {
-        const response = await RegistryApi.getCertificatePrice()
-        setEscMinPrice(Number(response.data.ESC.min_price))
-        setEscMaxPrice(Number(response.data.ESC.max_price))
+        const response = await RegistryApi.getCertificatePrice();
+        setEscMinPrice(Number(response.data.ESC.min_price));
+        setEscMaxPrice(Number(response.data.ESC.max_price));
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
-    }
+    };
 
-    fetchCertificatePrice()
+    fetchCertificatePrice();
   }, []);
 
   return (
@@ -310,9 +310,9 @@ export default function CertificateEstimatorF17(props) {
                     </h5>
 
                     <FormGroup
+                      htmlId="user-type"
                       label="What is your interest in the scheme?"
                       helper="Select the option that best describes you"
-                      htmlId="user-type"
                     >
                       <Select
                         htmlId="user-type"
@@ -327,11 +327,13 @@ export default function CertificateEstimatorF17(props) {
                     </FormGroup>
 
                     <FormGroup
+                      htmlId="postcode"
                       label="Postcode"
                       helper="Postcode where the installation has taken place" // helper text (secondary label)
                       errorText="Invalid value!" // error text if invalid
                     >
                       <TextInput
+                        htmlId="postcode"
                         style={{ maxWidth: '50%' }}
                         as="input"
                         type="number"
@@ -344,11 +346,13 @@ export default function CertificateEstimatorF17(props) {
                       />
                     </FormGroup>
                     <FormGroup
+                      htmlId="brand"
                       label="Brand"
                       helper="Select commercial water heater brand" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
+                        htmlId="brand"
                         style={{ maxWidth: '50%' }}
                         options={dropdownOptions}
                         onChange={(e) => {
@@ -361,11 +365,13 @@ export default function CertificateEstimatorF17(props) {
                     </FormGroup>
 
                     <FormGroup
+                      htmlId="model"
                       label="Model"
                       helper="Select commercial water heater model" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
+                        htmlId="model"
                         style={{ maxWidth: '50%' }}
                         options={dropdownOptionsModels}
                         onChange={(e) => {
@@ -500,7 +506,10 @@ export default function CertificateEstimatorF17(props) {
             selectedBrand &&
             selectedModel &&
             userType && (
-              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}>
+              <div
+                className="nsw-row"
+                style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}
+              >
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"

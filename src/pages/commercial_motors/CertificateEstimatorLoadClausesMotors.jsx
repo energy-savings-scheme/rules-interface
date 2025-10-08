@@ -10,7 +10,7 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import {updateSegmentCaptureAnalytics} from 'lib/analytics';
+import { updateSegmentCaptureAnalytics } from 'lib/analytics';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 import { formatNumber } from 'lib/helper';
 
@@ -129,9 +129,9 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
               <b>Please answer the following questions to calculate your ESCs.</b>
             </h5>
             <FormGroup
+              htmlId="user-type"
               label="What is your interest in the scheme?"
               helper="Select the option that best describes you"
-              htmlId="user-type"
             >
               <Select
                 htmlId="user-type"
@@ -213,12 +213,13 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
                   </span>
                 </p>
                 <p>
-                  Your estimated annual energy savings are{' '}
+                  Your estimated energy savings over the lifetime of the equipment are{' '}
                   <b>
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> MWh
+                  </b>{' '}
+                  MWh
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not

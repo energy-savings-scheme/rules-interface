@@ -9,7 +9,7 @@ import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
-import {D19_ESSJun24_PDRS__postcode} from 'types/openfisca_variables';
+import { D19_ESSJun24_PDRS__postcode } from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
 export default function CertificateEstimatorLoadClausesD19(props) {
@@ -274,12 +274,13 @@ export default function CertificateEstimatorLoadClausesD19(props) {
                 </p>
 
                 <p>
-                  Your estimated annual energy savings are{' '}
+                  Your estimated energy savings over the lifetime of the equipment are{' '}
                   <b>
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> MWh
+                  </b>{' '}
+                  MWh
                 </p>
 
                 <p>

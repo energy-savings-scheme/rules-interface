@@ -16,7 +16,7 @@ import {
 } from 'lib/analytics';
 import {
   D17_ESSJun24_split_system,
-  D17_ESSJun24_safety_requirement
+  D17_ESSJun24_safety_requirement,
 } from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
@@ -75,9 +75,7 @@ export default function ActivityRequirementsD17(props) {
 
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
 
-      const names = [
-        D17_ESSJun24_safety_requirement,
-      ];
+      const names = [D17_ESSJun24_safety_requirement];
 
       dep_arr = array.filter((item) => names.includes(item.name));
       array.find((item) => {
@@ -96,9 +94,7 @@ export default function ActivityRequirementsD17(props) {
 
   useEffect(() => {
     let new_arr = [];
-    const excludeClauses = [
-      D17_ESSJun24_split_system,
-    ];
+    const excludeClauses = [D17_ESSJun24_split_system];
 
     formValues
       .filter((x) => x.hide === false)

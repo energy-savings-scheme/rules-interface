@@ -122,9 +122,9 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
               <b>Please answer the following questions to calculate your ESCs</b>
             </h5>
             <FormGroup
+              htmlId="user-type"
               label="What is your interest in the scheme?"
               helper="Select the option that best describes you"
-              htmlId="user-type"
             >
               <Select
                 htmlId="user-type"
@@ -205,12 +205,13 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
                   </span>
                 </p>
                 <p>
-                  Your estimated annual energy savings are{' '}
+                  Your estimated energy savings over the lifetime of the equipment are{' '}
                   <b>
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> MWh
+                  </b>{' '}
+                  MWh
                 </p>
                 <p>
                   As this activity is only eligible for the Energy Savings Scheme, it generates

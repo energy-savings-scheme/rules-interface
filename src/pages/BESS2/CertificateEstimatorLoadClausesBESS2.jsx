@@ -54,7 +54,7 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
     userType,
     setUserType,
     prcMinPrice,
-    prcMaxPrice
+    prcMaxPrice,
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -137,9 +137,9 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
             </h5>
 
             <FormGroup
+              htmlId="user-type"
               label="What is your interest in the scheme?"
               helper="Select the option that best describes you"
-              htmlId="user-type"
             >
               <Select
                 htmlId="user-type"
@@ -221,12 +221,14 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
                   </span>
                 </p>
                 <p>
-                  Your estimated annual contribution to reducing peak summer energy demand is{' '}
+                  Your estimated contribution to reducing peak summer energy demand over the
+                  lifetime of the equipment is{' '}
                   <b>
                     {Math.floor(calculationResult) === 0
                       ? 0
                       : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
-                  </b> kW
+                  </b>{' '}
+                  kW
                 </p>
                 <p>
                   As this activity is only eligible for the Peak Demand Reduction Scheme, it
