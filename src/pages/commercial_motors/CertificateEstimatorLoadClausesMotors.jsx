@@ -126,7 +126,7 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
         {stepNumber === 1 && (
           <Fragment>
             <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
-              <b>Please answer the following questions to calculate your ESCs.</b>
+              <b>Please answer the following questions to calculate your ESCs:</b>
             </h5>
             <FormGroup
               htmlId="user-type"
