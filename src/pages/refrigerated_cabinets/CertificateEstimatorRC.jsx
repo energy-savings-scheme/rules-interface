@@ -317,7 +317,7 @@ export default function CertificateEstimatorRC(props) {
           {stepNumber === 3 && calculationError && calculationError2 && showError && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
-            } id="error-calculation" tabIndex="-1">
+            } id="error-calculation" className="nsw-col-lg-10" tabIndex="-1">
               <p>We are experiencing technical difficulties right now, please try again later.</p>
             </Alert>
           )}
@@ -438,7 +438,7 @@ export default function CertificateEstimatorRC(props) {
           {stepNumber === 1 && !registryData && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
-            } id="error-data-registry" tabIndex="-1">
+            } id="error-data-registry" className="nsw-col-lg-10" tabIndex="-1">
               <p>Unable to load data from the product registry. Please try again later.</p>
             </Alert>
           )}
@@ -541,7 +541,7 @@ export default function CertificateEstimatorRC(props) {
           {stepNumber === 1 && showPostcodeError && postcode.length >= 4 && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "The postcode is not valid in NSW"}}/>
-            } id="error-postcode" tabIndex="-1">
+            } id="error-postcode" className="nsw-col-lg-10" tabIndex="-1">
               <p>Please check your postcode and try again.</p>
             </Alert>
           )}
@@ -549,7 +549,7 @@ export default function CertificateEstimatorRC(props) {
           {stepNumber === 1 && showNoResponsePostcodeError && postcode.length >= 4 && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
-            } id="error-postcode-response" tabIndex="-1">
+            } id="error-postcode-response" className="nsw-col-lg-10" tabIndex="-1">
               <p>
                 We are experiencing technical difficulties validating the postcode, please try again
                 later.

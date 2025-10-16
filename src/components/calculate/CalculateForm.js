@@ -460,7 +460,7 @@ export default function CalculateForm(props) {
       {stepNumber === 1 && showPostcodeError && (
         <Alert as="error" customTitle={
           <h3 dangerouslySetInnerHTML={{__html: "The postcode is not valid in NSW"}}/>
-        } id="error-postcode" tabIndex="-1">
+        } id="error-postcode" className="nsw-col-lg-10" tabIndex="-1">
           <p>Please check your postcode and try again.</p>
         </Alert>
       )}
@@ -468,7 +468,7 @@ export default function CalculateForm(props) {
       {stepNumber === 1 && showNoResponsePostcodeError && (
         <Alert as="error" customTitle={
           <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
-        } id="error-postcode-response" tabIndex="-1">
+        } id="error-postcode-response" className="nsw-col-lg-10" tabIndex="-1">
           <p>
             We are experiencing technical difficulties validating the postcode, please try again
             later.
