@@ -22,6 +22,7 @@ export default function FormTextInput(props) {
     >
       <TextInput
         htmlId={formItem.name}
+        className="nsw-col-lg-6"
         style={{ ...defaultStyle, ...style }}
         as="input"
         number={['Float', 'Int'].includes(formItem.value_type)}

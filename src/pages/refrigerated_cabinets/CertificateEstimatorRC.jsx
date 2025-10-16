@@ -329,7 +329,7 @@ export default function CertificateEstimatorRC(props) {
                   <br></br>
                   <br></br>
                   <br></br>
-                  <div className="nsw-content-block__content nsw-col-lg-6">
+                  <div className="nsw-content-block__content">
                     <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
                       <b>Please answer the following questions to calculate your ESCs and PRCs</b>
                     </p>
@@ -341,6 +341,7 @@ export default function CertificateEstimatorRC(props) {
                     >
                       <Select
                         htmlId="user-type"
+                        className="nsw-col-lg-6"
                         options={USER_TYPE_OPTIONS}
                         onChange={(e) => {
                           setUserType(e.target.value);
@@ -358,6 +359,7 @@ export default function CertificateEstimatorRC(props) {
                     >
                       <TextInput
                         htmlId="postcode"
+                        className="nsw-col-lg-6"
                         as="input"
                         type="number"
                         placeholder="Enter postcode"
@@ -376,6 +378,7 @@ export default function CertificateEstimatorRC(props) {
                     >
                       <Select
                         htmlId="brand"
+                        className="nsw-col-lg-6"
                         options={dropdownOptions}
                         onChange={(e) => {
                           setSelectedBrand(RF2Brands.find((item) => item === e.target.value));
@@ -395,6 +398,7 @@ export default function CertificateEstimatorRC(props) {
                     >
                       <Select
                         htmlId="model"
+                        className="nsw-col-lg-6"
                         options={dropdownOptionsModels}
                         onChange={(e) => {
                           setSelectedModel(models.find((item) => item === e.target.value));
@@ -412,6 +416,7 @@ export default function CertificateEstimatorRC(props) {
                     >
                       <Select
                         htmlId="product-class"
+                        className="nsw-col-lg-6"
                         options={productClassOptions}
                         onChange={(e) => {
                           setSelectedProductClass(e.target.value);

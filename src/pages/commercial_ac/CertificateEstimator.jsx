@@ -429,7 +429,7 @@ export default function CertificateEstimatorHVAC(props) {
                   <br></br>
                   <br></br>
                   <br></br>
-                  <div className="nsw-content-block__content nsw-col-lg-6">
+                  <div className="nsw-content-block__content">
                     <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
                       <b>Please answer the following questions to calculate your ESCs and PRCs</b>
                     </p>
@@ -441,6 +441,7 @@ export default function CertificateEstimatorHVAC(props) {
                     >
                       <Select
                         htmlId="user-type"
+                        className="nsw-col-lg-6"
                         style={{ marginBottom: '1%' }}
                         options={USER_TYPE_OPTIONS}
                         onChange={(e) => {
@@ -459,6 +460,7 @@ export default function CertificateEstimatorHVAC(props) {
                     >
                       <TextInput
                         htmlId="postcode"
+                        className="nsw-col-lg-6"
                         style={{ marginBottom: '1%' }}
                         as="input"
                         type="number"
@@ -487,6 +489,7 @@ export default function CertificateEstimatorHVAC(props) {
                       >
                         <Select
                           htmlId="climate-zone"
+                          className="nsw-col-lg-6"
                           options={dropdownOptionsClimateZone}
                           onChange={(e) => {
                             setSelectedClimateZone(e.target.value);
@@ -504,6 +507,7 @@ export default function CertificateEstimatorHVAC(props) {
                     >
                       <Select
                         htmlId="brand"
+                        className="nsw-col-lg-6"
                         style={{ marginBottom: '1%' }}
                         options={dropdownOptions}
                         onChange={(e) => {
@@ -523,6 +527,7 @@ export default function CertificateEstimatorHVAC(props) {
                     >
                       <Select
                         htmlId="model"
+                        className="nsw-col-lg-6"
                         options={dropdownOptionsModels}
                         onChange={(e) => {
                           setSelectedModel(models.find((item) => item === e.target.value));

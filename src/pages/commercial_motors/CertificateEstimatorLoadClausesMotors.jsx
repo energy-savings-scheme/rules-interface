@@ -133,10 +133,10 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
               htmlId="user-type"
               label="What is your interest in the scheme?"
               helper="Select the option that best describes you"
-              className="nsw-col-lg-6"
             >
               <Select
                 htmlId="user-type"
+                className="nsw-col-lg-6"
                 style={{ marginBottom: '2.5%' }}
                 options={USER_TYPE_OPTIONS}
                 onChange={(e) => {

@@ -315,7 +315,7 @@ export default function CertificateEstimatorF16_gas(props) {
                 <div className="nsw-content-block">
                   <br></br>
                   <br></br>
-                  <div className="nsw-content-block__content nsw-col-lg-6">
+                  <div className="nsw-content-block__content">
                     <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
                       <b>Please answer the following questions to calculate your ESCs</b>
                     </p>
@@ -327,6 +327,7 @@ export default function CertificateEstimatorF16_gas(props) {
                     >
                       <Select
                         htmlId="user-type"
+                        className="nsw-col-lg-6"
                         options={USER_TYPE_OPTIONS}
                         onChange={(e) => {
                           setUserType(e.target.value);
@@ -344,6 +345,7 @@ export default function CertificateEstimatorF16_gas(props) {
                     >
                       <TextInput
                         htmlId="postcode"
+                        className="nsw-col-lg-6"
                         as="input"
                         type="number"
                         placeholder="Enter postcode"
@@ -362,6 +364,7 @@ export default function CertificateEstimatorF16_gas(props) {
                     >
                       <Select
                         htmlId="brand"
+                        className="nsw-col-lg-6"
                         options={dropdownOptions}
                         onChange={(e) => {
                           setSelectedBrand(brands.find((item) => item === e.target.value));
@@ -380,6 +383,7 @@ export default function CertificateEstimatorF16_gas(props) {
                     >
                       <Select
                         htmlId="model"
+                        className="nsw-col-lg-6"
                         options={dropdownOptionsModels}
                         onChange={(e) => {
                           setSelectedModel(models.find((item) => item === e.target.value));

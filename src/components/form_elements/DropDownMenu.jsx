@@ -31,6 +31,7 @@ export default function DropDownMenu(props) {
     >
       <Select
         htmlId={formItem.name}
+        className="nsw-col-lg-6"
         style={{ ...defaultStyle, ...style }}
         options={possibleValues}
         onChange={setItemValue}
