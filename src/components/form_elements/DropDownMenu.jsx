@@ -2,7 +2,11 @@ import React from 'react';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 
 export default function DropDownMenu(props) {
-  const { formItem, setItemValue } = props;
+  const { formItem, setItemValue, style } = props;
+
+  const defaultStyle = {
+    marginBottom: '4%'
+  }
 
   const possibleValues = [];
   if (formItem.defaultOption) {
@@ -27,7 +31,7 @@ export default function DropDownMenu(props) {
     >
       <Select
         htmlId={formItem.name}
-        style={{ maxWidth: '50%', marginBottom: '4%' }}
+        style={{ ...defaultStyle, ...style }}
         options={possibleValues}
         onChange={setItemValue}
         value={formItem.form_value}

@@ -667,13 +667,13 @@ export default function CalculateBlock(props) {
     ) {
       if (formItem.value_type == 'Float') {
         return (
-          <div key={formItem.name}>
+          <div className="nsw-col-lg-6" key={formItem.name}>
             <FormTextInput formItem={formItem} setItemValue={setItemValue} />
           </div>
         );
       } else if (formItem.value_type == 'Int') {
         return (
-          <div key={formItem.name}>
+          <div className="nsw-col-lg-6" key={formItem.name}>
             <FormTextInput formItem={formItem} setItemValue={setItemValue} />
           </div>
         );
@@ -685,7 +685,7 @@ export default function CalculateBlock(props) {
         );
       } else if (formItem.value_type == 'String' && formItem.name === 'RF2_product_class') {
         return (
-          <div key={formItem.name}>
+          <div className="nsw-col-lg-6" key={formItem.name}>
             <FormTextInput formItem={formItem} setItemValue={setItemValue} />
           </div>
         );
@@ -694,7 +694,7 @@ export default function CalculateBlock(props) {
         formItem.name === 'HVAC1_PDRSAug24_BCA_Climate_Zone'
       ) {
         return (
-          <div key={formItem.name}>
+          <div className="nsw-col-lg-6" key={formItem.name}>
             <FormTextInput formItem={formItem} setItemValue={setItemValue} />
           </div>
         );
@@ -703,7 +703,7 @@ export default function CalculateBlock(props) {
         formItem.name === 'HVAC2_PDRSAug24_BCA_Climate_Zone'
       ) {
         return (
-          <div key={formItem.name}>
+          <div className="nsw-col-lg-6" key={formItem.name}>
             <FormTextInput formItem={formItem} setItemValue={setItemValue} />
           </div>
         );
@@ -712,13 +712,13 @@ export default function CalculateBlock(props) {
         formItem.name === 'RF2_F1_2_ESSJun24_product_class'
       ) {
         return (
-          <div key={formItem.name}>
+          <div className="nsw-col-lg-6" key={formItem.name}>
             <FormTextInput formItem={formItem} setItemValue={setItemValue} />
           </div>
         );
       } else if (formItem.value_type == 'String' && formItem.name !== 'RF2_product_class') {
         return (
-          <div key={formItem.name}>
+          <div className="nsw-col-lg-6" key={formItem.name}>
             <DropDownMenu formItem={formItem} setItemValue={setItemValue} />
           </div>
         );
@@ -727,7 +727,7 @@ export default function CalculateBlock(props) {
         formItem.name !== 'RF2_F1_2_ESSJun24_product_class'
       ) {
         return (
-          <div key={formItem.name}>
+          <div className="nsw-col-lg-6" key={formItem.name}>
             <DropDownMenu formItem={formItem} setItemValue={setItemValue} />
           </div>
         );

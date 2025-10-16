@@ -19,6 +19,7 @@ import {
   updateSearchCaptureAnalytics,
   updateSegmentCaptureAnalytics
 } from 'lib/analytics';
+import { focusElement } from 'lib/helper';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
 
@@ -126,6 +127,12 @@ export default function CertificateEstimatorHVAC(props) {
     fetchCertificatePrice()
   }, []);
 
+  useEffect(() => {
+    if (calculationError && calculationError2 && showError) {
+      focusElement("error-calculation");
+    }
+  }, [calculationError, calculationError2, showError])
+
   // For brands
   const populateDropDown = (newOption) => {
     setDropdownOptions((prev) => {
@@ -183,18 +190,22 @@ export default function CertificateEstimatorHVAC(props) {
             } else {
               setShowPostcodeError(true);
               setShowNoResponsePostcodeError(false);
+              focusElement("error-postcode")
             }
           } else if (persons.status === '200' && persons.code === '404') {
             setShowPostcodeError(true);
             setShowNoResponsePostcodeError(false);
+            focusElement("error-postcode")
           } else if (persons.status !== '200') {
             setShowPostcodeError(false);
             setShowNoResponsePostcodeError(true);
+            focusElement("error-postcode-response")
           }
         })
         .catch((err) => {
           console.log(err);
           setShowNoResponsePostcodeError(true);
+          focusElement("error-postcode-response")
         });
     }
   };
@@ -236,6 +247,7 @@ export default function CertificateEstimatorHVAC(props) {
       .catch((err) => {
         console.log(err);
         setRegistryData(false);
+        focusElement("error-data-registry")
       });
   }, [selectedBrand]);
 
@@ -336,7 +348,7 @@ export default function CertificateEstimatorHVAC(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ paddingLeft: 0 }}>
+      <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
@@ -397,13 +409,15 @@ export default function CertificateEstimatorHVAC(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%', marginTop: '3rem' }} />
+        <ProgressIndicator step={stepNumber} of={3} style={{ marginTop: '3rem' }} className="nsw-col-lg-10" />
 
         {stepNumber === 3 && loading && !showError && <SpinnerFullscreen />}
 
         <Fragment>
           {stepNumber === 3 && calculationError && calculationError2 && showError && (
-            <Alert as="error" title="Sorry!" style={{ width: '80%' }}>
+            <Alert as="error" customTitle={
+              <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
+            } id="error-calculation" tabIndex="-1">
               <p>We are experiencing technical difficulties right now, please try again later.</p>
             </Alert>
           )}
@@ -415,10 +429,10 @@ export default function CertificateEstimatorHVAC(props) {
                   <br></br>
                   <br></br>
                   <br></br>
-                  <div className="nsw-content-block__content">
-                    <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+                  <div className="nsw-content-block__content nsw-col-lg-6">
+                    <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
                       <b>Please answer the following questions to calculate your ESCs and PRCs</b>
-                    </h5>
+                    </p>
 
                     <FormGroup
                       htmlId="user-type"
@@ -427,7 +441,7 @@ export default function CertificateEstimatorHVAC(props) {
                     >
                       <Select
                         htmlId="user-type"
-                        style={{ maxWidth: '50%', marginBottom: '1%' }}
+                        style={{ marginBottom: '1%' }}
                         options={USER_TYPE_OPTIONS}
                         onChange={(e) => {
                           setUserType(e.target.value);
@@ -445,7 +459,7 @@ export default function CertificateEstimatorHVAC(props) {
                     >
                       <TextInput
                         htmlId="postcode"
-                        style={{ maxWidth: '50%', marginBottom: '1%' }}
+                        style={{ marginBottom: '1%' }}
                         as="input"
                         type="number"
                         placeholder="Enter postcode"
@@ -473,7 +487,6 @@ export default function CertificateEstimatorHVAC(props) {
                       >
                         <Select
                           htmlId="climate-zone"
-                          style={{ maxWidth: '50%' }}
                           options={dropdownOptionsClimateZone}
                           onChange={(e) => {
                             setSelectedClimateZone(e.target.value);
@@ -491,7 +504,7 @@ export default function CertificateEstimatorHVAC(props) {
                     >
                       <Select
                         htmlId="brand"
-                        style={{ maxWidth: '50%', marginBottom: '1%' }}
+                        style={{ marginBottom: '1%' }}
                         options={dropdownOptions}
                         onChange={(e) => {
                           setSelectedBrand(hvacBrands.find((item) => item === e.target.value));
@@ -510,7 +523,6 @@ export default function CertificateEstimatorHVAC(props) {
                     >
                       <Select
                         htmlId="model"
-                        style={{ maxWidth: '50%' }}
                         options={dropdownOptionsModels}
                         onChange={(e) => {
                           setSelectedModel(models.find((item) => item === e.target.value));
@@ -531,7 +543,9 @@ export default function CertificateEstimatorHVAC(props) {
           )}
 
           {stepNumber === 1 && !registryData && (
-            <Alert as="error" title="Sorry! An error has occurred.">
+            <Alert as="error" customTitle={
+              <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
+            } id="error-data-registry" tabIndex="-1">
               <p>Unable to load data from the product registry. Please try again later.</p>
             </Alert>
           )}
@@ -632,13 +646,17 @@ export default function CertificateEstimatorHVAC(props) {
           {/* {stepNumber === 3 && calculationError && calculationError2 && <SpinnerFullscreen />} */}
 
           {stepNumber === 1 && showPostcodeError && postcode.length >= 4 && (
-            <Alert as="error" title="The postcode is not valid in NSW">
+            <Alert as="error" customTitle={
+              <h3 dangerouslySetInnerHTML={{__html: "The postcode is not valid in NSW"}}/>
+            } id="error-postcode" tabIndex="-1">
               <p>Please check your postcode and try again.</p>
             </Alert>
           )}
 
           {stepNumber === 1 && showNoResponsePostcodeError && postcode.length >= 4 && (
-            <Alert as="error" title="Sorry!">
+            <Alert as="error" customTitle={
+              <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
+            } id="error-postcode-response" tabIndex="-1">
               <p>
                 We are experiencing technical difficulties validating the postcode, please try again
                 later.

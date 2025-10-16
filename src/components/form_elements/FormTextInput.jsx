@@ -2,7 +2,11 @@ import React from 'react';
 import { FormGroup, TextInput } from 'nsw-ds-react/forms';
 
 export default function FormTextInput(props) {
-  const { formItem, setItemValue } = props;
+  const { formItem, setItemValue, style } = props;
+
+  const defaultStyle = {
+    marginBottom: '4%'
+  }
 
   // Set the step for float values. Modify '0.01' to the desired decimal precision.
   // const stepValue = formItem.value_type === 'Float' ? '0.01' : '1';
@@ -18,7 +22,7 @@ export default function FormTextInput(props) {
     >
       <TextInput
         htmlId={formItem.name}
-        style={{ maxWidth: '50%', marginBottom: '4%' }}
+        style={{ ...defaultStyle, ...style }}
         as="input"
         number={['Float', 'Int'].includes(formItem.value_type)}
         type={['Float', 'Int'].includes(formItem.value_type) ? 'number' : 'text'}

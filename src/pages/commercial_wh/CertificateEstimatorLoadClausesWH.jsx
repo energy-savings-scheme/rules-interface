@@ -5,6 +5,7 @@ import moment from 'moment';
 
 // Import components
 import CalculateBlock from 'components/calculate/CalculateBlock';
+import InfoBox from 'components/info-box/info-box';
 import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
@@ -195,26 +196,11 @@ export default function CertificateEstimatorLoadClausesWH(props) {
       <div style={{ marginTop: 70, marginBottom: 70 }}>
         {stepNumber === 2 && (
           <Fragment>
-            <div
-              class="nsw-global-alert nsw-global-alert--light js-global-alert"
-              role="alert"
-              style={{ width: '80%', marginBottom: '7%' }}
-            >
-              <div class="nsw-global-alert__wrapper">
-                <div class="nsw-global-alert__content">
-                  {/* <div class="nsw-global-alert__title"></div> */}
-                  <p>
-                    <b>Postcode: </b> {postcode}
-                  </p>
-                  <p>
-                    <b>Brand: </b> {selectedBrand}
-                  </p>
-                  <p>
-                    <b>Model: </b> {selectedModel}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <InfoBox 
+              postcode={postcode}
+              brand={selectedBrand}
+              model={selectedModel}
+            />
             <CalculateBlock
               zone={zone}
               calculationDate={calculationDate}
@@ -261,32 +247,19 @@ export default function CertificateEstimatorLoadClausesWH(props) {
         )}
 
         {stepNumber === 3 && !calculationError && !calculationError2 && (
-          <div
-            class="nsw-global-alert nsw-global-alert--light js-global-alert"
-            role="alert"
-            style={{ width: '80%', marginBottom: '7%' }}
-          >
-            <div class="nsw-global-alert__wrapper">
-              <div class="nsw-global-alert__content">
-                {/* <div class="nsw-global-alert__title"></div> */}
-                <p>
-                  <b>Postcode: </b> {postcode}
-                </p>
-                <p>
-                  <b>Brand: </b> {selectedBrand}
-                </p>
-                <p>
-                  <b>Model: </b> {selectedModel}
-                </p>
-              </div>
-            </div>
-          </div>
+          <InfoBox 
+            postcode={postcode}
+            brand={selectedBrand}
+            model={selectedModel}
+          />
         )}
 
         {stepNumber === 3 && !calculationError && !calculationError2 && (
           <Fragment>
             {
-              <Alert as="info" title="ESCs" style={{ width: '80%', marginBottom: '7%' }}>
+              <Alert as="info" customTitle={
+                <h3 dangerouslySetInnerHTML={{__html: "ESCs"}}/>
+              } className="nsw-col-lg-10" style={{ marginBottom: '7%' }}>
                 <p>
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   Based on the information provided, your ESCs are
@@ -317,7 +290,9 @@ export default function CertificateEstimatorLoadClausesWH(props) {
 
         {(stepNumber === 3 && calculationError) ||
           (stepNumber === 3 && calculationError2 && (
-            <Alert as="error" title="Sorry! An error has occurred.">
+            <Alert as="error" customTitle={
+              <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
+            }>
               <p>An error occurred during calculation. Try re-running the calculation</p>
             </Alert>
           ))}
@@ -325,11 +300,10 @@ export default function CertificateEstimatorLoadClausesWH(props) {
         {stepNumber === 3 && (
           <Fragment>
             <div
-              className="nsw-row"
+              className="nsw-row nsw-col-lg-10"
               style={{
                 paddingLeft: 'inherit',
                 paddingRight: 'inherit',
-                width: '80%',
               }}
             >
               <CertificiatePrice

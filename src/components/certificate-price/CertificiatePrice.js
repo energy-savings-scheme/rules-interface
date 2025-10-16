@@ -19,7 +19,7 @@ export default function CertificiatePrice(props) {
   return (
     <>
       {(escCertificates > 0 || prcCertificates > 0) && (
-        <div className="nsw-m-bottom-xxl">
+        <div className="nsw-col-xs-12 nsw-m-bottom-xxl">
           <h4 style={{marginBottom: '1.25rem'}}>How much is the incentive?</h4>
           <p>
             Certificate prices can change daily and this estimate is a
@@ -37,7 +37,11 @@ export default function CertificiatePrice(props) {
             <div className={ prcCertificates > 0 ? `nsw-container nsw-m-bottom-lg` : ''} style={{ paddingLeft: 0, paddingRight: 0 }}>
               <Alert
                 as="info"
-                title={`Potential ESCs incentive $${formatNumber(esc_calculation_min_price)} - $${formatNumber(esc_calculation_max_price)}*`}
+                customTitle={
+                  <h3 dangerouslySetInnerHTML={{
+                    __html: `Potential ESCs incentive $${formatNumber(esc_calculation_min_price)} - $${formatNumber(esc_calculation_max_price)}*`
+                  }}/>
+                }
                 style={{ marginTop: 0 }}
               >
                 <p>
@@ -52,7 +56,11 @@ export default function CertificiatePrice(props) {
             <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
               <Alert
                 as="info"
-                title={`Potential PRCs incentive $${formatNumber(prc_calculation_min_price)} - $${formatNumber(prc_calculation_max_price)}*`}
+                customTitle={
+                  <h3 dangerouslySetInnerHTML={{
+                    __html: `Potential PRCs incentive $${formatNumber(prc_calculation_min_price)} - $${formatNumber(prc_calculation_max_price)}*`
+                  }}/>
+                }
                 style={{ marginTop: 0 }}
               >
                 <p>
