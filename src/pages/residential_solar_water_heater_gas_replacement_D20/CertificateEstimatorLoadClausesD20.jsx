@@ -9,7 +9,7 @@ import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
-import {D20_ESSJun24_PDRS__postcode} from 'types/openfisca_variables';
+import { D20_ESSJun24_PDRS__postcode } from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
 export default function CertificateEstimatorLoadClausesD20(props) {
@@ -277,7 +277,8 @@ export default function CertificateEstimatorLoadClausesD20(props) {
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> MWh
+                  </b>{' '}
+                  MWh
                 </p>
                 <p>
                   As this activity is only eligible for the Energy Savings Scheme, it generates

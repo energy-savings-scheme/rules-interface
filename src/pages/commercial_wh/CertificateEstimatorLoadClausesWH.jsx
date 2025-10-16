@@ -18,7 +18,7 @@ import {
   F16_electric_PDRSDec24_HP_elec,
   F16_electric_PDRSDec24_HP_gas,
   WH1_F16_electric_PDRSAug24_annual_energy_savings,
-  WH1_F16_electric_PDRSAug24_volumetric_capacity
+  WH1_F16_electric_PDRSAug24_volumetric_capacity,
 } from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
@@ -142,11 +142,11 @@ export default function CertificateEstimatorLoadClausesWH(props) {
           formItem.form_value = metadata[`HPGas_zone_${zone}`];
         }
         if (formItem.name === F16_electric_PDRSDec24_number_of_heat_pumps) {
-          formItem.form_value = metadata['number_of_heat_pumps']
+          formItem.form_value = metadata['number_of_heat_pumps'];
           formItem.hide = true;
         }
         if (formItem.name === F16_electric_PDRSDec24_total_heat_pump_thermal_capacity) {
-          formItem.form_value = metadata['total_heat_pump_thermal_capacity']
+          formItem.form_value = metadata['total_heat_pump_thermal_capacity'];
           formItem.hide = true;
         }
         if (formItem.name === WH1_F16_electric_PDRSAug24_volumetric_capacity) {
@@ -303,7 +303,8 @@ export default function CertificateEstimatorLoadClausesWH(props) {
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> MWh
+                  </b>{' '}
+                  MWh
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not

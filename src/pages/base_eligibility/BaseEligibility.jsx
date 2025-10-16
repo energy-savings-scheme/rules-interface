@@ -5,16 +5,16 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import LoadClausesBaseEligibility from './LoadClausesBaseEligibility';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
-import {USER_TYPE_OPTIONS} from 'constant/user-type';
-import {BASE_CORE_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import { BASE_CORE_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSegmentCaptureAnalytics,
-  clearSearchCaptureAnalytics
+  clearSearchCaptureAnalytics,
 } from 'lib/analytics';
-import {ESS__PDRS__ACP_base_scheme_eligibility} from 'types/openfisca_variables';
+import { ESS__PDRS__ACP_base_scheme_eligibility } from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from '../../components/more-options-card/more-options-card';
 
@@ -41,8 +41,8 @@ export default function BaseEligibility(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
     clearSearchCaptureAnalytics();
-    updateEstimatorFormAnalytics(BASE_CORE_ELIGIBILITY_ANALYTICS_DATA)
-    updateFeedbackFormAnalytics(BASE_CORE_ELIGIBILITY_ANALYTICS_DATA)
+    updateEstimatorFormAnalytics(BASE_CORE_ELIGIBILITY_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_CORE_ELIGIBILITY_ANALYTICS_DATA);
   }, [stepNumber]);
 
   useEffect(() => {
@@ -191,23 +191,23 @@ export default function BaseEligibility(props) {
             <>
               {stepNumber === 1 && (
                 <FormGroup
-                label="What is your interest in the scheme?"
-                helper="Select the option that best describes you"
-                htmlId="user-type"
-                style={{marginTop: '4%'}}
-              >
-                <Select
+                  label="What is your interest in the scheme?"
+                  helper="Select the option that best describes you"
                   htmlId="user-type"
-                  style={{ maxWidth: '50%', marginBottom: '2.5%' }}
-                  options={USER_TYPE_OPTIONS}
-                  onChange={(e) => {
-                    setUserType(e.target.value);
-                    updateSegmentCaptureAnalytics(e.target.value)
-                  }}
-                  value={userType}
-                  required
-                />
-              </FormGroup>
+                  style={{ marginTop: '4%' }}
+                >
+                  <Select
+                    htmlId="user-type"
+                    style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                    options={USER_TYPE_OPTIONS}
+                    onChange={(e) => {
+                      setUserType(e.target.value);
+                      updateSegmentCaptureAnalytics(e.target.value);
+                    }}
+                    value={userType}
+                    required
+                  />
+                </FormGroup>
               )}
               <LoadClausesBaseEligibility
                 variableToLoad={variableToLoad}

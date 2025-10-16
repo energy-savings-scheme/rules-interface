@@ -9,17 +9,17 @@ import CertificateEstimatorLoadClausesMotors from './CertificateEstimatorLoadCla
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
-import {BASE_COMMERCIAL_MOTOR_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_COMMERCIAL_MOTOR_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
-  clearSearchCaptureAnalytics
+  clearSearchCaptureAnalytics,
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
 import {
   F7_PDRSAug24_ESC_calculation,
-  F7_PDRSAug24_energy_savings
+  F7_PDRSAug24_energy_savings,
 } from 'types/openfisca_variables';
 
 export default function CertificateEstimatorMotors(props) {
@@ -279,10 +279,14 @@ export default function CertificateEstimatorMotors(props) {
                   marginBottom: '5%',
                 }}
               >
-                <MoreOptionsCard options={[{
-                  title: 'Review eligibility for this activity',
-                  link: '/#commercial-motors-activity-requirements'
-                }]}/>
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#commercial-motors-activity-requirements',
+                    },
+                  ]}
+                />
               </div>
             </div>
           )}

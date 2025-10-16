@@ -13,17 +13,17 @@ import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSegmentCaptureAnalytics,
-  clearSearchCaptureAnalytics
+  clearSearchCaptureAnalytics,
 } from 'lib/analytics';
 import {
   F17_certified,
   F17_safety_requirement,
   F17_split_system,
-  F17_storage_volume
+  F17_storage_volume,
 } from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
-import {BASE_COMMERCIAL_HEAT_PUMP_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_COMMERCIAL_HEAT_PUMP_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
 
 export default function ActivityRequirementsF17(props) {
   const { entities, variables, loading, setLoading } = props;
@@ -99,7 +99,7 @@ export default function ActivityRequirementsF17(props) {
 
   useEffect(() => {
     let new_arr = [];
-    const excludeClauses = [F17_split_system, F17_storage_volume]
+    const excludeClauses = [F17_split_system, F17_storage_volume];
 
     formValues
       .filter((x) => x.hide === false)
@@ -189,7 +189,7 @@ export default function ActivityRequirementsF17(props) {
                   label="What is your interest in the scheme?"
                   helper="Select the option that best describes you"
                   htmlId="user-type"
-                  style={{marginTop: '4%'}}
+                  style={{ marginTop: '4%' }}
                 >
                   <Select
                     htmlId="user-type"
@@ -197,7 +197,7 @@ export default function ActivityRequirementsF17(props) {
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
                       setUserType(e.target.value);
-                      updateSegmentCaptureAnalytics(e.target.value)
+                      updateSegmentCaptureAnalytics(e.target.value);
                     }}
                     value={userType}
                     required

@@ -20,15 +20,18 @@ export const D20_ESSJun24_PDRS__postcode = 'D20_ESSJun24_PDRS__postcode';
 // Calculation
 export const BESS1_V5Nov24_PRC_calculation = 'BESS1_V5Nov24_PRC_calculation';
 export const BESS2_V5Nov24_PRC_calculation = 'BESS2_V5Nov24_PRC_calculation';
-export const BESS1_PDRSAug24_PRC_calculation = 'BESS1_PDRSAug24_PRC_calculation'
-export const BESS1_PDRSAug24_peak_demand_annual_savings = 'BESS1_PDRSAug24_peak_demand_annual_savings';
+export const BESS1_PDRSAug24_PRC_calculation = 'BESS1_PDRSAug24_PRC_calculation';
+export const BESS1_PDRSAug24_peak_demand_annual_savings =
+  'BESS1_PDRSAug24_peak_demand_annual_savings';
 export const BESS2_PDRSAug24_PRC_calculation = 'BESS2_PDRSAug24_PRC_calculation';
-export const BESS2_PDRSAug24_peak_demand_annual_savings = 'BESS2_PDRSAug24_peak_demand_annual_savings';
+export const BESS2_PDRSAug24_peak_demand_annual_savings =
+  'BESS2_PDRSAug24_peak_demand_annual_savings';
 export const C1_PDRSAug24_ESC_calculation = 'C1_PDRSAug24_ESC_calculation';
-export const C1_PDRSAug24_energy_savings = 'C1_PDRSAug24_energy_savings'
+export const C1_PDRSAug24_energy_savings = 'C1_PDRSAug24_energy_savings';
 
 export const HVAC1_PDRSAug24_BCA_Climate_Zone = 'HVAC1_PDRSAug24_BCA_Climate_Zone';
-export const HVAC1_PDRSAug24_new_installation_or_replacement = 'HVAC1_PDRSAug24_new_installation_or_replacement';
+export const HVAC1_PDRSAug24_new_installation_or_replacement =
+  'HVAC1_PDRSAug24_new_installation_or_replacement';
 export const HVAC2_PDRSAug24_BCA_Climate_Zone = 'HVAC2_PDRSAug24_BCA_Climate_Zone';
 export const HVAC2_new_installation_or_replacement = 'HVAC2_new_installation_or_replacement';
 
@@ -77,23 +80,29 @@ export const F16_electric_PDRSDec24__installation_replacement_final_activity_eli
   'F16_electric_PDRSDec24__installation_replacement_final_activity_eligibility';
 export const F16_electric_PDRSDec24__storage_volume = 'F16_electric_PDRSDec24__storage_volume';
 export const F16_electric_PDRSDec24__certified = 'F16_electric_PDRSDec24__certified';
-export const F16_electric_PDRSDec24_number_of_heat_pumps = 'F16_electric_PDRSDec24_number_of_heat_pumps';
-export const F16_electric_PDRSDec24_total_heat_pump_thermal_capacity = 'F16_electric_PDRSDec24_total_heat_pump_thermal_capacity';
+export const F16_electric_PDRSDec24_number_of_heat_pumps =
+  'F16_electric_PDRSDec24_number_of_heat_pumps';
+export const F16_electric_PDRSDec24_total_heat_pump_thermal_capacity =
+  'F16_electric_PDRSDec24_total_heat_pump_thermal_capacity';
 export const F16_electric_PDRSDec24_com_peak_load = 'F16_electric_PDRSDec24_com_peak_load';
-export const F16_electric_PDRSDec24_HP_capacity_factor = 'F16_electric_PDRSDec24_HP_capacity_factor';
+export const F16_electric_PDRSDec24_HP_capacity_factor =
+  'F16_electric_PDRSDec24_HP_capacity_factor';
 export const F16_electric_PDRSDec24_HP_elec = 'F16_electric_PDRSDec24_HP_elec';
 export const F16_electric_PDRSDec24_HP_gas = 'F16_electric_PDRSDec24_HP_gas';
 
 export const F16_electric_PDRSDec24_ESC_calculation = 'F16_electric_PDRSDec24_ESC_calculation';
-export const F16_electric_PDRSDec24__safety_requirement = 'F16_electric_PDRSDec24__safety_requirement';
+export const F16_electric_PDRSDec24__safety_requirement =
+  'F16_electric_PDRSDec24__safety_requirement';
 export const F16_electric_PDRSDec24__split_system = 'F16_electric_PDRSDec24__split_system';
 export const WH1_F16_electric_PDRSAug24_PRC_calculation =
   'WH1_F16_electric_PDRSAug24_PRC_calculation';
 export const F16_electric_PDRSDec24_energy_savings = 'F16_electric_PDRSDec24_energy_savings';
 export const WH1_F16_electric_PDRSAug24_peak_demand_annual_savings =
   'WH1_F16_electric_PDRSAug24_peak_demand_annual_savings';
-export const WH1_F16_electric_PDRSAug24_annual_energy_savings = 'WH1_F16_electric_PDRSAug24_annual_energy_savings';
-export const WH1_F16_electric_PDRSAug24_volumetric_capacity = 'WH1_F16_electric_PDRSAug24_volumetric_capacity';
+export const WH1_F16_electric_PDRSAug24_annual_energy_savings =
+  'WH1_F16_electric_PDRSAug24_annual_energy_savings';
+export const WH1_F16_electric_PDRSAug24_volumetric_capacity =
+  'WH1_F16_electric_PDRSAug24_volumetric_capacity';
 
 // Water heater gas
 export const F16_gas_ESC_calculation = 'F16_gas_ESC_calculation';
@@ -124,17 +133,22 @@ export const F7_PDRSAug24_ESC_calculation = 'F7_PDRSAug24_ESC_calculation';
 export const F7_PDRSAug24_energy_savings = 'F7_PDRSAug24_energy_savings';
 
 // POOL PUMPS
-export const SYS2_PDRSAug24_replacement_final_activity_eligibility = 'SYS2_PDRSAug24_replacement_final_activity_eligibility';
-export const SYS2_PDRSAug24_new_installation_or_replacement = 'SYS2_PDRSAug24_new_installation_or_replacement';
-export const SYS2_PDRSAug24_maximum_tested_input_power = 'SYS2_PDRSAug24_maximum_tested_input_power';
+export const SYS2_PDRSAug24_replacement_final_activity_eligibility =
+  'SYS2_PDRSAug24_replacement_final_activity_eligibility';
+export const SYS2_PDRSAug24_new_installation_or_replacement =
+  'SYS2_PDRSAug24_new_installation_or_replacement';
+export const SYS2_PDRSAug24_maximum_tested_input_power =
+  'SYS2_PDRSAug24_maximum_tested_input_power';
 export const SYS2_PDRSAug24_daily_run_time = 'SYS2_PDRSAug24_daily_run_time';
-export const SYS2_PDRSAug24_projected_annual_energy_consumption = 'SYS2_PDRSAug24_projected_annual_energy_consumption';
+export const SYS2_PDRSAug24_projected_annual_energy_consumption =
+  'SYS2_PDRSAug24_projected_annual_energy_consumption';
 export const SYS2_PDRSAug24_nameplate_input_power = 'SYS2_PDRSAug24_nameplate_input_power';
 
 // REFRIGERATED CABINET
 export const RF2_F1_2_ESSJun24_equipment_replaced = 'RF2_F1_2_ESSJun24_equipment_replaced';
 export const RF2_F1_2_ESSJun24_same_product_class = 'RF2_F1_2_ESSJun24_same_product_class';
-export const RF2_F1_2_ESSJun24_qualified_install_removal = 'RF2_F1_2_ESSJun24_qualified_install_removal';
+export const RF2_F1_2_ESSJun24_qualified_install_removal =
+  'RF2_F1_2_ESSJun24_qualified_install_removal';
 export const RF2_F1_2_ESSJun24_legal_disposal = 'RF2_F1_2_ESSJun24_legal_disposal';
 export const RF2_F1_2_ESSJun24_display_sides = 'RF2_F1_2_ESSJun24_display_sides';
 export const RF2_F1_2_ESSJun24_GEMS_product_class_5 = 'RF2_F1_2_ESSJun24_GEMS_product_class_5';

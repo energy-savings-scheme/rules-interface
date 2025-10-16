@@ -34,7 +34,7 @@ import {
   RF2_F1_2_ESSJun24_qualified_install_removal,
   RF2_F1_2_ESSJun24_legal_disposal,
   RF2_F1_2_ESSJun24_EEI_under_77,
-  RF2_F1_2_ESSJun24_EEI_under_81
+  RF2_F1_2_ESSJun24_EEI_under_81,
 } from 'types/openfisca_variables';
 
 export default function CalculateBlock(props) {
@@ -209,7 +209,20 @@ export default function CalculateBlock(props) {
     }
 
     if (formItem.name === D17_ESSJun24_split_system) {
-      const field_safety_requirement = formValues.find((v) => v.name === D17_ESSJun24_safety_requirement);
+      const field_safety_requirement = formValues.find(
+        (v) => v.name === D17_ESSJun24_safety_requirement,
+      );
+      if (field_safety_requirement !== undefined && formItem.form_value === true) {
+        field_safety_requirement.hide = false;
+      } else if (field_safety_requirement !== undefined && formItem.form_value === false) {
+        field_safety_requirement.hide = true;
+      }
+    }
+
+    if (formItem.name === D19_ESSJun24_split_system) {
+      const field_safety_requirement = formValues.find(
+        (v) => v.name === D19_ESSJun24_safety_requirement,
+      );
       if (field_safety_requirement !== undefined && formItem.form_value === true) {
         field_safety_requirement.hide = false;
       } else if (field_safety_requirement !== undefined && formItem.form_value === false) {
@@ -274,11 +287,12 @@ export default function CalculateBlock(props) {
       }
     }
 
-    if (formItem.name === SYS2_PDRSAug24_new_installation_or_replacement ||
-        formItem.name === HVAC1_PDRSAug24_new_installation_or_replacement ||
-        formItem.name === HVAC2_new_installation_or_replacement
+    if (
+      formItem.name === SYS2_PDRSAug24_new_installation_or_replacement ||
+      formItem.name === HVAC1_PDRSAug24_new_installation_or_replacement ||
+      formItem.name === HVAC2_new_installation_or_replacement
     ) {
-      formItem.defaultOption = { text: 'Please select activity', value: '', disabled: true }
+      formItem.defaultOption = { text: 'Please select activity', value: '', disabled: true };
     }
 
     const setItemValue = (e) => {
@@ -392,38 +406,38 @@ export default function CalculateBlock(props) {
           RF2_F1_2_ESSJun24_same_product_class,
           RF2_F1_2_ESSJun24_qualified_install_removal,
           RF2_F1_2_ESSJun24_legal_disposal,
-        ]
+        ];
         // New installation
         if (e.target.value === 'false') {
-          formValues.forEach(field => {
+          formValues.forEach((field) => {
             // Hide all questions replacement
             if (question_replacements.includes(field.name)) {
-              field.hide = true
+              field.hide = true;
             }
             // Hide question EEI under 81 and show question EEI under 77
             if (field.name === RF2_F1_2_ESSJun24_EEI_under_77) {
-              field.hide = false
+              field.hide = false;
             }
             if (field.name === RF2_F1_2_ESSJun24_EEI_under_81) {
-              field.hide = true
+              field.hide = true;
             }
-          })
-          
-        // Replacement
+          });
+
+          // Replacement
         } else if (e.target.value === 'true') {
-          formValues.forEach(field => {
+          formValues.forEach((field) => {
             // Show all questions replacement
             if (question_replacements.includes(field.name)) {
-              field.hide = false
+              field.hide = false;
             }
             // Hide question EEI under 77 and show question EEI under 81
             if (field.name === RF2_F1_2_ESSJun24_EEI_under_77) {
-              field.hide = true
+              field.hide = true;
             }
             if (field.name === RF2_F1_2_ESSJun24_EEI_under_81) {
-              field.hide = false
+              field.hide = false;
             }
-          })
+          });
         }
       }
 

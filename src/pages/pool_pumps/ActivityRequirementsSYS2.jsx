@@ -9,9 +9,13 @@ import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import { FormGroup, Select } from '../../nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import {BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
-import {updateEstimatorFormAnalytics, updateFeedbackFormAnalytics, updateSegmentCaptureAnalytics} from 'lib/analytics';
-import {SYS2_PDRSAug24_replacement_final_activity_eligibility} from 'types/openfisca_variables';
+import { BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+  updateSegmentCaptureAnalytics,
+} from 'lib/analytics';
+import { SYS2_PDRSAug24_replacement_final_activity_eligibility } from 'types/openfisca_variables';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
 
 export default function ActivityRequirementsSYS2(props) {
@@ -36,8 +40,8 @@ export default function ActivityRequirementsSYS2(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    updateEstimatorFormAnalytics(BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA)
-    updateFeedbackFormAnalytics(BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA)
+    updateEstimatorFormAnalytics(BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA);
   }, [stepNumber]);
 
   useEffect(() => {
@@ -186,7 +190,7 @@ export default function ActivityRequirementsSYS2(props) {
                   label="What is your interest in the scheme?"
                   helper="Select the option that best describes you"
                   htmlId="user-type"
-                  style={{marginTop: '4%'}}
+                  style={{ marginTop: '4%' }}
                 >
                   <Select
                     htmlId="user-type"
@@ -194,7 +198,7 @@ export default function ActivityRequirementsSYS2(props) {
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
                       setUserType(e.target.value);
-                      updateSegmentCaptureAnalytics(e.target.value)
+                      updateSegmentCaptureAnalytics(e.target.value);
                     }}
                     value={userType}
                     required
@@ -202,22 +206,22 @@ export default function ActivityRequirementsSYS2(props) {
                 </FormGroup>
               )}
               <LoadClausesSYS2
-              variableToLoad={variableToLoad}
-              variables={variables}
-              entities={entities}
-              stepNumber={stepNumber}
-              setStepNumber={setStepNumber}
-              formValues={formValues}
-              dependencies={dependencies}
-              setFormValues={setFormValues}
-              clausesForm={clausesForm}
-              setClausesForm={setClausesForm}
-              showError={showError}
-              setShowError={setShowError}
-              backAction={(e) => {
-                setStepNumber(stepNumber - 1);
-              }}
-            />
+                variableToLoad={variableToLoad}
+                variables={variables}
+                entities={entities}
+                stepNumber={stepNumber}
+                setStepNumber={setStepNumber}
+                formValues={formValues}
+                dependencies={dependencies}
+                setFormValues={setFormValues}
+                clausesForm={clausesForm}
+                setClausesForm={setClausesForm}
+                showError={showError}
+                setShowError={setShowError}
+                backAction={(e) => {
+                  setStepNumber(stepNumber - 1);
+                }}
+              />
             </>
           )}
         </Fragment>

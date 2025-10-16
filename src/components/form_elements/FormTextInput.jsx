@@ -18,6 +18,7 @@ export default function FormTextInput(props) {
     >
       <TextInput
         htmlId={formItem.name}
+        data-ui-name={formItem.name}
         style={{ maxWidth: '50%', marginBottom: '4%' }}
         as="input"
         number={['Float', 'Int'].includes(formItem.value_type)}

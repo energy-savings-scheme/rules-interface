@@ -15,12 +15,12 @@ import {
   WH1_F16_electric_PDRSAug24_peak_demand_annual_savings,
 } from 'types/openfisca_variables';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import {BASE_COMMERCIAL_ELECTRIC_HEAT_PUMP_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_COMMERCIAL_ELECTRIC_HEAT_PUMP_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSearchCaptureAnalytics,
-  updateSegmentCaptureAnalytics
+  updateSegmentCaptureAnalytics,
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
@@ -210,15 +210,15 @@ export default function CertificateEstimatorWH(props) {
   useEffect(() => {
     const fetchCertificatePrice = async function () {
       try {
-        const response = await RegistryApi.getCertificatePrice()
-        setEscMinPrice(Number(response.data.ESC.min_price))
-        setEscMaxPrice(Number(response.data.ESC.max_price))
+        const response = await RegistryApi.getCertificatePrice();
+        setEscMinPrice(Number(response.data.ESC.min_price));
+        setEscMaxPrice(Number(response.data.ESC.max_price));
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
-    }
+    };
 
-    fetchCertificatePrice()
+    fetchCertificatePrice();
   }, []);
 
   return (
@@ -246,8 +246,8 @@ export default function CertificateEstimatorWH(props) {
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-10">
               <p className="nsw-content-block__copy">
-                Estimate the energy savings certificates (ESCs) for the commercial heat pump
-                water heater activity (F16 in the{' '}
+                Estimate the energy savings certificates (ESCs) for the commercial heat pump water
+                heater activity (F16 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
                   target="_blank"
@@ -255,8 +255,8 @@ export default function CertificateEstimatorWH(props) {
                 >
                   Energy Savings Scheme
                 </a>
-                ) by answering the following questions. Note that a new installation activity
-                will not generate ESCs.
+                ) by answering the following questions. Note that a new installation activity will
+                not generate ESCs.
               </p>
               <p className="nsw-content-block__copy">
                 At the end of each week, commercial heat pump water heater specifications are
@@ -497,14 +497,17 @@ export default function CertificateEstimatorWH(props) {
             selectedBrand &&
             selectedModel &&
             userType && (
-              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}>
+              <div
+                className="nsw-row"
+                style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}
+              >
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"
                     onClick={(e) => {
                       validatePostcode(postcode);
                       updateSearchCaptureAnalytics(postcode, selectedBrand, selectedModel);
-                      updateSegmentCaptureAnalytics(userType)
+                      updateSegmentCaptureAnalytics(userType);
                     }}
                   >
                     Next
@@ -527,10 +530,14 @@ export default function CertificateEstimatorWH(props) {
                   marginBottom: '5%',
                 }}
               >
-                <MoreOptionsCard options={[{
-                  title: 'Review eligibility for this activity',
-                  link: '/#commercial-electric-to-heat-pump-water-heater-eligibility'
-                }]}/>
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#commercial-electric-to-heat-pump-water-heater-eligibility',
+                    },
+                  ]}
+                />
               </div>
             </div>
           )}

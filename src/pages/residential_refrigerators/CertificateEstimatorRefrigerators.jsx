@@ -10,17 +10,15 @@ import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
-import {
-  BASE_RESIDENTIAL_REFRIGERATOR_ESTIMATOR_ANALYTICS_DATA,
-} from 'constant/base-analytics-data';
+import { BASE_RESIDENTIAL_REFRIGERATOR_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
-  clearSearchCaptureAnalytics
+  clearSearchCaptureAnalytics,
 } from 'lib/analytics';
 import {
   C1_PDRSAug24_ESC_calculation,
-  C1_PDRSAug24_energy_savings
+  C1_PDRSAug24_energy_savings,
 } from 'types/openfisca_variables';
 
 export default function CertificateEstimatorRefrigerators(props) {
@@ -50,7 +48,7 @@ export default function CertificateEstimatorRefrigerators(props) {
     window.scrollTo(0, 0);
     clearSearchCaptureAnalytics();
     updateEstimatorFormAnalytics(BASE_RESIDENTIAL_REFRIGERATOR_ESTIMATOR_ANALYTICS_DATA);
-    updateFeedbackFormAnalytics(BASE_RESIDENTIAL_REFRIGERATOR_ESTIMATOR_ANALYTICS_DATA)
+    updateFeedbackFormAnalytics(BASE_RESIDENTIAL_REFRIGERATOR_ESTIMATOR_ANALYTICS_DATA);
 
     if (variables.length < 1) {
       OpenFiscaAPI.listEntities()
