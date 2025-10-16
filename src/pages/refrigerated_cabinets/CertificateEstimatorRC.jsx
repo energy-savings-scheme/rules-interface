@@ -10,12 +10,12 @@ import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import {BASE_COMMERCIAL_REFRIGERATED_CABINET_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_COMMERCIAL_REFRIGERATED_CABINET_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSearchCaptureAnalytics,
-  updateSegmentCaptureAnalytics
+  updateSegmentCaptureAnalytics,
 } from 'lib/analytics';
 import { focusElement } from 'lib/helper';
 import FeedbackComponent from 'components/feedback/feedback';
@@ -123,17 +123,17 @@ export default function CertificateEstimatorRC(props) {
   useEffect(() => {
     const fetchCertificatePrice = async function () {
       try {
-        const response = await RegistryApi.getCertificatePrice()
-        setEscMinPrice(Number(response.data.ESC.min_price))
-        setEscMaxPrice(Number(response.data.ESC.max_price))
-        setPrcMinPrice(Number(response.data.PRC.min_price))
-        setPrcMaxPrice(Number(response.data.PRC.max_price))
+        const response = await RegistryApi.getCertificatePrice();
+        setEscMinPrice(Number(response.data.ESC.min_price));
+        setEscMaxPrice(Number(response.data.ESC.max_price));
+        setPrcMinPrice(Number(response.data.PRC.min_price));
+        setPrcMaxPrice(Number(response.data.PRC.max_price));
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
-    }
+    };
 
-    fetchCertificatePrice()
+    fetchCertificatePrice();
   }, []);
 
   if (lastModified.length == 0) {
@@ -383,7 +383,7 @@ export default function CertificateEstimatorRC(props) {
                         onChange={(e) => {
                           setSelectedBrand(RF2Brands.find((item) => item === e.target.value));
                           setSelectedModel('');
-                          setSelectedProductClass('')
+                          setSelectedProductClass('');
                         }}
                         value={selectedBrand}
                         required
@@ -565,7 +565,10 @@ export default function CertificateEstimatorRC(props) {
             selectedModel &&
             selectedProductClass &&
             userType && (
-              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}>
+              <div
+                className="nsw-row"
+                style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}
+              >
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"
@@ -595,10 +598,14 @@ export default function CertificateEstimatorRC(props) {
                   marginBottom: '5%',
                 }}
               >
-                <MoreOptionsCard options={[{
-                  title: 'Review eligibility for this activity',
-                  link: '/#refrigerated-cabinet-activity-requirements'
-                }]}/>
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#refrigerated-cabinet-activity-requirements',
+                    },
+                  ]}
+                />
               </div>
             </div>
           )}

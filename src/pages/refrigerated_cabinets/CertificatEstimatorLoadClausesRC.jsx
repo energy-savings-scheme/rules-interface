@@ -10,7 +10,7 @@ import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
-import {RF2_F1_2_ESSJun24_PDRS__postcode} from 'types/openfisca_variables';
+import { RF2_F1_2_ESSJun24_PDRS__postcode } from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
 export default function CertificateEstimatorLoadClausesRC(props) {
@@ -54,7 +54,7 @@ export default function CertificateEstimatorLoadClausesRC(props) {
     escMinPrice,
     escMaxPrice,
     prcMinPrice,
-    prcMaxPrice
+    prcMaxPrice,
   } = props;
 
   useEffect(() => {
@@ -258,7 +258,8 @@ export default function CertificateEstimatorLoadClausesRC(props) {
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> MWh
+                  </b>{' '}
+                  MWh
                 </p>
                 <p>
                   Your estimated peak demand reduction over the lifetime of the equipment is{' '}
@@ -266,7 +267,8 @@ export default function CertificateEstimatorLoadClausesRC(props) {
                     {Math.floor(calculationResult) === 0
                       ? 0
                       : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
-                  </b> kW
+                  </b>{' '}
+                  kW
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not

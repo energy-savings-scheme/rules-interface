@@ -10,7 +10,7 @@ import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
-import {SYS2_PDRSAug24_new_installation_or_replacement} from 'types/openfisca_variables';
+import { SYS2_PDRSAug24_new_installation_or_replacement } from 'types/openfisca_variables';
 
 export default function LoadClausesSYS2(props) {
   const {
@@ -99,7 +99,6 @@ export default function LoadClausesSYS2(props) {
       <div>
         {stepNumber === 1 && (
           <Fragment>
-
             {/* <div className="nsw-row">
               <div className="nsw-col">
                 <Button

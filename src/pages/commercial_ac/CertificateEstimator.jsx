@@ -12,12 +12,12 @@ import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import {BASE_COMMERCIAL_AC_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_COMMERCIAL_AC_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSearchCaptureAnalytics,
-  updateSegmentCaptureAnalytics
+  updateSegmentCaptureAnalytics,
 } from 'lib/analytics';
 import { focusElement } from 'lib/helper';
 import FeedbackComponent from 'components/feedback/feedback';
@@ -63,8 +63,7 @@ export default function CertificateEstimatorHVAC(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
     updateEstimatorFormAnalytics(BASE_COMMERCIAL_AC_ESTIMATOR_ANALYTICS_DATA);
-    updateFeedbackFormAnalytics(BASE_COMMERCIAL_AC_ESTIMATOR_ANALYTICS_DATA)
-;
+    updateFeedbackFormAnalytics(BASE_COMMERCIAL_AC_ESTIMATOR_ANALYTICS_DATA);
     setDropdownOptions([{ value: '', text: 'Please select brand' }]);
 
     setDropdownOptionsClimateZone([
@@ -114,17 +113,17 @@ export default function CertificateEstimatorHVAC(props) {
   useEffect(() => {
     const fetchCertificatePrice = async function () {
       try {
-        const response = await RegistryApi.getCertificatePrice()
-        setEscMinPrice(Number(response.data.ESC.min_price))
-        setEscMaxPrice(Number(response.data.ESC.max_price))
-        setPrcMinPrice(Number(response.data.PRC.min_price))
-        setPrcMaxPrice(Number(response.data.PRC.max_price))
+        const response = await RegistryApi.getCertificatePrice();
+        setEscMinPrice(Number(response.data.ESC.min_price));
+        setEscMaxPrice(Number(response.data.ESC.max_price));
+        setPrcMinPrice(Number(response.data.PRC.min_price));
+        setPrcMaxPrice(Number(response.data.PRC.max_price));
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
-    }
+    };
 
-    fetchCertificatePrice()
+    fetchCertificatePrice();
   }, []);
 
   useEffect(() => {
@@ -676,14 +675,17 @@ export default function CertificateEstimatorHVAC(props) {
             selectedBrand &&
             selectedModel &&
             userType && (
-              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}>
+              <div
+                className="nsw-row"
+                style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}
+              >
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"
                     onClick={(e) => {
                       validatePostcode(postcode);
                       updateSearchCaptureAnalytics(postcode, selectedBrand, selectedModel);
-                      updateSegmentCaptureAnalytics(userType)
+                      updateSegmentCaptureAnalytics(userType);
                     }}
                   >
                     Next
@@ -706,10 +708,14 @@ export default function CertificateEstimatorHVAC(props) {
                   marginBottom: '5%',
                 }}
               >
-                <MoreOptionsCard options={[{
-                  title: 'Review eligibility for this activity',
-                  link: '/#commercial-ac-activity-requirements'
-                }]}/>
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#commercial-ac-activity-requirements',
+                    },
+                  ]}
+                />
               </div>
             </div>
           )}

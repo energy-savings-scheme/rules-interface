@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
-import {submitFeedbackFormAnalytics} from 'lib/analytics';
+import { submitFeedbackFormAnalytics } from 'lib/analytics';
 
 export default function FeedbackComponent(props) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [uiSectionHeight, setUiSectionHeight] = useState(0);
-  const feedbackEmail = 'sustainability@environment.nsw.gov.au'
+  const feedbackEmail = 'sustainability@environment.nsw.gov.au';
   const uiSectionRef = useRef(null);
 
   useEffect(() => {
@@ -26,12 +26,15 @@ export default function FeedbackComponent(props) {
         }}
         ref={uiSectionRef}
       >
-        <div style={{display: 'flex'}}>
-          <div className="nsw-col-md-6 nsw-m-right-xs" style={{
-            display: 'flex',
-            justifyContent: 'end',
-            alignItems: 'center'
-          }}>
+        <div style={{ display: 'flex' }}>
+          <div
+            className="nsw-col-md-6 nsw-m-right-xs"
+            style={{
+              display: 'flex',
+              justifyContent: 'end',
+              alignItems: 'center',
+            }}
+          >
             <span className="nsw-small">
               <b>Was this tool helpful for you today?</b>
             </span>
@@ -54,10 +57,13 @@ export default function FeedbackComponent(props) {
               <span>Yes</span>
             </button>
           </div>
-          <div className="nsw-col-md-6 nsw-m-left-xs" style={{
-            display: 'flex',
-            alignItems: 'center'
-          }}>
+          <div
+            className="nsw-col-md-6 nsw-m-left-xs"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
             <button
               type="button"
               className="nsw-button nsw-button--dark nsw-p-top-sm nsw-p-bottom-sm nsw-m-right-md"
@@ -88,7 +94,7 @@ export default function FeedbackComponent(props) {
         style={{ height: uiSectionHeight, display: isSubmitted ? 'none' : 'block' }}
         className="nsw-m-bottom-xxl"
       ></div>
-      <div className="nsw-container" style={{display: isSubmitted ? 'block' : 'none'}}>
+      <div className="nsw-container" style={{ display: isSubmitted ? 'block' : 'none' }}>
         <p className="nsw-small">
           {feedbackMessage}
           <strong className="nsw-text-underline">{feedbackEmail}</strong>

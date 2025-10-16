@@ -12,7 +12,7 @@ import OpenFiscaApi from 'services/openfisca_api';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 import {
   HVAC2_PDRSAug24_PDRS__postcode,
-  HVAC2_PDRSAug24_BCA_Climate_Zone
+  HVAC2_PDRSAug24_BCA_Climate_Zone,
 } from 'types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
@@ -57,7 +57,7 @@ export default function CertificateEstimatorLoadClauses(props) {
     escMinPrice,
     escMaxPrice,
     prcMinPrice,
-    prcMaxPrice
+    prcMaxPrice,
   } = props;
 
   const bca_mapping = {
@@ -294,7 +294,8 @@ export default function CertificateEstimatorLoadClauses(props) {
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> MWh
+                  </b>{' '}
+                  MWh
                 </p>
                 <p>
                   Your estimated peak demand reduction over the lifetime of the equipment is{' '}
@@ -302,7 +303,8 @@ export default function CertificateEstimatorLoadClauses(props) {
                     {Math.floor(calculationResult) === 0
                       ? 0
                       : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
-                  </b> kW
+                  </b>{' '}
+                  kW
                 </p>
                 <p>
                   If you are receiving an estimation of 0 certificates, the brand and model may not

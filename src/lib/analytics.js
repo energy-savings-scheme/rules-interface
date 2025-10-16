@@ -1,68 +1,68 @@
-import moment from 'moment'
+import moment from 'moment';
 
 class FormAnalytics {
   constructor(event) {
-    this.event = event
-    this.values = {}
+    this.event = event;
+    this.values = {};
   }
 
   updateData(values) {
-    Object.assign(this.values, values)
+    Object.assign(this.values, values);
   }
 }
 
-const estimatorFormAnalytics = new FormAnalytics('SafeguardSubmission')
-const feedbackFormAnalytics = new FormAnalytics('SafeguardFeedback')
+const estimatorFormAnalytics = new FormAnalytics('SafeguardSubmission');
+const feedbackFormAnalytics = new FormAnalytics('SafeguardFeedback');
 
 export function updateEstimatorFormAnalytics(values) {
-  estimatorFormAnalytics.updateData(values)
-  return estimatorFormAnalytics.values
+  estimatorFormAnalytics.updateData(values);
+  return estimatorFormAnalytics.values;
 }
 
 export function updateFeedbackFormAnalytics(values) {
-  feedbackFormAnalytics.updateData(values)
-  return feedbackFormAnalytics.values
+  feedbackFormAnalytics.updateData(values);
+  return feedbackFormAnalytics.values;
 }
 
 export function updateSearchCaptureAnalytics(postcode, brand, model) {
   updateEstimatorFormAnalytics({
     sf_postcode: postcode,
     sf_brand: brand,
-    sf_model: model
-  })
+    sf_model: model,
+  });
   updateFeedbackFormAnalytics({
     sf_postcode: postcode,
     sf_brand: brand,
-    sf_model: model
-  })
+    sf_model: model,
+  });
 }
 
 export function updateSegmentCaptureAnalytics(userType) {
   updateEstimatorFormAnalytics({
-    sf_userType: userType
-  })
+    sf_userType: userType,
+  });
   updateFeedbackFormAnalytics({
-    sf_userType: userType
-  })
+    sf_userType: userType,
+  });
 }
 
 export function updatePostCodeAnalytics(postcode) {
   updateEstimatorFormAnalytics({
-    sf_postcode: postcode
-  })
+    sf_postcode: postcode,
+  });
   updateFeedbackFormAnalytics({
-    sf_postcode: postcode
-  })
+    sf_postcode: postcode,
+  });
 }
 
 export function clearSearchCaptureAnalytics() {
-  delete estimatorFormAnalytics.values.sf_postcode
-  delete estimatorFormAnalytics.values.sf_brand
-  delete estimatorFormAnalytics.values.sf_model
+  delete estimatorFormAnalytics.values.sf_postcode;
+  delete estimatorFormAnalytics.values.sf_brand;
+  delete estimatorFormAnalytics.values.sf_model;
 
-  delete feedbackFormAnalytics.values.sf_postcode
-  delete feedbackFormAnalytics.values.sf_brand
-  delete feedbackFormAnalytics.values.sf_model
+  delete feedbackFormAnalytics.values.sf_postcode;
+  delete feedbackFormAnalytics.values.sf_brand;
+  delete feedbackFormAnalytics.values.sf_model;
 }
 
 export function submitEstimatorFormAnalytics() {
@@ -70,10 +70,10 @@ export function submitEstimatorFormAnalytics() {
   const submittedData = {
     ...estimatorFormAnalytics.values,
     event: estimatorFormAnalytics.event,
-    submittedAt: moment().utc().format()
-  }
+    submittedAt: moment().utc().format(),
+  };
   window.dataLayer.push(submittedData);
-  console.log(`Estimator form analytics: ${JSON.stringify(submittedData)}`)
+  console.log(`Estimator form analytics: ${JSON.stringify(submittedData)}`);
 }
 
 export function submitFeedbackFormAnalytics(isHelpful) {
@@ -82,8 +82,8 @@ export function submitFeedbackFormAnalytics(isHelpful) {
     ...feedbackFormAnalytics.values,
     event: feedbackFormAnalytics.event,
     sf_isHelpful: isHelpful,
-    submittedAt: moment().utc().format()
-  }
+    submittedAt: moment().utc().format(),
+  };
   window.dataLayer.push(submittedData);
-  console.log(`Feedback form analytics: ${JSON.stringify(submittedData)}`)
+  console.log(`Feedback form analytics: ${JSON.stringify(submittedData)}`);
 }

@@ -20,6 +20,7 @@ export default function FormTextInput(props) {
         htmlId={formItem.name}
         className="nsw-col-lg-6"
         style={{ marginBottom: '4%' }}
+        data-ui-name={formItem.name}
         as="input"
         number={['Float', 'Int'].includes(formItem.value_type)}
         type={['Float', 'Int'].includes(formItem.value_type) ? 'number' : 'text'}

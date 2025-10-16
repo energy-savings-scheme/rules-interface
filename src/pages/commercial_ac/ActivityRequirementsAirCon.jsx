@@ -12,11 +12,11 @@ import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSegmentCaptureAnalytics,
-  clearSearchCaptureAnalytics
+  clearSearchCaptureAnalytics,
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
-import {BASE_COMMERCIAL_AC_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_COMMERCIAL_AC_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
 
 export default function ActivityRequirementsCommercialAC(props) {
   const { entities, variables, loading, setLoading } = props;
@@ -191,7 +191,7 @@ export default function ActivityRequirementsCommercialAC(props) {
                   label="What is your interest in the scheme?"
                   helper="Select the option that best describes you"
                   htmlId="user-type"
-                  style={{marginTop: '4%'}}
+                  style={{ marginTop: '4%' }}
                 >
                   <Select
                     htmlId="user-type"
@@ -200,7 +200,7 @@ export default function ActivityRequirementsCommercialAC(props) {
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
                       setUserType(e.target.value);
-                      updateSegmentCaptureAnalytics(e.target.value)
+                      updateSegmentCaptureAnalytics(e.target.value);
                     }}
                     value={userType}
                     required
