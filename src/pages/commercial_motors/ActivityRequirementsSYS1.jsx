@@ -168,10 +168,10 @@ export default function ActivityRequirementsSYS1(props) {
                   helper="Select the option that best describes you"
                   htmlId="user-type"
                   style={{marginTop: '4%'}}
-                  className="nsw-col-lg-6"
                 >
                   <Select
                     htmlId="user-type"
+                    className="nsw-col-lg-6"
                     style={{ marginBottom: '2.5%' }}
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
