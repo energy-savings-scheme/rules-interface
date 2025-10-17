@@ -27,8 +27,9 @@ export default function DropDownMenu(props) {
     >
       <Select
         htmlId={formItem.name}
+        className="nsw-col-lg-6"
+        style={{ marginBottom: '4%' }}
         data-ui-name={formItem.name}
-        style={{ maxWidth: '50%', marginBottom: '4%' }}
         options={possibleValues}
         onChange={setItemValue}
         value={formItem.form_value}
