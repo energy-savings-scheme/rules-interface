@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { submitFeedbackFormAnalytics } from 'lib/analytics';
+import { focusElement } from 'lib/helper';
 
 export default function FeedbackComponent(props) {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -14,6 +15,12 @@ export default function FeedbackComponent(props) {
     }
   }, [uiSectionRef]);
 
+  useEffect(() => {
+    if (feedbackMessage) {
+      focusElement("feedback-message");
+    }
+  }, [feedbackMessage])
+
   return (
     <>
       <section
@@ -26,7 +33,7 @@ export default function FeedbackComponent(props) {
         }}
         ref={uiSectionRef}
       >
-        <div style={{ display: 'flex' }}>
+        <div role="group" style={{ display: 'flex' }}>
           <div
             className="nsw-col-md-6 nsw-m-right-xs"
             style={{
@@ -41,6 +48,7 @@ export default function FeedbackComponent(props) {
             <button
               type="button"
               className="nsw-button nsw-button--dark nsw-p-top-sm nsw-p-bottom-sm nsw-m-left-md"
+              aria-describedby="help-text-rating"
               onClick={() => {
                 submitFeedbackFormAnalytics(true);
                 setIsSubmitted(true);
@@ -67,6 +75,7 @@ export default function FeedbackComponent(props) {
             <button
               type="button"
               className="nsw-button nsw-button--dark nsw-p-top-sm nsw-p-bottom-sm nsw-m-right-md"
+              aria-describedby="help-text-rating"
               onClick={() => {
                 submitFeedbackFormAnalytics(false);
                 setIsSubmitted(true);
@@ -84,7 +93,7 @@ export default function FeedbackComponent(props) {
               </span>
               <span>No</span>
             </button>
-            <span className="nsw-small">
+            <span id="help-text-rating" className="nsw-small">
               Your rating will help us improve the Safeguard Certificate Estimator
             </span>
           </div>
@@ -94,7 +103,7 @@ export default function FeedbackComponent(props) {
         style={{ height: uiSectionHeight, display: isSubmitted ? 'none' : 'block' }}
         className="nsw-m-bottom-xxl"
       ></div>
-      <div className="nsw-container" style={{ display: isSubmitted ? 'block' : 'none' }}>
+      <div id="feedback-message" className="nsw-container" style={{ display: isSubmitted ? 'block' : 'none' }} tabIndex="-1">
         <p className="nsw-small">
           {feedbackMessage}
           <strong className="nsw-text-underline">{feedbackEmail}</strong>

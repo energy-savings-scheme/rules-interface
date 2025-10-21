@@ -310,7 +310,7 @@ export default function CertificateEstimatorLoadClausesPP(props) {
           (stepNumber === 3 && calculationError2 === true && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
-            }>
+            } className="nsw-col-lg-10">
               <p>An error occurred during calculation. Try re-running the calculation</p>
             </Alert>
           ))}
