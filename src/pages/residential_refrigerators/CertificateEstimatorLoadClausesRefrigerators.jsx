@@ -5,7 +5,7 @@ import moment from 'moment';
 
 // Import components
 import CalculateBlock from 'components/calculate/CalculateBlock';
-
+import InfoBox from 'components/info-box/info-box';
 import Button from 'nsw-ds-react/button/button';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
@@ -118,9 +118,9 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
       <div style={{ marginTop: 70, marginBottom: 70 }}>
         {stepNumber === 1 && (
           <Fragment>
-            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+            <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your ESCs</b>
-            </h5>
+            </p>
             <FormGroup
               htmlId="user-type"
               label="What is your interest in the scheme?"
@@ -128,7 +128,8 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
             >
               <Select
                 htmlId="user-type"
-                style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                className="nsw-col-lg-6"
+                style={{ marginBottom: '2.5%' }}
                 options={USER_TYPE_OPTIONS}
                 onChange={(e) => {
                   setUserType(e.target.value);
@@ -183,21 +184,11 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
 
         {stepNumber === 2 && !calculationError && !calculationError2 && (
           <Fragment>
-            <div
-              className="nsw-global-alert nsw-global-alert--light js-global-alert"
-              role="alert"
-              style={{ width: '80%', marginBottom: '7%' }}
-            >
-              <div className="nsw-global-alert__wrapper">
-                <div className="nsw-global-alert__content">
-                  <p>
-                    <b>Postcode: </b> {postcode}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <InfoBox postcode={postcode} />
             {
-              <Alert as="info" title="ESCs" style={{ width: '80%', marginBottom: '7%' }}>
+              <Alert as="info" customTitle={
+                <h3 dangerouslySetInnerHTML={{__html: "ESCs"}}/>
+              } className="nsw-col-lg-10" style={{ marginBottom: '7%' }}>
                 <p>
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
@@ -232,7 +223,9 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
 
         {(stepNumber === 2 && calculationError === true) ||
           (stepNumber === 2 && calculationError2 === true && (
-            <Alert as="error" title="Sorry! An error has occurred.">
+            <Alert as="error" customTitle={
+              <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
+            }>
               <p>An error occurred during calculation. Try re-running the calculation</p>
             </Alert>
           ))}
@@ -240,11 +233,10 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
         {stepNumber === 2 && (
           <Fragment>
             <div
-              className="nsw-row"
+              className="nsw-row nsw-col-lg-10"
               style={{
                 paddingLeft: 'inherit',
                 paddingRight: 'inherit',
-                width: '80%',
               }}
             >
               <CertificiatePrice
