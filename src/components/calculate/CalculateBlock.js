@@ -230,15 +230,6 @@ export default function CalculateBlock(props) {
       }
     }
 
-    if (formItem.name === D19_ESSJun24_split_system) {
-      const field_safety_requirement = formValues.find((v) => v.name === D19_ESSJun24_safety_requirement);
-      if (field_safety_requirement !== undefined && formItem.form_value === true) {
-        field_safety_requirement.hide = false;
-      } else if (field_safety_requirement !== undefined && formItem.form_value === false) {
-        field_safety_requirement.hide = true;
-      }
-    }
-
     if (formItem.name === F16_electric_PDRSDec24__storage_volume && formItem.form_value === true) {
       formValues.find((v) => v.name === F16_electric_PDRSDec24__certified).hide = false;
     } else if (

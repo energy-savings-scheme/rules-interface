@@ -128,7 +128,7 @@ export default function ActivityRequirementsCommercialAC(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ paddingLeft: 0 }}>
+      <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -180,7 +180,7 @@ export default function ActivityRequirementsCommercialAC(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={2} className="nsw-col-lg-10" />
 
         <Fragment>
           {loading && <SpinnerFullscreen />}
@@ -195,7 +195,8 @@ export default function ActivityRequirementsCommercialAC(props) {
                 >
                   <Select
                     htmlId="user-type"
-                    style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                    className="nsw-col-lg-6"
+                    style={{ marginBottom: '2.5%' }}
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
                       setUserType(e.target.value);

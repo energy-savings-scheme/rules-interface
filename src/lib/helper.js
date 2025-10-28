@@ -9,4 +9,16 @@ function formatNumber(num) {
   return num.toLocaleString('en-AU', {maximumFractionDigits:2});
 }
 
-export { formatNumber };
+/**
+ * Focus to a specific element by id
+ * 
+ * @param {string} id
+ */
+function focusElement(id) {
+  const element = document.getElementById(id)
+  if (element) {
+    element.focus();
+  }
+}
+
+export { formatNumber, focusElement };
