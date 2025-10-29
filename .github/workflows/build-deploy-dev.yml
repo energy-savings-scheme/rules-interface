@@ -66,9 +66,12 @@ jobs:
           # Copy poc acp list folder
           cp -R ./poc_acp/* ./build/dist/latest/
 
+          # Copy dynamic loader script
+          cp ./src/dynamic-loader.js ./build/dist/latest/
+
       - name: Deploy to Azure
         uses: TravisSpomer/deploy-to-azure-storage@v1.4.0
         with:
           source-path: build
           cleanup: false
-          sas-url: ${{ secrets.DEPLOY_SAS_URL_TESTING }}
+          sas-url: ${{ secrets.DEPLOY_SAS_URL_DEV }}

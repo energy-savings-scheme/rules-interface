@@ -19,13 +19,17 @@ export default function DropDownMenu(props) {
 
   return (
     <FormGroup
+      htmlId={formItem.name}
       helper={<span dangerouslySetInnerHTML={{ __html: formItem.metadata.display_question }} />} // primary label
       label={formItem.metadata.label} // primary question text
       error="Invalid value!" // error text if invalid
       status={formItem.invalid && 'invalid'} // if `true` renders invalid formatting
     >
       <Select
-        style={{ maxWidth: '50%', marginBottom: '4%' }}
+        htmlId={formItem.name}
+        className="nsw-col-lg-6"
+        style={{ marginBottom: '4%' }}
+        data-ui-name={formItem.name}
         options={possibleValues}
         onChange={setItemValue}
         value={formItem.form_value}

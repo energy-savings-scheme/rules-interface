@@ -19,7 +19,7 @@ import {
   F17_certified,
   F17_safety_requirement,
   F17_split_system,
-  F17_storage_volume
+  F17_storage_volume,
 } from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
@@ -99,7 +99,7 @@ export default function ActivityRequirementsF17(props) {
 
   useEffect(() => {
     let new_arr = [];
-    const excludeClauses = [F17_split_system, F17_storage_volume]
+    const excludeClauses = [F17_split_system, F17_storage_volume];
 
     formValues
       .filter((x) => x.hide === false)
@@ -133,7 +133,7 @@ export default function ActivityRequirementsF17(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ paddingLeft: 0 }}>
+      <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -178,7 +178,7 @@ export default function ActivityRequirementsF17(props) {
           </div>
         )} */}
 
-        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={2} className="nsw-col-lg-10" />
 
         <Fragment>
           {loading && <SpinnerFullscreen />}
@@ -193,7 +193,8 @@ export default function ActivityRequirementsF17(props) {
                 >
                   <Select
                     htmlId="user-type"
-                    style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                    className="nsw-col-lg-6"
+                    style={{ marginBottom: '2.5%' }}
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
                       setUserType(e.target.value);

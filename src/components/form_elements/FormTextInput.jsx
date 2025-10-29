@@ -9,6 +9,7 @@ export default function FormTextInput(props) {
 
   return (
     <FormGroup
+      htmlId={formItem.name}
       helper={<span dangerouslySetInnerHTML={{ __html: formItem.metadata.display_question }} />} // primary label with URL
       label={formItem.metadata.label} // helper text (secondary label)
       error="Invalid value!" // error text if invalid
@@ -16,16 +17,19 @@ export default function FormTextInput(props) {
       style={formItem.hide ? { display: 'none' } : {}}
     >
       <TextInput
-        style={{ maxWidth: '50%', marginBottom: '4%' }}
+        htmlId={formItem.name}
+        className="nsw-col-lg-6"
+        style={{ marginBottom: '4%' }}
+        data-ui-name={formItem.name}
         as="input"
-        number={['Float', 'Integer'].includes(formItem.value_type)}
-        type={['Float', 'Integer'].includes(formItem.value_type) ? 'number' : 'text'}
+        number={['Float', 'Int'].includes(formItem.value_type)}
+        type={['Float', 'Int'].includes(formItem.value_type) ? 'number' : 'text'}
         placeholder="Enter value"
         value={formItem.form_value}
         onChange={setItemValue}
         required
         readOnly={formItem.read_only ? true : false}
-        min={['Float', 'Integer'].includes(formItem.value_type) ? '0' : '0'} // Set min to 0 for Float and Integer types
+        min={['Float', 'Int'].includes(formItem.value_type) ? '0' : '0'} // Set min to 0 for Float and Integer types
       />
     </FormGroup>
   );

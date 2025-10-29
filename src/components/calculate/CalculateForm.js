@@ -40,6 +40,7 @@ import {
   submitEstimatorFormAnalytics,
   updatePostCodeAnalytics,
 } from 'lib/analytics';
+import { focusElement } from 'lib/helper';
 
 export default function CalculateForm(props) {
   const {
@@ -374,18 +375,22 @@ export default function CalculateForm(props) {
                   } else {
                     setShowPostcodeError(true);
                     setShowNoResponsePostcodeError(false);
+                    focusElement("error-postcode");
                   }
                 } else if (persons.status === '200' && persons.code === '404') {
                   setShowPostcodeError(true);
                   setShowNoResponsePostcodeError(false);
+                  focusElement("error-postcode");
                 } else if (persons.status !== '200') {
                   setShowPostcodeError(false);
                   setShowNoResponsePostcodeError(true);
+                  focusElement("error-postcode-response");
                 }
               })
               .catch((err) => {
                 console.log(err);
                 setShowNoResponsePostcodeError(true);
+                focusElement("error-postcode-response");
               });
           }
         }
@@ -408,7 +413,7 @@ export default function CalculateForm(props) {
   };
 
   return (
-    <form onSubmit={handleCalculate}>
+    <form data-ui-name="calculate-form" onSubmit={handleCalculate}>
       <div className="nsw-content-block">
         <div className="nsw-content-block__content">
           {workflow === Workflow.CERTIFICATES &&
@@ -424,15 +429,15 @@ export default function CalculateForm(props) {
             // that's why we adding this template below.
             // F16 shouldn't have PRC anymore.
             // TODO: Need to do refactor and find a good way on how to display this section properly.
-            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+            <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your ESCs</b>
-            </h5>
+            </p>
           ) : workflow === Workflow.CERTIFICATES &&
             (variable.name === BESS1_V5Nov24_PRC_calculation ||
               variable.name === BESS2_V5Nov24_PRC_calculation) ? (
-            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+            <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your PRCs</b>
-            </h5>
+            </p>
           ) : workflow === Workflow.CERTIFICATES &&
             (variable.name === C1_PDRSAug24_ESC_calculation ||
               variable.name === F7_PDRSAug24_ESC_calculation ||
@@ -440,13 +445,13 @@ export default function CalculateForm(props) {
               variable.name === BESS2_PDRSAug24_PRC_calculation) ? (
             <></>
           ) : workflow === Workflow.CERTIFICATES ? (
-            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+            <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your ESCs and PRCs</b>
-            </h5>
+            </p>
           ) : (
-            <h5 className="nsw-content-block__copy">
+            <p className="nsw-content-block__copy">
               <b>Check if you meet the following requirements</b>
-            </h5>
+            </p>
           )}
         </div>
       </div>
@@ -454,13 +459,17 @@ export default function CalculateForm(props) {
       {props.children}
 
       {stepNumber === 1 && showPostcodeError && (
-        <Alert as="error" title="The postcode is not valid in NSW">
+        <Alert as="error" customTitle={
+          <h3 dangerouslySetInnerHTML={{__html: "The postcode is not valid in NSW"}}/>
+        } id="error-postcode" className="nsw-col-lg-10" tabIndex="-1">
           <p>Please check your postcode and try again.</p>
         </Alert>
       )}
 
       {stepNumber === 1 && showNoResponsePostcodeError && (
-        <Alert as="error" title="Sorry!">
+        <Alert as="error" customTitle={
+          <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
+        } id="error-postcode-response" className="nsw-col-lg-10" tabIndex="-1">
           <p>
             We are experiencing technical difficulties validating the postcode, please try again
             later.
@@ -486,7 +495,7 @@ export default function CalculateForm(props) {
           </div>
 
           <div className="nsw-col-md-3">
-            <Button as="dark" type="submit" style={{ float: 'right' }}>
+            <Button data-ui-name="next" as="dark" type="submit" style={{ float: 'right' }}>
               {loading ? (
                 <Spinner animation="border" role="status" size="lg">
                   <span className="sr-only">Loading...</span>

@@ -16,7 +16,7 @@ import {
 } from 'lib/analytics';
 import {
   D19_ESSJun24_split_system,
-  D19_ESSJun24_safety_requirement
+  D19_ESSJun24_safety_requirement,
 } from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
@@ -75,9 +75,7 @@ export default function ActivityRequirementsD19(props) {
 
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
 
-      const names = [
-        D19_ESSJun24_safety_requirement
-      ];
+      const names = [D19_ESSJun24_safety_requirement];
 
       dep_arr = array.filter((item) => names.includes(item.name));
       array.find((item) => {
@@ -96,7 +94,7 @@ export default function ActivityRequirementsD19(props) {
 
   useEffect(() => {
     let new_arr = [];
-    const exlucdeClauses = [D19_ESSJun24_split_system]
+    const exlucdeClauses = [D19_ESSJun24_split_system];
 
     formValues
       .filter((x) => x.hide === false)
@@ -129,7 +127,7 @@ export default function ActivityRequirementsD19(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ paddingLeft: 0 }}>
+      <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -175,7 +173,7 @@ export default function ActivityRequirementsD19(props) {
           </div>
         )} */}
 
-        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={2} className="nsw-col-lg-10" />
 
         <Fragment>
           {loading && <SpinnerFullscreen />}
@@ -190,7 +188,8 @@ export default function ActivityRequirementsD19(props) {
                 >
                   <Select
                     htmlId="user-type"
-                    style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                    className="nsw-col-lg-6"
+                    style={{ marginBottom: '2.5%' }}
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
                       setUserType(e.target.value);

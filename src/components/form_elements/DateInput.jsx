@@ -13,6 +13,7 @@ export default function DateInput(props) {
       status={formItem.invalid && 'invalid'} // if `true` renders invalid formatting
     >
       <TextInput
+        data-ui-name={formItem.name}
         style={{ maxWidth: '50%', marginBottom: '4%' }}
         as="input"
         type="date"
