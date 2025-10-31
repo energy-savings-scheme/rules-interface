@@ -3,6 +3,9 @@ import { FormGroup, Select } from 'nsw-ds-react/forms';
 
 export default function DropDownMenu(props) {
   const { formItem, setItemValue } = props;
+  const defaultStyle = {
+    marginBottom: '4%'
+  }
 
   const possibleValues = [];
   if (formItem.defaultOption) {
@@ -23,17 +26,19 @@ export default function DropDownMenu(props) {
       helper={<span dangerouslySetInnerHTML={{ __html: formItem.metadata.display_question }} />} // primary label
       label={formItem.metadata.label} // primary question text
       error="Invalid value!" // error text if invalid
-      status={formItem.invalid && 'invalid'} // if `true` renders invalid formatting
+      status={formItem.invalid ? 'invalid' : ''} // if `true` renders invalid formatting
+      statusText={formItem.invalidText ? formItem.invalidText : ''}
+      style={formItem.hide ? {...defaultStyle, display: 'none'} : defaultStyle}
     >
       <Select
         htmlId={formItem.name}
         className="nsw-col-lg-6"
-        style={{ marginBottom: '4%' }}
         data-ui-name={formItem.name}
         options={possibleValues}
         onChange={setItemValue}
         value={formItem.form_value}
         required
+        status={formItem.invalid ? 'invalid' : ''}
       />
     </FormGroup>
   );
