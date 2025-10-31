@@ -107,7 +107,7 @@ export const FormGroup = ({
     {helper ? <FormHelper htmlId={htmlId}>{helper}</FormHelper> : ''}
     {React.Children.map(children, (child) => React.cloneElement(child, { error }))}
     {status ? (
-      <FormHelper htmlId={htmlId} status={status}>
+      <FormHelper htmlId={htmlId} status={status} className="nsw-col-lg-6">
         {statusText}
       </FormHelper>
     ) : (

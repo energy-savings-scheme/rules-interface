@@ -42,7 +42,7 @@ export const Select = ({
   <select
     className={`nsw-form__select ${className}`}
     aria-invalid={status === 'invalid' ? 'true' : ''}
-    aria-describedby={status === 'invalid' ? `helper${htmlId} error${htmlId}` : `helper${htmlId}`}
+    aria-describedby={status === 'invalid' ? `error${htmlId}` : `helper${htmlId}`}
     id={htmlId}
     defaultValue={selected}
     {...attributeOptions}

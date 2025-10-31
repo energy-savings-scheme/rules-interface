@@ -78,6 +78,7 @@ export default function CalculateForm(props) {
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
+    onValidateUserType
   } = props;
 
   var { formValues } = props;
@@ -131,19 +132,67 @@ export default function CalculateForm(props) {
     return item;
   };
 
-  const validateUserType = () => {
-    const userType = document.querySelector('select#user-type');
+  const validateForm = () => {
+    // in some activities user type field is not part of the form
+    // need to have separate validation process
+    // in this case eligibility and certificate with only 2 steps.
+    const invalidElements = [];
 
-    if (!userType.value) {
-      document.querySelector('select#user-type').reportValidity();
-      document
-        .querySelector('select#user-type')
-        .setCustomValidity('Please select an item in the list.');
-      return false;
+    // special variable below are certificate pages that has only 2 steps.
+    const specialVariables = [
+      C1_PDRSAug24_ESC_calculation,
+      F7_PDRSAug24_ESC_calculation,
+      BESS1_PDRSAug24_PRC_calculation,
+      BESS2_PDRSAug24_PRC_calculation,
+    ];
+
+    // if eligibility and certificate pages with only 2 steps
+    // validate the user type first.
+    if (workflow == Workflow.ELIGIBILITY || specialVariables.includes(variable.name)) {
+      const userType = document.querySelector('select#user-type');
+      let userTypeValid = true;
+      let userTypeErrorMessage = '';
+      if (!userType.checkValidity()) {
+        invalidElements.push(userType);
+        userTypeValid = false;
+        userTypeErrorMessage = userType.validationMessage;
+      }
+
+      // send error message to parent component
+      // to update user type field with error state.
+      if (typeof onValidateUserType == "function") {
+        onValidateUserType(userTypeValid, userTypeErrorMessage);
+      }
     }
 
-    return true;
-  };
+    const validatedFormValues = formValues.map(item => {
+      // Exclude fields that are not displayed in the UI
+      // and fields with value type boolean
+      // which is radio button, because by default all radio button has default value.
+      if (!item.hide && item.value_type.toLowerCase() != "boolean") {
+        const element = document.querySelector(`#${item.name}`);
+        // trigger input field validation
+        // display error if input field didn't pass the validation
+        if (!element.checkValidity()) { 
+          item.invalid = true;
+          item.invalidText = element.validationMessage;
+          invalidElements.push(element);
+        } else {
+          item.invalid = false;
+          item.invalidText = '';
+        }
+      }
+
+      return item;
+    });
+    
+    if (invalidElements.length > 0) {
+      setFormValues(validatedFormValues);
+      focusElement(invalidElements[0].id);
+    }
+
+    return invalidElements.length == 0;
+  }
 
   const handleCalculate = (e) => {
     e.preventDefault();
@@ -190,16 +239,18 @@ export default function CalculateForm(props) {
       return variable;
     });
 
+    const isFormValid = validateForm();
+    if (!isFormValid) {
+      setLoading(false);
+      return false;
+    }
+
     var payload = {
       persons: { person1: {} },
       [entity.plural]: { [`${entity.name}_1`]: { [variable.name]: { [date]: null } } },
     };
 
     if (workflow === Workflow.ELIGIBILITY) {
-      if (!validateUserType()) {
-        setLoading(false);
-        return false;
-      }
       formValues
         .filter((x) => x.hide === false)
         .map((variable) => {
@@ -210,19 +261,6 @@ export default function CalculateForm(props) {
           };
         });
     } else {
-      // special variable below are certificate pages that has only 2 steps.
-      const specialVariables = [
-        C1_PDRSAug24_ESC_calculation,
-        F7_PDRSAug24_ESC_calculation,
-        BESS1_PDRSAug24_PRC_calculation,
-        BESS2_PDRSAug24_PRC_calculation,
-      ];
-      if (specialVariables.includes(variable.name)) {
-        if (!validateUserType()) {
-          setLoading(false);
-          return false;
-        }
-      }
       formValues.map((variable) => {
         const variable_entity = entities.find((item) => item.name === variable.entity);
 
@@ -413,7 +451,7 @@ export default function CalculateForm(props) {
   };
 
   return (
-    <form data-ui-name="calculate-form" onSubmit={handleCalculate}>
+    <form id="form-estimator" data-ui-name="calculate-form" onSubmit={handleCalculate} noValidate>
       <div className="nsw-content-block">
         <div className="nsw-content-block__content">
           {workflow === Workflow.CERTIFICATES &&

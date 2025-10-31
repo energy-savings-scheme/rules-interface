@@ -61,6 +61,8 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
   const [dependencies, setDependencies] = useState([]);
+  const [isUserTypeValid, setIsUserTypeValid] = useState(true);
+  const [userTypeError, setUserTypeError] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -121,6 +123,11 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
 
   if (!variable) return null;
 
+  function onValidateUserType(isValid, errorMessage) {
+    setIsUserTypeValid(isValid);
+    setUserTypeError(errorMessage);
+  }
+
   return (
     <div>
       <div style={{ marginTop: 70, marginBottom: 70 }}>
@@ -133,17 +140,20 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
               htmlId="user-type"
               label="What is your interest in the scheme?"
               helper="Select the option that best describes you"
+              status={isUserTypeValid ? '' : 'invalid'}
+              statusText={userTypeError}
+              style={{marginBottom: '4%'}}
             >
               <Select
                 htmlId="user-type"
                 className="nsw-col-lg-6"
-                style={{ marginBottom: '2.5%' }}
                 options={USER_TYPE_OPTIONS}
                 onChange={(e) => {
                   setUserType(e.target.value);
                   updateSegmentCaptureAnalytics(e.target.value);
                 }}
                 value={userType}
+                status={isUserTypeValid ? '' : 'invalid'}
                 required
               />
             </FormGroup>
@@ -186,6 +196,7 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              onValidateUserType={onValidateUserType}
             />
           </Fragment>
         )}

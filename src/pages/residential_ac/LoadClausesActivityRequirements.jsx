@@ -25,6 +25,7 @@ export default function LoadClausesResidentialActivityRequirements(props) {
     setClausesForm,
     showError,
     setShowError,
+    onValidateUserType
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -122,6 +123,7 @@ export default function LoadClausesResidentialActivityRequirements(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              onValidateUserType={onValidateUserType}
             />
           </Fragment>
         )}
