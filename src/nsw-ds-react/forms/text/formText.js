@@ -35,7 +35,7 @@ export const TextInput = ({
         `${number ? ' nsw-form__input--number' : ''}`
       }
       aria-invalid={status === 'invalid' ? 'true' : 'false'}
-      aria-describedby={status === 'invalid' ? `helper${htmlId} error${htmlId}` : `helper${htmlId}`}
+      aria-describedby={status === 'invalid' ? `error${htmlId}` : `helper${htmlId}`}
       id={htmlId}
       {...attributeOptions}
     />
@@ -48,7 +48,7 @@ export const TextInput = ({
       }
       step="any"
       aria-invalid={status === 'invalid' ? 'true' : 'false'}
-      aria-describedby={status === 'invalid' ? `helper${htmlId} error${htmlId}` : `helper${htmlId}`}
+      aria-describedby={status === 'invalid' ? `error${htmlId}` : `helper${htmlId}`}
       type={type}
       {...attributeOptions}
       id={htmlId}
