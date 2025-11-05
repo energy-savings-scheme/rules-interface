@@ -663,98 +663,107 @@ export default function CalculateBlock(props) {
       setFormValues(abc);
     };
 
-    if (formItem.value_type == 'Float') {
-      return (
-        <div key={formItem.name}>
-          <FormTextInput formItem={formItem} setItemValue={setItemValue} />
-        </div>
-      );
-    } else if (formItem.value_type == 'Int') {
-      return (
-        <div key={formItem.name}>
-          <FormTextInput formItem={formItem} setItemValue={setItemValue} />
-        </div>
-      );
-    } else if (formItem.value_type == 'Date') {
-      return (
-        <div key={formItem.name}>
-          <DateInput formItem={formItem} setItemValue={setItemValue} />
-        </div>
-      );
-    } else if (formItem.value_type == 'String' && formItem.name === 'RF2_product_class') {
-      return (
-        <div key={formItem.name}>
-          <FormTextInput formItem={formItem} setItemValue={setItemValue} />
-        </div>
-      );
-    } else if (
-      formItem.value_type == 'String' &&
-      formItem.name === 'HVAC1_PDRSAug24_BCA_Climate_Zone'
+    if (
+      formItem.name !== 'HVAC1_PDRSAug24_TCSPF_mixed' &&
+      formItem.name !== 'HVAC1_PDRSAug24_HSPF_cold' &&
+      formItem.name !== 'HVAC1_PDRSAug24_HSPF_mixed' &&
+      formItem.name !== 'HVAC2_PDRSAug24_TCSPF_mixed' &&
+      formItem.name !== 'HVAC2_PDRSAug24_HSPF_mixed' &&
+      formItem.name !== 'HVAC2_PDRSAug24_HSPF_cold'
     ) {
-      return (
-        <div key={formItem.name}>
-          <FormTextInput formItem={formItem} setItemValue={setItemValue} />
-        </div>
-      );
-    } else if (
-      formItem.value_type == 'String' &&
-      formItem.name === 'HVAC2_PDRSAug24_BCA_Climate_Zone'
-    ) {
-      return (
-        <div key={formItem.name}>
-          <FormTextInput formItem={formItem} setItemValue={setItemValue} />
-        </div>
-      );
-    } else if (
-      formItem.value_type == 'String' &&
-      formItem.name === 'RF2_F1_2_ESSJun24_product_class'
-    ) {
-      return (
-        <div key={formItem.name}>
-          <FormTextInput formItem={formItem} setItemValue={setItemValue} />
-        </div>
-      );
-    } else if (formItem.value_type == 'String' && formItem.name !== 'RF2_product_class') {
-      return (
-        <div key={formItem.name}>
-          <DropDownMenu formItem={formItem} setItemValue={setItemValue} />
-        </div>
-      );
-    } else if (
-      formItem.value_type == 'String' &&
-      formItem.name !== 'RF2_F1_2_ESSJun24_product_class'
-    ) {
-      return (
-        <div key={formItem.name}>
-          <DropDownMenu formItem={formItem} setItemValue={setItemValue} />
-        </div>
-      );
-    } else if (
-      formItem.value_type == 'Boolean' &&
-      workflow === 'eligibility' &&
-      formItem.hide === false
-    ) {
-      return (
-        <div key={formItem.name}>
-          <RadioButton formItem={formItem} setItemValue={setItemValue} />
-        </div>
-      );
-    } else if (
-      formItem.value_type == 'Boolean' &&
-      workflow === 'activity' &&
-      formItem.hide === false
-    ) {
-      return (
-        <div key={formItem.name}>
-          <RadioButton formItem={formItem} setItemValue={setItemValue} />
-        </div>
-      );
-    } else if (formItem.value_type == 'Boolean' && workflow === 'certificates') {
-      return (
-        <div key={formItem.name}>
-          <RadioButton formItem={formItem} setItemValue={setItemValue} />
-        </div>
-      );
+      if (formItem.value_type == 'Float') {
+        return (
+          <div key={formItem.name}>
+            <FormTextInput formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      } else if (formItem.value_type == 'Int') {
+        return (
+          <div key={formItem.name}>
+            <FormTextInput formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      } else if (formItem.value_type == 'Date') {
+        return (
+          <div key={formItem.name}>
+            <DateInput formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      } else if (formItem.value_type == 'String' && formItem.name === 'RF2_product_class') {
+        return (
+          <div key={formItem.name}>
+            <FormTextInput formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      } else if (
+        formItem.value_type == 'String' &&
+        formItem.name === 'HVAC1_PDRSAug24_BCA_Climate_Zone'
+      ) {
+        return (
+          <div key={formItem.name}>
+            <FormTextInput formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      } else if (
+        formItem.value_type == 'String' &&
+        formItem.name === 'HVAC2_PDRSAug24_BCA_Climate_Zone'
+      ) {
+        return (
+          <div key={formItem.name}>
+            <FormTextInput formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      } else if (
+        formItem.value_type == 'String' &&
+        formItem.name === 'RF2_F1_2_ESSJun24_product_class'
+      ) {
+        return (
+          <div key={formItem.name}>
+            <FormTextInput formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      } else if (formItem.value_type == 'String' && formItem.name !== 'RF2_product_class') {
+        return (
+          <div key={formItem.name}>
+            <DropDownMenu formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      } else if (
+        formItem.value_type == 'String' &&
+        formItem.name !== 'RF2_F1_2_ESSJun24_product_class'
+      ) {
+        return (
+          <div key={formItem.name}>
+            <DropDownMenu formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      } else if (
+        formItem.value_type == 'Boolean' &&
+        workflow === 'eligibility' &&
+        formItem.hide === false
+      ) {
+        return (
+          <div key={formItem.name}>
+            <RadioButton formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      } else if (
+        formItem.value_type == 'Boolean' &&
+        workflow === 'activity' &&
+        formItem.hide === false
+      ) {
+        return (
+          <div key={formItem.name}>
+            <RadioButton formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      } else if (formItem.value_type == 'Boolean' && workflow === 'certificates') {
+        return (
+          <div key={formItem.name}>
+            <RadioButton formItem={formItem} setItemValue={setItemValue} />
+          </div>
+        );
+      }
     }
   };
 
