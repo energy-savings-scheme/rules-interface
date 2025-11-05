@@ -32,8 +32,14 @@ export const C1_PDRSAug24_energy_savings = 'C1_PDRSAug24_energy_savings';
 export const HVAC1_PDRSAug24_BCA_Climate_Zone = 'HVAC1_PDRSAug24_BCA_Climate_Zone';
 export const HVAC1_PDRSAug24_new_installation_or_replacement =
   'HVAC1_PDRSAug24_new_installation_or_replacement';
+export const HVAC1_PDRSAug24_TCSPF_mixed = 'HVAC1_PDRSAug24_TCSPF_mixed';
+export const HVAC1_PDRSAug24_HSPF_cold = 'HVAC1_PDRSAug24_HSPF_cold';
+export const HVAC1_PDRSAug24_HSPF_mixed = 'HVAC1_PDRSAug24_HSPF_mixed';
 export const HVAC2_PDRSAug24_BCA_Climate_Zone = 'HVAC2_PDRSAug24_BCA_Climate_Zone';
 export const HVAC2_new_installation_or_replacement = 'HVAC2_new_installation_or_replacement';
+export const HVAC2_PDRSAug24_TCSPF_mixed = 'HVAC2_PDRSAug24_TCSPF_mixed';
+export const HVAC2_PDRSAug24_HSPF_cold = 'HVAC2_PDRSAug24_HSPF_cold';
+export const HVAC2_PDRSAug24_HSPF_mixed = 'HVAC2_PDRSAug24_HSPF_mixed';
 
 export const BESS1_V5Nov24_installation_final_activity_eligibility =
   'BESS1_V5Nov24_installation_final_activity_eligibility';

@@ -13,6 +13,9 @@ import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 import {
   HVAC1_PDRSAug24_PDRS__postcode,
   HVAC1_PDRSAug24_BCA_Climate_Zone,
+  HVAC1_PDRSAug24_TCSPF_mixed,
+  HVAC1_PDRSAug24_HSPF_cold,
+  HVAC1_PDRSAug24_HSPF_mixed
 } from '../../types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
@@ -128,8 +131,15 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
       const children2 = variableData2.input_offsprings;
 
       // Define the original array (at a minimum include the Implementation Date)
-      var array1 = [];
-      var array2 = [];
+      let array1 = [];
+      let array2 = [];
+      const hiddenFields = [
+        HVAC1_PDRSAug24_PDRS__postcode,
+        HVAC1_PDRSAug24_BCA_Climate_Zone,
+        HVAC1_PDRSAug24_TCSPF_mixed,
+        HVAC1_PDRSAug24_HSPF_cold,
+        HVAC1_PDRSAug24_HSPF_mixed
+      ]
 
       children1.map((child) => {
         array1.push({ ...child, form_value: '', invalid: false });
@@ -142,6 +152,10 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
       array2.forEach((item) => addElement(array1, item));
 
       array1.map((formItem) => {
+        if (hiddenFields.includes(formItem.name)) {
+          formItem.hide = true;
+        }
+        
         if (formItem.name === 'HVAC1_PDRSAug24_rated_AEER_input') {
           formItem.form_value = metadata['Rated AEER'];
         }
@@ -186,12 +200,10 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
         if (formItem.name === HVAC1_PDRSAug24_PDRS__postcode) {
           formItem.form_value = postcode;
           formItem.read_only = true;
-          formItem.hide = true;
         }
         if (formItem.name === HVAC1_PDRSAug24_BCA_Climate_Zone) {
           formItem.form_value = bca_mapping[selectedClimateZone];
           formItem.read_only = true;
-          formItem.hide = true;
         }
       });
 
