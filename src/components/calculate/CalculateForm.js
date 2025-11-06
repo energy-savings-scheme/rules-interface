@@ -171,7 +171,9 @@ export default function CalculateForm(props) {
       // which is radio button, because by default all radio button has default value.
       if (!item.hide && item.value_type.toLowerCase() != "boolean") {
         const element = document.querySelector(`#${item.name}`);
-        if (!element) return item;
+        if (!element) {
+          return item;
+        }
 
         // trigger input field validation
         // display error if input field didn't pass the validation
