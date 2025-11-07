@@ -1,6 +1,32 @@
 import moment from 'moment';
 import RegistryApi from 'services/registry_api';
 
+
+class Safeguard {
+  measurementId = 'G-8DV3J4W84B'
+  constructor() {
+  }
+
+  gtag() {
+    return window.dataLayer.push(arguments);
+  }
+
+  async getGTMValue(measurementId, propName) {
+    return new Promise((resolve) => {
+      this.gtag('get', measurementId, propName, (v) => resolve(v || null))
+    });
+  }
+  async getGTMClientId() {
+    return this.getGTMValue(this.measurementId, 'client_id');
+  }
+  async getGTMSessionId() {
+    return this.getGTMValue(this.measurementId, 'session_id');
+  }
+}
+
+const safeguard = new Safeguard();
+
+
 class FormAnalytics {
   constructor(event) {
     this.event = event;
@@ -12,21 +38,8 @@ class FormAnalytics {
   }
 }
 
-function getClientID() {
-  const cookieMatch = document.cookie.match(/_ga=([^;]*)/);
-  if (cookieMatch && cookieMatch[1]) {
-    const raw = cookieMatch[1];
-    const parts = raw.split('.');
-    if (parts.length >= 2) {
-      // The last two parts are the client ID: a unique ID and a timestamp
-      return parts[2] + '.' + parts[3];
-    }
-  }
-  return null; 
-}
-
-const estimatorFormAnalytics = new FormAnalytics('SafeguardSubmission')
-const feedbackFormAnalytics = new FormAnalytics('SafeguardFeedback')
+const estimatorFormAnalytics = new FormAnalytics('SafeguardSubmission');
+const feedbackFormAnalytics = new FormAnalytics('SafeguardFeedback');
 
 export function updateEstimatorFormAnalytics(values) {
   estimatorFormAnalytics.updateData(values);
@@ -82,10 +95,11 @@ export function clearSearchCaptureAnalytics() {
 export async function submitEstimatorFormAnalytics() {
   try {
     await RegistryApi.sendToGoogleAnalytics({
-      client_id: getClientID(),
       event: estimatorFormAnalytics.event,
+      client_id: safeguard.getGTMClientId(),
       params: {
         ...estimatorFormAnalytics.values,
+        session_id: safeguard.getGTMSessionId(),
         submittedAt: moment().utc().format()
       }
     })
@@ -97,10 +111,11 @@ export async function submitEstimatorFormAnalytics() {
 export async function submitFeedbackFormAnalytics(isHelpful) {
   try {
     await RegistryApi.sendToGoogleAnalytics({
-      client_id: getClientID(),
       event: feedbackFormAnalytics.event,
+      client_id: safeguard.getGTMClientId(),
       params: {
         ...feedbackFormAnalytics.values,
+        session_id: safeguard.getGTMSessionId(),
         sf_isHelpful: isHelpful,
         submittedAt: moment().utc().format()
       }
