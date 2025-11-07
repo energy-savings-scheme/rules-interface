@@ -96,10 +96,10 @@ export async function submitEstimatorFormAnalytics() {
   try {
     await RegistryApi.sendToGoogleAnalytics({
       event: estimatorFormAnalytics.event,
-      client_id: safeguard.getGTMClientId(),
+      client_id: await safeguard.getGTMClientId(),
       params: {
         ...estimatorFormAnalytics.values,
-        session_id: safeguard.getGTMSessionId(),
+        session_id: await safeguard.getGTMSessionId(),
         submittedAt: moment().utc().format()
       }
     })
@@ -112,10 +112,10 @@ export async function submitFeedbackFormAnalytics(isHelpful) {
   try {
     await RegistryApi.sendToGoogleAnalytics({
       event: feedbackFormAnalytics.event,
-      client_id: safeguard.getGTMClientId(),
+      client_id: await safeguard.getGTMClientId(),
       params: {
         ...feedbackFormAnalytics.values,
-        session_id: safeguard.getGTMSessionId(),
+        session_id: await safeguard.getGTMSessionId(),
         sf_isHelpful: isHelpful,
         submittedAt: moment().utc().format()
       }
