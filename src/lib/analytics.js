@@ -2,9 +2,12 @@ import moment from 'moment';
 import RegistryApi from 'services/registry_api';
 
 
-class Safeguard {
+class FormAnalytics {
   measurementId = 'G-8DV3J4W84B'
-  constructor() {
+
+  constructor(event) {
+    this.event = event
+    this.values = {}
   }
 
   gtag() {
@@ -12,6 +15,10 @@ class Safeguard {
   }
 
   async getGTMValue(measurementId, propName) {
+    if (window.dataLayer === undefined) {
+      return null
+    }
+
     return new Promise((resolve) => {
       this.gtag('get', measurementId, propName, (v) => resolve(v || null))
     });
@@ -21,16 +28,6 @@ class Safeguard {
   }
   async getGTMSessionId() {
     return this.getGTMValue(this.measurementId, 'session_id');
-  }
-}
-
-const safeguard = new Safeguard();
-
-
-class FormAnalytics {
-  constructor(event) {
-    this.event = event;
-    this.values = {};
   }
 
   updateData(values) {
@@ -96,10 +93,10 @@ export async function submitEstimatorFormAnalytics() {
   try {
     await RegistryApi.sendToGoogleAnalytics({
       event: estimatorFormAnalytics.event,
-      client_id: await safeguard.getGTMClientId(),
+      client_id: await estimatorFormAnalytics.getGTMClientId(),
       params: {
         ...estimatorFormAnalytics.values,
-        session_id: await safeguard.getGTMSessionId(),
+        session_id: await estimatorFormAnalytics.getGTMSessionId(),
         submittedAt: moment().utc().format()
       }
     })
@@ -112,10 +109,10 @@ export async function submitFeedbackFormAnalytics(isHelpful) {
   try {
     await RegistryApi.sendToGoogleAnalytics({
       event: feedbackFormAnalytics.event,
-      client_id: await safeguard.getGTMClientId(),
+      client_id: await feedbackFormAnalytics.getGTMClientId(),
       params: {
         ...feedbackFormAnalytics.values,
-        session_id: await safeguard.getGTMSessionId(),
+        session_id: await feedbackFormAnalytics.getGTMSessionId(),
         sf_isHelpful: isHelpful,
         submittedAt: moment().utc().format()
       }
