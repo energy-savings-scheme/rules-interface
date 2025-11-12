@@ -78,6 +78,7 @@ export default function CalculateBlock(props) {
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
     setPostcode,
+    onValidateUserType
   } = props;
 
   useEffect(() => {
@@ -804,6 +805,7 @@ export default function CalculateBlock(props) {
       setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
       peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
       setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+      onValidateUserType={onValidateUserType}
     >
       {formValues.map((formItem, index) => renderFormField(formItem))}
     </CalculateForm>

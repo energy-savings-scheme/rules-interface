@@ -31,6 +31,8 @@ export default function BaseEligibility(props) {
   const [secDep, setSecDep] = useState([]);
   const [showError, setShowError] = useState(false);
   const [userType, setUserType] = useState('');
+  const [isUserTypeValid, setIsUserTypeValid] = useState(true);
+  const [userTypeError, setUserTypeError] = useState('');
 
   if (formValues.length === 0) {
     setLoading(true);
@@ -120,6 +122,11 @@ export default function BaseEligibility(props) {
     setClausesForm(new_arr);
   }, [stepNumber]);
 
+  function onValidateUserType(isValid, errorMessage) {
+    setIsUserTypeValid(isValid);
+    setUserTypeError(errorMessage);
+  }
+
   return (
     <Fragment>
       {!IS_DRUPAL_PAGES && (
@@ -194,18 +201,20 @@ export default function BaseEligibility(props) {
                   label="What is your interest in the scheme?"
                   helper="Select the option that best describes you"
                   htmlId="user-type"
-                  style={{ marginTop: '4%' }}
+                  status={isUserTypeValid ? '' : 'invalid'}
+                  statusText={userTypeError}
+                  style={{marginBottom: '4%'}}
                 >
                   <Select
                     htmlId="user-type"
                     className="nsw-col-lg-6"
-                    style={{ marginBottom: '2.5%' }}
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
                       setUserType(e.target.value);
                       updateSegmentCaptureAnalytics(e.target.value);
                     }}
                     value={userType}
+                    status={isUserTypeValid ? '' : 'invalid'}
                     required
                   />
                 </FormGroup>
@@ -230,6 +239,7 @@ export default function BaseEligibility(props) {
                 backAction={(e) => {
                   setStepNumber(stepNumber - 1);
                 }}
+                onValidateUserType={onValidateUserType}
               />
             </>
           )}

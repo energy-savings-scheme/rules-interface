@@ -25,6 +25,7 @@ export default function LoadClausesD20(props) {
     setClausesForm,
     showError,
     setShowError,
+    onValidateUserType
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -119,6 +120,7 @@ export default function LoadClausesD20(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              onValidateUserType={onValidateUserType}
             />
           </Fragment>
         )}
