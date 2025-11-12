@@ -1,9 +1,33 @@
 import moment from 'moment';
+import RegistryApi from 'services/registry_api';
+
 
 class FormAnalytics {
+  measurementId = 'G-8DV3J4W84B'
+
   constructor(event) {
-    this.event = event;
-    this.values = {};
+    this.event = event
+    this.values = {}
+  }
+
+  gtag() {
+    return window.dataLayer.push(arguments);
+  }
+
+  async getGTMValue(measurementId, propName) {
+    if (window.dataLayer === undefined) {
+      return null
+    }
+
+    return new Promise((resolve) => {
+      this.gtag('get', measurementId, propName, (v) => resolve(v || null))
+    });
+  }
+  async getGTMClientId() {
+    return this.getGTMValue(this.measurementId, 'client_id');
+  }
+  async getGTMSessionId() {
+    return this.getGTMValue(this.measurementId, 'session_id');
   }
 
   updateData(values) {
@@ -65,25 +89,35 @@ export function clearSearchCaptureAnalytics() {
   delete feedbackFormAnalytics.values.sf_model;
 }
 
-export function submitEstimatorFormAnalytics() {
-  window.dataLayer = window.dataLayer || [];
-  const submittedData = {
-    ...estimatorFormAnalytics.values,
-    event: estimatorFormAnalytics.event,
-    submittedAt: moment().utc().format(),
-  };
-  window.dataLayer.push(submittedData);
-  console.log(`Estimator form analytics: ${JSON.stringify(submittedData)}`);
+export async function submitEstimatorFormAnalytics() {
+  try {
+    await RegistryApi.sendToGoogleAnalytics({
+      event: estimatorFormAnalytics.event,
+      client_id: await estimatorFormAnalytics.getGTMClientId(),
+      session_id: await estimatorFormAnalytics.getGTMSessionId(),
+      params: {
+        ...estimatorFormAnalytics.values,
+        submittedAt: moment().utc().format()
+      }
+    })
+  } catch(err) {
+    console.log(err.data.error)
+  }
 }
 
-export function submitFeedbackFormAnalytics(isHelpful) {
-  window.dataLayer = window.dataLayer || [];
-  const submittedData = {
-    ...feedbackFormAnalytics.values,
-    event: feedbackFormAnalytics.event,
-    sf_isHelpful: isHelpful,
-    submittedAt: moment().utc().format(),
-  };
-  window.dataLayer.push(submittedData);
-  console.log(`Feedback form analytics: ${JSON.stringify(submittedData)}`);
+export async function submitFeedbackFormAnalytics(isHelpful) {
+  try {
+    await RegistryApi.sendToGoogleAnalytics({
+      event: feedbackFormAnalytics.event,
+      client_id: await feedbackFormAnalytics.getGTMClientId(),
+      session_id: await feedbackFormAnalytics.getGTMSessionId(),
+      params: {
+        ...feedbackFormAnalytics.values,
+        sf_isHelpful: isHelpful,
+        submittedAt: moment().utc().format()
+      }
+    })
+  } catch (err) {
+    console.log(err.data.error)
+  }
 }
