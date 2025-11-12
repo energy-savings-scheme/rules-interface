@@ -1,6 +1,6 @@
-import moment from 'moment'
-import RegistryApi from 'services/registry_api'
-import config from 'lib/config'
+import moment from 'moment';
+import RegistryApi from 'services/registry_api';
+import config from 'lib/config';
 
 
 class FormAnalytics {
