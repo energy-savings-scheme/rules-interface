@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+import config from 'lib/config'
+
 const client = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL,
+  baseURL: config.djangoApiBaseUrl,
   withCredentials: false,
 });
 

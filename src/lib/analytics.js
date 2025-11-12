@@ -1,5 +1,6 @@
 import moment from 'moment'
 import RegistryApi from 'services/registry_api'
+import config from 'lib/config'
 
 
 class FormAnalytics {
@@ -90,6 +91,10 @@ export function clearSearchCaptureAnalytics() {
 }
 
 export async function submitEstimatorFormAnalytics() {
+  if (!config.analyticIsEnabled) {
+    return 
+  }
+
   try {
     await RegistryApi.sendToGoogleAnalytics({
       event: estimatorFormAnalytics.event,
@@ -106,6 +111,10 @@ export async function submitEstimatorFormAnalytics() {
 }
 
 export async function submitFeedbackFormAnalytics(isHelpful) {
+  if (!config.analyticIsEnabled) {
+    return 
+  }
+
   try {
     await RegistryApi.sendToGoogleAnalytics({
       event: feedbackFormAnalytics.event,
