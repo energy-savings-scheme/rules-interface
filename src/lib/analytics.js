@@ -94,9 +94,9 @@ export async function submitEstimatorFormAnalytics() {
     await RegistryApi.sendToGoogleAnalytics({
       event: estimatorFormAnalytics.event,
       client_id: await estimatorFormAnalytics.getGTMClientId(),
+      session_id: await estimatorFormAnalytics.getGTMSessionId(),
       params: {
         ...estimatorFormAnalytics.values,
-        session_id: await estimatorFormAnalytics.getGTMSessionId(),
         submittedAt: moment().utc().format()
       }
     })
@@ -110,9 +110,9 @@ export async function submitFeedbackFormAnalytics(isHelpful) {
     await RegistryApi.sendToGoogleAnalytics({
       event: feedbackFormAnalytics.event,
       client_id: await feedbackFormAnalytics.getGTMClientId(),
+      session_id: await feedbackFormAnalytics.getGTMSessionId(),
       params: {
         ...feedbackFormAnalytics.values,
-        session_id: await feedbackFormAnalytics.getGTMSessionId(),
         sf_isHelpful: isHelpful,
         submittedAt: moment().utc().format()
       }
