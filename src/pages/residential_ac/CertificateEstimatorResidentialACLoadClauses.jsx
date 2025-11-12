@@ -5,11 +5,15 @@ import moment from 'moment';
 
 // Import components
 import CalculateBlock from 'components/calculate/CalculateBlock';
+import InfoBox from 'components/info-box/info-box';
 import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
-import {HVAC1_PDRSAug24_PDRS__postcode, HVAC1_PDRSAug24_BCA_Climate_Zone} from '../../types/openfisca_variables';
+import {
+  HVAC1_PDRSAug24_PDRS__postcode,
+  HVAC1_PDRSAug24_BCA_Climate_Zone,
+} from '../../types/openfisca_variables';
 import { formatNumber } from 'lib/helper';
 
 export default function CertificateEstimatorResidentialACLoadClauses(props) {
@@ -53,7 +57,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
     escMinPrice,
     escMaxPrice,
     prcMinPrice,
-    prcMaxPrice
+    prcMaxPrice,
   } = props;
 
   const bca_mapping = {
@@ -214,29 +218,12 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
       <div style={{ marginTop: 70, marginBottom: 70 }}>
         {stepNumber === 2 && (
           <Fragment>
-            <div
-              class="nsw-global-alert nsw-global-alert--light js-global-alert"
-              role="alert"
-              style={{ width: '80%', marginBottom: '7%' }}
-            >
-              <div class="nsw-global-alert__wrapper">
-                <div class="nsw-global-alert__content">
-                  {/* <div class="nsw-global-alert__title"></div> */}
-                  <p>
-                    <b>Postcode: </b> {postcode}
-                  </p>
-                  <p>
-                    <b>BCA Climate Zone: </b> {selectedClimateZone.charAt(selectedClimateZone.length - 1)}
-                  </p>
-                  <p>
-                    <b>Brand: </b> {selectedBrand}
-                  </p>
-                  <p>
-                    <b>Model: </b> {selectedModel}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <InfoBox 
+              postcode={postcode}
+              climateZone={selectedClimateZone}
+              brand={selectedBrand}
+              model={selectedModel}
+            />
             <CalculateBlock
               calculationDate={calculationDate}
               variable={variableData1}
@@ -283,60 +270,47 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
 
         {stepNumber === 3 && !calculationError && !calculationError2 && (
           <Fragment>
-            <div
-              class="nsw-global-alert nsw-global-alert--light js-global-alert"
-              role="alert"
-              style={{ width: '80%', marginBottom: '7%' }}
-            >
-              <div class="nsw-global-alert__wrapper">
-                <div class="nsw-global-alert__content">
-                  {/* <div class="nsw-global-alert__title"></div> */}
-                  <p>
-                    <b>Postcode: </b> {postcode}
-                  </p>
-                  <p>
-                    <b>BCA Climate Zone: </b> {selectedClimateZone.charAt(selectedClimateZone.length - 1)}
-                  </p>
-                  <p>
-                    <b>Brand: </b> {selectedBrand}
-                  </p>
-                  <p>
-                    <b>Model: </b> {selectedModel}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <InfoBox 
+              postcode={postcode}
+              climateZone={selectedClimateZone}
+              brand={selectedBrand}
+              model={selectedModel}
+            />
             {
-              <Alert as="info" title="ESCs and PRCs" style={{ width: '80%', marginBottom: '7%' }}>
+              <Alert as="info" customTitle={
+                <h3 dangerouslySetInnerHTML={{__html: "ESCs and PRCs"}}/>
+              } className="nsw-col-lg-10" style={{ marginBottom: '7%' }}>
                 <p>
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{formatNumber(Math.floor(calculationResult2))}</b>
+                    <b data-ui-name="esc">{formatNumber(Math.floor(calculationResult2))}</b>
                   </span>
                   {/* </h4> */}
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   and your PRCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{formatNumber(Math.floor(calculationResult))}</b>
+                    <b data-ui-name="prc">{formatNumber(Math.floor(calculationResult))}</b>
                   </span>
                   {/* </h4> */}
                 </p>
                 <p>
-                  Your estimated annual energy savings are{' '}
-                  <b>
+                  Your estimated energy savings over the lifetime of the equipment are{' '}
+                  <b data-ui-name="aes">
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> MWh
+                  </b>{' '}
+                  MWh
                 </p>
                 <p>
-                  Your estimated annual peak demand reduction is{' '}
-                  <b>
+                  Your estimated peak demand reduction over the lifetime of the equipment is{' '}
+                  <b data-ui-name="apdr">
                     {Math.floor(calculationResult) === 0
                       ? 0
                       : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
-                  </b> kW
+                  </b>{' '}
+                  kW
                 </p>
 
                 <p>
@@ -351,7 +325,9 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
 
         {(stepNumber === 3 && calculationError) ||
           (stepNumber === 3 && calculationError2 && (
-            <Alert as="error" title="Sorry! An error has occurred.">
+            <Alert as="error" customTitle={
+              <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
+            } className="nsw-col-lg-10">
               <p>An error occurred during calculation. Try re-running the calculation</p>
             </Alert>
           ))}
@@ -359,11 +335,10 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
         {stepNumber === 3 && (
           <Fragment>
             <div
-              className="nsw-row"
+              className="nsw-row nsw-col-lg-10"
               style={{
                 paddingLeft: 'inherit',
                 paddingRight: 'inherit',
-                width: '80%',
               }}
             >
               <CertificiatePrice
@@ -374,7 +349,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                 prcMinPrice={prcMinPrice}
                 prcMaxPrice={prcMaxPrice}
               />
-              <div className="nsw-col-md-9" style={{marginTop: '1.25rem'}}>
+              <div className="nsw-col-md-9" style={{ marginTop: '1.25rem' }}>
                 <Button
                   style={{ float: 'left' }}
                   as="dark-outline-solid"

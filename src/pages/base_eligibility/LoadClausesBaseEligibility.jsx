@@ -5,7 +5,7 @@ import moment from 'moment';
 
 // Import components
 import CalculateBlock from 'components/calculate/CalculateBlock';
-
+import { focusElement } from 'lib/helper';
 import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
@@ -25,6 +25,7 @@ export default function LoadClausesBaseEligibility(props) {
     setClausesForm,
     showError,
     setShowError,
+    onValidateUserType
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -62,6 +63,12 @@ export default function LoadClausesBaseEligibility(props) {
     };
   }, [variableToLoad]);
 
+  useEffect(() => {
+    if (calculationError && showError) {
+      focusElement("error-calculation");
+    }
+  }, [calculationError, showError])
+
   const formatResultString = (result) => {
     if (typeof result === 'boolean') {
       if (result === true) {
@@ -92,7 +99,9 @@ export default function LoadClausesBaseEligibility(props) {
         {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
         {stepNumber === 2 && calculationError && showError && (
-          <Alert as="error" title="Sorry!" style={{ width: '80%' }}>
+          <Alert as="error" customTitle={
+            <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
+          } id="error-calculation" className="nsw-col-lg-10" tabIndex="-1">
             <p>We are experiencing technical difficulties right now, please try again later.</p>
           </Alert>
         )}
@@ -119,6 +128,7 @@ export default function LoadClausesBaseEligibility(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              onValidateUserType={onValidateUserType}
             />
           </Fragment>
         )}
@@ -127,7 +137,9 @@ export default function LoadClausesBaseEligibility(props) {
           <Fragment>
             {
               <div style={{ marginTop: '5%' }}>
-                <Alert as="info" title="Core eligibility" style={{ width: '80%' }}>
+                <Alert as="info" customTitle={
+                  <h3 dangerouslySetInnerHTML={{__html: "Core eligibility"}}/>
+                } className="nsw-col-lg-10">
                   <p>
                     {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                     Based on the information you have provided{' '}
@@ -138,8 +150,9 @@ export default function LoadClausesBaseEligibility(props) {
                 {calculationResult === false && (
                   <Alert
                     as="warning"
-                    title="The following answers were ineligible:"
-                    style={{ width: '80%' }}
+                    customTitle={
+                      <h3 dangerouslySetInnerHTML={{__html: "The following answers were ineligible:"}}/>
+                    } className="nsw-col-lg-10"
                   >
                     <p>
                       {clausesForm.length > 0 &&

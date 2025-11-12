@@ -9,9 +9,13 @@ import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import { FormGroup, Select } from '../../nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import {BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
-import {updateEstimatorFormAnalytics, updateFeedbackFormAnalytics, updateSegmentCaptureAnalytics} from 'lib/analytics';
-import {SYS2_PDRSAug24_replacement_final_activity_eligibility} from 'types/openfisca_variables';
+import { BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+  updateSegmentCaptureAnalytics,
+} from 'lib/analytics';
+import { SYS2_PDRSAug24_replacement_final_activity_eligibility } from 'types/openfisca_variables';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
 
 export default function ActivityRequirementsSYS2(props) {
@@ -27,6 +31,8 @@ export default function ActivityRequirementsSYS2(props) {
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
   const [userType, setUserType] = useState('');
+  const [isUserTypeValid, setIsUserTypeValid] = useState(true);
+  const [userTypeError, setUserTypeError] = useState('');
 
   if (formValues.length === 0) {
     setLoading(true);
@@ -36,8 +42,8 @@ export default function ActivityRequirementsSYS2(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    updateEstimatorFormAnalytics(BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA)
-    updateFeedbackFormAnalytics(BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA)
+    updateEstimatorFormAnalytics(BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_POOL_PUMP_ELIGIBILITY_ANALYTICS_DATA);
   }, [stepNumber]);
 
   useEffect(() => {
@@ -104,6 +110,11 @@ export default function ActivityRequirementsSYS2(props) {
     setClausesForm(new_arr);
   }, [stepNumber]);
 
+  function onValidateUserType(isValid, errorMessage) {
+    setIsUserTypeValid(isValid);
+    setUserTypeError(errorMessage);
+  }
+
   return (
     <Fragment>
       {/* Search section */}
@@ -122,7 +133,7 @@ export default function ActivityRequirementsSYS2(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ paddingLeft: 0 }}>
+      <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -175,7 +186,7 @@ export default function ActivityRequirementsSYS2(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={2} className="nsw-col-lg-10" />
 
         <Fragment>
           {loading && <SpinnerFullscreen />}
@@ -186,38 +197,42 @@ export default function ActivityRequirementsSYS2(props) {
                   label="What is your interest in the scheme?"
                   helper="Select the option that best describes you"
                   htmlId="user-type"
-                  style={{marginTop: '4%'}}
+                  status={isUserTypeValid ? '' : 'invalid'}
+                  statusText={userTypeError}
+                  style={{marginBottom: '4%'}}
                 >
                   <Select
                     htmlId="user-type"
-                    style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                    className="nsw-col-lg-6"
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
                       setUserType(e.target.value);
-                      updateSegmentCaptureAnalytics(e.target.value)
+                      updateSegmentCaptureAnalytics(e.target.value);
                     }}
                     value={userType}
+                    status={isUserTypeValid ? '' : 'invalid'}
                     required
                   />
                 </FormGroup>
               )}
               <LoadClausesSYS2
-              variableToLoad={variableToLoad}
-              variables={variables}
-              entities={entities}
-              stepNumber={stepNumber}
-              setStepNumber={setStepNumber}
-              formValues={formValues}
-              dependencies={dependencies}
-              setFormValues={setFormValues}
-              clausesForm={clausesForm}
-              setClausesForm={setClausesForm}
-              showError={showError}
-              setShowError={setShowError}
-              backAction={(e) => {
-                setStepNumber(stepNumber - 1);
-              }}
-            />
+                variableToLoad={variableToLoad}
+                variables={variables}
+                entities={entities}
+                stepNumber={stepNumber}
+                setStepNumber={setStepNumber}
+                formValues={formValues}
+                dependencies={dependencies}
+                setFormValues={setFormValues}
+                clausesForm={clausesForm}
+                setClausesForm={setClausesForm}
+                showError={showError}
+                setShowError={setShowError}
+                backAction={(e) => {
+                  setStepNumber(stepNumber - 1);
+                }}
+                onValidateUserType={onValidateUserType}
+              />
             </>
           )}
         </Fragment>

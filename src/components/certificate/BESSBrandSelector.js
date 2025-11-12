@@ -21,7 +21,7 @@ export default function BESSBrandSelector(props) {
     postcode,
     setPostcode,
     userType,
-    setUserType
+    setUserType,
   } = props;
   const [registryDataLoaded, setRegistryDataLoaded] = useState(true);
   const [brandOptions, setBrandOptions] = useState([]);
@@ -279,7 +279,7 @@ export default function BESSBrandSelector(props) {
               onClick={(e) => {
                 validatePostcode(postcode);
                 updateSearchCaptureAnalytics(postcode, selectedBrand, selectedModel);
-                updateSegmentCaptureAnalytics(userType)
+                updateSegmentCaptureAnalytics(userType);
               }}
             >
               Next

@@ -13,17 +13,17 @@ import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSegmentCaptureAnalytics,
-  clearSearchCaptureAnalytics
+  clearSearchCaptureAnalytics,
 } from 'lib/analytics';
-import { 
+import {
   RF2_F1_2_ESSJun24_equipment_replaced,
   RF2_F1_2_ESSJun24_GEMS_product_class_5,
   RF2_F1_2_ESSJun24_EEI_under_51,
-  RF2_F1_2_ESSJun24_EEI_under_77
+  RF2_F1_2_ESSJun24_EEI_under_77,
 } from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
-import {BASE_COMMERCIAL_REFRIGERATED_CABINET_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_COMMERCIAL_REFRIGERATED_CABINET_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
 
 export default function ActivityRequirementsRF2(props) {
   const { entities, variables, loading, setLoading } = props;
@@ -38,6 +38,8 @@ export default function ActivityRequirementsRF2(props) {
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
   const [userType, setUserType] = useState('');
+  const [isUserTypeValid, setIsUserTypeValid] = useState(true);
+  const [userTypeError, setUserTypeError] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -80,7 +82,7 @@ export default function ActivityRequirementsRF2(props) {
       const names = [
         RF2_F1_2_ESSJun24_GEMS_product_class_5,
         RF2_F1_2_ESSJun24_EEI_under_51,
-        RF2_F1_2_ESSJun24_EEI_under_77
+        RF2_F1_2_ESSJun24_EEI_under_77,
       ];
 
       dep_arr = array.filter((item) => names.includes(item.name));
@@ -104,8 +106,8 @@ export default function ActivityRequirementsRF2(props) {
   useEffect(() => {
     let new_arr = [];
     const excludeClauses = [
-      RF2_F1_2_ESSJun24_equipment_replaced // replacement or new installation are now eligible
-    ]
+      RF2_F1_2_ESSJun24_equipment_replaced, // replacement or new installation are now eligible
+    ];
 
     formValues
       .filter((x) => x.hide === false)
@@ -121,6 +123,11 @@ export default function ActivityRequirementsRF2(props) {
       });
     setClausesForm(new_arr);
   }, [stepNumber]);
+
+  function onValidateUserType(isValid, errorMessage) {
+    setIsUserTypeValid(isValid);
+    setUserTypeError(errorMessage);
+  }
 
   return (
     <Fragment>
@@ -139,7 +146,7 @@ export default function ActivityRequirementsRF2(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ paddingLeft: 0 }}>
+      <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -191,7 +198,7 @@ export default function ActivityRequirementsRF2(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={2} className="nsw-col-lg-10" />
 
         <Fragment>
           {loading && <SpinnerFullscreen />}
@@ -202,17 +209,20 @@ export default function ActivityRequirementsRF2(props) {
                   label="What is your interest in the scheme?"
                   helper="Select the option that best describes you"
                   htmlId="user-type"
-                  style={{marginTop: '4%'}}
+                  status={isUserTypeValid ? '' : 'invalid'}
+                  statusText={userTypeError}
+                  style={{marginBottom: '4%'}}
                 >
                   <Select
                     htmlId="user-type"
-                    style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                    className="nsw-col-lg-6"
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
                       setUserType(e.target.value);
-                      updateSegmentCaptureAnalytics(e.target.value)
+                      updateSegmentCaptureAnalytics(e.target.value);
                     }}
                     value={userType}
+                    status={isUserTypeValid ? '' : 'invalid'}
                     required
                   />
                 </FormGroup>
@@ -233,6 +243,7 @@ export default function ActivityRequirementsRF2(props) {
                 backAction={(e) => {
                   setStepNumber(stepNumber - 1);
                 }}
+                onValidateUserType={onValidateUserType}
               />
             </>
           )}

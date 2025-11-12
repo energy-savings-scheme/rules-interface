@@ -18,7 +18,7 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import OpenFiscaAPI from 'services/openfisca_api';
 
 // Import styles
-//import './styles/App.css';
+import './styles/App.scss';
 import 'nsw-design-system/src/main.scss';
 import '@fontsource/public-sans';
 import '@fontsource/public-sans/600.css';

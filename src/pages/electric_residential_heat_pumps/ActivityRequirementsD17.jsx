@@ -12,15 +12,15 @@ import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSegmentCaptureAnalytics,
-  clearSearchCaptureAnalytics
+  clearSearchCaptureAnalytics,
 } from 'lib/analytics';
 import {
   D17_ESSJun24_split_system,
-  D17_ESSJun24_safety_requirement
+  D17_ESSJun24_safety_requirement,
 } from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
-import {BASE_RESIDENTIAL_ELECTRIC_HEAT_PUMP_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_RESIDENTIAL_ELECTRIC_HEAT_PUMP_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
 
 export default function ActivityRequirementsD17(props) {
   const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
@@ -35,6 +35,8 @@ export default function ActivityRequirementsD17(props) {
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
   const [userType, setUserType] = useState('');
+  const [isUserTypeValid, setIsUserTypeValid] = useState(true);
+  const [userTypeError, setUserTypeError] = useState('');
 
   if (formValues.length === 0) {
     setLoading(true);
@@ -75,9 +77,7 @@ export default function ActivityRequirementsD17(props) {
 
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
 
-      const names = [
-        D17_ESSJun24_safety_requirement,
-      ];
+      const names = [D17_ESSJun24_safety_requirement];
 
       dep_arr = array.filter((item) => names.includes(item.name));
       array.find((item) => {
@@ -96,9 +96,7 @@ export default function ActivityRequirementsD17(props) {
 
   useEffect(() => {
     let new_arr = [];
-    const excludeClauses = [
-      D17_ESSJun24_split_system,
-    ];
+    const excludeClauses = [D17_ESSJun24_split_system];
 
     formValues
       .filter((x) => x.hide === false)
@@ -113,6 +111,11 @@ export default function ActivityRequirementsD17(props) {
       });
     setClausesForm(new_arr);
   }, [stepNumber]);
+
+  function onValidateUserType(isValid, errorMessage) {
+    setIsUserTypeValid(isValid);
+    setUserTypeError(errorMessage);
+  }
 
   return (
     <Fragment>
@@ -131,7 +134,7 @@ export default function ActivityRequirementsD17(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ paddingLeft: 0 }}>
+      <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -177,7 +180,7 @@ export default function ActivityRequirementsD17(props) {
           </div>
         )} */}
 
-        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={2} className="nsw-col-lg-10" />
 
         <Fragment>
           {loading && <SpinnerFullscreen />}
@@ -188,17 +191,20 @@ export default function ActivityRequirementsD17(props) {
                   label="What is your interest in the scheme?"
                   helper="Select the option that best describes you"
                   htmlId="user-type"
-                  style={{marginTop: '4%'}}
+                  status={isUserTypeValid ? '' : 'invalid'}
+                  statusText={userTypeError}
+                  style={{marginBottom: '4%'}}
                 >
                   <Select
                     htmlId="user-type"
-                    style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                    className="nsw-col-lg-6"
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
                       setUserType(e.target.value);
-                      updateSegmentCaptureAnalytics(e.target.value)
+                      updateSegmentCaptureAnalytics(e.target.value);
                     }}
                     value={userType}
+                    status={isUserTypeValid ? '' : 'invalid'}
                     required
                   />
                 </FormGroup>
@@ -219,6 +225,7 @@ export default function ActivityRequirementsD17(props) {
                 backAction={(e) => {
                   setStepNumber(stepNumber - 1);
                 }}
+                onValidateUserType={onValidateUserType}
               />
             </>
           )}

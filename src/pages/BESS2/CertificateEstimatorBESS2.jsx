@@ -9,15 +9,16 @@ import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import {
   BESS2_PDRSAug24_PRC_calculation,
-  BESS2_PDRSAug24_peak_demand_annual_savings
+  BESS2_PDRSAug24_peak_demand_annual_savings,
 } from 'types/openfisca_variables';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
-import {BASE_BESS2_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_BESS2_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
-  clearSearchCaptureAnalytics
+  clearSearchCaptureAnalytics,
 } from 'lib/analytics';
+import { focusElement } from 'lib/helper';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
 
@@ -109,6 +110,12 @@ export default function CertificateEstimatorBESS2(props) {
     fetchCertificatePrice()
   }, []);
 
+  useEffect(() => {
+    if (calculationError && calculationError2 && showError) {
+      focusElement("error-calculation");
+    }
+  }, [calculationError, calculationError2, showError])
+
   return (
     <Fragment>
       {!IS_DRUPAL_PAGES && (
@@ -126,7 +133,7 @@ export default function CertificateEstimatorBESS2(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ paddingLeft: 0 }}>
+      <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -164,13 +171,15 @@ export default function CertificateEstimatorBESS2(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%', marginTop: '3rem' }} />
+        <ProgressIndicator step={stepNumber} of={2} style={{ marginTop: '3rem' }} className="nsw-col-lg-10" />
 
         {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
         <Fragment>
           {stepNumber === 2 && calculationError && calculationError2 && showError && (
-            <Alert as="error" title="Sorry!" style={{ width: '80%' }}>
+            <Alert as="error" customTitle={
+              <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
+            } id="error-calculation" className="nsw-col-lg-10" tabIndex="-1">
               <p>We are experiencing technical difficulties right now, please try again later.</p>
             </Alert>
           )}
@@ -277,10 +286,14 @@ export default function CertificateEstimatorBESS2(props) {
                   marginBottom: '5%',
                 }}
               >
-                <MoreOptionsCard options={[{
-                  title: 'Review eligibility for this activity',
-                  link: '/#residential-solar-battery-demand-response-eligibility'
-                }]}/>
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#residential-solar-battery-demand-response-eligibility',
+                    },
+                  ]}
+                />
               </div>
             </div>
           )}

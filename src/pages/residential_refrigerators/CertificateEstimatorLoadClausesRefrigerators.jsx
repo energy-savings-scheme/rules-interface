@@ -5,7 +5,7 @@ import moment from 'moment';
 
 // Import components
 import CalculateBlock from 'components/calculate/CalculateBlock';
-
+import InfoBox from 'components/info-box/info-box';
 import Button from 'nsw-ds-react/button/button';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import Alert from 'nsw-ds-react/alert/alert';
@@ -65,11 +65,18 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
   const [dependencies, setDependencies] = useState([]);
+  const [isUserTypeValid, setIsUserTypeValid] = useState(true);
+  const [userTypeError, setUserTypeError] = useState('');
 
   function addElement(arr, obj) {
     const found = arr.some((el) => el.name === obj.name);
     if (!found) arr.push(obj);
     return arr;
+  }
+
+  function onValidateUserType(isValid, errorMessage) {
+    setIsUserTypeValid(isValid);
+    setUserTypeError(errorMessage);
   }
 
   useEffect(() => {
@@ -118,23 +125,27 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
       <div style={{ marginTop: 70, marginBottom: 70 }}>
         {stepNumber === 1 && (
           <Fragment>
-            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+            <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your ESCs</b>
-            </h5>
+            </p>
             <FormGroup
+              htmlId="user-type"
               label="What is your interest in the scheme?"
               helper="Select the option that best describes you"
-              htmlId="user-type"
+              status={isUserTypeValid ? '' : 'invalid'}
+              statusText={userTypeError}
+              style={{marginBottom: '4%'}}
             >
               <Select
                 htmlId="user-type"
-                style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                className="nsw-col-lg-6"
                 options={USER_TYPE_OPTIONS}
                 onChange={(e) => {
                   setUserType(e.target.value);
                   updateSegmentCaptureAnalytics(e.target.value);
                 }}
                 value={userType}
+                status={isUserTypeValid ? '' : 'invalid'}
                 required
               />
             </FormGroup>
@@ -177,27 +188,18 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              onValidateUserType={onValidateUserType}
             />
           </Fragment>
         )}
 
         {stepNumber === 2 && !calculationError && !calculationError2 && (
           <Fragment>
-            <div
-              className="nsw-global-alert nsw-global-alert--light js-global-alert"
-              role="alert"
-              style={{ width: '80%', marginBottom: '7%' }}
-            >
-              <div className="nsw-global-alert__wrapper">
-                <div className="nsw-global-alert__content">
-                  <p>
-                    <b>Postcode: </b> {postcode}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <InfoBox postcode={postcode} />
             {
-              <Alert as="info" title="ESCs" style={{ width: '80%', marginBottom: '7%' }}>
+              <Alert as="info" customTitle={
+                <h3 dangerouslySetInnerHTML={{__html: "ESCs"}}/>
+              } className="nsw-col-lg-10" style={{ marginBottom: '7%' }}>
                 <p>
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
@@ -205,12 +207,13 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
                   </span>
                 </p>
                 <p>
-                  Your estimated annual energy savings are{' '}
+                  Your estimated energy savings over the lifetime of the equipment are{' '}
                   <b>
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
-                  </b> MWh
+                  </b>{' '}
+                  MWh
                 </p>
                 <p>
                   As this activity is only eligible for the Energy Savings Scheme, it generates
@@ -231,7 +234,9 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
 
         {(stepNumber === 2 && calculationError === true) ||
           (stepNumber === 2 && calculationError2 === true && (
-            <Alert as="error" title="Sorry! An error has occurred.">
+            <Alert as="error" customTitle={
+              <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
+            } className="nsw-col-lg-10">
               <p>An error occurred during calculation. Try re-running the calculation</p>
             </Alert>
           ))}
@@ -239,11 +244,10 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
         {stepNumber === 2 && (
           <Fragment>
             <div
-              className="nsw-row"
+              className="nsw-row nsw-col-lg-10"
               style={{
                 paddingLeft: 'inherit',
                 paddingRight: 'inherit',
-                width: '80%',
               }}
             >
               <CertificiatePrice
