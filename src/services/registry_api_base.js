@@ -1,11 +1,11 @@
 import axios from 'axios';
 
+import config from 'lib/config'
+
 const client = axios.create({
-  baseURL: process.env.REACT_APP_REGISTRY_API_BASE_URL,
+  baseURL: config.productRegistryApiBaseUrl,
   withCredentials: false,
 });
-
-console.log(process.env.REACT_APP_REGISTRY_API_BASE_URL);
 
 const RegistryApiBase = function (options) {
   const onSuccess = function (response) {
