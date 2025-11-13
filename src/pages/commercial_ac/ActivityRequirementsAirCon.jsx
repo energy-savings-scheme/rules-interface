@@ -12,11 +12,11 @@ import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSegmentCaptureAnalytics,
-  clearSearchCaptureAnalytics
+  clearSearchCaptureAnalytics,
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
-import {BASE_COMMERCIAL_AC_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_COMMERCIAL_AC_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
 
 export default function ActivityRequirementsCommercialAC(props) {
   const { entities, variables, loading, setLoading } = props;
@@ -31,6 +31,8 @@ export default function ActivityRequirementsCommercialAC(props) {
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
   const [userType, setUserType] = useState('');
+  const [isUserTypeValid, setIsUserTypeValid] = useState(true);
+  const [userTypeError, setUserTypeError] = useState('');
 
   if (formValues.length === 0) {
     setLoading(true);
@@ -111,6 +113,11 @@ export default function ActivityRequirementsCommercialAC(props) {
     setClausesForm(new_arr);
   }, [stepNumber]);
 
+  function onValidateUserType(isValid, errorMessage) {
+    setIsUserTypeValid(isValid);
+    setUserTypeError(errorMessage);
+  }
+
   return (
     <Fragment>
       {!IS_DRUPAL_PAGES && (
@@ -128,7 +135,7 @@ export default function ActivityRequirementsCommercialAC(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ paddingLeft: 0 }}>
+      <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -180,7 +187,7 @@ export default function ActivityRequirementsCommercialAC(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={2} className="nsw-col-lg-10" />
 
         <Fragment>
           {loading && <SpinnerFullscreen />}
@@ -191,17 +198,20 @@ export default function ActivityRequirementsCommercialAC(props) {
                   label="What is your interest in the scheme?"
                   helper="Select the option that best describes you"
                   htmlId="user-type"
-                  style={{marginTop: '4%'}}
+                  status={isUserTypeValid ? '' : 'invalid'}
+                  statusText={userTypeError}
+                  style={{marginBottom: '4%'}}
                 >
                   <Select
                     htmlId="user-type"
-                    style={{ maxWidth: '50%', marginBottom: '2.5%' }}
+                    className="nsw-col-lg-6"
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
                       setUserType(e.target.value);
-                      updateSegmentCaptureAnalytics(e.target.value)
+                      updateSegmentCaptureAnalytics(e.target.value);
                     }}
                     value={userType}
+                    status={isUserTypeValid ? '' : 'invalid'}
                     required
                   />
                 </FormGroup>
@@ -222,6 +232,7 @@ export default function ActivityRequirementsCommercialAC(props) {
                 backAction={(e) => {
                   setStepNumber(stepNumber - 1);
                 }}
+                onValidateUserType={onValidateUserType}
               />
             </>
           )}

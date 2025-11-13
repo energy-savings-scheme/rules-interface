@@ -31,7 +31,7 @@ import {
   D18_ESSJun24_ESC_calculation,
   D19_ESSJun24_ESC_calculation,
   D20_ESSJun24_ESC_calculation,
-  F17_ESC_calculation
+  F17_ESC_calculation,
 } from 'types/openfisca_variables';
 
 import { Float } from 'types/value_type';
@@ -40,6 +40,7 @@ import {
   submitEstimatorFormAnalytics,
   updatePostCodeAnalytics,
 } from 'lib/analytics';
+import { focusElement } from 'lib/helper';
 
 export default function CalculateForm(props) {
   const {
@@ -77,6 +78,7 @@ export default function CalculateForm(props) {
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
+    onValidateUserType
   } = props;
 
   var { formValues } = props;
@@ -130,17 +132,71 @@ export default function CalculateForm(props) {
     return item;
   };
 
-  const validateUserType = () => {
-    const userType = document.querySelector('select#user-type');
+  const validateForm = () => {
+    // in some activities user type field is not part of the form
+    // need to have separate validation process
+    // in this case eligibility and certificate with only 2 steps.
+    const invalidElements = [];
 
-    if (!userType.value) {
-      document.querySelector('select#user-type').reportValidity();
-      document.querySelector('select#user-type').setCustomValidity('Please select an item in the list.')
-      return false;
+    // special variable below are certificate pages that has only 2 steps.
+    const specialVariables = [
+      C1_PDRSAug24_ESC_calculation,
+      F7_PDRSAug24_ESC_calculation,
+      BESS1_PDRSAug24_PRC_calculation,
+      BESS2_PDRSAug24_PRC_calculation,
+    ];
+
+    // if eligibility and certificate pages with only 2 steps
+    // validate the user type first.
+    if (workflow == Workflow.ELIGIBILITY || specialVariables.includes(variable.name)) {
+      const userType = document.querySelector('select#user-type');
+      let userTypeValid = true;
+      let userTypeErrorMessage = '';
+      if (!userType.checkValidity()) {
+        invalidElements.push(userType);
+        userTypeValid = false;
+        userTypeErrorMessage = userType.validationMessage;
+      }
+
+      // send error message to parent component
+      // to update user type field with error state.
+      if (typeof onValidateUserType == "function") {
+        onValidateUserType(userTypeValid, userTypeErrorMessage);
+      }
     }
 
-    return true;
-  };
+    const validatedFormValues = formValues.map(item => {
+      // Exclude fields that are not displayed in the UI
+      // and fields with value type boolean
+      // which is radio button, because by default all radio button has default value.
+      if (!item.hide && item.value_type.toLowerCase() != "boolean") {
+        const element = document.querySelector(`#${item.name}`);
+        if (!element) {
+          return item;
+        }
+
+        // trigger input field validation
+        // display error if input field didn't pass the validation
+        if (!element.checkValidity()) { 
+          item.invalid = true;
+          item.invalidText = element.validationMessage;
+          invalidElements.push(element);
+        } else {
+          item.invalid = false;
+          item.invalidText = '';
+        }
+      }
+
+      return item;
+    });
+    
+    if (invalidElements.length > 0) {
+      setFormValues(validatedFormValues);
+      focusElement(invalidElements[0].id);
+    }
+
+    return invalidElements.length == 0;
+  }
 
   const handleCalculate = (e) => {
     e.preventDefault();
@@ -187,16 +243,18 @@ export default function CalculateForm(props) {
       return variable;
     });
 
+    const isFormValid = validateForm();
+    if (!isFormValid) {
+      setLoading(false);
+      return false;
+    }
+
     var payload = {
       persons: { person1: {} },
       [entity.plural]: { [`${entity.name}_1`]: { [variable.name]: { [date]: null } } },
     };
 
     if (workflow === Workflow.ELIGIBILITY) {
-      if (!validateUserType()) {
-        setLoading(false);
-        return false;
-      }
       formValues
         .filter((x) => x.hide === false)
         .map((variable) => {
@@ -207,19 +265,6 @@ export default function CalculateForm(props) {
           };
         });
     } else {
-      // special variable below are certificate pages that has only 2 steps.
-      const specialVariables = [
-        C1_PDRSAug24_ESC_calculation,
-        F7_PDRSAug24_ESC_calculation,
-        BESS1_PDRSAug24_PRC_calculation,
-        BESS2_PDRSAug24_PRC_calculation,
-      ];
-      if (specialVariables.includes(variable.name)) {
-        if (!validateUserType()) {
-          setLoading(false);
-          return false;
-        }
-      }
       formValues.map((variable) => {
         const variable_entity = entities.find((item) => item.name === variable.entity);
 
@@ -372,18 +417,22 @@ export default function CalculateForm(props) {
                   } else {
                     setShowPostcodeError(true);
                     setShowNoResponsePostcodeError(false);
+                    focusElement("error-postcode");
                   }
                 } else if (persons.status === '200' && persons.code === '404') {
                   setShowPostcodeError(true);
                   setShowNoResponsePostcodeError(false);
+                  focusElement("error-postcode");
                 } else if (persons.status !== '200') {
                   setShowPostcodeError(false);
                   setShowNoResponsePostcodeError(true);
+                  focusElement("error-postcode-response");
                 }
               })
               .catch((err) => {
                 console.log(err);
                 setShowNoResponsePostcodeError(true);
+                focusElement("error-postcode-response");
               });
           }
         }
@@ -406,32 +455,31 @@ export default function CalculateForm(props) {
   };
 
   return (
-    <form onSubmit={handleCalculate}>
+    <form id="form-estimator" data-ui-name="calculate-form" onSubmit={handleCalculate} noValidate>
       <div className="nsw-content-block">
         <div className="nsw-content-block__content">
           {workflow === Workflow.CERTIFICATES &&
-            (variable.name === F16_electric_PDRSDec24_ESC_calculation ||
-              variable.name === WH1_F16_electric_PDRSAug24_PRC_calculation ||
-              variable.name === F16_gas_ESC_calculation ||
-              variable.name === D17_ESSJun24_ESC_calculation ||
-              variable.name === D18_ESSJun24_ESC_calculation ||
-              variable.name === D19_ESSJun24_ESC_calculation ||
-              variable.name === D20_ESSJun24_ESC_calculation ||
-              variable.name === F17_ESC_calculation
-            ) ? (
+          (variable.name === F16_electric_PDRSDec24_ESC_calculation ||
+            variable.name === WH1_F16_electric_PDRSAug24_PRC_calculation ||
+            variable.name === F16_gas_ESC_calculation ||
+            variable.name === D17_ESSJun24_ESC_calculation ||
+            variable.name === D18_ESSJun24_ESC_calculation ||
+            variable.name === D19_ESSJun24_ESC_calculation ||
+            variable.name === D20_ESSJun24_ESC_calculation ||
+            variable.name === F17_ESC_calculation) ? (
             // for now we just need to update the copy right now, this is just temporary solution
             // that's why we adding this template below.
             // F16 shouldn't have PRC anymore.
             // TODO: Need to do refactor and find a good way on how to display this section properly.
-            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+            <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your ESCs</b>
-            </h5>
+            </p>
           ) : workflow === Workflow.CERTIFICATES &&
             (variable.name === BESS1_V5Nov24_PRC_calculation ||
               variable.name === BESS2_V5Nov24_PRC_calculation) ? (
-            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+            <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your PRCs</b>
-            </h5>
+            </p>
           ) : workflow === Workflow.CERTIFICATES &&
             (variable.name === C1_PDRSAug24_ESC_calculation ||
               variable.name === F7_PDRSAug24_ESC_calculation ||
@@ -439,13 +487,13 @@ export default function CalculateForm(props) {
               variable.name === BESS2_PDRSAug24_PRC_calculation) ? (
             <></>
           ) : workflow === Workflow.CERTIFICATES ? (
-            <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+            <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
               <b>Please answer the following questions to calculate your ESCs and PRCs</b>
-            </h5>
+            </p>
           ) : (
-            <h5 className="nsw-content-block__copy">
+            <p className="nsw-content-block__copy">
               <b>Check if you meet the following requirements</b>
-            </h5>
+            </p>
           )}
         </div>
       </div>
@@ -453,13 +501,17 @@ export default function CalculateForm(props) {
       {props.children}
 
       {stepNumber === 1 && showPostcodeError && (
-        <Alert as="error" title="The postcode is not valid in NSW">
+        <Alert as="error" customTitle={
+          <h3 dangerouslySetInnerHTML={{__html: "The postcode is not valid in NSW"}}/>
+        } id="error-postcode" className="nsw-col-lg-10" tabIndex="-1">
           <p>Please check your postcode and try again.</p>
         </Alert>
       )}
 
       {stepNumber === 1 && showNoResponsePostcodeError && (
-        <Alert as="error" title="Sorry!">
+        <Alert as="error" customTitle={
+          <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
+        } id="error-postcode-response" className="nsw-col-lg-10" tabIndex="-1">
           <p>
             We are experiencing technical difficulties validating the postcode, please try again
             later.
@@ -485,7 +537,7 @@ export default function CalculateForm(props) {
           </div>
 
           <div className="nsw-col-md-3">
-            <Button as="dark" type="submit" style={{ float: 'right' }}>
+            <Button data-ui-name="next" as="dark" type="submit" style={{ float: 'right' }}>
               {loading ? (
                 <Spinner animation="border" role="status" size="lg">
                   <span className="sr-only">Loading...</span>

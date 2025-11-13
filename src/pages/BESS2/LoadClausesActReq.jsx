@@ -10,6 +10,7 @@ import Button from 'nsw-ds-react/button/button';
 import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
+import { focusElement } from 'lib/helper';
 
 export default function LoadClausesBESS2(props) {
   const {
@@ -25,6 +26,7 @@ export default function LoadClausesBESS2(props) {
     setClausesForm,
     showError,
     setShowError,
+    onValidateUserType
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -57,6 +59,12 @@ export default function LoadClausesBESS2(props) {
         console.log(err);
       });
   }, [variableToLoad]);
+
+  useEffect(() => {
+    if (calculationError && showError) {
+      focusElement("error-calculation");
+    }
+  }, [calculationError, showError])
 
   const formatResultString = (result) => {
     if (typeof result === 'boolean') {
@@ -102,6 +110,7 @@ export default function LoadClausesBESS2(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              onValidateUserType={onValidateUserType}
             />
           </Fragment>
         )}
@@ -109,7 +118,9 @@ export default function LoadClausesBESS2(props) {
         {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
         {stepNumber === 2 && calculationError && showError && (
-          <Alert as="error" title="Sorry!" style={{ width: '80%' }}>
+          <Alert as="error" customTitle={
+            <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
+          } id="error-calculation" className="nsw-col-lg-10" tabIndex="-1">
             <p>We are experiencing technical difficulties right now, please try again later.</p>
           </Alert>
         )}
@@ -118,7 +129,9 @@ export default function LoadClausesBESS2(props) {
           <Fragment>
             {
               <div style={{ marginTop: '5%' }}>
-                <Alert as="info" title="Activity Requirements" style={{ width: '80%' }}>
+                <Alert as="info" customTitle={
+                  <h3 dangerouslySetInnerHTML={{__html: "Activity Requirements"}}/>
+                } className="nsw-col-lg-10">
                   <p>
                     {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                     Based on the information you have provided{' '}
@@ -129,8 +142,10 @@ export default function LoadClausesBESS2(props) {
                 {calculationResult === false && (
                   <Alert
                     as="warning"
-                    title="The following answers were ineligible:"
-                    style={{ width: '80%' }}
+                    customTitle={
+                      <h3 dangerouslySetInnerHTML={{__html: "The following answers were ineligible:"}}/>
+                    } 
+                    className="nsw-col-lg-10"
                   >
                     <p>
                       {clausesForm.length > 0 &&

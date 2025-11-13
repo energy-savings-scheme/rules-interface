@@ -5,16 +5,16 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import LoadClausesBaseEligibility from './LoadClausesBaseEligibility';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
-import {USER_TYPE_OPTIONS} from 'constant/user-type';
-import {BASE_CORE_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import { BASE_CORE_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSegmentCaptureAnalytics,
-  clearSearchCaptureAnalytics
+  clearSearchCaptureAnalytics,
 } from 'lib/analytics';
-import {ESS__PDRS__ACP_base_scheme_eligibility} from 'types/openfisca_variables';
+import { ESS__PDRS__ACP_base_scheme_eligibility } from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from '../../components/more-options-card/more-options-card';
 
@@ -31,6 +31,8 @@ export default function BaseEligibility(props) {
   const [secDep, setSecDep] = useState([]);
   const [showError, setShowError] = useState(false);
   const [userType, setUserType] = useState('');
+  const [isUserTypeValid, setIsUserTypeValid] = useState(true);
+  const [userTypeError, setUserTypeError] = useState('');
 
   if (formValues.length === 0) {
     setLoading(true);
@@ -41,8 +43,8 @@ export default function BaseEligibility(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
     clearSearchCaptureAnalytics();
-    updateEstimatorFormAnalytics(BASE_CORE_ELIGIBILITY_ANALYTICS_DATA)
-    updateFeedbackFormAnalytics(BASE_CORE_ELIGIBILITY_ANALYTICS_DATA)
+    updateEstimatorFormAnalytics(BASE_CORE_ELIGIBILITY_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_CORE_ELIGIBILITY_ANALYTICS_DATA);
   }, [stepNumber]);
 
   useEffect(() => {
@@ -120,6 +122,11 @@ export default function BaseEligibility(props) {
     setClausesForm(new_arr);
   }, [stepNumber]);
 
+  function onValidateUserType(isValid, errorMessage) {
+    setIsUserTypeValid(isValid);
+    setUserTypeError(errorMessage);
+  }
+
   return (
     <Fragment>
       {!IS_DRUPAL_PAGES && (
@@ -137,7 +144,7 @@ export default function BaseEligibility(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ paddingLeft: 0 }}>
+      <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
@@ -183,7 +190,7 @@ export default function BaseEligibility(props) {
           </div>
         )}
 
-        <ProgressIndicator step={stepNumber} of={2} style={{ width: '80%' }} />
+        <ProgressIndicator step={stepNumber} of={2} className="nsw-col-lg-10" />
 
         <Fragment>
           {loading && <SpinnerFullscreen />}
@@ -191,23 +198,26 @@ export default function BaseEligibility(props) {
             <>
               {stepNumber === 1 && (
                 <FormGroup
-                label="What is your interest in the scheme?"
-                helper="Select the option that best describes you"
-                htmlId="user-type"
-                style={{marginTop: '4%'}}
-              >
-                <Select
+                  label="What is your interest in the scheme?"
+                  helper="Select the option that best describes you"
                   htmlId="user-type"
-                  style={{ maxWidth: '50%', marginBottom: '2.5%' }}
-                  options={USER_TYPE_OPTIONS}
-                  onChange={(e) => {
-                    setUserType(e.target.value);
-                    updateSegmentCaptureAnalytics(e.target.value)
-                  }}
-                  value={userType}
-                  required
-                />
-              </FormGroup>
+                  status={isUserTypeValid ? '' : 'invalid'}
+                  statusText={userTypeError}
+                  style={{marginBottom: '4%'}}
+                >
+                  <Select
+                    htmlId="user-type"
+                    className="nsw-col-lg-6"
+                    options={USER_TYPE_OPTIONS}
+                    onChange={(e) => {
+                      setUserType(e.target.value);
+                      updateSegmentCaptureAnalytics(e.target.value);
+                    }}
+                    value={userType}
+                    status={isUserTypeValid ? '' : 'invalid'}
+                    required
+                  />
+                </FormGroup>
               )}
               <LoadClausesBaseEligibility
                 variableToLoad={variableToLoad}
@@ -229,6 +239,7 @@ export default function BaseEligibility(props) {
                 backAction={(e) => {
                   setStepNumber(stepNumber - 1);
                 }}
+                onValidateUserType={onValidateUserType}
               />
             </>
           )}

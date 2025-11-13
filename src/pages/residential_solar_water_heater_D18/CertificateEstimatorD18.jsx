@@ -10,16 +10,17 @@ import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import {BASE_RESIDENTIAL_ELECTRIC_SOLAR_WH_ESTIMATOR_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_RESIDENTIAL_ELECTRIC_SOLAR_WH_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSearchCaptureAnalytics,
-  updateSegmentCaptureAnalytics
+  updateSegmentCaptureAnalytics,
 } from 'lib/analytics';
+import { focusElement } from 'lib/helper';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
-import {D18_ESSJun24_ESC_calculation} from 'types/openfisca_variables';
+import { D18_ESSJun24_ESC_calculation } from 'types/openfisca_variables';
 
 export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
   const { entities, variables, brands } = props;
@@ -123,18 +124,22 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
             } else {
               setShowPostcodeError(true);
               setShowNoResponsePostcodeError(false);
+              focusElement("error-postcode");
             }
           } else if (persons.status === '200' && persons.code === '404') {
             setShowPostcodeError(true);
             setShowNoResponsePostcodeError(false);
+            focusElement("error-postcode");
           } else if (persons.status !== '200') {
             setShowPostcodeError(false);
             setShowNoResponsePostcodeError(true);
+            focusElement("error-postcode-response");
           }
         })
         .catch((err) => {
           console.log(err);
           setShowNoResponsePostcodeError(true);
+          focusElement("error-postcode-response");
         });
     }
   };
@@ -176,6 +181,7 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
       .catch((err) => {
         console.log(err);
         setRegistryData(false);
+        focusElement("error-data-registry");
       });
   }, [selectedBrand]);
 
@@ -208,16 +214,22 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
   useEffect(() => {
     const fetchCertificatePrice = async function () {
       try {
-        const response = await RegistryApi.getCertificatePrice()
-        setEscMinPrice(Number(response.data.ESC.min_price))
-        setEscMaxPrice(Number(response.data.ESC.max_price))
+        const response = await RegistryApi.getCertificatePrice();
+        setEscMinPrice(Number(response.data.ESC.min_price));
+        setEscMaxPrice(Number(response.data.ESC.max_price));
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
-    }
+    };
 
-    fetchCertificatePrice()
+    fetchCertificatePrice();
   }, []);
+
+  useEffect(() => {
+    if (calculationError && calculationError2 && showError) {
+      focusElement("error-calculation");
+    }
+  }, [calculationError, calculationError2, showError])
 
   return (
     <Fragment>
@@ -237,7 +249,7 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
         </div>
       )}
 
-      <div className="nsw-container" style={{ paddingLeft: 0 }}>
+      <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
         <br></br>
         <br></br>
         {!IS_DRUPAL_PAGES && stepNumber !== 3 && (
@@ -291,13 +303,15 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
           </div>
         )} */}
 
-        <ProgressIndicator step={stepNumber} of={3} style={{ width: '80%', marginTop: '3rem' }} />
+        <ProgressIndicator step={stepNumber} of={3} style={{ marginTop: '3rem' }} className="nsw-col-lg-10" />
 
         {stepNumber === 3 && loading && !showError && <SpinnerFullscreen />}
 
         <Fragment>
           {stepNumber === 3 && calculationError && calculationError2 && showError && (
-            <Alert as="error" title="Sorry!" style={{ width: '80%' }}>
+            <Alert as="error" customTitle={
+              <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
+            } id="error-calculation" className="nsw-col-lg-10" tabIndex="-1">
               <p>We are experiencing technical difficulties right now, please try again later.</p>
             </Alert>
           )}
@@ -308,18 +322,18 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
                   <br></br>
                   <br></br>
                   <div className="nsw-content-block__content">
-                    <h5 className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
+                    <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
                       <b>Please answer the following questions to calculate your ESCs</b>
-                    </h5>
+                    </p>
 
                     <FormGroup
+                      htmlId="user-type"
                       label="What is your interest in the scheme?"
                       helper="Select the option that best describes you"
-                      htmlId="user-type"
                     >
                       <Select
                         htmlId="user-type"
-                        style={{ maxWidth: '50%' }}
+                        className="nsw-col-lg-6"
                         options={USER_TYPE_OPTIONS}
                         onChange={(e) => {
                           setUserType(e.target.value);
@@ -330,12 +344,14 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
                     </FormGroup>
 
                     <FormGroup
+                      htmlId="postcode"
                       label="Postcode"
                       helper="Postcode where the replacement has taken place" // helper text (secondary label)
                       errorText="Invalid value!" // error text if invalid
                     >
                       <TextInput
-                        style={{ maxWidth: '50%' }}
+                        htmlId="postcode"
+                        className="nsw-col-lg-6"
                         as="input"
                         type="number"
                         placeholder="Enter postcode"
@@ -347,12 +363,14 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
                       />
                     </FormGroup>
                     <FormGroup
+                      htmlId="brand"
                       label="Brand"
                       helper="Select residential solar water heater brand" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
-                        style={{ maxWidth: '50%' }}
+                        htmlId="brand"
+                        className="nsw-col-lg-6"
                         options={dropdownOptions}
                         onChange={(e) => {
                           setSelectedBrand(brands.find((item) => item === e.target.value));
@@ -364,12 +382,14 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
                     </FormGroup>
 
                     <FormGroup
+                      htmlId="model"
                       label="Model"
                       helper="Select residential solar water heater model" // primary question text
                       errorText="Invalid value!" // error text if invalid
                     >
                       <Select
-                        style={{ maxWidth: '50%' }}
+                        htmlId="model"
+                        className="nsw-col-lg-6"
                         options={dropdownOptionsModels}
                         onChange={(e) => {
                           setSelectedModel(models.find((item) => item === e.target.value));
@@ -435,7 +455,9 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
           )}
 
           {stepNumber === 1 && !registryData && (
-            <Alert as="error" title="Sorry! An error has occurred.">
+            <Alert as="error" customTitle={
+              <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
+            } id="error-data-registry" className="nsw-col-lg-10" tabIndex="-1">
               <p>Unable to load data from the product registry. Please try again later.</p>
             </Alert>
           )}
@@ -443,13 +465,17 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
           {stepNumber === 2 && loading && <SpinnerFullscreen />}
 
           {stepNumber === 1 && showPostcodeError && postcode.length >= 4 && (
-            <Alert as="error" title="The postcode is not valid in NSW">
+            <Alert as="error" customTitle={
+              <h3 dangerouslySetInnerHTML={{__html: "The postcode is not valid in NSW"}}/>
+            } id="error-postcode" className="nsw-col-lg-10" tabIndex="-1">
               <p>Please check your postcode and try again.</p>
             </Alert>
           )}
 
           {stepNumber === 1 && showNoResponsePostcodeError && postcode.length >= 4 && (
-            <Alert as="error" title="Sorry!">
+            <Alert as="error" customTitle={
+              <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
+            } id="error-postcode-response" className="nsw-col-lg-10" tabIndex="-1">
               <p>
                 We are experiencing technical difficulties validating the postcode, please try again
                 later.
@@ -503,14 +529,17 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
             selectedBrand &&
             selectedModel &&
             userType && (
-              <div className="nsw-row" style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}>
+              <div
+                className="nsw-row"
+                style={{ paddingTop: '30px', width: '80%', marginBottom: 70 }}
+              >
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"
                     onClick={(e) => {
                       validatePostcode(postcode);
                       updateSearchCaptureAnalytics(postcode, selectedBrand, selectedModel);
-                      updateSegmentCaptureAnalytics(userType)
+                      updateSegmentCaptureAnalytics(userType);
                     }}
                   >
                     Next
@@ -533,10 +562,14 @@ export default function CertificateEstimatorResidentialSolarWaterHeater(props) {
                   marginBottom: '5%',
                 }}
               >
-                <MoreOptionsCard options={[{
-                  title: 'Review eligibility for this activity',
-                  link: '/#residential-solar-water-heater-activity-requirements'
-                }]}/>
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Review eligibility for this activity',
+                      link: '/#residential-solar-water-heater-activity-requirements',
+                    },
+                  ]}
+                />
               </div>
             </div>
           )}

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const ProgressIndicator = ({ step, of, ...attributeOptions }) => (
-  <div className="nsw-progress-indicator" {...attributeOptions}>
-    <div className="nsw-progress-indicator__count">
-      Step {step} of {of}
-    </div>
+export const ProgressIndicator = ({ step, of, className = '', ...attributeOptions }) => (
+  <div className={`nsw-progress-indicator ${className}`} {...attributeOptions}>
+    <h2 className="nsw-progress-indicator__count">
+      {`Step ${step} of ${of}`}
+    </h2>
     <div className="nsw-progress-indicator__bar">
       {
         // eslint-disable-next-line react/no-array-index-key
@@ -25,6 +25,7 @@ export const ProgressIndicator = ({ step, of, ...attributeOptions }) => (
 ProgressIndicator.propTypes = {
   step: PropTypes.number.isRequired,
   of: PropTypes.number.isRequired,
+  className: PropTypes.string
 };
 
 export const ProgressIndicatorStep = ({ active }) => (
