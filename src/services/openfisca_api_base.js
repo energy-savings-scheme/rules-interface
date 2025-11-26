@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-import config from 'lib/config'
-
 const client = axios.create({
-  baseURL: config.openfiscaApiBaseUrl,
+  baseURL: process.env.REACT_APP_OPENFISCA_BASE_URL,
   withCredentials: false,
 });
 

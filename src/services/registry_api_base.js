@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-import config from 'lib/config'
-
 const client = axios.create({
-  baseURL: config.productRegistryApiBaseUrl,
+  baseURL: process.env.REACT_APP_REGISTRY_API_BASE_URL,
   withCredentials: false,
 });
 
