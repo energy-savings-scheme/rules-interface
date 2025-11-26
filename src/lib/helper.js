@@ -30,9 +30,7 @@ function focusElement(id) {
 function getCookie(name) {
   const cookie = document.cookie
     .split("; ")
-    .find((c) => {
-      c.startsWith(`${name}=`)
-    })
+    .find((c) => c.startsWith(`${name}=`))
   
   if (cookie) {
     return cookie.split("=")[1]
