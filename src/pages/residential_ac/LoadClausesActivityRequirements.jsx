@@ -159,7 +159,7 @@ export default function LoadClausesResidentialActivityRequirements(props) {
                               {item.metadata.display_question} :{' '}
                               {formatBooleanToString(item.form_value)}
                             </div>
-                            <p data-ui-name={`${item.name}`} style={{ whiteSpace: 'pre-line' }}>
+                            <p data-ui-name={item.name} style={{ whiteSpace: 'pre-line' }}>
                               {item.metadata.eligibility_clause &&
                                 item.metadata.eligibility_clause.split('<br />').join('\n')}
                             </p>
