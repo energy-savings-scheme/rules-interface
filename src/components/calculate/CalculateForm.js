@@ -555,7 +555,7 @@ export default function CalculateForm(props) {
       {stepNumber === 1 && (
         <div className="nsw-row" style={{ width: '80%', paddingTop: '50px' }}>
           <div className="nsw-col-md-3">
-            <Button as="dark" type="submit" style={{ float: 'left' }}>
+            <Button as="dark" type="submit" style={{ float: 'left' }} data-ui-name="next">
               {loading ? (
                 <Spinner animation="border" role="status" size="lg">
                   <span className="sr-only">Loading...</span>

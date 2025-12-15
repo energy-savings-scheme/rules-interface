@@ -1,0 +1,21 @@
+const responseTemplate = {
+  "code": "200",
+  "data": {
+      "bspname": "NEW CNTRY WEST",
+      "bspnumber": "020",
+      "category": "Delivery Area",
+      "comments": "",
+      "deliveryoffice": "NOWRA DC",
+      "latitude": "-34.8742027283",
+      "locality": "BANGALEE, BOMADERRY, NORTH NOWRA, NOWRA, NOWRA DC, NOWRA EAST, NOWRA NORTH, SOUTH NOWRA, WEST NOWRA",
+      "longitude": "150.6003723145",
+      "parcelzone": "N2",
+      "presortindicator": "270"
+  },
+  "message": "okay",
+  "status": "200"
+}
+
+export {
+  responseTemplate,
+}

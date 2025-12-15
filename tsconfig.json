@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "target": "ES2020",
     "module": "esnext",
     "strict": true,
@@ -27,6 +27,7 @@
     "jsx": "react-jsx"
   },
   "include": [
+    "./src",
     "**/*.ts"
   ],
   "exclude": [
