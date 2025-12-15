@@ -94,7 +94,7 @@ export default function LoadClausesResidentialActivityRequirements(props) {
       {stepNumber === 2 && calculationError && showError && (
         <Alert as="error" customTitle={
           <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
-        } id="error-calculation" className="nsw-col-lg-10" tabIndex="-1">
+        } id="error-calculation" className="nsw-col-lg-10" data-ui-name="error-calculation" tabIndex="-1">
           <p>We are experiencing technical difficulties right now, please try again later.</p>
         </Alert>
       )}
