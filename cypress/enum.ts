@@ -1,12 +1,3 @@
-enum ActivityId {
-  RESIDENTIAL_AC_CERTIFICATE = "HVAC1/D16"
-}
-
-enum ActivityType {
-  CERTIFICATE = "certificate",
-  ELIGIBILITY = "eligibility"
-}
-
 enum FormSelector {
   INITIAL_FORM_SELECTOR = '[data-ui-name="initial-form"]',
   CALCULATE_FORM_SELECTOR = '[data-ui-name="calculate-form"]',
