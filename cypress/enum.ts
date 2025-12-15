@@ -42,8 +42,6 @@ enum PostcodeState {
 
 
 export {
-  ActivityId,
-  ActivityType,
   FormSelector,
   ResultSelector,
   EligibilityResultText,
