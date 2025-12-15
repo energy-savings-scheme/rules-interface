@@ -21,4 +21,22 @@ function focusElement(id) {
   }
 }
 
-export { formatNumber, focusElement };
+
+/**
+ * 
+ * @param {string} name - The cookie name
+ * @returns {string|null}
+ */
+function getCookie(name) {
+  const cookie = document.cookie
+    .split("; ")
+    .find((c) => c.startsWith(`${name}=`))
+  
+  if (cookie) {
+    return cookie.split("=")[1]
+  }
+
+  return null
+}
+
+export { formatNumber, focusElement, getCookie };

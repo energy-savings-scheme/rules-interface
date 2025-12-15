@@ -109,6 +109,8 @@ export const FormGroupRadio = (props) => (
             value={option.value}
             onChange={props.onChange}
             row
+            data-ui-name={props.htmlId}
+            uniqueID={`${props.htmlId}_${option.value}`}
           />
         ))}
       </div>

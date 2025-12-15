@@ -5,8 +5,6 @@ const client = axios.create({
   withCredentials: false,
 });
 
-console.log(process.env.REACT_APP_REGISTRY_API_BASE_URL);
-
 const RegistryApiBase = function (options) {
   const onSuccess = function (response) {
     return response;
