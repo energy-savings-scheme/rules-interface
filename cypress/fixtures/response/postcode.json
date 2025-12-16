@@ -1,4 +1,4 @@
-const responseTemplate = {
+{
   "code": "200",
   "data": {
       "bspname": "NEW CNTRY WEST",
@@ -14,8 +14,4 @@ const responseTemplate = {
   },
   "message": "okay",
   "status": "200"
-}
-
-export {
-  responseTemplate,
 }

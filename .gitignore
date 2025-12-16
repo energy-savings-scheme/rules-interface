@@ -36,3 +36,6 @@ src/fullList.json
 .vscode
 .idea
 yarn.lock
+
+# Cypress
+cypress/screenshots

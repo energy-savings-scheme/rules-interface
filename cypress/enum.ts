@@ -3,17 +3,18 @@ enum FormSelector {
   CALCULATE_FORM_SELECTOR = '[data-ui-name="calculate-form"]',
   USER_TYPE_SELECTOR = '[data-ui-name="user-type"]',
   NEXT_SELECTOR = '[data-ui-name="next"]',
-  USER_TYPE = '[data-ui-name="user-type"]',
-  POSTCODE = '[data-ui-name="postcode"]',
-  BRAND = '[data-ui-name="brand"]',
-  MODEL = '[data-ui-name="model"]'
+  POSTCODE_SELECTOR = '[data-ui-name="postcode"]',
+  BRAND_SELECTOR = '[data-ui-name="brand"]',
+  MODEL_SELECTOR = '[data-ui-name="model"]',
+  RECALCULATE_SELECTOR = '[data-ui-name="recalculate"]'
 }
 
 enum ResultSelector {
-  ESC_CERTIFICATE = "esc",
-  PRC_CERTIFICATE = "prc",
-  ENERGY_SAVING = "aes",
-  PEAK_DEMAND_REDUCTION = "apdr"
+  ESC_CERTIFICATE_SELECTOR = "esc",
+  PRC_CERTIFICATE_SELECTOR = "prc",
+  ENERGY_SAVING_SELECTOR = "aes",
+  PEAK_DEMAND_REDUCTION_SELECTOR = "apdr",
+  ELIGIBILITY_RESULT_TEXT_SELECTOR = '[data-ui-name="eligibility-result-text"]'
 }
 
 enum ErrorSelector {
@@ -21,8 +22,6 @@ enum ErrorSelector {
   PRODUCT_REGISTRY_API_ERROR = '[data-ui-name="error-data-registry"]',
   CALCULATE_ERROR = '[data-ui-name="error-calculation"]'
 }
-
-const ELIGIBILITY_RESULT_TEXT_SELECTOR = '[data-ui-name="eligibility-result-text"]'
 
 enum EligibilityResultText {
   ELIGIBLE = "Based on the information you have provided you have met the activity eligibility requirements.",
@@ -40,6 +39,11 @@ enum PostcodeState {
   INVALID = "VIC"
 }
 
+enum URLPath {
+  RES_AIR_CONDITIONER_CERT = "#/residential-ac-estimator",
+  RES_AIR_CONDITIONER_ELIG = "#/residential-ac-activity-requirements"
+}
+
 
 export {
   FormSelector,
@@ -48,5 +52,5 @@ export {
   ErrorSelector,
   PostcodeState,
   ErrorMessage,
-  ELIGIBILITY_RESULT_TEXT_SELECTOR
+  URLPath
 }

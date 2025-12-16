@@ -191,6 +191,7 @@ export default function LoadClausesResidentialActivityRequirements(props) {
                 <Button
                   style={{ float: 'left' }}
                   as="dark"
+                  data-ui-name="recalculate"
                   onClick={(e) => {
                     setClausesForm([]);
                     setStepNumber(stepNumber - 1);

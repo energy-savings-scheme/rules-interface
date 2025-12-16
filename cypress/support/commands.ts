@@ -1,13 +1,12 @@
 import "cypress-network-idle";
 import { WorkBook } from "xlsx";
 
-import { FormSelector, ELIGIBILITY_RESULT_TEXT_SELECTOR } from "../enum";
+import { FormSelector, ResultSelector } from "@cypress/enum";
 import { 
   InterceptPostcodeAPIOptions, 
   CalculateEligibilityFormInputType,
   CalculateFormInputType
-} from "../type";
-import {responseTemplate } from "../fixtures/response/postcode";
+} from "@cypress/type";
 
 
 declare global {
@@ -108,26 +107,38 @@ Cypress.Commands.add("nextOrCalculate", (selector: string) => {
 
 Cypress.Commands.add("calculate", (input: CalculateFormInputType) => {
   // Open page and wait
+  cy.task("log", `Running test calculate. Test ID: ${input.id}`);
+
+  cy.intercept("POST", "**/calculate").as("calculateAPI");
+
   cy.visitAndExpectRegistry(input.uri);
   if (input.interceptPostcodeAPI) {
-    cy.interceptPostcodeAPI(input.interceptPostcodeAPI)
+    cy.interceptPostcodeAPI(input.interceptPostcodeAPI).as('getResponsePostcode');
   }
 
   // Fill first form
   cy.fillForm(input.initialFormSelector, input.data);
   cy.waitForNetworkIdle(1000);
   cy.nextOrCalculate(input.nextSelector);
+  cy.wait('@getResponsePostcode');
 
   // Next form
   cy.get(input.nextSelector).should("be.exist");
   cy.fillForm(input.calculateFormSelector, input.data);
   cy.nextOrCalculate(input.nextSelector);
 
+  // make sure to wait calculate api completed first before do assertation.
+  cy.wait('@calculateAPI');
+
   // Check result
   cy.checkCalculationResult(input.resultSelector, input.data);
 });
 
 Cypress.Commands.add("calculateEligibility", (input: CalculateEligibilityFormInputType) => {
+  cy.task("log", `Running test calculate eligibility. Test ID: ${input.id}`);
+
+  cy.intercept("POST", "**/calculate").as("calculateAPI");
+
   let variables: {[key: string]: any}[] = [];
   cy.visit(input.uri);
   cy.wait('@getVariableDetail').then((interception) => {
@@ -136,7 +147,10 @@ Cypress.Commands.add("calculateEligibility", (input: CalculateEligibilityFormInp
     cy.fillForm(input.calculateFormSelector, input.data);
     cy.nextOrCalculate(input.nextSelector);
 
-    cy.get(ELIGIBILITY_RESULT_TEXT_SELECTOR).should("have.text", input.eligibilityResultText);
+    // make sure to wait calculate api completed first before do assertation.
+    cy.wait('@calculateAPI');
+
+    cy.get(ResultSelector.ELIGIBILITY_RESULT_TEXT_SELECTOR).should("have.text", input.eligibilityResultText);
 
     input.ineligibleSelectors.forEach((selector) => {
       const variableDetail = variables.find((variable) => {
@@ -144,7 +158,11 @@ Cypress.Commands.add("calculateEligibility", (input: CalculateEligibilityFormInp
       })
 
       if(variableDetail) {
+        // replace all <br />, <br> with \n
+        // because <br />, <br> element in eligibility clause text from response api
+        // are being replaced by \n when rendered in eligibility result page.
         const expectedText = variableDetail.metadata.eligibility_clause.replace(/<br\s*\/?>/gi, '\n')
+
         cy.get(`[data-ui-name=${selector}]`)
         .should("be.exist")
         .invoke("text")
@@ -155,17 +173,19 @@ Cypress.Commands.add("calculateEligibility", (input: CalculateEligibilityFormInp
 })
 
 Cypress.Commands.add("interceptPostcodeAPI", (params: InterceptPostcodeAPIOptions) => {
-  cy.intercept("GET", "**/postcode/**", (req) => {
-    req.reply({
-      statusCode: 200,
-      body: {
-        ...responseTemplate,
-        data: {
-          ...responseTemplate["data"],
-          state: params.state,
-          postcode: params.postcode
+  cy.fixture("response/postcode").then((response) => {
+    cy.intercept("GET", "**/postcode/**", (req) => {
+      req.reply({
+        statusCode: 200,
+        body: {
+          ...response,
+          data: {
+            ...response["data"],
+            state: params.state,
+            postcode: params.postcode
+          }
         }
-      }
+      })
     })
   })
 })
