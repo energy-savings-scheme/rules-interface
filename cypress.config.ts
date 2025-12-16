@@ -30,9 +30,7 @@ export default defineConfig({
         }
       });
     },
-    env: {
-      dataExcelPath: process.env.CYPRESS_DATA_EXCEL_PATH
-    }
+    env: {}
   },
   env: {},
   trashAssetsBeforeRuns: false,

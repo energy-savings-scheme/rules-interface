@@ -1,4 +1,4 @@
-import { PostcodeState } from "./enum";
+import { PostcodeState } from "@cypress/enum";
 
 
 export interface BaseInputFormType {

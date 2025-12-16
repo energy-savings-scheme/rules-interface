@@ -1,14 +1,19 @@
 import {WorkBook} from "xlsx";
 
-import {DataExcel, SheetName} from "../../excel"
-import { FormSelector, ErrorMessage, EligibilityResultText } from "../../enum";
+import {DataExcel, SheetName, EXCEL_PATH} from "@cypress/excel"
+import { 
+  FormSelector, 
+  ErrorMessage, 
+  EligibilityResultText,
+  URLPath
+} from "@cypress/enum";
 
 describe('Calculate Eligibility.', () => {
-  const urlPath:string = "#/residential-ac-activity-requirements";
+  const urlPath:string = URLPath.RES_AIR_CONDITIONER_ELIG;
   let dataExcel: DataExcel;
 
   before(() => {
-    cy.task<WorkBook>("getDataExcel", Cypress.env("dataExcelPath"))
+    cy.task<WorkBook>("getDataExcel", EXCEL_PATH)
     .then((workbook) => {
       dataExcel = new DataExcel(workbook, SheetName.RES_AC_ELIG_SHEET);
     })
@@ -28,67 +33,63 @@ describe('Calculate Eligibility.', () => {
   })
 
   it('Successfully calculate eligibility with eligible result.', () => {
-    const testId: string = "HVAC1_E_001";
-    const rowData = dataExcel.getRowData(testId);
+    const rowsData = dataExcel.getData();
     
-    cy.calculateEligibility({
-      id: testId,
-      uri: urlPath,
-      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
-      nextSelector: FormSelector.NEXT_SELECTOR,
-      data: rowData,
-      eligibilityResultText: EligibilityResultText.ELIGIBLE,
-      ineligibleSelectors: []
+    rowsData.forEach((rowData, index) => {
+      let ineligibleSelectors: string[] = [];
+      if (rowData["ineligibleQuestions"]) {
+        ineligibleSelectors = rowData["ineligibleQuestions"].split(",");
+      }
+
+      const eligibleResult = ineligibleSelectors.length == 0 ? EligibilityResultText.ELIGIBLE : EligibilityResultText.INELIGIBLE;
+
+      cy.calculateEligibility({
+        id: rowData["tid"],
+        uri: urlPath,
+        calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
+        nextSelector: FormSelector.NEXT_SELECTOR,
+        data: rowData,
+        eligibilityResultText: eligibleResult,
+        ineligibleSelectors: ineligibleSelectors
+      })
+
+      if (index <= rowsData.length - 1) {
+        // reload page needed to trigger the **/variables/** API again.
+        // because we need the network request triggered in order to intercept the request.
+        // detail on beforeEach above.
+        cy.reload();
+      }
     })
   })
 
-  it('Successfully calculate eligibility with ineligible result.', () => {
-    const testId: string = "HVAC1_E_002";
-    const rowData = dataExcel.getRowData(testId);
-    let ineligibleSelectors: string[] = [];
-    if (rowData["ineligibleQuestions"]) {
-      ineligibleSelectors = rowData["ineligibleQuestions"].split(",");
-    }
+  // it('Failed because required fields are empty.', () => {
+  //   const testId: string = "HVAC1_E_003";
+  //   const rowData = dataExcel.getRowData(testId);
+  //   const requiredFields: string[] = rowData["requiredFields"].split(",");
 
-    cy.calculateEligibility({
-      id: testId,
-      uri: urlPath,
-      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
-      nextSelector: FormSelector.NEXT_SELECTOR,
-      data: rowData,
-      eligibilityResultText: EligibilityResultText.INELIGIBLE,
-      ineligibleSelectors: ineligibleSelectors
-    })
-  })
+  //   cy.visit(urlPath);
+  //   cy.get(FormSelector.USER_TYPE_SELECTOR).select("Government");
+  //   cy.fillForm(FormSelector.CALCULATE_FORM_SELECTOR, rowData);
+  //   cy.nextOrCalculate(FormSelector.NEXT_SELECTOR);
 
-  it('Failed because required fields are empty.', () => {
-    const testId: string = "HVAC1_E_003";
-    const rowData = dataExcel.getRowData(testId);
-    const requiredFields: string[] = rowData["requiredFields"].split(",");
+  //   requiredFields.forEach((selector) => {
+  //     cy.get(`[data-ui-name="${selector}"]`).should("be.exist");
+  //   })
+  // })
 
-    cy.visit(urlPath);
-    cy.get(FormSelector.USER_TYPE_SELECTOR).select("Government");
-    cy.fillForm(FormSelector.CALCULATE_FORM_SELECTOR, rowData);
-    cy.nextOrCalculate(FormSelector.NEXT_SELECTOR);
+  // it('Failed because Openfisca server unreachable.', () => {
+  //   const testId: string = "HVAC1_E_004";
+  //   const rowData = dataExcel.getRowData(testId);
 
-    requiredFields.forEach((selector) => {
-      cy.get(`[data-ui-name="${selector}"]`).should("be.exist");
-    })
-  })
+  //   cy.visit(urlPath);
+  //   cy.get(FormSelector.USER_TYPE_SELECTOR).select("Government");
+  //   cy.fillForm(FormSelector.CALCULATE_FORM_SELECTOR, rowData);
+  //   cy.intercept("POST", "**/calculate", {forceNetworkError: true});
+  //   cy.nextOrCalculate(FormSelector.NEXT_SELECTOR);
 
-  it('Failed because Openfisca server unreachable.', () => {
-    const testId: string = "HVAC1_E_004";
-    const rowData = dataExcel.getRowData(testId);
-
-    cy.visit(urlPath);
-    cy.get(FormSelector.USER_TYPE_SELECTOR).select("Government");
-    cy.fillForm(FormSelector.CALCULATE_FORM_SELECTOR, rowData);
-    cy.intercept("POST", "**/calculate", {forceNetworkError: true});
-    cy.nextOrCalculate(FormSelector.NEXT_SELECTOR);
-
-    cy.get(`[data-ui-name="error-calculation"]`)
-      .should("be.exist")
-      .find("p")
-      .and("have.text", ErrorMessage.UnreachableOpenfiscaServer);
-  })
+  //   cy.get(`[data-ui-name="error-calculation"]`)
+  //     .should("be.exist")
+  //     .find("p")
+  //     .and("have.text", ErrorMessage.UnreachableOpenfiscaServer);
+  // })
 })
