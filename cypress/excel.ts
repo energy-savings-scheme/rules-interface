@@ -2,8 +2,8 @@ import { WorkBook, WorkSheet, utils } from "xlsx";
 
 
 enum SheetName {
-  RES_AC_CERT_SHEET = "HVAC1_C",
-  RES_AC_ELIG_SHEET = "HVAC1_E"
+  HVAC1_C = "HVAC1_C",
+  HVAC1_E = "HVAC1_E"
 }
 
 const EXCEL_PATH = "cypress/fixtures/data.xlsx"
