@@ -10,8 +10,8 @@ import {
   URLPath
 } from "@cypress/enum";
 
-describe('Calculate ESC and PRC certificate.', () => {
-  const urlPath: string = URLPath.RES_AIR_CONDITIONER_CERT;
+describe('Calculate HVAC1 ESC and PRC certificate.', () => {
+  const urlPath: string = URLPath.HVAC1_C;
   const resultSelector = [
     ResultSelector.ESC_CERTIFICATE_SELECTOR,
     ResultSelector.PRC_CERTIFICATE_SELECTOR,
@@ -23,11 +23,11 @@ describe('Calculate ESC and PRC certificate.', () => {
   before(() => {
     cy.task<WorkBook>("getDataExcel", EXCEL_PATH)
     .then((workbook) => {
-      dataExcel = new DataExcel(workbook, SheetName.RES_AC_CERT_SHEET);
+      dataExcel = new DataExcel(workbook, SheetName.HVAC1_C);
     })
   })
 
-  it('Successfully calculate certificate.', () => {
+  it('Calculate certificate based on Excel sheet.', () => {
     const rowsData = dataExcel.getData();
 
     rowsData.forEach((rowData, index) => {

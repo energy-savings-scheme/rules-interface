@@ -40,8 +40,8 @@ enum PostcodeState {
 }
 
 enum URLPath {
-  RES_AIR_CONDITIONER_CERT = "#/residential-ac-estimator",
-  RES_AIR_CONDITIONER_ELIG = "#/residential-ac-activity-requirements"
+  HVAC1_C = "#/residential-ac-estimator",
+  HVAC1_E = "#/residential-ac-activity-requirements"
 }
 
 

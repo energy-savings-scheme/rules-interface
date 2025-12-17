@@ -8,14 +8,14 @@ import {
   URLPath
 } from "@cypress/enum";
 
-describe('Calculate Eligibility.', () => {
-  const urlPath:string = URLPath.RES_AIR_CONDITIONER_ELIG;
+describe('Calculate HVAC1 Eligibility.', () => {
+  const urlPath:string = URLPath.HVAC1_E;
   let dataExcel: DataExcel;
 
   before(() => {
     cy.task<WorkBook>("getDataExcel", EXCEL_PATH)
     .then((workbook) => {
-      dataExcel = new DataExcel(workbook, SheetName.RES_AC_ELIG_SHEET);
+      dataExcel = new DataExcel(workbook, SheetName.HVAC1_E);
     })
   })
 
