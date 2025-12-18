@@ -353,6 +353,7 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
                 <Button
                   style={{ float: 'left' }}
                   as="dark-outline-solid"
+                  data-ui-name="recalculate"
                   onClick={(e) => {
                     setFlow('backward');
                     setStepNumber(stepNumber - 2);

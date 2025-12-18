@@ -382,7 +382,7 @@ export default function CertificateEstimatorResidentialAC(props) {
           {stepNumber === 3 && calculationError && calculationError2 && showError && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
-            } id="error-calculation" className="nsw-col-lg-10" tabIndex="-1">
+            } id="error-calculation" className="nsw-col-lg-10" tabIndex="-1" data-ui-name="error-calculation">
               <p>We are experiencing technical difficulties right now, please try again later.</p>
             </Alert>
           )}
@@ -518,7 +518,7 @@ export default function CertificateEstimatorResidentialAC(props) {
           {stepNumber === 1 && !registryData && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
-            } id="error-data-registry" className="nsw-col-lg-10" tabIndex="-1">
+            } id="error-data-registry" className="nsw-col-lg-10" tabIndex="-1" data-ui-name="error-data-registry">
               <p>Unable to load data from the product registry. Please try again later.</p>
             </Alert>
           )}
@@ -578,7 +578,7 @@ export default function CertificateEstimatorResidentialAC(props) {
           {stepNumber === 1 && showPostcodeError && postcode.length >= 4 && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "The postcode is not valid in NSW"}}/>
-            } id="error-postcode" className="nsw-col-lg-10" tabIndex="-1">
+            } id="error-postcode" className="nsw-col-lg-10" tabIndex="-1" data-ui-name="error-postcode">
               <p>Please check your postcode and try again.</p>
             </Alert>
           )}
