@@ -31,6 +31,7 @@ export const RadioItem = ({
       className="nsw-form__radio-input"
       type="radio"
       name={htmlId}
+      data-ui-name={htmlId}
       // aria-invalid={status === 'invalid' && as != 'group' ? 'true' : ''}
       aria-describedby={status === 'invalid' ? `helper${htmlId} error${htmlId}` : `helper${htmlId}`}
       id={uniqueID}
