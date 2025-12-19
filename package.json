@@ -13,7 +13,6 @@
     "bootstrap": "^5.2.2",
     "caniuse-lite": "1.0.30001632",
     "cors": "^2.8.5",
-    "cypress-network-idle": "^1.15.0",
     "date-fns": "^2.29.3",
     "moment": "^2.29.1",
     "nsw-design-system": "^3.2.4",
@@ -28,17 +27,14 @@
     "react-scripts": "4.0.2",
     "sass": "^1.32.8",
     "tokenize": "^0.0.3",
-    "web-vitals": "^1.0.1",
-    "xlsx": "^0.18.5"
+    "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dist-build": "ts-node ./scripts/dist-build.ts",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "dist-build": "ts-node ./scripts/dist-build.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -60,8 +56,6 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "cypress": "^15.7.1",
-    "dotenv": "^17.2.3",
     "husky": "^3.1.0",
     "prettier": "2.2.1",
     "pretty-quick": "^3.1.0",

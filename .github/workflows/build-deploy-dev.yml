@@ -75,3 +75,99 @@ jobs:
           source-path: build
           cleanup: false
           sas-url: ${{ secrets.DEPLOY_SAS_URL_DEV }}
+
+  test:
+    name: Run automated testing with Cypress
+    needs: ["build-and-deploy"]
+    runs-on: ubuntu-latest
+
+    container:
+      image: cypress/browsers:node-24.12.0-chrome-143
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        working-directory: cypress
+        run: npm ci
+
+      - name: Run Cypress
+        working-directory: cypress
+        env:
+          CYPRESS_BASE_URL: "https://auesfgracessstgdev.z8.web.core.windows.net"
+        run: npx cypress run --browser chrome
+      
+      - name: "Cypress Upload Screenshots"
+        uses: "actions/upload-artifact@v4"
+        with:
+          name: "cypress-screenshots"
+          path: "./cypress/test/screenshots"
+          overwrite: true
+        if: always()
+
+      - name: "Cypress Upload Videos"
+        uses: "actions/upload-artifact@v4"
+        with:
+          name: "cypress-videos"
+          path: "./cypress/test/videos"
+          overwrite: true
+        if: always()
+  
+  # test:
+  #   name: Run automated testing with cypress
+  #   needs: ["build-and-deploy"]
+  #   runs-on: "ubuntu-latest"
+  #   container: 
+  #     image: "cypress/browsers:node-24.12.0-chrome-143.0.7499.109-1-ff-146.0-edge-143.0.3650.80-1"
+    
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+
+  #     - name: Install Cypress dependencies
+  #       working-directory: cypress
+  #       run: |
+  #         npm ci
+
+  #     - name: Cypress run
+  #       uses: cypress-io/github-action@v6
+  #       working-directory: cypress
+  #       with:
+  #         start: npm run test
+  #         browser: chrome
+    
+      # - name: "Setup node"
+      #   uses: "actions/setup-node@v3"
+      #   with:
+      #     node-version-file: ".nvmrc"
+      #   if: always()
+      # - name: "Install tools"
+      #   run: |
+      #     # Install packages
+      #     npm ci
+      # - name: "Cypress Run All Tests"
+      #   uses: "cypress-io/github-action@v5"
+      #   with:
+      #     install: false
+      #     working-directory: "./frontend-next"
+      #     browser: "chrome"
+      #     config: "pageLoadTimeout=100000"
+      #   env:
+      #     CYPRESS_BASE_URL: "${{ needs.deploy.outputs.VERCEL_DEPLOYMENT_URL }}"
+      #     CYPRESS_ENABLE_TEST_ISR: "true"
+      #     CYPRESS_DRUPAL_REVALIDATE_SECRET: "${{ secrets.CYPRESS_DRUPAL_REVALIDATE_SECRET }}"
+      #   if: always()
+      # - name: "Cypress Upload Screenshots"
+      #   uses: "actions/upload-artifact@v4"
+      #   with:
+      #     name: "cypress-screenshots"
+      #     path: "./frontend-next/cypress/screenshots"
+      #     overwrite: true
+      #   if: always()
+      # - name: "Cypress Upload Videos"
+      #   uses: "actions/upload-artifact@v4"
+      #   with:
+      #     name: "cypress-videos"
+      #     path: "./frontend-next/cypress/videos"
+      #     overwrite: true
+      #   if: always()

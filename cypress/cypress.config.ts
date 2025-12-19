@@ -9,6 +9,14 @@ export default defineConfig({
     baseUrl: process.env.CYPRESS_BASE_URL,
     viewportWidth: 960,
     viewportHeight: 1280,
+    fileServerFolder: "test",
+    downloadsFolder: "test/downloads",
+    fixturesFolder: "test/fixtures",
+    screenshotsFolder: "test/screenshots",
+    videosFolder: "test/videos",
+    supportFile: "test/support/e2e.{js,jsx,ts,tsx}",
+    specPattern: "test/e2e/**/*.cy.{js,jsx,ts,tsx}",
+    video: true,
     setupNodeEvents(on, config) {
       // implement node event listeners here
       on("task", {

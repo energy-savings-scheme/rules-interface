@@ -6,7 +6,7 @@ enum SheetName {
   HVAC1_E = "HVAC1_E"
 }
 
-const EXCEL_PATH = "cypress/fixtures/data.xlsx"
+const EXCEL_PATH = "test/fixtures/data.xlsx"
 
 class DataExcel {
   workbook: WorkBook
