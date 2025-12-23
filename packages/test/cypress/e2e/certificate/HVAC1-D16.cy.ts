@@ -1,14 +1,14 @@
-import {WorkBook} from "xlsx";
+import { WorkBook } from 'xlsx';
 
-import {DataExcel, SheetName, EXCEL_PATH} from "@cypress/excel"
-import { 
-  FormSelector, 
-  ErrorSelector, 
-  ResultSelector, 
+import { DataExcel, SheetName, EXCEL_PATH } from 'cypress/excel';
+import {
+  FormSelector,
+  ErrorSelector,
+  ResultSelector,
   PostcodeState,
   ErrorMessage,
-  URLPath
-} from "@cypress/enum";
+  URLPath,
+} from 'cypress/enum';
 
 describe('Calculate HVAC1 ESC and PRC certificate.', () => {
   const urlPath: string = URLPath.HVAC1_C;
@@ -16,23 +16,22 @@ describe('Calculate HVAC1 ESC and PRC certificate.', () => {
     ResultSelector.ESC_CERTIFICATE_SELECTOR,
     ResultSelector.PRC_CERTIFICATE_SELECTOR,
     ResultSelector.ENERGY_SAVING_SELECTOR,
-    ResultSelector.PEAK_DEMAND_REDUCTION_SELECTOR
-  ]
+    ResultSelector.PEAK_DEMAND_REDUCTION_SELECTOR,
+  ];
   let dataExcel: DataExcel;
 
   before(() => {
-    cy.task<WorkBook>("getDataExcel", EXCEL_PATH)
-    .then((workbook) => {
+    cy.task<WorkBook>('getDataExcel', EXCEL_PATH).then((workbook) => {
       dataExcel = new DataExcel(workbook, SheetName.HVAC1_C);
-    })
-  })
+    });
+  });
 
   it('Calculate certificate based on Excel sheet.', () => {
     const rowsData = dataExcel.getData();
 
     rowsData.forEach((rowData, index) => {
       cy.calculate({
-        id: rowData["tid"],
+        id: rowData['tid'],
         uri: urlPath,
         initialFormSelector: FormSelector.INITIAL_FORM_SELECTOR,
         calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
@@ -40,16 +39,16 @@ describe('Calculate HVAC1 ESC and PRC certificate.', () => {
         data: rowData,
         resultSelector: resultSelector,
         interceptPostcodeAPI: {
-          postcode: rowData["postcode"],
-          state: PostcodeState.VALID
-        }
-      })
+          postcode: rowData['postcode'],
+          state: PostcodeState.VALID,
+        },
+      });
 
       if (index <= rowsData.length - 1) {
-        cy.get(FormSelector.RECALCULATE_SELECTOR).should("be.exist").click();
+        cy.get(FormSelector.RECALCULATE_SELECTOR).should('be.exist').click();
       }
-    })
-  })
+    });
+  });
 
   // it('Failed because of invalid postcode.', () => {
   //   const testId: string = "HVAC1_C_004";
@@ -78,7 +77,7 @@ describe('Calculate HVAC1 ESC and PRC certificate.', () => {
   //   const rowData = dataExcel.getRowData(testId);
 
   //   cy.intercept("GET", "**/models", {forceNetworkError: true});
-    
+
   //   cy.visitAndExpectRegistry(urlPath);
   //   cy.fillForm(FormSelector.INITIAL_FORM_SELECTOR, rowData);
   //   cy.get(ErrorSelector.PRODUCT_REGISTRY_API_ERROR)
@@ -97,7 +96,7 @@ describe('Calculate HVAC1 ESC and PRC certificate.', () => {
   //       state: PostcodeState.VALID
   //     })
   //   }).as('getPostcodeResponse');
-    
+
   //   cy.visitAndExpectRegistry(urlPath);
   //   cy.fillForm(FormSelector.INITIAL_FORM_SELECTOR, rowData);
   //   cy.waitForNetworkIdle(1000);
@@ -135,4 +134,4 @@ describe('Calculate HVAC1 ESC and PRC certificate.', () => {
   //     cy.get(`[data-ui-name="${field}"]`).should("be.exist");
   //   })
   // })
-})
+});

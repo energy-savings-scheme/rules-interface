@@ -38,6 +38,6 @@ src/fullList.json
 yarn.lock
 
 # Cypress
-cypress/node_modules/
-cypress/test/screenshots
-cypress/test/videos
+packages/test/node_modules/
+packages/test/cypress/screenshots
+packages/test/cypress/videos
