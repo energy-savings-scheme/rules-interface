@@ -26,9 +26,9 @@ jobs:
           echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> .env
 
       - name: Start app with Docker Compose
+        working-directory: ./
         run: docker compose up -d
 
-      # switch 
       - name: Setup Node for Cypress
         uses: actions/setup-node@v6
         with:
