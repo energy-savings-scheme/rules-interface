@@ -198,7 +198,7 @@ export default function ActivityRequirementsResAC(props) {
                   htmlId="user-type"
                   status={isUserTypeValid ? '' : 'invalid'}
                   statusText={userTypeError}
-                  style={{marginBottom: '4%'}}
+                  style={{ marginBottom: '4%' }}
                 >
                   <Select
                     htmlId="user-type"

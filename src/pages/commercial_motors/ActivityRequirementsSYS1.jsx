@@ -13,11 +13,11 @@ import {
   updateEstimatorFormAnalytics,
   updateFeedbackFormAnalytics,
   updateSegmentCaptureAnalytics,
-  clearSearchCaptureAnalytics
+  clearSearchCaptureAnalytics,
 } from 'lib/analytics';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
-import {BASE_COMMERCIAL_MOTOR_ELIGIBILITY_ANALYTICS_DATA} from 'constant/base-analytics-data';
+import { BASE_COMMERCIAL_MOTOR_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
 
 export default function ActivityRequirementsSYS1(props) {
   const { entities, variables, loading, setLoading } = props;
@@ -176,7 +176,7 @@ export default function ActivityRequirementsSYS1(props) {
                   htmlId="user-type"
                   status={isUserTypeValid ? '' : 'invalid'}
                   statusText={userTypeError}
-                  style={{marginBottom: '4%'}}
+                  style={{ marginBottom: '4%' }}
                 >
                   <Select
                     htmlId="user-type"

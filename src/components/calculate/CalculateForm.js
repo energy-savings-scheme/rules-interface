@@ -78,7 +78,7 @@ export default function CalculateForm(props) {
     setAnnualEnergySavingsNumber,
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
-    onValidateUserType
+    onValidateUserType,
   } = props;
 
   var { formValues } = props;
@@ -160,16 +160,16 @@ export default function CalculateForm(props) {
 
       // send error message to parent component
       // to update user type field with error state.
-      if (typeof onValidateUserType == "function") {
+      if (typeof onValidateUserType == 'function') {
         onValidateUserType(userTypeValid, userTypeErrorMessage);
       }
     }
 
-    const validatedFormValues = formValues.map(item => {
+    const validatedFormValues = formValues.map((item) => {
       // Exclude fields that are not displayed in the UI
       // and fields with value type boolean
       // which is radio button, because by default all radio button has default value.
-      if (!item.hide && item.value_type.toLowerCase() != "boolean") {
+      if (!item.hide && item.value_type.toLowerCase() != 'boolean') {
         const element = document.querySelector(`#${item.name}`);
         if (!element) {
           return item;
@@ -177,7 +177,7 @@ export default function CalculateForm(props) {
 
         // trigger input field validation
         // display error if input field didn't pass the validation
-        if (!element.checkValidity()) { 
+        if (!element.checkValidity()) {
           item.invalid = true;
           item.invalidText = element.validationMessage;
           invalidElements.push(element);
@@ -189,14 +189,14 @@ export default function CalculateForm(props) {
 
       return item;
     });
-    
+
     if (invalidElements.length > 0) {
       setFormValues(validatedFormValues);
       focusElement(invalidElements[0].id);
     }
 
     return invalidElements.length == 0;
-  }
+  };
 
   const handleCalculate = (e) => {
     e.preventDefault();
@@ -417,22 +417,22 @@ export default function CalculateForm(props) {
                   } else {
                     setShowPostcodeError(true);
                     setShowNoResponsePostcodeError(false);
-                    focusElement("error-postcode");
+                    focusElement('error-postcode');
                   }
                 } else if (persons.status === '200' && persons.code === '404') {
                   setShowPostcodeError(true);
                   setShowNoResponsePostcodeError(false);
-                  focusElement("error-postcode");
+                  focusElement('error-postcode');
                 } else if (persons.status !== '200') {
                   setShowPostcodeError(false);
                   setShowNoResponsePostcodeError(true);
-                  focusElement("error-postcode-response");
+                  focusElement('error-postcode-response');
                 }
               })
               .catch((err) => {
                 console.log(err);
                 setShowNoResponsePostcodeError(true);
-                focusElement("error-postcode-response");
+                focusElement('error-postcode-response');
               });
           }
         }
@@ -501,17 +501,27 @@ export default function CalculateForm(props) {
       {props.children}
 
       {stepNumber === 1 && showPostcodeError && (
-        <Alert as="error" customTitle={
-          <h3 dangerouslySetInnerHTML={{__html: "The postcode is not valid in NSW"}}/>
-        } id="error-postcode" className="nsw-col-lg-10" tabIndex="-1">
+        <Alert
+          as="error"
+          customTitle={
+            <h3 dangerouslySetInnerHTML={{ __html: 'The postcode is not valid in NSW' }} />
+          }
+          id="error-postcode"
+          className="nsw-col-lg-10"
+          tabIndex="-1"
+        >
           <p>Please check your postcode and try again.</p>
         </Alert>
       )}
 
       {stepNumber === 1 && showNoResponsePostcodeError && (
-        <Alert as="error" customTitle={
-          <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
-        } id="error-postcode-response" className="nsw-col-lg-10" tabIndex="-1">
+        <Alert
+          as="error"
+          customTitle={<h3 dangerouslySetInnerHTML={{ __html: 'Sorry!' }} />}
+          id="error-postcode-response"
+          className="nsw-col-lg-10"
+          tabIndex="-1"
+        >
           <p>
             We are experiencing technical difficulties validating the postcode, please try again
             later.

@@ -4,8 +4,8 @@ import { FormGroup, TextInput } from 'nsw-ds-react/forms';
 export default function FormTextInput(props) {
   const { formItem, setItemValue } = props;
   const defaultStyle = {
-    marginBottom: '4%'
-  }
+    marginBottom: '4%',
+  };
 
   // Set the step for float values. Modify '0.01' to the desired decimal precision.
   // const stepValue = formItem.value_type === 'Float' ? '0.01' : '1';
@@ -18,7 +18,7 @@ export default function FormTextInput(props) {
       error="Invalid value!" // error text if invalid
       status={formItem.invalid ? 'invalid' : ''} // if `true` renders invalid formatting
       statusText={formItem.invalidText ? formItem.invalidText : ''}
-      style={formItem.hide ? {...defaultStyle, display: 'none'} : defaultStyle}
+      style={formItem.hide ? { ...defaultStyle, display: 'none' } : defaultStyle}
     >
       <TextInput
         htmlId={formItem.name}

@@ -76,7 +76,7 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('nextOrCalculate', (selector: string) => {
-  cy.get(selector).should("be.exist").click();
+  cy.get(selector).should('be.exist').click();
 });
 
 Cypress.Commands.add('calculate', (input: CalculateFormInputType) => {
@@ -168,6 +168,5 @@ Cypress.Commands.add('interceptPostcodeAPI', (params: InterceptPostcodeAPIOption
     });
   });
 });
-
 
 export {};

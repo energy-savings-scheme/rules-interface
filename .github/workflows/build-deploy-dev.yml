@@ -17,6 +17,7 @@ env:
 jobs:
   test:
     name: Run Test
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -64,6 +65,7 @@ jobs:
 
   build-and-deploy:
     name: Build and deploy
+    if: github.event_name == 'push'
     needs: test
     runs-on: ubuntu-latest
 

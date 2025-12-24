@@ -134,7 +134,7 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
               helper="Select the option that best describes you"
               status={isUserTypeValid ? '' : 'invalid'}
               statusText={userTypeError}
-              style={{marginBottom: '4%'}}
+              style={{ marginBottom: '4%' }}
             >
               <Select
                 htmlId="user-type"
@@ -197,9 +197,12 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
           <Fragment>
             <InfoBox postcode={postcode} />
             {
-              <Alert as="info" customTitle={
-                <h3 dangerouslySetInnerHTML={{__html: "ESCs"}}/>
-              } className="nsw-col-lg-10" style={{ marginBottom: '7%' }}>
+              <Alert
+                as="info"
+                customTitle={<h3 dangerouslySetInnerHTML={{ __html: 'ESCs' }} />}
+                className="nsw-col-lg-10"
+                style={{ marginBottom: '7%' }}
+              >
                 <p>
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
@@ -234,9 +237,13 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
 
         {(stepNumber === 2 && calculationError === true) ||
           (stepNumber === 2 && calculationError2 === true && (
-            <Alert as="error" customTitle={
-              <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
-            } className="nsw-col-lg-10">
+            <Alert
+              as="error"
+              customTitle={
+                <h3 dangerouslySetInnerHTML={{ __html: 'Sorry! An error has occurred.' }} />
+              }
+              className="nsw-col-lg-10"
+            >
               <p>An error occurred during calculation. Try re-running the calculation</p>
             </Alert>
           ))}
