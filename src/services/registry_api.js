@@ -216,15 +216,15 @@ function getCertificatePrice() {
   return RegistryApiBase({
     url: '/certificate-price',
     method: 'GET',
-  })
+  });
 }
 
 function sendToGoogleAnalytics(payload) {
   return RegistryApiBase({
     url: '/collect-data',
     method: 'POST',
-    data: payload
-  })
+    data: payload,
+  });
 }
 
 const RegistryApi = {
@@ -258,7 +258,7 @@ const RegistryApi = {
   getResidentialSolarBatteryModels,
   getResidentialSolarBatteryMetadata,
   getCertificatePrice,
-  sendToGoogleAnalytics
+  sendToGoogleAnalytics,
 };
 
 export default RegistryApi;

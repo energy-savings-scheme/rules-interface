@@ -193,7 +193,7 @@ export default function ActivityRequirementsD19(props) {
                   htmlId="user-type"
                   status={isUserTypeValid ? '' : 'invalid'}
                   statusText={userTypeError}
-                  style={{marginBottom: '4%'}}
+                  style={{ marginBottom: '4%' }}
                 >
                   <Select
                     htmlId="user-type"

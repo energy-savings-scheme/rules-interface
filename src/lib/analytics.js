@@ -1,14 +1,13 @@
 import moment from 'moment';
 import RegistryApi from 'services/registry_api';
-import { getCookie } from 'lib/helper'
-
+import { getCookie } from 'lib/helper';
 
 class FormAnalytics {
-  measurementId = 'G-8DV3J4W84B'
+  measurementId = 'G-8DV3J4W84B';
 
   constructor(event) {
-    this.event = event
-    this.values = {}
+    this.event = event;
+    this.values = {};
   }
 
   gtag() {
@@ -17,11 +16,11 @@ class FormAnalytics {
 
   async getGTMValue(measurementId, propName) {
     if (window.dataLayer === undefined) {
-      return null
+      return null;
     }
 
     return new Promise((resolve) => {
-      this.gtag('get', measurementId, propName, (v) => resolve(v || null))
+      this.gtag('get', measurementId, propName, (v) => resolve(v || null));
     });
   }
   async getGTMClientId() {
@@ -92,7 +91,7 @@ export function clearSearchCaptureAnalytics() {
 
 function analyticIsDisabled() {
   let isDisabled = false;
-  const cookie = getCookie("analyticDisabled");
+  const cookie = getCookie('analyticDisabled');
   if (cookie && cookie == 'true') {
     isDisabled = true;
   }
@@ -102,7 +101,7 @@ function analyticIsDisabled() {
 
 export async function submitEstimatorFormAnalytics() {
   if (analyticIsDisabled()) {
-    return 
+    return;
   }
 
   try {
@@ -112,17 +111,17 @@ export async function submitEstimatorFormAnalytics() {
       session_id: await estimatorFormAnalytics.getGTMSessionId(),
       params: {
         ...estimatorFormAnalytics.values,
-        submittedAt: moment().utc().format()
-      }
-    })
-  } catch(err) {
-    console.log(err.data.error)
+        submittedAt: moment().utc().format(),
+      },
+    });
+  } catch (err) {
+    console.log(err.data.error);
   }
 }
 
 export async function submitFeedbackFormAnalytics(isHelpful) {
   if (analyticIsDisabled()) {
-    return 
+    return;
   }
 
   try {
@@ -133,10 +132,10 @@ export async function submitFeedbackFormAnalytics(isHelpful) {
       params: {
         ...feedbackFormAnalytics.values,
         sf_isHelpful: isHelpful,
-        submittedAt: moment().utc().format()
-      }
-    })
+        submittedAt: moment().utc().format(),
+      },
+    });
   } catch (err) {
-    console.log(err.data.error)
+    console.log(err.data.error);
   }
 }
