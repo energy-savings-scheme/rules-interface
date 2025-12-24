@@ -26,7 +26,7 @@ jobs:
           echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> .env
 
       - name: Start app with Docker Compose
-        working-directory: ./
+        working-directory: .
         run: docker compose up -d
 
       - name: Setup Node for Cypress
@@ -53,6 +53,11 @@ jobs:
           browser: chrome
         env:
           CYPRESS_BASE_URL: http://localhost:3000
+      
+      - name: Tear down docker
+        if: always()
+        run: docker compose down
+        working-directory: .
 
       # - uses: actions/checkout@v4
 

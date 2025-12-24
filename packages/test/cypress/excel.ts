@@ -22,10 +22,8 @@ class DataExcel {
   }
 
   getData(): Record<string, any>[] {
-    console.log('GET DATA');
     const worksheet = this.workbook.Sheets[this.sheetName];
     const headers = this.getHeaders(worksheet);
-    console.log(`HEADERS: ${headers}`)
     const rowsData = utils.sheet_to_json<Record<string, any>[]>(worksheet, {
       header: headers,
       range: 2,
