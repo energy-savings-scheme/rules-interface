@@ -35,7 +35,6 @@ src/fullList.json
 # IDE tools
 .vscode
 .idea
-yarn.lock
 
 # Cypress
 packages/test/node_modules/
