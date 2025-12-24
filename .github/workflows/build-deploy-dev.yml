@@ -2,6 +2,9 @@ name: Build and Deploy to DEV
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches:
+      - nonprod
   push:
     branches:
       - nonprod
@@ -53,137 +56,73 @@ jobs:
           browser: chrome
         env:
           CYPRESS_BASE_URL: http://localhost:3000
-      
+
       - name: Tear down docker
         if: always()
         run: docker compose down
         working-directory: .
 
-      # - uses: actions/checkout@v4
+  build-and-deploy:
+    name: Build and deploy
+    needs: test
+    runs-on: ubuntu-latest
 
-      # - name: Install dependencies
-      #   working-directory: packages/test
-      #   run: npm ci
+    steps:
+      - uses: actions/checkout@v2
 
-      # - name: Run Cypress
-      #   working-directory: packages/test
-      #   env:
-      #     CYPRESS_BASE_URL: 'https://auesfgracessstgdev.z8.web.core.windows.net'
-      #   run: npx cypress run --browser chrome
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
 
-      # - name: 'Cypress Upload Screenshots'
-      #   uses: 'actions/upload-artifact@v4'
-      #   with:
-      #     name: 'cypress-screenshots'
-      #     path: './packages/test/cypress/screenshots'
-      #     overwrite: true
-      #   if: always()
+      - name: Install Yarn
+        run: npm install -g yarn
 
-      # - name: 'Cypress Upload Videos'
-      #   uses: 'actions/upload-artifact@v4'
-      #   with:
-      #     name: 'cypress-videos'
-      #     path: './packages/test/cypress/videos'
-      #     overwrite: true
-      #   if: always()
+      - name: Install tools
+        run: |
+          if ! command -v azcopy &> /dev/null
+          then
+            echo "azcopy not found, installing..."
+            curl -L https://aka.ms/downloadazcopy-v10-linux | \
+            sudo tar --strip-components=1 -C /usr/local/bin/ --no-same-owner --exclude=*.txt -xzvf -
+            sudo ln -s /usr/local/bin/azcopy /usr/local/bin/azcopy10
+          fi
 
-  # build-and-deploy:
-  #   name: Build and deploy
-  #   runs-on: ubuntu-latest
+      - name: Build website
+        run: |
+          # Install all npm packages
+          YARN_IGNORE_ENGINES=true yarn install --frozen-lockfile
 
-  #   steps:
-  #     - uses: actions/checkout@v2
+          export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
 
-  #     - name: Install Node.js
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 14.x
+          # Create .env file
+          touch ./.env
+          echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> ./.env
+          echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> ./.env
+          echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> ./.env
 
-  #     - name: Install Yarn
-  #       run: npm install -g yarn
+          # Build all the JS files for the Drupal
+          yarn run dist-build
+          # Build the react pages
+          yarn run build
 
-  #     - name: Install tools
-  #       run: |
-  #         if ! command -v azcopy &> /dev/null
-  #         then
-  #           echo "azcopy not found, installing..."
-  #           curl -L https://aka.ms/downloadazcopy-v10-linux | \
-  #           sudo tar --strip-components=1 -C /usr/local/bin/ --no-same-owner --exclude=*.txt -xzvf -
-  #           sudo ln -s /usr/local/bin/azcopy /usr/local/bin/azcopy10
-  #         fi
+          # Prepare dist files to versioned directory
+          mkdir -p ./build/dist/$REACT_APP_BUILD_VERSION
+          cp -R ./dist/* ./build/dist/$REACT_APP_BUILD_VERSION/
 
-  #     - name: Build website
-  #       run: |
-  #         # Install all npm packages
-  #         YARN_IGNORE_ENGINES=true yarn install --frozen-lockfile
+          # Prepare dist files to latest directory
+          mkdir -p ./build/dist/latest
+          cp -R ./dist/* ./build/dist/latest/
 
-  #         export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
+          # Copy poc acp list folder
+          cp -R ./poc_acp/* ./build/dist/latest/
 
-  #         # Create .env file
-  #         touch ./.env
-  #         echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> ./.env
-  #         echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> ./.env
-  #         echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> ./.env
+          # Copy dynamic loader script
+          cp ./src/dynamic-loader.js ./build/dist/latest/
 
-  #         # Build all the JS files for the Drupal
-  #         yarn run dist-build
-  #         # Build the react pages
-  #         yarn run build
-
-  #         # Prepare dist files to versioned directory
-  #         mkdir -p ./build/dist/$REACT_APP_BUILD_VERSION
-  #         cp -R ./dist/* ./build/dist/$REACT_APP_BUILD_VERSION/
-
-  #         # Prepare dist files to latest directory
-  #         mkdir -p ./build/dist/latest
-  #         cp -R ./dist/* ./build/dist/latest/
-
-  #         # Copy poc acp list folder
-  #         cp -R ./poc_acp/* ./build/dist/latest/
-
-  #         # Copy dynamic loader script
-  #         cp ./src/dynamic-loader.js ./build/dist/latest/
-
-  #     - name: Deploy to Azure
-  #       uses: TravisSpomer/deploy-to-azure-storage@v1.4.0
-  #       with:
-  #         source-path: build
-  #         cleanup: false
-  #         sas-url: ${{ secrets.DEPLOY_SAS_URL_DEV }}
-
-  # test:
-  #   name: Run automated testing with Cypress
-  #   needs: ['build-and-deploy']
-  #   runs-on: ubuntu-latest
-
-  #   container:
-  #     image: cypress/browsers:node-24.12.0-chrome-143.0.7499.109-1-ff-146.0-edge-143.0.3650.80-1
-
-  #   steps:
-  #     - uses: actions/checkout@v4
-
-  #     - name: Install dependencies
-  #       working-directory: packages/test
-  #       run: npm ci
-
-  #     - name: Run Cypress
-  #       working-directory: packages/test
-  #       env:
-  #         CYPRESS_BASE_URL: 'https://auesfgracessstgdev.z8.web.core.windows.net'
-  #       run: npx cypress run --browser chrome
-
-  #     - name: 'Cypress Upload Screenshots'
-  #       uses: 'actions/upload-artifact@v4'
-  #       with:
-  #         name: 'cypress-screenshots'
-  #         path: './packages/test/cypress/screenshots'
-  #         overwrite: true
-  #       if: always()
-
-  #     - name: 'Cypress Upload Videos'
-  #       uses: 'actions/upload-artifact@v4'
-  #       with:
-  #         name: 'cypress-videos'
-  #         path: './packages/test/cypress/videos'
-  #         overwrite: true
-  #       if: always()
+      - name: Deploy to Azure
+        uses: TravisSpomer/deploy-to-azure-storage@v1.4.0
+        with:
+          source-path: build
+          cleanup: false
+          sas-url: ${{ secrets.DEPLOY_SAS_URL_DEV }}
