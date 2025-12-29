@@ -322,7 +322,7 @@ export default function CertificateEstimatorPP(props) {
                   <br></br>
                   <br></br>
                   <br></br>
-                  <div className="nsw-content-block__content">
+                  <div data-ui-name="initial-form" className="nsw-content-block__content">
                     <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
                       <b>Please answer the following questions to calculate your ESCs and PRCs</b>
                     </p>
@@ -334,6 +334,7 @@ export default function CertificateEstimatorPP(props) {
                     >
                       <Select
                         htmlId="user-type"
+                        data-ui-name="user-type"
                         className="nsw-col-lg-6"
                         options={USER_TYPE_OPTIONS}
                         onChange={(e) => {
@@ -352,6 +353,7 @@ export default function CertificateEstimatorPP(props) {
                     >
                       <TextInput
                         htmlId="postcode"
+                        data-ui-name="postcode"
                         className="nsw-col-lg-6"
                         style={{ marginBottom: '1%' }}
                         as="input"
@@ -372,6 +374,7 @@ export default function CertificateEstimatorPP(props) {
                     >
                       <Select
                         htmlId="brand"
+                        data-ui-name="brand"
                         className="nsw-col-lg-6"
                         style={{ marginBottom: '1%' }}
                         options={dropdownOptions}
@@ -392,6 +395,7 @@ export default function CertificateEstimatorPP(props) {
                     >
                       <Select
                         htmlId="model"
+                        data-ui-name="model"
                         className="nsw-col-lg-6"
                         options={dropdownOptionsModels}
                         onChange={(e) => {
@@ -402,7 +406,7 @@ export default function CertificateEstimatorPP(props) {
                       />
                     </FormGroup>
 
-                    <p style={{ fontSize: '14px', marginBottom: '2%' }}>
+                    <p data-ui-name="registry-update" style={{ fontSize: '14px', marginBottom: '2%' }}>
                       {' '}
                       Updated from product registry: {lastModified}
                     </p>
@@ -546,6 +550,7 @@ export default function CertificateEstimatorPP(props) {
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"
+                    data-ui-name="next"
                     onClick={(e) => {
                       validatePostcode(postcode);
                       updateSearchCaptureAnalytics(postcode, selectedBrand, selectedModel);
