@@ -322,7 +322,7 @@ export default function CertificateEstimatorElectricHeatPump(props) {
           {stepNumber === 1 && (
             <div className="nsw-row">
               <div className="nsw-col" style={{ padding: 'inherit' }}>
-                <div className="nsw-content-block">
+                <div data-ui-name="initial-form" className="nsw-content-block">
                   <br></br>
                   <br></br>
                   <div className="nsw-content-block__content">
@@ -337,6 +337,7 @@ export default function CertificateEstimatorElectricHeatPump(props) {
                     >
                       <Select
                         htmlId="user-type"
+                        data-ui-name="user-type"
                         className="nsw-col-lg-6"
                         options={USER_TYPE_OPTIONS}
                         onChange={(e) => {
@@ -355,6 +356,7 @@ export default function CertificateEstimatorElectricHeatPump(props) {
                     >
                       <TextInput
                         htmlId="postcode"
+                        data-ui-name="postcode"
                         className="nsw-col-lg-6"
                         as="input"
                         type="number"
@@ -374,6 +376,7 @@ export default function CertificateEstimatorElectricHeatPump(props) {
                     >
                       <Select
                         htmlId="brand"
+                        data-ui-name="brand"
                         className="nsw-col-lg-6"
                         options={dropdownOptions}
                         onChange={(e) => {
@@ -393,6 +396,7 @@ export default function CertificateEstimatorElectricHeatPump(props) {
                     >
                       <Select
                         htmlId="model"
+                        data-ui-name="model"
                         className="nsw-col-lg-6"
                         options={dropdownOptionsModels}
                         onChange={(e) => {
@@ -403,7 +407,7 @@ export default function CertificateEstimatorElectricHeatPump(props) {
                       />
                     </FormGroup>
 
-                    <p style={{ fontSize: '14px', marginBottom: '2%' }}>
+                    <p data-ui-name="registry-update" style={{ fontSize: '14px', marginBottom: '2%' }}>
                       {' '}
                       Updated from product registry: {lastModified}
                     </p>
@@ -540,6 +544,7 @@ export default function CertificateEstimatorElectricHeatPump(props) {
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"
+                    data-ui-name="next"
                     onClick={(e) => {
                       validatePostcode(postcode);
                       updateSearchCaptureAnalytics(postcode, selectedBrand, selectedModel);

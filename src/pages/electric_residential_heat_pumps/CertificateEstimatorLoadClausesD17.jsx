@@ -241,12 +241,12 @@ export default function CertificateEstimatorLoadClausesD17(props) {
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{formatNumber(Math.floor(calculationResult2))}</b>
+                    <b data-ui-name="esc">{formatNumber(Math.floor(calculationResult2))}</b>
                   </span>
                 </p>
                 <p>
                   Your estimated energy savings over the lifetime of the equipment are{' '}
-                  <b>
+                  <b data-ui-name="aes">
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
@@ -296,6 +296,7 @@ export default function CertificateEstimatorLoadClausesD17(props) {
                 <Button
                   style={{ float: 'left' }}
                   as="dark-outline-solid"
+                  data-ui-name="recalculate"
                   onClick={(e) => {
                     setFlow('backward');
                     setStepNumber(stepNumber - 2);
