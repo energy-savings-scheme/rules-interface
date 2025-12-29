@@ -10,7 +10,7 @@ import {
   URLPath,
 } from 'cypress/enum';
 
-describe('Calculate HVAC1 ESC and PRC certificate.', () => {
+describe('Calculate SYS2/D5 ESC and PRC certificate.', () => {
   const urlPath: string = URLPath.SYS2_D5_C;
   const resultSelector = [
     ResultSelector.ESC_CERTIFICATE_SELECTOR,
