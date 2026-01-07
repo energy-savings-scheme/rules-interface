@@ -70,7 +70,7 @@ export default function SolarBatteryCertificatePage(props) {
                 Estimate certificates
               </h2>
               <div class="nsw-grid">
-                <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
+                {/* <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
                     copy="Install a new residential battery energy storage system"
                     headline="Install a new solar battery"
@@ -83,7 +83,7 @@ export default function SolarBatteryCertificatePage(props) {
                       },
                     ]}
                   />
-                </div>
+                </div> */}
                 <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
                     copy="Sign a residential battery energy storage system up to a demand response contract"
