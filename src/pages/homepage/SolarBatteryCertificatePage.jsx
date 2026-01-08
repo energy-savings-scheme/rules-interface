@@ -86,8 +86,8 @@ export default function SolarBatteryCertificatePage(props) {
                 </div> */}
                 <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
-                    copy="Sign a residential battery energy storage system up to a demand response contract"
-                    headline="Sign a solar battery up to a demand response contract"
+                    copy="Onboard a behind the meter battery with a Virtual Power Plant (VPP)"
+                    headline="Sign a solar battery up to a Virtual Power Plant"
                     image="BESS2.jpg"
                     highlight
                     links={[
