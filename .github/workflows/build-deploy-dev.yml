@@ -17,7 +17,10 @@ env:
 jobs:
   test:
     name: Run Test
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    if: |
+      contains(github.event.pull_request.labels.*.name, 'automated-test') || 
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
