@@ -3,7 +3,7 @@ name: Build and Deploy to DEV
 on:
   workflow_dispatch:
   pull_request:
-    types: [opened, labeled]
+    types: [opened, synchronize, labeled]
     branches:
       - nonprod
   push:
@@ -20,6 +20,7 @@ jobs:
     name: Run Test
     if: |
       contains(github.event.pull_request.labels.*.name, 'automated-test') || 
+      github.event.action == 'opened' ||
       github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
