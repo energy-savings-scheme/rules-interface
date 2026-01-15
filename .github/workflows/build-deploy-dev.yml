@@ -22,7 +22,6 @@ jobs:
       contains(github.event.pull_request.labels.*.name, 'automated-test') || 
       github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch'
-
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
