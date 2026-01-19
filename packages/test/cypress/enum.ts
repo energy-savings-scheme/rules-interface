@@ -35,8 +35,8 @@ enum ErrorMessage {
 }
 
 enum PostcodeState {
-  VALID = 'NSW',
-  INVALID = 'VIC',
+  NSW = 'NSW',
+  VIC = 'VIC',
 }
 
 enum URLPath {
