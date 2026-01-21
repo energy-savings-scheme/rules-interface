@@ -29,7 +29,12 @@ ProgressIndicator.propTypes = {
 };
 
 export const ProgressIndicatorStep = ({ active }) => (
-  <div className={`${active ? 'active' : ''}`} />
+  <div
+    className={`${active ? 'active' : ''}`}
+    style={{
+      ...(!active && { backgroundColor: 'var(--nsw-grey-02)' }),
+    }}
+  />
 );
 
 ProgressIndicatorStep.propTypes = {
