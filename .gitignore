@@ -35,4 +35,8 @@ src/fullList.json
 # IDE tools
 .vscode
 .idea
-yarn.lock
+
+# Cypress
+packages/test/node_modules/
+packages/test/cypress/screenshots
+packages/test/cypress/videos

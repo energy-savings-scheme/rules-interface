@@ -1,4 +1,6 @@
 import moment from 'moment';
+import RegistryApi from 'services/registry_api';
+import { getCookie } from 'lib/helper';
 
 class FormAnalytics {
   constructor(event) {
@@ -65,7 +67,21 @@ export function clearSearchCaptureAnalytics() {
   delete feedbackFormAnalytics.values.sf_model;
 }
 
+function analyticIsDisabled() {
+  let isDisabled = false;
+  const cookie = getCookie('analyticDisabled');
+  if (cookie && cookie == 'true') {
+    isDisabled = true;
+  }
+
+  return isDisabled;
+}
+
 export function submitEstimatorFormAnalytics() {
+  if (analyticIsDisabled()) {
+    return;
+  }
+
   window.dataLayer = window.dataLayer || [];
   const submittedData = {
     ...estimatorFormAnalytics.values,
@@ -77,6 +93,10 @@ export function submitEstimatorFormAnalytics() {
 }
 
 export function submitFeedbackFormAnalytics(isHelpful) {
+  if (analyticIsDisabled()) {
+    return;
+  }
+
   window.dataLayer = window.dataLayer || [];
   const submittedData = {
     ...feedbackFormAnalytics.values,

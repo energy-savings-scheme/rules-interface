@@ -61,6 +61,8 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
   const [dependencies, setDependencies] = useState([]);
+  const [isUserTypeValid, setIsUserTypeValid] = useState(true);
+  const [userTypeError, setUserTypeError] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -121,6 +123,11 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
 
   if (!variable) return null;
 
+  function onValidateUserType(isValid, errorMessage) {
+    setIsUserTypeValid(isValid);
+    setUserTypeError(errorMessage);
+  }
+
   return (
     <div>
       <div style={{ marginTop: 70, marginBottom: 70 }}>
@@ -133,17 +140,20 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
               htmlId="user-type"
               label="What is your interest in the scheme?"
               helper="Select the option that best describes you"
+              status={isUserTypeValid ? '' : 'invalid'}
+              statusText={userTypeError}
+              style={{ marginBottom: '4%' }}
             >
               <Select
                 htmlId="user-type"
                 className="nsw-col-lg-6"
-                style={{ marginBottom: '2.5%' }}
                 options={USER_TYPE_OPTIONS}
                 onChange={(e) => {
                   setUserType(e.target.value);
                   updateSegmentCaptureAnalytics(e.target.value);
                 }}
                 value={userType}
+                status={isUserTypeValid ? '' : 'invalid'}
                 required
               />
             </FormGroup>
@@ -186,17 +196,21 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              onValidateUserType={onValidateUserType}
             />
           </Fragment>
         )}
 
         {stepNumber === 2 && !calculationError && !calculationError2 && (
           <Fragment>
-            <InfoBox postcode={postcode}/>
+            <InfoBox postcode={postcode} />
             {
-              <Alert as="info" customTitle={
-                <h3 dangerouslySetInnerHTML={{__html: "ESCs"}}/>
-              } className="nsw-col-lg-10" style={{ marginBottom: '7%' }}>
+              <Alert
+                as="info"
+                customTitle={<h3 dangerouslySetInnerHTML={{ __html: 'ESCs' }} />}
+                className="nsw-col-lg-10"
+                style={{ marginBottom: '7%' }}
+              >
                 <p>
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
@@ -226,9 +240,12 @@ export default function CertificateEstimatorLoadClausesMotors(props) {
 
         {(stepNumber === 2 && calculationError === true) ||
           (stepNumber === 2 && calculationError2 === true && (
-            <Alert as="error" customTitle={
-              <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
-            }>
+            <Alert
+              as="error"
+              customTitle={
+                <h3 dangerouslySetInnerHTML={{ __html: 'Sorry! An error has occurred.' }} />
+              }
+            >
               <p>An error occurred during calculation. Try re-running the calculation</p>
             </Alert>
           ))}

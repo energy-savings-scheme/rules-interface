@@ -63,6 +63,8 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
   const [dependencies, setDependencies] = useState([]);
+  const [isUserTypeValid, setIsUserTypeValid] = useState(true);
+  const [userTypeError, setUserTypeError] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -72,6 +74,11 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
     const found = arr.some((el) => el.name === obj.name);
     if (!found) arr.push(obj);
     return arr;
+  }
+
+  function onValidateUserType(isValid, errorMessage) {
+    setIsUserTypeValid(isValid);
+    setUserTypeError(errorMessage);
   }
 
   useEffect(() => {
@@ -141,17 +148,20 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
               htmlId="user-type"
               label="What is your interest in the scheme?"
               helper="Select the option that best describes you"
+              status={isUserTypeValid ? '' : 'invalid'}
+              statusText={userTypeError}
+              style={{ marginBottom: '4%' }}
             >
               <Select
                 htmlId="user-type"
                 className="nsw-col-lg-6"
-                style={{ marginBottom: '2.5%' }}
                 options={USER_TYPE_OPTIONS}
                 onChange={(e) => {
                   setUserType(e.target.value);
                   updateSegmentCaptureAnalytics(e.target.value);
                 }}
                 value={userType}
+                status={isUserTypeValid ? '' : 'invalid'}
                 required
               />
             </FormGroup>
@@ -195,19 +205,21 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
               setAnnualEnergySavingsNumber={setAnnualEnergySavingsNumber}
               peakDemandReductionSavingsNumber={peakDemandReductionSavingsNumber}
               setPeakDemandReductionSavingsNumber={setPeakDemandReductionSavingsNumber}
+              onValidateUserType={onValidateUserType}
             />
           </Fragment>
         )}
 
         {stepNumber === 2 && !calculationError && !calculationError2 && (
           <Fragment>
-            <InfoBox 
-              postcode={postcode}
-            />
+            <InfoBox postcode={postcode} />
             {
-              <Alert as="info" customTitle={
-                <h3 dangerouslySetInnerHTML={{__html: "PRCs"}}/>
-              } className="nsw-col-lg-10" style={{ marginBottom: '7%' }}>
+              <Alert
+                as="info"
+                customTitle={<h3 dangerouslySetInnerHTML={{ __html: 'PRCs' }} />}
+                className="nsw-col-lg-10"
+                style={{ marginBottom: '7%' }}
+              >
                 <p>
                   Based on the information provided, your PRCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
@@ -243,9 +255,13 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
 
         {(stepNumber === 2 && calculationError === true) ||
           (stepNumber === 2 && calculationError2 === true && (
-            <Alert as="error" customTitle={
-              <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
-            } className="nsw-col-lg-10">
+            <Alert
+              as="error"
+              customTitle={
+                <h3 dangerouslySetInnerHTML={{ __html: 'Sorry! An error has occurred.' }} />
+              }
+              className="nsw-col-lg-10"
+            >
               <p>An error occurred during calculation. Try re-running the calculation</p>
             </Alert>
           ))}

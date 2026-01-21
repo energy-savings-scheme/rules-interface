@@ -25,6 +25,7 @@ export default function LoadClausesResidentialActivityRequirements(props) {
     setClausesForm,
     showError,
     setShowError,
+    onValidateUserType,
   } = props;
 
   const [variable, setVariable] = useState({}); // all info about variable
@@ -64,9 +65,9 @@ export default function LoadClausesResidentialActivityRequirements(props) {
 
   useEffect(() => {
     if (calculationError && showError) {
-      focusElement("error-calculation");
+      focusElement('error-calculation');
     }
-  }, [calculationError, showError])
+  }, [calculationError, showError]);
 
   const formatResultString = (result) => {
     if (typeof result === 'boolean') {
@@ -91,9 +92,14 @@ export default function LoadClausesResidentialActivityRequirements(props) {
       {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
       {stepNumber === 2 && calculationError && showError && (
-        <Alert as="error" customTitle={
-          <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
-        } id="error-calculation" className="nsw-col-lg-10" tabIndex="-1">
+        <Alert
+          as="error"
+          customTitle={<h3 dangerouslySetInnerHTML={{ __html: 'Sorry!' }} />}
+          id="error-calculation"
+          className="nsw-col-lg-10"
+          data-ui-name="error-calculation"
+          tabIndex="-1"
+        >
           <p>We are experiencing technical difficulties right now, please try again later.</p>
         </Alert>
       )}
@@ -122,6 +128,7 @@ export default function LoadClausesResidentialActivityRequirements(props) {
               setLoading={setLoading}
               showError={showError}
               setShowError={setShowError}
+              onValidateUserType={onValidateUserType}
             />
           </Fragment>
         )}
@@ -130,10 +137,12 @@ export default function LoadClausesResidentialActivityRequirements(props) {
           <Fragment>
             {
               <div style={{ marginTop: '5%' }}>
-                <Alert as="info" customTitle={
-                  <h3 dangerouslySetInnerHTML={{__html: "Activity Requirements"}}/>
-                } className="nsw-col-lg-10">
-                  <p>
+                <Alert
+                  as="info"
+                  customTitle={<h3 dangerouslySetInnerHTML={{ __html: 'Activity Requirements' }} />}
+                  className="nsw-col-lg-10"
+                >
+                  <p data-ui-name="eligibility-result-text">
                     {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                     Based on the information you have provided{' '}
                     {formatResultString(calculationResult)}.
@@ -144,8 +153,13 @@ export default function LoadClausesResidentialActivityRequirements(props) {
                   <Alert
                     as="warning"
                     customTitle={
-                      <h3 dangerouslySetInnerHTML={{__html: "The following answers were ineligible:"}}/>
-                    } className="nsw-col-lg-10"
+                      <h3
+                        dangerouslySetInnerHTML={{
+                          __html: 'The following answers were ineligible:',
+                        }}
+                      />
+                    }
+                    className="nsw-col-lg-10"
                   >
                     <p>
                       {clausesForm.length > 0 &&
@@ -157,7 +171,7 @@ export default function LoadClausesResidentialActivityRequirements(props) {
                               {item.metadata.display_question} :{' '}
                               {formatBooleanToString(item.form_value)}
                             </div>
-                            <p style={{ whiteSpace: 'pre-line' }}>
+                            <p data-ui-name={item.name} style={{ whiteSpace: 'pre-line' }}>
                               {item.metadata.eligibility_clause &&
                                 item.metadata.eligibility_clause.split('<br />').join('\n')}
                             </p>
@@ -189,6 +203,7 @@ export default function LoadClausesResidentialActivityRequirements(props) {
                 <Button
                   style={{ float: 'left' }}
                   as="dark"
+                  data-ui-name="recalculate"
                   onClick={(e) => {
                     setClausesForm([]);
                     setStepNumber(stepNumber - 1);

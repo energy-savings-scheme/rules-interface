@@ -27,6 +27,7 @@ const defHtmlId = nextId();
 export const FormHelper = ({ htmlId, children, className, status, ...attributeOptions }) => (
   <span
     id={`${status === 'invalid' ? 'error' : 'helper'}${htmlId}`}
+    data-ui-name={`${status === 'invalid' ? 'error' : 'helper'}${htmlId}`}
     className={`nsw-form__helper ${status === 'invalid' ? ' nsw-form__helper--error' : ''} ${
       status === 'valid' ? ' nsw-form__helper--valid' : ''
     } ${className}`}
@@ -107,7 +108,7 @@ export const FormGroup = ({
     {helper ? <FormHelper htmlId={htmlId}>{helper}</FormHelper> : ''}
     {React.Children.map(children, (child) => React.cloneElement(child, { error }))}
     {status ? (
-      <FormHelper htmlId={htmlId} status={status}>
+      <FormHelper htmlId={htmlId} status={status} className="nsw-col-lg-6">
         {statusText}
       </FormHelper>
     ) : (
