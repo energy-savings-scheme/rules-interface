@@ -78,7 +78,7 @@ export default function CalculateBlock(props) {
     peakDemandReductionSavingsNumber,
     setPeakDemandReductionSavingsNumber,
     setPostcode,
-    onValidateUserType
+    onValidateUserType,
   } = props;
 
   useEffect(() => {

@@ -2,6 +2,10 @@ name: Build and Deploy to STAGING
 
 on:
   workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, labeled]
+    branches:
+      - master
   push:
     branches:
       - master
@@ -12,8 +16,61 @@ env:
   REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_PROD }}'
 
 jobs:
+  test:
+    name: Run Test
+    if: |
+      contains(github.event.pull_request.labels.*.name, 'run-test') || 
+      github.event.action == 'opened' ||
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create env file from secrets
+        run: |
+          echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> .env
+          echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> .env
+          echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> .env
+
+      - name: Start app with Docker Compose
+        working-directory: .
+        run: docker compose up -d
+
+      - name: Setup Node for Cypress
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      # 1. Lock Chrome version
+      - name: Setup Chrome 143
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 143
+
+      - name: Install Cypress dependencies
+        working-directory: packages/test
+        run: yarn install --frozen-lockfile
+
+      - name: Run Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: packages/test
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 60
+          browser: chrome
+        env:
+          CYPRESS_BASE_URL: http://localhost:3000
+
+      - name: Tear down docker
+        if: always()
+        run: docker compose down
+        working-directory: .
+
   build-and-deploy:
     name: Build and deploy
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     steps:

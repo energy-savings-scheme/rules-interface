@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "..",
+    "baseUrl": ".",
     "paths": {
       "@cypress/*": ["cypress/*"]
     },
@@ -11,15 +11,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
-    "types": [
-      "cypress",
-      "node"
-    ],
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "types": ["cypress", "node"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
@@ -29,10 +22,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
 }

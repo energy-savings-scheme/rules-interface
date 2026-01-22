@@ -4,8 +4,8 @@ import { FormGroup, Select } from 'nsw-ds-react/forms';
 export default function DropDownMenu(props) {
   const { formItem, setItemValue } = props;
   const defaultStyle = {
-    marginBottom: '4%'
-  }
+    marginBottom: '4%',
+  };
 
   const possibleValues = [];
   if (formItem.defaultOption) {
@@ -28,7 +28,7 @@ export default function DropDownMenu(props) {
       error="Invalid value!" // error text if invalid
       status={formItem.invalid ? 'invalid' : ''} // if `true` renders invalid formatting
       statusText={formItem.invalidText ? formItem.invalidText : ''}
-      style={formItem.hide ? {...defaultStyle, display: 'none'} : defaultStyle}
+      style={formItem.hide ? { ...defaultStyle, display: 'none' } : defaultStyle}
     >
       <Select
         htmlId={formItem.name}
