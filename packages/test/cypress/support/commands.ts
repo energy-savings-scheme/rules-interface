@@ -70,6 +70,7 @@ Cypress.Commands.add(
   (fieldNames: string[], data: { [key: string]: any }) => {
     // const result: { [key: string]: string } = {};
     fieldNames.forEach((field) => {
+      cy.task('log', `Validating field ${field}`)
       cy.get(`[data-ui-name="${field}"]`).should('be.exist').and('have.text', data[field]);
     });
   },
@@ -134,6 +135,7 @@ Cypress.Commands.add('calculateEligibility', (input: CalculateEligibilityFormInp
       });
 
       if (variableDetail) {
+        cy.task('log', `Checking ineligible field ${selector}`)
         // replace all <br />, <br> with \n
         // because <br />, <br> element in eligibility clause text from response api
         // are being replaced by \n when rendered in eligibility result page.

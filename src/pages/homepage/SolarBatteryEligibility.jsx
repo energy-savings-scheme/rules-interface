@@ -70,7 +70,7 @@ export default function SolarBatteryEligibilityPage(props) {
                 Check eligibility
               </h2>
               <div class="nsw-grid">
-                <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
+                {/* <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
                     copy="Install a new battery energy storage system "
                     headline="Install a battery "
@@ -83,11 +83,11 @@ export default function SolarBatteryEligibilityPage(props) {
                       },
                     ]}
                   />
-                </div>
+                </div> */}
                 <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
-                    copy="Sign a battery up to a demand response contract, also known as a Virtual Power Plant (VPP) "
-                    headline="Sign a battery up to a demand response contract "
+                    copy="Onboard a behind the meter battery with a Virtual Power Plant (VPP)"
+                    headline="Sign a solar battery up to a Virtual Power Plant"
                     image="BESS2.jpg"
                     highlight
                     links={[
