@@ -7,7 +7,6 @@ import {
   CalculateEligibilityFormInputType,
   CalculateFormInputType,
 } from 'cypress/type';
-import { SheetName } from 'cypress/excel';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
