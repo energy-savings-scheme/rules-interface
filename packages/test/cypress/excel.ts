@@ -7,6 +7,8 @@ enum SheetName {
   D18_C = 'D18_C',
   D19_C = 'D19_C',
   D20_C = 'D20_C',
+  C1_C = 'C1_C',
+  BESS2_C = 'BESS2_C',
   HVAC1_E = 'HVAC1_E',
 }
 

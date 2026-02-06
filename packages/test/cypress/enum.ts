@@ -46,6 +46,8 @@ enum URLPath {
   D18_C = '#/residential-solar-water-heater-estimator',
   D19_C = '#/gas-heat-pumps-estimator',
   D20_C = '#/residential-gas-replacement-solar-water-heater-estimator',
+  C1_C = '#/residential-refrigerators-estimator',
+  BESS2_C = '#/residential-solar-battery-demand-response-certificates',
   HVAC1_E = '#/residential-ac-activity-requirements',
 }
 

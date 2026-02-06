@@ -121,7 +121,7 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
   if (!variable) return null;
 
   return (
-    <div className>
+    <div data-ui-name="initial-form">
       <div style={{ marginTop: 70, marginBottom: 70 }}>
         {stepNumber === 1 && (
           <Fragment>
@@ -138,6 +138,7 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
             >
               <Select
                 htmlId="user-type"
+                data-ui-name="user-type"
                 className="nsw-col-lg-6"
                 options={USER_TYPE_OPTIONS}
                 onChange={(e) => {
@@ -206,12 +207,12 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
                 <p>
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{formatNumber(Math.floor(calculationResult2))}</b>
+                    <b data-ui-name="esc">{formatNumber(Math.floor(calculationResult2))}</b>
                   </span>
                 </p>
                 <p>
                   Your estimated energy savings over the lifetime of the equipment are{' '}
-                  <b>
+                  <b data-ui-name="aes">
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
@@ -266,6 +267,7 @@ export default function CertificateEstimatorLoadClausesRefrigerators(props) {
                 <Button
                   style={{ float: 'left' }}
                   as="dark-outline-solid"
+                  data-ui-name="recalculate"
                   onClick={(e) => {
                     setFlow('backward');
                     setStepNumber(stepNumber - 1);

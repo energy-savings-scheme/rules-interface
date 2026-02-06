@@ -1,26 +1,19 @@
 import { WorkBook } from 'xlsx';
 
 import { DataExcel, SheetName, EXCEL_PATH } from 'cypress/excel';
-import {
-  FormSelector,
-  ErrorSelector,
-  ResultSelector,
-  PostcodeState,
-  ErrorMessage,
-  URLPath,
-} from 'cypress/enum';
+import { FormSelector, ResultSelector, PostcodeState, URLPath } from 'cypress/enum';
 
-describe('Calculate D18 ESC certificate.', () => {
-  const urlPath: string = URLPath.D18_C;
+describe('Calculate BESS2 PRC certificate.', () => {
+  const urlPath: string = URLPath.BESS2_C;
   const resultSelector = [
-    ResultSelector.ESC_CERTIFICATE_SELECTOR,
-    ResultSelector.ENERGY_SAVING_SELECTOR,
+    ResultSelector.PRC_CERTIFICATE_SELECTOR,
+    ResultSelector.PEAK_DEMAND_REDUCTION_SELECTOR,
   ];
   let dataExcel: DataExcel;
 
   before(() => {
     cy.task<WorkBook>('getDataExcel', EXCEL_PATH).then((workbook) => {
-      dataExcel = new DataExcel(workbook, SheetName.D18_C);
+      dataExcel = new DataExcel(workbook, SheetName.BESS2_C);
     });
   });
 
@@ -36,8 +29,9 @@ describe('Calculate D18 ESC certificate.', () => {
         nextSelector: FormSelector.NEXT_SELECTOR,
         data: rowData,
         resultSelector: resultSelector,
+        twoStep: true,
         interceptPostcodeAPI: {
-          postcode: rowData['postcode'],
+          postcode: rowData['BESS2_PDRSAug24_PDRS__postcode'],
           state: PostcodeState.NSW,
         },
       });

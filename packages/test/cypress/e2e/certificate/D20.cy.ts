@@ -38,7 +38,7 @@ describe('Calculate D20 ESC certificate.', () => {
         resultSelector: resultSelector,
         interceptPostcodeAPI: {
           postcode: rowData['postcode'],
-          state: PostcodeState.VALID,
+          state: PostcodeState.NSW,
         },
       });
 
