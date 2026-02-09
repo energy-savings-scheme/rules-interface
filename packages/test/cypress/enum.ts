@@ -41,6 +41,13 @@ enum PostcodeState {
 
 enum URLPath {
   HVAC1_C = '#/residential-ac-estimator',
+  SYS2_D5_C = '#/residential-pool-pump-certificates',
+  D17_C = '#/electric-heat-pumps-estimator',
+  D18_C = '#/residential-solar-water-heater-estimator',
+  D19_C = '#/gas-heat-pumps-estimator',
+  D20_C = '#/residential-gas-replacement-solar-water-heater-estimator',
+  C1_C = '#/residential-refrigerators-estimator',
+  BESS2_C = '#/residential-solar-battery-demand-response-certificates',
   HVAC1_E = '#/residential-ac-activity-requirements',
 }
 

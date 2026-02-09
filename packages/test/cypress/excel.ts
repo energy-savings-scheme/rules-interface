@@ -2,6 +2,13 @@ import { WorkBook, WorkSheet, utils } from 'xlsx';
 
 enum SheetName {
   HVAC1_C = 'HVAC1_C',
+  SYS2_D5_C = 'SYS2_D5_C',
+  D17_C = 'D17_C',
+  D18_C = 'D18_C',
+  D19_C = 'D19_C',
+  D20_C = 'D20_C',
+  C1_C = 'C1_C',
+  BESS2_C = 'BESS2_C',
   HVAC1_E = 'HVAC1_E',
 }
 
