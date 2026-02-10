@@ -49,6 +49,8 @@ enum URLPath {
   C1_C = '#/residential-refrigerators-estimator',
   BESS2_C = '#/residential-solar-battery-demand-response-certificates',
   HVAC1_E = '#/residential-ac-activity-requirements',
+  SYS2_D5_E = '#/residential-pool-pump-eligibility',
+  C1_E = '#/residential-refrigeration-activity-requirements'
 }
 
 export {

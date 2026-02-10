@@ -10,6 +10,8 @@ enum SheetName {
   C1_C = 'C1_C',
   BESS2_C = 'BESS2_C',
   HVAC1_E = 'HVAC1_E',
+  SYS2_D5_E = 'SYS2_D5_E',
+  C1_E = 'C1_E',
 }
 
 const EXCEL_PATH = 'cypress/fixtures/data.xlsx';
