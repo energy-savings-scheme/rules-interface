@@ -1,7 +1,7 @@
 import { WorkBook } from 'xlsx';
 
 import { DataExcel, SheetName, EXCEL_PATH } from 'cypress/excel';
-import { FormSelector, ErrorMessage, EligibilityResultText, URLPath } from 'cypress/enum';
+import { FormSelector, EligibilityResultText, URLPath } from 'cypress/enum';
 
 describe('Calculate SYS2/D5 Eligibility.', () => {
   const urlPath: string = URLPath.SYS2_D5_E;
@@ -25,7 +25,7 @@ describe('Calculate SYS2/D5 Eligibility.', () => {
     }).as('getVariableDetail');
   });
 
-  it('Successfully calculate pool pump eligibility with eligible result.', () => {
+  it('Successfully calculate pool pump eligibility with eligible or ineligible result.', () => {
     const rowsData = dataExcel.getData();
 
     rowsData.forEach((rowData, index) => {
