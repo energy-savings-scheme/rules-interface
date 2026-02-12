@@ -17,7 +17,7 @@ enum SheetName {
   D17_E = 'D17_E',
   D18_E = 'D18_E',
   D19_E = 'D19_E',
-  D20_E = 'D20_E'
+  D20_E = 'D20_E',
 }
 
 const EXCEL_PATH = 'cypress/fixtures/data.xlsx';
