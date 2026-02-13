@@ -64,24 +64,17 @@ jobs:
         env:
           CYPRESS_BASE_URL: http://localhost:3000
 
-      # - uses: actions/upload-artifact@v6
-      #   if: always()
-      #   with:
-      #     name: cypress-artifacts
-      #     path: |
-      #       pacakges/test/cypress/screenshots
-      #       pacakges/test/cypress/videos
-      #     if-no-files-found: ignore
-      - uses: actions/upload-artifact@v6
-        # add the line below to store screenshots only on failures
-        if: always()
+      - name: Upload screenshot
+        uses: actions/upload-artifact@v6
+        if: failure()
         with:
           name: cypress-screenshots
           path: packages/test/cypress/screenshots/
           if-no-files-found: ignore
         
-      - uses: actions/upload-artifact@v6
-        if: always()
+      - name: Upload videos
+        uses: actions/upload-artifact@v6
+        if: failure()
         with:
           name: cypress-videos
           path: packages/testcypress/videos/
