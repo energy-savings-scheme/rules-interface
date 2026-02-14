@@ -167,7 +167,7 @@ export default function LoadClausesSYS2(props) {
                   customTitle={<h3 dangerouslySetInnerHTML={{ __html: 'Activity Requirements' }} />}
                   className="nsw-col-lg-10"
                 >
-                  <p>
+                  <p data-ui-name="eligibility-result-text">
                     {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                     Based on the information you have provided{' '}
                     {formatResultString(calculationResult)}.
@@ -195,7 +195,7 @@ export default function LoadClausesSYS2(props) {
                             <div class="nsw-global-alert__title">
                               {item.metadata.display_question} : {formatBooleanToString(item)}
                             </div>
-                            <p style={{ whiteSpace: 'pre-line' }}>
+                            <p data-ui-name={item.name} style={{ whiteSpace: 'pre-line' }}>
                               {item.metadata.eligibility_clause &&
                                 item.metadata.eligibility_clause.split('<br />').join('\n')}
                             </p>
@@ -220,6 +220,7 @@ export default function LoadClausesSYS2(props) {
                 <Button
                   style={{ float: 'left' }}
                   as="dark"
+                  data-ui-name="recalculate"
                   onClick={(e) => {
                     setClausesForm([]);
                     setStepNumber(stepNumber - 1);

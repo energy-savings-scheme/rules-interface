@@ -56,6 +56,11 @@ Cypress.Commands.add('fillForm', (formSelector: string, data: { [key: string]: a
         }
       } else if (tag === 'textarea' || type === 'text' || type === 'email' || type === 'number') {
         cy.wrap(input).clear().type(value);
+        // we put network idle here to wait that request may occurred
+        // whenever we fill the text input field, especially when we input postcode field
+        // in residential and commercial AC. In this case we want the dropdown field
+        // BCA Climate zone fully rendered correctly.
+        cy.waitForNetworkIdle(500);
       } else if (type === 'checkbox' || type === 'radio') {
         cy.wrap(input).check(value);
       } else {

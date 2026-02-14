@@ -84,14 +84,6 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
   const [variableData1, setVariableData1] = useState({});
   const [variableData2, setVariableData2] = useState({});
 
-  if (calculationResult2 === null) {
-    setCalculationResult2('0');
-  }
-
-  if (calculationResult === null) {
-    setCalculationResult2('0');
-  }
-
   useEffect(() => {
     OpenFiscaApi.getVariable(variableToLoad1)
       .then((res) => {

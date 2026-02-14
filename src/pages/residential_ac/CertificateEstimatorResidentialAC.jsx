@@ -231,7 +231,8 @@ export default function CertificateEstimatorResidentialAC(props) {
   useEffect(() => {
     if (!postcode) return;
 
-    const payload = {
+    if (postcode.length == 4) {
+      const payload = {
       buildings: {
         building_1: {
           HVAC1_PDRSAug24_PDRS__postcode: { '2021-01-01': postcode },
@@ -279,6 +280,7 @@ export default function CertificateEstimatorResidentialAC(props) {
       .catch((err) => {
         console.log(err);
       });
+    }
   }, [postcode]);
 
   useEffect(() => {
