@@ -3,13 +3,13 @@ import { WorkBook } from 'xlsx';
 import { DataExcel, SheetName, EXCEL_PATH } from 'cypress/excel';
 import { FormSelector, EligibilityResultText, URLPath } from 'cypress/enum';
 
-describe('Calculate HVAC1 Eligibility.', () => {
-  const urlPath: string = URLPath.HVAC1_E;
+describe('Calculate SYS2/D5 Eligibility.', () => {
+  const urlPath: string = URLPath.SYS2_D5_E;
   let dataExcel: DataExcel;
 
   before(() => {
     cy.task<WorkBook>('getDataExcel', EXCEL_PATH).then((workbook) => {
-      dataExcel = new DataExcel(workbook, SheetName.HVAC1_E);
+      dataExcel = new DataExcel(workbook, SheetName.SYS2_D5_E);
     });
   });
 
@@ -25,7 +25,7 @@ describe('Calculate HVAC1 Eligibility.', () => {
     }).as('getVariableDetail');
   });
 
-  it('Successfully calculate eligibility with eligible or ineligible result.', () => {
+  it('Successfully calculate pool pump eligibility with eligible or ineligible result.', () => {
     const rowsData = dataExcel.getData();
 
     rowsData.forEach((rowData, index) => {
@@ -57,35 +57,4 @@ describe('Calculate HVAC1 Eligibility.', () => {
       }
     });
   });
-
-  // it('Failed because required fields are empty.', () => {
-  //   const testId: string = "HVAC1_E_003";
-  //   const rowData = dataExcel.getRowData(testId);
-  //   const requiredFields: string[] = rowData["requiredFields"].split(",");
-
-  //   cy.visit(urlPath);
-  //   cy.get(FormSelector.USER_TYPE_SELECTOR).select("Government");
-  //   cy.fillForm(FormSelector.CALCULATE_FORM_SELECTOR, rowData);
-  //   cy.nextOrCalculate(FormSelector.NEXT_SELECTOR);
-
-  //   requiredFields.forEach((selector) => {
-  //     cy.get(`[data-ui-name="${selector}"]`).should("be.exist");
-  //   })
-  // })
-
-  // it('Failed because Openfisca server unreachable.', () => {
-  //   const testId: string = "HVAC1_E_004";
-  //   const rowData = dataExcel.getRowData(testId);
-
-  //   cy.visit(urlPath);
-  //   cy.get(FormSelector.USER_TYPE_SELECTOR).select("Government");
-  //   cy.fillForm(FormSelector.CALCULATE_FORM_SELECTOR, rowData);
-  //   cy.intercept("POST", "**/calculate", {forceNetworkError: true});
-  //   cy.nextOrCalculate(FormSelector.NEXT_SELECTOR);
-
-  //   cy.get(`[data-ui-name="error-calculation"]`)
-  //     .should("be.exist")
-  //     .find("p")
-  //     .and("have.text", ErrorMessage.UnreachableOpenfiscaServer);
-  // })
 });

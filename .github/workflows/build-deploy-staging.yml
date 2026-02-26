@@ -63,6 +63,22 @@ jobs:
         env:
           CYPRESS_BASE_URL: http://localhost:3000
 
+      - name: Upload screenshot
+        uses: actions/upload-artifact@v6
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: packages/test/cypress/screenshots/
+          if-no-files-found: ignore
+        
+      - name: Upload videos
+        uses: actions/upload-artifact@v6
+        if: failure()
+        with:
+          name: cypress-videos
+          path: packages/testcypress/videos/
+          if-no-files-found: ignore
+
       - name: Tear down docker
         if: always()
         run: docker compose down

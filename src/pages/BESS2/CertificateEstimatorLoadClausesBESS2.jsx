@@ -136,7 +136,7 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
   if (!variable) return null;
 
   return (
-    <div className>
+    <div data-ui-name="initial-form">
       <div style={{ marginTop: 70, marginBottom: 70 }}>
         {stepNumber === 1 && (
           <Fragment>
@@ -154,6 +154,7 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
             >
               <Select
                 htmlId="user-type"
+                data-ui-name="user-type"
                 className="nsw-col-lg-6"
                 options={USER_TYPE_OPTIONS}
                 onChange={(e) => {
@@ -223,13 +224,13 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
                 <p>
                   Based on the information provided, your PRCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{formatNumber(Math.floor(calculationResult))}</b>
+                    <b data-ui-name="prc">{formatNumber(Math.floor(calculationResult))}</b>
                   </span>
                 </p>
                 <p>
                   Your estimated contribution to reducing peak summer energy demand over the
                   lifetime of the equipment is{' '}
-                  <b>
+                  <b data-ui-name="apdr">
                     {Math.floor(calculationResult) === 0
                       ? 0
                       : formatNumber(Math.round(peakDemandReductionSavingsNumber * 100) / 100)}
@@ -285,6 +286,7 @@ export default function CertificateEstimatorLoadClausesBESS2(props) {
                 <Button
                   style={{ float: 'left' }}
                   as="dark-outline-solid"
+                  data-ui-name="recalculate"
                   onClick={(e) => {
                     setFlow('backward');
                     setStepNumber(1);

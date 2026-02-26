@@ -57,7 +57,7 @@ function postTrace(payload) {
 
 function postCalculate(payload) {
   return OpenFiscaApiBase({
-    url: '/calculate/',
+    url: '/calculate',
     method: 'POST',
     data: payload,
   });

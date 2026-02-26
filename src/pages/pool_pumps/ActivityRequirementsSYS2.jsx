@@ -203,6 +203,7 @@ export default function ActivityRequirementsSYS2(props) {
                 >
                   <Select
                     htmlId="user-type"
+                    data-ui-name="user-type"
                     className="nsw-col-lg-6"
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {

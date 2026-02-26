@@ -1,0 +1,6 @@
+.github
+.idea
+docs
+node_modules
+.env.example
+.gitignore
