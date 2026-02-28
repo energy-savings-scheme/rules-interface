@@ -111,6 +111,7 @@ Cypress.Commands.add('calculate', (input: CalculateFormInputType) => {
   // There're activities that only have 2 steps
   // So we can continue to calcute step.
   if (!input.twoStep) {
+    cy.wait(1000);
     cy.get(input.nextSelector).should('be.exist');
     cy.fillForm(input.calculateFormSelector, input.data);
     cy.nextOrCalculate(input.nextSelector);
