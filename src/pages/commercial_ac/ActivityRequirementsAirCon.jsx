@@ -205,6 +205,7 @@ export default function ActivityRequirementsCommercialAC(props) {
                   <Select
                     htmlId="user-type"
                     className="nsw-col-lg-6"
+                    data-ui-name="user-type"
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
                       setUserType(e.target.value);

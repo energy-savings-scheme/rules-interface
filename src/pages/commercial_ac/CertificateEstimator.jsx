@@ -416,7 +416,7 @@ export default function CertificateEstimatorHVAC(props) {
           {stepNumber === 3 && calculationError && calculationError2 && showError && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
-            } id="error-calculation" className="nsw-col-lg-10" tabIndex="-1">
+            } id="error-calculation" className="nsw-col-lg-10" tabIndex="-1" data-ui-name="error-calculation">
               <p>We are experiencing technical difficulties right now, please try again later.</p>
             </Alert>
           )}
@@ -428,7 +428,7 @@ export default function CertificateEstimatorHVAC(props) {
                   <br></br>
                   <br></br>
                   <br></br>
-                  <div className="nsw-content-block__content">
+                  <div data-ui-name="initial-form" className="nsw-content-block__content">
                     <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
                       <b>Please answer the following questions to calculate your ESCs and PRCs</b>
                     </p>
@@ -441,6 +441,7 @@ export default function CertificateEstimatorHVAC(props) {
                       <Select
                         htmlId="user-type"
                         className="nsw-col-lg-6"
+                        data-ui-name="user-type"
                         style={{ marginBottom: '1%' }}
                         options={USER_TYPE_OPTIONS}
                         onChange={(e) => {
@@ -460,6 +461,7 @@ export default function CertificateEstimatorHVAC(props) {
                       <TextInput
                         htmlId="postcode"
                         className="nsw-col-lg-6"
+                        data-ui-name="postcode"
                         style={{ marginBottom: '1%' }}
                         as="input"
                         type="number"
@@ -489,6 +491,7 @@ export default function CertificateEstimatorHVAC(props) {
                         <Select
                           htmlId="climate-zone"
                           className="nsw-col-lg-6"
+                          data-ui-name="bca-climate-zone"
                           options={dropdownOptionsClimateZone}
                           onChange={(e) => {
                             setSelectedClimateZone(e.target.value);
@@ -507,6 +510,7 @@ export default function CertificateEstimatorHVAC(props) {
                       <Select
                         htmlId="brand"
                         className="nsw-col-lg-6"
+                        data-ui-name="brand"
                         style={{ marginBottom: '1%' }}
                         options={dropdownOptions}
                         onChange={(e) => {
@@ -527,6 +531,7 @@ export default function CertificateEstimatorHVAC(props) {
                       <Select
                         htmlId="model"
                         className="nsw-col-lg-6"
+                        data-ui-name="model"
                         options={dropdownOptionsModels}
                         onChange={(e) => {
                           setSelectedModel(models.find((item) => item === e.target.value));
@@ -536,7 +541,7 @@ export default function CertificateEstimatorHVAC(props) {
                       />
                     </FormGroup>
 
-                    <p style={{ fontSize: '14px', marginBottom: '2%' }}>
+                    <p data-ui-name="registry-update" style={{ fontSize: '14px', marginBottom: '2%' }}>
                       {' '}
                       Updated from product registry: {lastModified}
                     </p>
@@ -549,7 +554,7 @@ export default function CertificateEstimatorHVAC(props) {
           {stepNumber === 1 && !registryData && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
-            } id="error-data-registry" className="nsw-col-lg-10" tabIndex="-1">
+            } id="error-data-registry" className="nsw-col-lg-10" tabIndex="-1" data-ui-name="error-data-registry">
               <p>Unable to load data from the product registry. Please try again later.</p>
             </Alert>
           )}
@@ -652,7 +657,7 @@ export default function CertificateEstimatorHVAC(props) {
           {stepNumber === 1 && showPostcodeError && postcode.length >= 4 && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "The postcode is not valid in NSW"}}/>
-            } id="error-postcode" className="nsw-col-lg-10" tabIndex="-1">
+            } id="error-postcode" className="nsw-col-lg-10" tabIndex="-1" data-ui-name="error-postcode">
               <p>Please check your postcode and try again.</p>
             </Alert>
           )}
@@ -681,6 +686,7 @@ export default function CertificateEstimatorHVAC(props) {
               >
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
+                    data-ui-name="next"
                     as="dark"
                     onClick={(e) => {
                       validatePostcode(postcode);

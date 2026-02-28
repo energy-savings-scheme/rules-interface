@@ -298,7 +298,7 @@ export default function CertificateEstimatorWH(props) {
           {stepNumber === 3 && calculationError && calculationError2 && showError && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
-            } id="error-calculation" className="nsw-col-lg-10" tabIndex="-1">
+            } id="error-calculation" className="nsw-col-lg-10" tabIndex="-1" data-ui-name="error-calculation">
               <p>We are experiencing technical difficulties right now, please try again later.</p>
             </Alert>
           )}
@@ -309,7 +309,7 @@ export default function CertificateEstimatorWH(props) {
                 <div className="nsw-content-block">
                   <br></br>
                   <br></br>
-                  <div className="nsw-content-block__content">
+                  <div data-ui-name="initial-form" className="nsw-content-block__content">
                     <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
                       <b>Please answer the following questions to calculate your ESCs</b>
                     </p>
@@ -321,6 +321,7 @@ export default function CertificateEstimatorWH(props) {
                     >
                       <Select
                         htmlId="user-type"
+                        data-ui-name="user-type"
                         className="nsw-col-lg-6"
                         options={USER_TYPE_OPTIONS}
                         onChange={(e) => {
@@ -339,6 +340,7 @@ export default function CertificateEstimatorWH(props) {
                     >
                       <TextInput
                         htmlId="postcode"
+                        data-ui-name="postcode"
                         className="nsw-col-lg-6"
                         as="input"
                         type="number"
@@ -358,6 +360,7 @@ export default function CertificateEstimatorWH(props) {
                     >
                       <Select
                         htmlId="brand"
+                        data-ui-name="brand"
                         className="nsw-col-lg-6"
                         options={dropdownOptions}
                         onChange={(e) => {
@@ -377,6 +380,7 @@ export default function CertificateEstimatorWH(props) {
                     >
                       <Select
                         htmlId="model"
+                        data-ui-name="model"
                         className="nsw-col-lg-6"
                         options={dropdownOptionsModels}
                         onChange={(e) => {
@@ -445,7 +449,7 @@ export default function CertificateEstimatorWH(props) {
           {stepNumber === 1 && !registryData && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
-            } id="error-data-registry" className="nsw-col-lg-10" tabIndex="-1">
+            } id="error-data-registry" className="nsw-col-lg-10" tabIndex="-1" data-ui-name="error-data-registry">
               <p>Unable to load data from the product registry. Please try again later.</p>
             </Alert>
           )}
@@ -455,7 +459,7 @@ export default function CertificateEstimatorWH(props) {
           {stepNumber === 1 && showPostcodeError && postcode.length >= 4 && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "The postcode is not valid in NSW"}}/>
-            } id="error-postcode" className="nsw-col-lg-10" tabIndex="-1">
+            } id="error-postcode" className="nsw-col-lg-10" tabIndex="-1" data-ui-name="error-postcode">
               <p>Please check your postcode and try again.</p>
             </Alert>
           )}
@@ -463,7 +467,7 @@ export default function CertificateEstimatorWH(props) {
           {stepNumber === 1 && showNoResponsePostcodeError && postcode.length >= 4 && (
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
-            } id="error-postcode-response" className="nsw-col-lg-10" tabIndex="-1">
+            } id="error-postcode-response" className="nsw-col-lg-10" tabIndex="-1" data-ui-name="error-postcode-response">
               <p>
                 We are experiencing technical difficulties validating the postcode, please try again
                 later.
@@ -524,6 +528,7 @@ export default function CertificateEstimatorWH(props) {
                 <div className="nsw-col" style={{ padding: 'inherit' }}>
                   <Button
                     as="dark"
+                    data-ui-name="next"
                     onClick={(e) => {
                       validatePostcode(postcode);
                       updateSearchCaptureAnalytics(postcode, selectedBrand, selectedModel);

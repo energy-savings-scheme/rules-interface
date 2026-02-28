@@ -9,6 +9,12 @@ enum SheetName {
   D20_C = 'D20_C',
   C1_C = 'C1_C',
   BESS2_C = 'BESS2_C',
+  HVAC2_C = 'HVAC2_C',
+  F16_E_C = 'F16_E_C',
+  F16_G_C = 'F16_G_C',
+  F17_C = 'F17_C',
+  RF2_F1_2_C = 'RF2_F1_2_C',
+  F7_C = 'F7_C',
   CORE_E = 'CORE_E',
   HVAC1_E = 'HVAC1_E',
   SYS2_D5_E = 'SYS2_D5_E',
@@ -18,6 +24,12 @@ enum SheetName {
   D18_E = 'D18_E',
   D19_E = 'D19_E',
   D20_E = 'D20_E',
+  HVAC2_E = 'HVAC2_E',
+  F16_E_E = 'F16_E_E',
+  F16_G_E = 'F16_G_E',
+  F17_E = 'F17_E',
+  RF2_F1_2_E = 'RF2_F1_2_E',
+  F7_E = 'F7_E',
 }
 
 const EXCEL_PATH = 'cypress/fixtures/data.xlsx';
