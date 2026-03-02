@@ -60,10 +60,8 @@ jobs:
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 60
           browser: chrome
-          spec: cypress/e2e/certificate/*
         env:
           CYPRESS_BASE_URL: http://localhost:3000
-          DEBUG: cypress:server:util:process_profiler
 
       - name: Upload screenshot
         uses: actions/upload-artifact@v6
