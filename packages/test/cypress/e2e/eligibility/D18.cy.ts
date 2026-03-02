@@ -6,10 +6,12 @@ import { FormSelector, EligibilityResultText, URLPath } from 'cypress/enum';
 describe('Calculate D18 Eligibility.', () => {
   const urlPath: string = URLPath.D18_E;
   let dataExcel: DataExcel;
+  let rowsData: Record<string, any>[];
 
   before(() => {
     cy.task<WorkBook>('getDataExcel', EXCEL_PATH).then((workbook) => {
       dataExcel = new DataExcel(workbook, SheetName.D18_E);
+      rowsData = dataExcel.getData();
     });
   });
 
@@ -25,36 +27,108 @@ describe('Calculate D18 Eligibility.', () => {
     }).as('getVariableDetail');
   });
 
-  it('Successfully calculate electric water heater - solar water heater eligibility with eligible or ineligible result.', () => {
-    const rowsData = dataExcel.getData();
+  it('Successfully calculate electric water heater - solar water heater eligibility with eligible or ineligible result. Row data 1', () => {
+    const rowData = rowsData[0];
 
-    rowsData.forEach((rowData, index) => {
-      let ineligibleSelectors: string[] = [];
-      if (rowData['ineligibleQuestions']) {
-        ineligibleSelectors = rowData['ineligibleQuestions'].split(',');
-      }
+    let ineligibleSelectors: string[] = [];
+    if (rowData['ineligibleQuestions']) {
+      ineligibleSelectors = rowData['ineligibleQuestions'].split(',');
+    }
 
-      const eligibleResult =
-        ineligibleSelectors.length == 0
-          ? EligibilityResultText.ELIGIBLE
-          : EligibilityResultText.INELIGIBLE;
+    const eligibleResult =
+      ineligibleSelectors.length == 0
+        ? EligibilityResultText.ELIGIBLE
+        : EligibilityResultText.INELIGIBLE;
 
-      cy.calculateEligibility({
-        id: rowData['tid'],
-        uri: urlPath,
-        calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
-        nextSelector: FormSelector.NEXT_SELECTOR,
-        data: rowData,
-        eligibilityResultText: eligibleResult,
-        ineligibleSelectors: ineligibleSelectors,
-      });
-
-      if (index <= rowsData.length - 1) {
-        // reload page needed to trigger the **/variables/** API again.
-        // because we need the network request triggered in order to intercept the request.
-        // detail on beforeEach above.
-        cy.reload();
-      }
+    cy.calculateEligibility({
+      id: rowData['tid'],
+      uri: urlPath,
+      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
+      nextSelector: FormSelector.NEXT_SELECTOR,
+      data: rowData,
+      eligibilityResultText: eligibleResult,
+      ineligibleSelectors: ineligibleSelectors,
     });
   });
+
+  it('Successfully calculate electric water heater - solar water heater eligibility with eligible or ineligible result. Row data 2', () => {
+    const rowData = rowsData[1];
+
+    let ineligibleSelectors: string[] = [];
+    if (rowData['ineligibleQuestions']) {
+      ineligibleSelectors = rowData['ineligibleQuestions'].split(',');
+    }
+
+    const eligibleResult =
+      ineligibleSelectors.length == 0
+        ? EligibilityResultText.ELIGIBLE
+        : EligibilityResultText.INELIGIBLE;
+
+    cy.calculateEligibility({
+      id: rowData['tid'],
+      uri: urlPath,
+      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
+      nextSelector: FormSelector.NEXT_SELECTOR,
+      data: rowData,
+      eligibilityResultText: eligibleResult,
+      ineligibleSelectors: ineligibleSelectors,
+    });
+  });
+
+  it('Successfully calculate electric water heater - solar water heater eligibility with eligible or ineligible result. Row data 3', () => {
+    const rowData = rowsData[2];
+
+    let ineligibleSelectors: string[] = [];
+    if (rowData['ineligibleQuestions']) {
+      ineligibleSelectors = rowData['ineligibleQuestions'].split(',');
+    }
+
+    const eligibleResult =
+      ineligibleSelectors.length == 0
+        ? EligibilityResultText.ELIGIBLE
+        : EligibilityResultText.INELIGIBLE;
+
+    cy.calculateEligibility({
+      id: rowData['tid'],
+      uri: urlPath,
+      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
+      nextSelector: FormSelector.NEXT_SELECTOR,
+      data: rowData,
+      eligibilityResultText: eligibleResult,
+      ineligibleSelectors: ineligibleSelectors,
+    });
+  });
+
+  // it('Successfully calculate electric water heater - solar water heater eligibility with eligible or ineligible result.', () => {
+  //   const rowsData = dataExcel.getData();
+
+  //   rowsData.forEach((rowData, index) => {
+  //     let ineligibleSelectors: string[] = [];
+  //     if (rowData['ineligibleQuestions']) {
+  //       ineligibleSelectors = rowData['ineligibleQuestions'].split(',');
+  //     }
+
+  //     const eligibleResult =
+  //       ineligibleSelectors.length == 0
+  //         ? EligibilityResultText.ELIGIBLE
+  //         : EligibilityResultText.INELIGIBLE;
+
+  //     cy.calculateEligibility({
+  //       id: rowData['tid'],
+  //       uri: urlPath,
+  //       calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
+  //       nextSelector: FormSelector.NEXT_SELECTOR,
+  //       data: rowData,
+  //       eligibilityResultText: eligibleResult,
+  //       ineligibleSelectors: ineligibleSelectors,
+  //     });
+
+  //     if (index <= rowsData.length - 1) {
+  //       // reload page needed to trigger the **/variables/** API again.
+  //       // because we need the network request triggered in order to intercept the request.
+  //       // detail on beforeEach above.
+  //       cy.reload();
+  //     }
+  //   });
+  // });
 });

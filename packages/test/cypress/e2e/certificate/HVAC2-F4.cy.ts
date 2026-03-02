@@ -11,7 +11,7 @@ import {
 } from 'cypress/enum';
 
 describe('Calculate HVAC2 ESC and PRC certificate.', () => {
-  const urlPath: string = URLPath.HVAC2_C;
+  const urlPath: string = URLPath.HVAC2_F4_C;
   const resultSelector = [
     ResultSelector.ESC_CERTIFICATE_SELECTOR,
     ResultSelector.PRC_CERTIFICATE_SELECTOR,
@@ -23,7 +23,7 @@ describe('Calculate HVAC2 ESC and PRC certificate.', () => {
 
   before(() => {
     cy.task<WorkBook>('getDataExcel', EXCEL_PATH).then((workbook) => {
-      dataExcel = new DataExcel(workbook, SheetName.HVAC2_C);
+      dataExcel = new DataExcel(workbook, SheetName.HVAC2_F4_C);
       rowsData = dataExcel.getData();
     });
   });
