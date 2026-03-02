@@ -76,7 +76,7 @@ jobs:
         if: failure()
         with:
           name: cypress-videos
-          path: packages/testcypress/videos/
+          path: packages/test/cypress/videos/
           if-no-files-found: ignore
 
       - name: Tear down docker
