@@ -1,14 +1,11 @@
-import { WorkBook } from 'xlsx';
-
-import { DataExcel, SheetName, EXCEL_PATH } from 'cypress/excel';
 import {
   FormSelector,
-  ErrorSelector,
   ResultSelector,
   PostcodeState,
-  ErrorMessage,
   URLPath,
 } from 'cypress/enum';
+
+import dataFixtures from 'cypress/fixtures/certificate/HVAC1_D16_C.json';
 
 describe('Calculate HVAC1 ESC and PRC certificate.', () => {
   const urlPath: string = URLPath.HVAC1_D16_C;
@@ -18,214 +15,24 @@ describe('Calculate HVAC1 ESC and PRC certificate.', () => {
     ResultSelector.ENERGY_SAVING_SELECTOR,
     ResultSelector.PEAK_DEMAND_REDUCTION_SELECTOR,
   ];
-  let dataExcel: DataExcel;
-  let rowsData: Record<string, any>[];
 
-  before(() => {
-    cy.task<WorkBook>('getDataExcel', EXCEL_PATH).then((workbook) => {
-      dataExcel = new DataExcel(workbook, SheetName.HVAC1_D16_C);
-      rowsData = dataExcel.getData();
+  dataFixtures.forEach((rowData: Record<string, any>) => {
+    it(`Calculate certificate test ID: ${rowData['tid']}`, () => {
+      cy.calculate({
+        id: rowData['tid'],
+        uri: urlPath,
+        initialFormSelector: FormSelector.INITIAL_FORM_SELECTOR,
+        calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
+        nextSelector: FormSelector.NEXT_SELECTOR,
+        data: rowData,
+        resultSelector: resultSelector,
+        interceptPostcodeAPI: {
+          postcode: rowData['postcode'],
+          state: PostcodeState.NSW,
+        },
+      });
     });
   });
-
-  it('Calculate certificate based on Excel sheet. Row data 1', () => {
-    const rowData = rowsData[0];
-
-    cy.calculate({
-      id: rowData['tid'],
-      uri: urlPath,
-      initialFormSelector: FormSelector.INITIAL_FORM_SELECTOR,
-      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
-      nextSelector: FormSelector.NEXT_SELECTOR,
-      data: rowData,
-      resultSelector: resultSelector,
-      interceptPostcodeAPI: {
-        postcode: rowData['postcode'],
-        state: PostcodeState.NSW,
-      },
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet. Row data 2', () => {
-    const rowData = rowsData[1]
-
-    cy.calculate({
-      id: rowData['tid'],
-      uri: urlPath,
-      initialFormSelector: FormSelector.INITIAL_FORM_SELECTOR,
-      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
-      nextSelector: FormSelector.NEXT_SELECTOR,
-      data: rowData,
-      resultSelector: resultSelector,
-      interceptPostcodeAPI: {
-        postcode: rowData['postcode'],
-        state: PostcodeState.NSW,
-      },
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet. Row data 3', () => {
-    const rowData = rowsData[2]
-
-    cy.calculate({
-      id: rowData['tid'],
-      uri: urlPath,
-      initialFormSelector: FormSelector.INITIAL_FORM_SELECTOR,
-      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
-      nextSelector: FormSelector.NEXT_SELECTOR,
-      data: rowData,
-      resultSelector: resultSelector,
-      interceptPostcodeAPI: {
-        postcode: rowData['postcode'],
-        state: PostcodeState.NSW,
-      },
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet. Row data 4', () => {
-    const rowData = rowsData[3]
-
-    cy.calculate({
-      id: rowData['tid'],
-      uri: urlPath,
-      initialFormSelector: FormSelector.INITIAL_FORM_SELECTOR,
-      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
-      nextSelector: FormSelector.NEXT_SELECTOR,
-      data: rowData,
-      resultSelector: resultSelector,
-      interceptPostcodeAPI: {
-        postcode: rowData['postcode'],
-        state: PostcodeState.NSW,
-      },
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet. Row data 5', () => {
-    const rowData = rowsData[4]
-
-    cy.calculate({
-      id: rowData['tid'],
-      uri: urlPath,
-      initialFormSelector: FormSelector.INITIAL_FORM_SELECTOR,
-      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
-      nextSelector: FormSelector.NEXT_SELECTOR,
-      data: rowData,
-      resultSelector: resultSelector,
-      interceptPostcodeAPI: {
-        postcode: rowData['postcode'],
-        state: PostcodeState.NSW,
-      },
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet. Row data 6', () => {
-    const rowData = rowsData[5]
-
-    cy.calculate({
-      id: rowData['tid'],
-      uri: urlPath,
-      initialFormSelector: FormSelector.INITIAL_FORM_SELECTOR,
-      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
-      nextSelector: FormSelector.NEXT_SELECTOR,
-      data: rowData,
-      resultSelector: resultSelector,
-      interceptPostcodeAPI: {
-        postcode: rowData['postcode'],
-        state: PostcodeState.NSW,
-      },
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet. Row data 7', () => {
-    const rowData = rowsData[6]
-
-    cy.calculate({
-      id: rowData['tid'],
-      uri: urlPath,
-      initialFormSelector: FormSelector.INITIAL_FORM_SELECTOR,
-      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
-      nextSelector: FormSelector.NEXT_SELECTOR,
-      data: rowData,
-      resultSelector: resultSelector,
-      interceptPostcodeAPI: {
-        postcode: rowData['postcode'],
-        state: PostcodeState.NSW,
-      },
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet. Row data 8', () => {
-    const rowData = rowsData[7]
-
-    cy.calculate({
-      id: rowData['tid'],
-      uri: urlPath,
-      initialFormSelector: FormSelector.INITIAL_FORM_SELECTOR,
-      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
-      nextSelector: FormSelector.NEXT_SELECTOR,
-      data: rowData,
-      resultSelector: resultSelector,
-      interceptPostcodeAPI: {
-        postcode: rowData['postcode'],
-        state: PostcodeState.NSW,
-      },
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet. Row data 9', () => {
-    const rowData = rowsData[8]
-
-    cy.calculate({
-      id: rowData['tid'],
-      uri: urlPath,
-      initialFormSelector: FormSelector.INITIAL_FORM_SELECTOR,
-      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
-      nextSelector: FormSelector.NEXT_SELECTOR,
-      data: rowData,
-      resultSelector: resultSelector,
-      interceptPostcodeAPI: {
-        postcode: rowData['postcode'],
-        state: PostcodeState.NSW,
-      },
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet. Row data 10', () => {
-    const rowData = rowsData[9]
-
-    cy.calculate({
-      id: rowData['tid'],
-      uri: urlPath,
-      initialFormSelector: FormSelector.INITIAL_FORM_SELECTOR,
-      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
-      nextSelector: FormSelector.NEXT_SELECTOR,
-      data: rowData,
-      resultSelector: resultSelector,
-      interceptPostcodeAPI: {
-        postcode: rowData['postcode'],
-        state: PostcodeState.NSW,
-      },
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet. Row data 11', () => {
-    const rowData = rowsData[10]
-
-    cy.calculate({
-      id: rowData['tid'],
-      uri: urlPath,
-      initialFormSelector: FormSelector.INITIAL_FORM_SELECTOR,
-      calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
-      nextSelector: FormSelector.NEXT_SELECTOR,
-      data: rowData,
-      resultSelector: resultSelector,
-      interceptPostcodeAPI: {
-        postcode: rowData['postcode'],
-        state: PostcodeState.NSW,
-      },
-    });
-  });
-
   // it('Calculate certificate based on Excel sheet.', () => {
   //   const rowsData = dataExcel.getData();
 

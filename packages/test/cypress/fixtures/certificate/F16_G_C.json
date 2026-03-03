@@ -1,0 +1,46 @@
+[
+  {
+    "tid": "F16_G_C_001",
+    "user-type": "Government",
+    "postcode": "2148",
+    "brand": "ECO ALLIANCE",
+    "model": "ECO-155LU",
+    "F16_gas_replacement_activity": "true",
+    "F16_gas_WH_capacity_factor": "3.65",
+    "esc": "10",
+    "aes": "44.13"
+  },
+  {
+    "tid": "F16_G_C_002",
+    "user-type": "Government",
+    "postcode": "2000",
+    "brand": "EMERALD ENERGY",
+    "model": "EE-HWS-A1-220",
+    "F16_gas_replacement_activity": "true",
+    "F16_gas_WH_capacity_factor": "2.5",
+    "esc": "17",
+    "aes": "51.03"
+  },
+  {
+    "tid": "F16_G_C_003",
+    "user-type": "Government",
+    "postcode": "2640",
+    "brand": "AQUATECH",
+    "model": "DYNAMIC-X8",
+    "F16_gas_replacement_activity": "true",
+    "F16_gas_WH_capacity_factor": "4.07",
+    "esc": "14",
+    "aes": "48.71"
+  },
+  {
+    "tid": "F16_G_C_004",
+    "user-type": "Government",
+    "postcode": "2311",
+    "brand": "DUX",
+    "model": "200DHA20",
+    "F16_gas_replacement_activity": "true",
+    "F16_gas_WH_capacity_factor": "6.00",
+    "esc": "11",
+    "aes": "45.53"
+  }
+]

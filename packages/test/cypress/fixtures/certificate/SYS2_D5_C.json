@@ -1,0 +1,79 @@
+[
+  {
+    "tid": "SYS2_D5_C_001",
+    "user-type": "Government",
+    "postcode": "2541",
+    "brand": "ASTRAL POOL",
+    "model": "11547 (VIRON XT P320C)",
+    "esc": "10",
+    "prc": "248",
+    "aes": "9.86",
+    "apdr": "23.64"
+  },
+  {
+    "tid": "SYS2_D5_C_002",
+    "user-type": "Government",
+    "postcode": "2441",
+    "brand": "AQUATIGHT",
+    "model": "SATURN VS100",
+    "esc": "8",
+    "prc": "152",
+    "aes": "8.14",
+    "apdr": "14.49"
+  },
+  {
+    "tid": "SYS2_D5_C_003",
+    "user-type": "Government",
+    "postcode": "2148",
+    "brand": "BADU",
+    "model": "BADU ALPHA ECO SOFT",
+    "esc": "9",
+    "prc": "160",
+    "aes": "8.97",
+    "apdr": "15.33"
+  },
+  {
+    "tid": "SYS2_D5_C_004",
+    "user-type": "Government",
+    "postcode": "2372",
+    "brand": "PUREBLUE",
+    "model": "EP475",
+    "esc": "9",
+    "prc": "237",
+    "aes": "9.12",
+    "apdr": "22.58"
+  },
+  {
+    "tid": "SYS2_D5_C_005",
+    "user-type": "Government",
+    "postcode": "2800",
+    "brand": "STANLEY",
+    "model": "V3 PRO",
+    "esc": "9",
+    "prc": "162",
+    "aes": "9.15",
+    "apdr": "15.45"
+  },
+  {
+    "tid": "SYS2_D5_C_006",
+    "user-type": "Government",
+    "postcode": "2476",
+    "brand": "HAYWARD",
+    "model": "ESP2300HVS",
+    "esc": "9",
+    "prc": "154",
+    "aes": "8.48",
+    "apdr": "14.76"
+  },
+  {
+    "tid": "SYS2_D5_C_007",
+    "user-type": "Government",
+    "postcode": "2024",
+    "brand": "KLORMAN WATERTECH",
+    "model": "WT100-VS",
+    "esc": "9",
+    "prc": "226",
+    "aes": "8.73",
+    "apdr": "21.78"
+  }
+]
