@@ -233,53 +233,53 @@ export default function CertificateEstimatorResidentialAC(props) {
 
     if (postcode.length == 4) {
       const payload = {
-      buildings: {
-        building_1: {
-          HVAC1_PDRSAug24_PDRS__postcode: { '2021-01-01': postcode },
-          HVAC1_PDRSAug24_get_climate_zone_by_postcode: { '2021-01-01': null },
+        buildings: {
+          building_1: {
+            HVAC1_PDRSAug24_PDRS__postcode: { '2021-01-01': postcode },
+            HVAC1_PDRSAug24_get_climate_zone_by_postcode: { '2021-01-01': null },
+          },
         },
-      },
-      persons: {
-        person1: {},
-      },
-    };
-
-    OpenFiscaApi.postCalculate(payload)
-      .then((res) => {
-        var result =
-          res.data.buildings.building_1['HVAC1_PDRSAug24_get_climate_zone_by_postcode'][
-            '2021-01-01'
-          ];
-        setZone(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    const payload_bca = {
-      buildings: {
-        building_1: {
-          HVAC1_PDRSAug24_PDRS__postcode: { '2021-01-01': postcode },
-          HVAC1_PDRSAug24_BCA_climate_zone_by_postcode: { '2021-01-01': null },
+        persons: {
+          person1: {},
         },
-      },
-      persons: {
-        person1: {},
-      },
-    };
+      };
 
-    OpenFiscaApi.postCalculate(payload_bca)
-      .then((res) => {
-        var result =
-          res.data.buildings.building_1['HVAC1_PDRSAug24_BCA_climate_zone_by_postcode'][
-            '2021-01-01'
-          ];
-        setBCAZone(result);
-        setSelectedClimateZone(getClimateZoneText(result));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      OpenFiscaApi.postCalculate(payload)
+        .then((res) => {
+          var result =
+            res.data.buildings.building_1['HVAC1_PDRSAug24_get_climate_zone_by_postcode'][
+              '2021-01-01'
+            ];
+          setZone(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      const payload_bca = {
+        buildings: {
+          building_1: {
+            HVAC1_PDRSAug24_PDRS__postcode: { '2021-01-01': postcode },
+            HVAC1_PDRSAug24_BCA_climate_zone_by_postcode: { '2021-01-01': null },
+          },
+        },
+        persons: {
+          person1: {},
+        },
+      };
+
+      OpenFiscaApi.postCalculate(payload_bca)
+        .then((res) => {
+          var result =
+            res.data.buildings.building_1['HVAC1_PDRSAug24_BCA_climate_zone_by_postcode'][
+              '2021-01-01'
+            ];
+          setBCAZone(result);
+          setSelectedClimateZone(getClimateZoneText(result));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, [postcode]);
 

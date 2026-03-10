@@ -17,9 +17,9 @@ export default function FeedbackComponent(props) {
 
   useEffect(() => {
     if (feedbackMessage) {
-      focusElement("feedback-message");
+      focusElement('feedback-message');
     }
-  }, [feedbackMessage])
+  }, [feedbackMessage]);
 
   return (
     <>
@@ -33,7 +33,7 @@ export default function FeedbackComponent(props) {
         }}
         ref={uiSectionRef}
       >
-        <div role="group" style={{ display: 'flex' }}>
+        <div role="group" style={{ display: 'flex' }} aria-labelledby="feedback-legend">
           <div
             className="nsw-col-md-6 nsw-m-right-xs"
             style={{
@@ -42,7 +42,7 @@ export default function FeedbackComponent(props) {
               alignItems: 'center',
             }}
           >
-            <span className="nsw-small">
+            <span className="nsw-small" id="feedback-legend">
               <b>Was this tool helpful for you today?</b>
             </span>
             <button
@@ -103,7 +103,12 @@ export default function FeedbackComponent(props) {
         style={{ height: uiSectionHeight, display: isSubmitted ? 'none' : 'block' }}
         className="nsw-m-bottom-xxl"
       ></div>
-      <div id="feedback-message" className="nsw-container" style={{ display: isSubmitted ? 'block' : 'none' }} tabIndex="-1">
+      <div
+        id="feedback-message"
+        className="nsw-container"
+        style={{ display: isSubmitted ? 'block' : 'none' }}
+        tabIndex="-1"
+      >
         <p className="nsw-small">
           {feedbackMessage}
           <strong className="nsw-text-underline">{feedbackEmail}</strong>

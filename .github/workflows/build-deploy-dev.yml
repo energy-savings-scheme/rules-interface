@@ -71,7 +71,7 @@ jobs:
           name: cypress-screenshots
           path: packages/test/cypress/screenshots/
           if-no-files-found: ignore
-        
+
       - name: Upload videos
         uses: actions/upload-artifact@v6
         if: failure()
