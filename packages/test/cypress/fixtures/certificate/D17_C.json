@@ -5,8 +5,8 @@
     "postcode": "2000",
     "brand": "DUX",
     "model": "200DHA20",
-    "D18_ESSJun24_replacement_activity": "true",
-    "D18_ESSJun24_system_size": "system_size_medium",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_medium",
     "esc": "26",
     "aes": "25.09"
   },
@@ -16,8 +16,8 @@
     "postcode": "2358",
     "brand": "SOLARBUILD",
     "model": "NA31-210A",
-    "D18_ESSJun24_replacement_activity": "true",
-    "D18_ESSJun24_system_size": "system_size_medium",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_medium",
     "esc": "29",
     "aes": "26.73"
   },
@@ -27,8 +27,8 @@
     "postcode": "2476",
     "brand": "SOLTARO",
     "model": "HPWSTR002",
-    "D18_ESSJun24_replacement_activity": "true",
-    "D18_ESSJun24_system_size": "system_size_medium",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_medium",
     "esc": "27",
     "aes": "25.47"
   },
@@ -38,8 +38,8 @@
     "postcode": "2148",
     "brand": "EMERALD ENERGY",
     "model": "EE-HWS-A1-220",
-    "D18_ESSJun24_replacement_activity": "true",
-    "D18_ESSJun24_system_size": "system_size_medium",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_medium",
     "esc": "29",
     "aes": "27.78"
   },
@@ -49,8 +49,8 @@
     "postcode": "2148",
     "brand": "IHEAT",
     "model": "PASHW008-180LD-NM",
-    "D18_ESSJun24_replacement_activity": "true",
-    "D18_ESSJun24_system_size": "system_size_medium",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_medium",
     "esc": "26",
     "aes": "25.28"
   },
@@ -60,10 +60,10 @@
     "postcode": "2372",
     "brand": "RHEEM",
     "model": "551180",
-    "D18_ESSJun24_replacement_activity": "true",
-    "D18_ESSJun24_system_size": "system_size_small",
-    "esc": "18",
-    "aes": "16.56"
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_small",
+    "esc": "14",
+    "aes": "13.06"
   },
   {
     "tid": "D17_C_007",
@@ -71,8 +71,8 @@
     "postcode": "2352",
     "brand": "DUX",
     "model": "200DHA20",
-    "D18_ESSJun24_replacement_activity": "true",
-    "D18_ESSJun24_system_size": "system_size_medium",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_medium",
     "esc": "27",
     "aes": "25.09"
   },
@@ -82,8 +82,8 @@
     "postcode": "2024",
     "brand": "ECONOVA",
     "model": "ECON-260RVW",
-    "D18_ESSJun24_replacement_activity": "true",
-    "D18_ESSJun24_system_size": "system_size_medium",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_medium",
     "esc": "28",
     "aes": "27.34"
   }

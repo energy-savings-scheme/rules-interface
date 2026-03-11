@@ -41,19 +41,6 @@
   {
     "tid": "HVAC1_D16_C_004",
     "user-type": "Government",
-    "postcode": "2222",
-    "brand": "SAMSUNG",
-    "model": "AC200JXAFNH- AC200JNHFKH",
-    "HVAC1_PDRSAug24_Activity": "new_installation_activity",
-    "HVAC1_PDRSAug24_Air_Conditioner_type": "ducted_unitary_system",
-    "esc": "49",
-    "prc": "116",
-    "aes": "47.11",
-    "apdr": "11.17"
-  },
-  {
-    "tid": "HVAC1_D16_C_005",
-    "user-type": "Government",
     "postcode": "2423",
     "brand": "EMERALD ENERGY",
     "model": "ACSS25",
@@ -65,7 +52,7 @@
     "apdr": "6.58"
   },
   {
-    "tid": "HVAC1_D16_C_006",
+    "tid": "HVAC1_D16_C_005",
     "user-type": "Government",
     "postcode": "2024",
     "brand": "DIAMOND",
@@ -78,7 +65,7 @@
     "apdr": "0"
   },
   {
-    "tid": "HVAC1_D16_C_007",
+    "tid": "HVAC1_D16_C_006",
     "user-type": "Government",
     "postcode": "2148",
     "brand": "FUJITSU",
@@ -91,7 +78,7 @@
     "apdr": "0"
   },
   {
-    "tid": "HVAC1_D16_C_008",
+    "tid": "HVAC1_D16_C_007",
     "user-type": "Government",
     "postcode": "2705",
     "brand": "PANASONIC",
@@ -104,7 +91,7 @@
     "apdr": "8.34"
   },
   {
-    "tid": "HVAC1_D16_C_009",
+    "tid": "HVAC1_D16_C_008",
     "user-type": "Government",
     "postcode": "2076",
     "brand": "MITSUBISHI ELECTRIC",
@@ -117,7 +104,7 @@
     "apdr": "5.22"
   },
   {
-    "tid": "HVAC1_D16_C_010",
+    "tid": "HVAC1_D16_C_009",
     "user-type": "Government",
     "postcode": "2154",
     "brand": "LG",
@@ -130,7 +117,7 @@
     "apdr": "11.65"
   },
   {
-    "tid": "HVAC1_D16_C_011",
+    "tid": "HVAC1_D16_C_010",
     "user-type": "Government",
     "postcode": "2350",
     "brand": "MITSUBISHI ELECTRIC",

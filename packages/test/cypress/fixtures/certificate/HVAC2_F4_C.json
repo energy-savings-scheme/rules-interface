@@ -15,19 +15,6 @@
   {
     "tid": "HVAC2_F4_C_002",
     "user-type": "Government",
-    "postcode": "2222",
-    "brand": "SAMSUNG",
-    "model": "AC200JXAFNH- AC200JNHFKH",
-    "HVAC2_PDRSAug24_Activity": "new_installation_activity",
-    "HVAC2_PDRSAug24_Air_Conditioner_type": "ducted_unitary_system",
-    "esc": "33",
-    "prc": "96",
-    "aes": "31.68",
-    "apdr": "9.3"
-  },
-  {
-    "tid": "HVAC2_F4_C_003",
-    "user-type": "Government",
     "postcode": "2423",
     "brand": "EMERALD ENERGY",
     "model": "ACSS25",
@@ -39,7 +26,7 @@
     "apdr": "5.48"
   },
   {
-    "tid": "HVAC2_F4_C_004",
+    "tid": "HVAC2_F4_C_003",
     "user-type": "Government",
     "postcode": "2390",
     "brand": "BRIVIS",
@@ -52,7 +39,7 @@
     "apdr": "27.7"
   },
   {
-    "tid": "HVAC2_F4_C_005",
+    "tid": "HVAC2_F4_C_004",
     "user-type": "Government",
     "postcode": "2640",
     "brand": "DAIKIN",
@@ -65,7 +52,7 @@
     "apdr": "97.95"
   },
   {
-    "tid": "HVAC2_F4_C_006",
+    "tid": "HVAC2_F4_C_005",
     "user-type": "Government",
     "postcode": "2222",
     "brand": "DAIKIN",
@@ -78,7 +65,7 @@
     "apdr": "52.3"
   },
   {
-    "tid": "HVAC2_F4_C_007",
+    "tid": "HVAC2_F4_C_006",
     "user-type": "Government",
     "postcode": "2650",
     "brand": "SAMSUNG ELECTRONICS",
@@ -91,7 +78,7 @@
     "apdr": "119.69"
   },
   {
-    "tid": "HVAC2_F4_C_008",
+    "tid": "HVAC2_F4_C_007",
     "user-type": "Government",
     "postcode": "2650",
     "brand": "MITSUBISHI HEAVY INDUSTRIES",
