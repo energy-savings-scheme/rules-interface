@@ -122,8 +122,6 @@ Cypress.Commands.add('calculate', (input: CalculateFormInputType) => {
 });
 
 Cypress.Commands.add('calculateEligibility', (input: CalculateEligibilityFormInputType) => {
-  cy.task('log', `Running test calculate eligibility. Test ID: ${input.id}`);
-
   cy.intercept('POST', '**/calculate').as('calculateAPI');
 
   let variables: { [key: string]: any }[] = [];
