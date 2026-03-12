@@ -1,14 +1,6 @@
-import { WorkBook } from 'xlsx';
+import { FormSelector, ResultSelector, PostcodeState, URLPath } from 'cypress/enum';
 
-import { DataExcel, SheetName, EXCEL_PATH } from 'cypress/excel';
-import {
-  FormSelector,
-  ErrorSelector,
-  ResultSelector,
-  PostcodeState,
-  ErrorMessage,
-  URLPath,
-} from 'cypress/enum';
+import dataFixtures from 'cypress/fixtures/certificate/D20_C.json';
 
 describe('Calculate D20 ESC certificate.', () => {
   const urlPath: string = URLPath.D20_C;
@@ -16,18 +8,9 @@ describe('Calculate D20 ESC certificate.', () => {
     ResultSelector.ESC_CERTIFICATE_SELECTOR,
     ResultSelector.ENERGY_SAVING_SELECTOR,
   ];
-  let dataExcel: DataExcel;
 
-  before(() => {
-    cy.task<WorkBook>('getDataExcel', EXCEL_PATH).then((workbook) => {
-      dataExcel = new DataExcel(workbook, SheetName.D20_C);
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet.', () => {
-    const rowsData = dataExcel.getData();
-
-    rowsData.forEach((rowData, index) => {
+  dataFixtures.forEach((rowData: Record<string, any>) => {
+    it(`Calculate certificate test ID: ${rowData['tid']}`, () => {
       cy.calculate({
         id: rowData['tid'],
         uri: urlPath,
@@ -41,10 +24,6 @@ describe('Calculate D20 ESC certificate.', () => {
           state: PostcodeState.NSW,
         },
       });
-
-      if (index <= rowsData.length - 1) {
-        cy.get(FormSelector.RECALCULATE_SELECTOR).should('be.exist').click();
-      }
     });
   });
 });

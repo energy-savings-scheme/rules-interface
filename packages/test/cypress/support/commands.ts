@@ -87,8 +87,6 @@ Cypress.Commands.add('nextOrCalculate', (selector: string) => {
 
 Cypress.Commands.add('calculate', (input: CalculateFormInputType) => {
   // Open page and wait
-  cy.task('log', `Running test calculate. Test ID: ${input.id}`);
-
   cy.intercept('POST', '**/calculate').as('calculateAPI');
 
   // Some Activities don't have product selection in form
@@ -124,8 +122,6 @@ Cypress.Commands.add('calculate', (input: CalculateFormInputType) => {
 });
 
 Cypress.Commands.add('calculateEligibility', (input: CalculateEligibilityFormInputType) => {
-  cy.task('log', `Running test calculate eligibility. Test ID: ${input.id}`);
-
   cy.intercept('POST', '**/calculate').as('calculateAPI');
 
   let variables: { [key: string]: any }[] = [];

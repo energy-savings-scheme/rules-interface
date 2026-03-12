@@ -1,14 +1,6 @@
-import { WorkBook } from 'xlsx';
+import { FormSelector, ResultSelector, PostcodeState, URLPath } from 'cypress/enum';
 
-import { DataExcel, SheetName, EXCEL_PATH } from 'cypress/excel';
-import {
-  FormSelector,
-  ErrorSelector,
-  ResultSelector,
-  PostcodeState,
-  ErrorMessage,
-  URLPath,
-} from 'cypress/enum';
+import dataFixtures from 'cypress/fixtures/certificate/SYS2_D5_C.json';
 
 describe('Calculate SYS2/D5 ESC and PRC certificate.', () => {
   const urlPath: string = URLPath.SYS2_D5_C;
@@ -18,18 +10,9 @@ describe('Calculate SYS2/D5 ESC and PRC certificate.', () => {
     ResultSelector.ENERGY_SAVING_SELECTOR,
     ResultSelector.PEAK_DEMAND_REDUCTION_SELECTOR,
   ];
-  let dataExcel: DataExcel;
 
-  before(() => {
-    cy.task<WorkBook>('getDataExcel', EXCEL_PATH).then((workbook) => {
-      dataExcel = new DataExcel(workbook, SheetName.SYS2_D5_C);
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet.', () => {
-    const rowsData = dataExcel.getData();
-
-    rowsData.forEach((rowData, index) => {
+  dataFixtures.forEach((rowData: Record<string, any>) => {
+    it(`Calculate certificate test ID: ${rowData['tid']}`, () => {
       cy.calculate({
         id: rowData['tid'],
         uri: urlPath,
@@ -43,10 +26,6 @@ describe('Calculate SYS2/D5 ESC and PRC certificate.', () => {
           state: PostcodeState.NSW,
         },
       });
-
-      if (index <= rowsData.length - 1) {
-        cy.get(FormSelector.RECALCULATE_SELECTOR).should('be.exist').click();
-      }
     });
   });
 });

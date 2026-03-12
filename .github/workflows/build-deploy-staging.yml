@@ -76,7 +76,7 @@ jobs:
         if: failure()
         with:
           name: cypress-videos
-          path: packages/testcypress/videos/
+          path: packages/test/cypress/videos/
           if-no-files-found: ignore
 
       - name: Tear down docker
@@ -86,6 +86,7 @@ jobs:
 
   build-and-deploy:
     name: Build and deploy
+    needs: test
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 

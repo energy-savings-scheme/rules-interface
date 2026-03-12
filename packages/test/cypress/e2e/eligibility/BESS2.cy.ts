@@ -1,17 +1,9 @@
-import { WorkBook } from 'xlsx';
-
-import { DataExcel, SheetName, EXCEL_PATH } from 'cypress/excel';
 import { FormSelector, EligibilityResultText, URLPath } from 'cypress/enum';
+
+import dataFixtures from 'cypress/fixtures/eligibility/BESS2_E.json';
 
 describe('Calculate BESS2 Eligibility.', () => {
   const urlPath: string = URLPath.BESS2_E;
-  let dataExcel: DataExcel;
-
-  before(() => {
-    cy.task<WorkBook>('getDataExcel', EXCEL_PATH).then((workbook) => {
-      dataExcel = new DataExcel(workbook, SheetName.BESS2_E);
-    });
-  });
 
   beforeEach(() => {
     cy.intercept('**/variables/**', { middleware: true }, (req) => {
@@ -25,10 +17,8 @@ describe('Calculate BESS2 Eligibility.', () => {
     }).as('getVariableDetail');
   });
 
-  it('Successfully calculate solar battery eligibility with eligible or ineligible result.', () => {
-    const rowsData = dataExcel.getData();
-
-    rowsData.forEach((rowData, index) => {
+  dataFixtures.forEach((rowData: Record<string, any>) => {
+    it(`Successfully calculate solar battery eligibility with eligible or ineligible result. Test ID: ${rowData['tid']}`, () => {
       let ineligibleSelectors: string[] = [];
       if (rowData['ineligibleQuestions']) {
         ineligibleSelectors = rowData['ineligibleQuestions'].split(',');
@@ -48,13 +38,6 @@ describe('Calculate BESS2 Eligibility.', () => {
         eligibilityResultText: eligibleResult,
         ineligibleSelectors: ineligibleSelectors,
       });
-
-      if (index <= rowsData.length - 1) {
-        // reload page needed to trigger the **/variables/** API again.
-        // because we need the network request triggered in order to intercept the request.
-        // detail on beforeEach above.
-        cy.reload();
-      }
     });
   });
 });

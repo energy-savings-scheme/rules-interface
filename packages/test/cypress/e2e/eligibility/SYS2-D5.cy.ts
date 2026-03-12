@@ -1,17 +1,9 @@
-import { WorkBook } from 'xlsx';
-
-import { DataExcel, SheetName, EXCEL_PATH } from 'cypress/excel';
 import { FormSelector, EligibilityResultText, URLPath } from 'cypress/enum';
+
+import dataFixtures from 'cypress/fixtures/eligibility/SYS2_D5_E.json';
 
 describe('Calculate SYS2/D5 Eligibility.', () => {
   const urlPath: string = URLPath.SYS2_D5_E;
-  let dataExcel: DataExcel;
-
-  before(() => {
-    cy.task<WorkBook>('getDataExcel', EXCEL_PATH).then((workbook) => {
-      dataExcel = new DataExcel(workbook, SheetName.SYS2_D5_E);
-    });
-  });
 
   beforeEach(() => {
     cy.intercept('**/variables/**', { middleware: true }, (req) => {
@@ -25,10 +17,8 @@ describe('Calculate SYS2/D5 Eligibility.', () => {
     }).as('getVariableDetail');
   });
 
-  it('Successfully calculate pool pump eligibility with eligible or ineligible result.', () => {
-    const rowsData = dataExcel.getData();
-
-    rowsData.forEach((rowData, index) => {
+  dataFixtures.forEach((rowData: Record<string, any>) => {
+    it(`Successfully calculate pool pump eligibility with eligible or ineligible result. Test ID: ${rowData['tid']}`, () => {
       let ineligibleSelectors: string[] = [];
       if (rowData['ineligibleQuestions']) {
         ineligibleSelectors = rowData['ineligibleQuestions'].split(',');
@@ -48,13 +38,6 @@ describe('Calculate SYS2/D5 Eligibility.', () => {
         eligibilityResultText: eligibleResult,
         ineligibleSelectors: ineligibleSelectors,
       });
-
-      if (index <= rowsData.length - 1) {
-        // reload page needed to trigger the **/variables/** API again.
-        // because we need the network request triggered in order to intercept the request.
-        // detail on beforeEach above.
-        cy.reload();
-      }
     });
   });
 });
