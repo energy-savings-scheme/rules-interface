@@ -130,6 +130,12 @@ export async function submitFeedbackFormAnalytics(isHelpful) {
       client_id: await feedbackFormAnalytics.getGTMClientId(),
       session_id: await feedbackFormAnalytics.getGTMSessionId(),
       params: {
+        page_location: window.location.href,
+        page_path: window.location.pathname,
+        page_hostname: window.location.hostname,
+        page_title: document.title,
+        page_referrer: document.referrer || null,
+        user_agent: navigator.userAgent,
         ...feedbackFormAnalytics.values,
         sf_isHelpful: isHelpful,
         submittedAt: moment().utc().format(),
