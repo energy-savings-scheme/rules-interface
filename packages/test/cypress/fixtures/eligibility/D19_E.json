@@ -1,0 +1,58 @@
+[
+  {
+    "tid": "D19_E_001",
+    "user-type": "Government",
+    "D19_ESSJun24_equipment_replaced": "true",
+    "D19_ESSJun24_engaged_ACP": "true",
+    "D19_ESSJun24_minimum_payment": "true",
+    "D19_ESSJun24_equipment_removed": "true",
+    "D19_ESSJun24_equipment_installed": "true",
+    "D19_ESSJun24_installed_by_qualified_person": "true",
+    "D19_ESSJun24_equipment_registered_IPART": "true",
+    "D19_ESSJun24_split_system": "false",
+    "D19_ESSJun24_safety_requirement": "",
+    "ineligibleQuestions": ""
+  },
+  {
+    "tid": "D19_E_002",
+    "user-type": "Government",
+    "D19_ESSJun24_equipment_replaced": "true",
+    "D19_ESSJun24_engaged_ACP": "false",
+    "D19_ESSJun24_minimum_payment": "false",
+    "D19_ESSJun24_equipment_removed": "true",
+    "D19_ESSJun24_equipment_installed": "true",
+    "D19_ESSJun24_installed_by_qualified_person": "true",
+    "D19_ESSJun24_equipment_registered_IPART": "true",
+    "D19_ESSJun24_split_system": "false",
+    "D19_ESSJun24_safety_requirement": "",
+    "ineligibleQuestions": "D19_ESSJun24_engaged_ACP,D19_ESSJun24_minimum_payment"
+  },
+  {
+    "tid": "D19_E_003",
+    "user-type": "Government",
+    "D19_ESSJun24_equipment_replaced": "true",
+    "D19_ESSJun24_engaged_ACP": "true",
+    "D19_ESSJun24_minimum_payment": "true",
+    "D19_ESSJun24_equipment_removed": "true",
+    "D19_ESSJun24_equipment_installed": "true",
+    "D19_ESSJun24_installed_by_qualified_person": "true",
+    "D19_ESSJun24_equipment_registered_IPART": "true",
+    "D19_ESSJun24_split_system": "true",
+    "D19_ESSJun24_safety_requirement": "true",
+    "ineligibleQuestions": ""
+  },
+  {
+    "tid": "D19_E_004",
+    "user-type": "Government",
+    "D19_ESSJun24_equipment_replaced": "true",
+    "D19_ESSJun24_engaged_ACP": "true",
+    "D19_ESSJun24_minimum_payment": "true",
+    "D19_ESSJun24_equipment_removed": "true",
+    "D19_ESSJun24_equipment_installed": "true",
+    "D19_ESSJun24_installed_by_qualified_person": "true",
+    "D19_ESSJun24_equipment_registered_IPART": "true",
+    "D19_ESSJun24_split_system": "true",
+    "D19_ESSJun24_safety_requirement": "false",
+    "ineligibleQuestions": "D19_ESSJun24_safety_requirement"
+  }
+]

@@ -1,0 +1,79 @@
+[
+  {
+    "tid": "D20_C_001",
+    "user-type": "Government",
+    "postcode": "2148",
+    "brand": "DUX",
+    "model": "D2M36F202",
+    "D20_ESSJun24_replacement_activity": "true",
+    "D20_ESSJun24_system_size": "system_size_medium",
+    "esc": "21",
+    "aes": "53.63"
+  },
+  {
+    "tid": "D20_C_002",
+    "user-type": "Government",
+    "postcode": "2365",
+    "brand": "CHROMAGEN",
+    "model": "9302TOBP1108",
+    "D20_ESSJun24_replacement_activity": "true",
+    "D20_ESSJun24_system_size": "system_size_small",
+    "esc": "0",
+    "aes": "0"
+  },
+  {
+    "tid": "D20_C_003",
+    "user-type": "Government",
+    "postcode": "2566",
+    "brand": "ENVIROSUN",
+    "model": "AS315-40-O-E24-E20HS-DM",
+    "D20_ESSJun24_replacement_activity": "true",
+    "D20_ESSJun24_system_size": "system_size_small",
+    "esc": "10",
+    "aes": "29.1"
+  },
+  {
+    "tid": "D20_C_004",
+    "user-type": "Government",
+    "postcode": "2148",
+    "brand": "DUX",
+    "model": "D2M36F202",
+    "D20_ESSJun24_replacement_activity": "true",
+    "D20_ESSJun24_system_size": "system_size_small",
+    "esc": "10",
+    "aes": "29.49"
+  },
+  {
+    "tid": "D20_C_005",
+    "user-type": "Government",
+    "postcode": "2365",
+    "brand": "CHROMAGEN",
+    "model": "9302TOBP1108",
+    "D20_ESSJun24_replacement_activity": "true",
+    "D20_ESSJun24_system_size": "system_size_medium",
+    "esc": "0",
+    "aes": "0"
+  },
+  {
+    "tid": "D20_C_006",
+    "user-type": "Government",
+    "postcode": "2729",
+    "brand": "RINNAI",
+    "model": "CLOSE COUPLED CCSE2001BL",
+    "D20_ESSJun24_replacement_activity": "true",
+    "D20_ESSJun24_system_size": "system_size_medium",
+    "esc": "0",
+    "aes": "0"
+  },
+  {
+    "tid": "D20_C_007",
+    "user-type": "Government",
+    "postcode": "2729",
+    "brand": "RINNAI",
+    "model": "CLOSE COUPLED CCSE2001BL",
+    "D20_ESSJun24_replacement_activity": "true",
+    "D20_ESSJun24_system_size": "system_size_small",
+    "esc": "0",
+    "aes": "0"
+  }
+]

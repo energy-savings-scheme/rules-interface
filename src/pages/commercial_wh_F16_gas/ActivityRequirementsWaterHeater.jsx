@@ -201,6 +201,7 @@ export default function ActivityRequirementsF16_gas(props) {
                 >
                   <Select
                     htmlId="user-type"
+                    data-ui-name="user-type"
                     className="nsw-col-lg-6"
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {

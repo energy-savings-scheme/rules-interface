@@ -1,0 +1,35 @@
+[
+  {
+    "tid": "D18_C_001",
+    "user-type": "Government",
+    "postcode": "2000",
+    "brand": "CHROMAGEN",
+    "model": "9302TOBP1108",
+    "D18_ESSJun24_replacement_activity": "true",
+    "D18_ESSJun24_system_size": "system_size_medium",
+    "esc": "36",
+    "aes": "34.16"
+  },
+  {
+    "tid": "D18_C_002",
+    "user-type": "Government",
+    "postcode": "2794",
+    "brand": "APRICUS AUSTRALIA",
+    "model": "AE-250-GL-BOT-30",
+    "D18_ESSJun24_replacement_activity": "true",
+    "D18_ESSJun24_system_size": "system_size_small",
+    "esc": "22",
+    "aes": "20.44"
+  },
+  {
+    "tid": "D18_C_003",
+    "user-type": "Government",
+    "postcode": "2890",
+    "brand": "DUX",
+    "model": "D2M36F202",
+    "D18_ESSJun24_replacement_activity": "true",
+    "D18_ESSJun24_system_size": "system_size_small",
+    "esc": "24",
+    "aes": "22.7"
+  }
+]

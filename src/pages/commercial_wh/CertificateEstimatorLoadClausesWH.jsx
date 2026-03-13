@@ -196,11 +196,7 @@ export default function CertificateEstimatorLoadClausesWH(props) {
       <div style={{ marginTop: 70, marginBottom: 70 }}>
         {stepNumber === 2 && (
           <Fragment>
-            <InfoBox 
-              postcode={postcode}
-              brand={selectedBrand}
-              model={selectedModel}
-            />
+            <InfoBox postcode={postcode} brand={selectedBrand} model={selectedModel} />
             <CalculateBlock
               zone={zone}
               calculationDate={calculationDate}
@@ -247,24 +243,23 @@ export default function CertificateEstimatorLoadClausesWH(props) {
         )}
 
         {stepNumber === 3 && !calculationError && !calculationError2 && (
-          <InfoBox 
-            postcode={postcode}
-            brand={selectedBrand}
-            model={selectedModel}
-          />
+          <InfoBox postcode={postcode} brand={selectedBrand} model={selectedModel} />
         )}
 
         {stepNumber === 3 && !calculationError && !calculationError2 && (
           <Fragment>
             {
-              <Alert as="info" customTitle={
-                <h3 dangerouslySetInnerHTML={{__html: "ESCs"}}/>
-              } className="nsw-col-lg-10" style={{ marginBottom: '7%' }}>
+              <Alert
+                as="info"
+                customTitle={<h3 dangerouslySetInnerHTML={{ __html: 'ESCs' }} />}
+                className="nsw-col-lg-10"
+                style={{ marginBottom: '7%' }}
+              >
                 <p>
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                   Based on the information provided, your ESCs are
                   <span style={{ fontSize: '25px', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <b>{formatNumber(Math.floor(calculationResult2))}</b>
+                    <b data-ui-name="esc">{formatNumber(Math.floor(calculationResult2))}</b>
                   </span>
                   {/* </h4> */}
                   {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
@@ -272,7 +267,7 @@ export default function CertificateEstimatorLoadClausesWH(props) {
                 </p>
                 <p>
                   Your estimated energy savings over the lifetime of the equipment are{' '}
-                  <b>
+                  <b data-ui-name="aes">
                     {Math.floor(calculationResult2) === 0
                       ? 0
                       : formatNumber(Math.round(annualEnergySavingsNumber * 100) / 100)}
@@ -291,9 +286,12 @@ export default function CertificateEstimatorLoadClausesWH(props) {
 
         {(stepNumber === 3 && calculationError) ||
           (stepNumber === 3 && calculationError2 && (
-            <Alert as="error" customTitle={
-              <h3 dangerouslySetInnerHTML={{__html: "Sorry! An error has occurred."}}/>
-            }>
+            <Alert
+              as="error"
+              customTitle={
+                <h3 dangerouslySetInnerHTML={{ __html: 'Sorry! An error has occurred.' }} />
+              }
+            >
               <p>An error occurred during calculation. Try re-running the calculation</p>
             </Alert>
           ))}
@@ -316,6 +314,7 @@ export default function CertificateEstimatorLoadClausesWH(props) {
                 <Button
                   style={{ float: 'left' }}
                   as="dark-outline-solid"
+                  data-ui-name="recalculate"
                   onClick={(e) => {
                     setFlow('backward');
                     setStepNumber(stepNumber - 2);
