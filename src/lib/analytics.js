@@ -102,8 +102,6 @@ function analyticIsDisabled() {
 function populateBaseEventsParams() {
   return {
     page_location: window.location.href,
-    page_path: window.location.pathname,
-    page_hostname: window.location.hostname,
     page_title: document.title,
     page_referrer: document.referrer || null,
     user_agent: navigator.userAgent,
