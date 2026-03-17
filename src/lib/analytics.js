@@ -99,8 +99,8 @@ function analyticIsDisabled() {
   return isDisabled;
 }
 
-function populateBaseEventsParams(eventParams) {
-  const sfFormId = (eventParams.values.sf_formId || '').replace(/\//, '-').toLowerCase();
+function populateBaseEventsParams() {
+  const sfFormId = (estimatorFormAnalytics.values.sf_formId || '').replace(/\//, '-').toLowerCase();
   const pageLocation = new URL(window.location.href);
   pageLocation.pathname = `/ess/${sfFormId}`;
   pageLocation.hash = '';
@@ -124,7 +124,7 @@ export async function submitEstimatorFormAnalytics() {
       client_id: await estimatorFormAnalytics.getGTMClientId(),
       session_id: await estimatorFormAnalytics.getGTMSessionId(),
       params: {
-        ...populateBaseEventsParams(estimatorFormAnalytics.values),
+        ...populateBaseEventsParams(),
         ...estimatorFormAnalytics.values,
         submittedAt: moment().utc().format(),
       },
