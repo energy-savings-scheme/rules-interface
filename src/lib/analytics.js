@@ -101,8 +101,8 @@ function analyticIsDisabled() {
 
 function populateBaseEventsParams() {
   const pageLocation = new URL(window.location.href);
-  url.hash = '';
-  const pageLocationCleanUrl = url.toString();
+  pageLocation.hash = '';
+  const pageLocationCleanUrl = pageLocation.toString();
   return {
     page_location: pageLocationCleanUrl,
     page_title: document.title,
