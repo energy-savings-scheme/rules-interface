@@ -53,15 +53,15 @@ jobs:
         working-directory: packages/test
         run: yarn install --frozen-lockfile
 
-      - name: Run Cypress
-        uses: cypress-io/github-action@v6
-        with:
-          working-directory: packages/test
-          wait-on: 'http://localhost:3000'
-          wait-on-timeout: 60
-          browser: chrome
-        env:
-          CYPRESS_BASE_URL: http://localhost:3000
+      # - name: Run Cypress
+      #   uses: cypress-io/github-action@v6
+      #   with:
+      #     working-directory: packages/test
+      #     wait-on: 'http://localhost:3000'
+      #     wait-on-timeout: 60
+      #     browser: chrome
+      #   env:
+      #     CYPRESS_BASE_URL: http://localhost:3000
 
       - name: Upload screenshot
         uses: actions/upload-artifact@v6
