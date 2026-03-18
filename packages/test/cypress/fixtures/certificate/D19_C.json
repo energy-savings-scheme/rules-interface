@@ -29,8 +29,8 @@
     "model": "651180",
     "D19_ESSJun24_replacement_activity": "true",
     "D19_ESSJun24_system_size": "system_size_medium",
-    "esc": "11",
-    "aes": "37.79"
+    "esc": "15",
+    "aes": "41.29"
   },
   {
     "tid": "D19_C_004",
@@ -62,7 +62,7 @@
     "model": "651180",
     "D19_ESSJun24_replacement_activity": "true",
     "D19_ESSJun24_system_size": "system_size_small",
-    "esc": "2",
-    "aes": "18.48"
+    "esc": "6",
+    "aes": "21.99"
   }
 ]
