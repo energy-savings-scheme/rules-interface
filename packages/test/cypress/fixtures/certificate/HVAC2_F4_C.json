@@ -1,0 +1,93 @@
+[
+  {
+    "tid": "HVAC2_F4_C_001",
+    "user-type": "Government",
+    "postcode": "2800",
+    "brand": "SPT",
+    "model": "AW028C-1 - AW028E",
+    "HVAC2_PDRSAug24_Activity": "replacement_activity",
+    "HVAC2_PDRSAug24_Air_Conditioner_type": "ducted_unitary_system",
+    "esc": "12",
+    "prc": "204",
+    "aes": "11.83",
+    "apdr": "19.47"
+  },
+  {
+    "tid": "HVAC2_F4_C_002",
+    "user-type": "Government",
+    "postcode": "2423",
+    "brand": "EMERALD ENERGY",
+    "model": "ACSS25",
+    "HVAC2_PDRSAug24_Activity": "replacement_activity",
+    "HVAC2_PDRSAug24_Air_Conditioner_type": "non_ducted_split_system",
+    "esc": "8",
+    "prc": "57",
+    "aes": "7.36",
+    "apdr": "5.48"
+  },
+  {
+    "tid": "HVAC2_F4_C_003",
+    "user-type": "Government",
+    "postcode": "2390",
+    "brand": "BRIVIS",
+    "model": "AONSR13B1-AINHU11B1",
+    "HVAC2_PDRSAug24_Activity": "new_installation_activity",
+    "HVAC2_PDRSAug24_Air_Conditioner_type": "non_ducted_split_system",
+    "esc": "45",
+    "prc": "290",
+    "aes": "41.97",
+    "apdr": "27.7"
+  },
+  {
+    "tid": "HVAC2_F4_C_004",
+    "user-type": "Government",
+    "postcode": "2640",
+    "brand": "DAIKIN",
+    "model": "REYQ16BYM",
+    "HVAC2_PDRSAug24_Activity": "new_installation_activity",
+    "HVAC2_PDRSAug24_Air_Conditioner_type": "non_ducted_split_system",
+    "esc": "0",
+    "prc": "1,028",
+    "aes": "0",
+    "apdr": "97.95"
+  },
+  {
+    "tid": "HVAC2_F4_C_005",
+    "user-type": "Government",
+    "postcode": "2222",
+    "brand": "DAIKIN",
+    "model": "REYQ16BYM",
+    "HVAC2_PDRSAug24_Activity": "new_installation_activity",
+    "HVAC2_PDRSAug24_Air_Conditioner_type": "non_ducted_split_system",
+    "esc": "117",
+    "prc": "543",
+    "aes": "110.38",
+    "apdr": "52.3"
+  },
+  {
+    "tid": "HVAC2_F4_C_006",
+    "user-type": "Government",
+    "postcode": "2650",
+    "brand": "SAMSUNG ELECTRONICS",
+    "model": "AM080DXVGGH-SA",
+    "HVAC2_PDRSAug24_Activity": "replacement_activity",
+    "HVAC2_PDRSAug24_Air_Conditioner_type": "non_ducted_split_system",
+    "esc": "0",
+    "prc": "1,256",
+    "aes": "0",
+    "apdr": "119.69"
+  },
+  {
+    "tid": "HVAC2_F4_C_007",
+    "user-type": "Government",
+    "postcode": "2650",
+    "brand": "MITSUBISHI HEAVY INDUSTRIES",
+    "model": "FDC100VNA-W - SRK100ZR-W",
+    "HVAC2_PDRSAug24_Activity": "new_installation_activity",
+    "HVAC2_PDRSAug24_Air_Conditioner_type": "non_ducted_split_system",
+    "esc": "0",
+    "prc": "16",
+    "aes": "0",
+    "apdr": "1.59"
+  }
+]

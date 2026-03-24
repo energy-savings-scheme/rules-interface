@@ -14,6 +14,8 @@ export interface FirstFormType extends BaseInputFormType {
 export interface CalculateFormInputType extends FirstFormType {
   calculateFormSelector: string;
   resultSelector: string[];
+  productSelection?: boolean;
+  twoStep?: boolean;
   interceptPostcodeAPI?: InterceptPostcodeAPIOptions;
 }
 
@@ -26,7 +28,7 @@ export interface CalculateEligibilityFormInputType extends BaseInputFormType {
 
 export interface InterceptPostcodeAPIOptions {
   postcode: string;
-  state: PostcodeState.VALID | PostcodeState.INVALID;
+  state: PostcodeState.NSW | PostcodeState.VIC;
 }
 
 export interface PostCodeResponseType {

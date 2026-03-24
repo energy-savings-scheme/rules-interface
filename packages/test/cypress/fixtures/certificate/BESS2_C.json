@@ -1,0 +1,101 @@
+[
+  {
+    "tid": "BESS2_C_001",
+    "user-type": "Government",
+    "BESS2_PDRSAug24_PDRS__postcode": "2540",
+    "BESS2_PDRSAug24_installation_activity": "true",
+    "BESS2_PDRSAug24_usable_battery_capacity": "22",
+    "prc": "489",
+    "apdr": "47.08"
+  },
+  {
+    "tid": "BESS2_C_002",
+    "user-type": "Government",
+    "BESS2_PDRSAug24_PDRS__postcode": "2336",
+    "BESS2_PDRSAug24_installation_activity": "true",
+    "BESS2_PDRSAug24_usable_battery_capacity": "33",
+    "prc": "734",
+    "apdr": "70.61"
+  },
+  {
+    "tid": "BESS2_C_003",
+    "user-type": "Government",
+    "BESS2_PDRSAug24_PDRS__postcode": "2754",
+    "BESS2_PDRSAug24_installation_activity": "true",
+    "BESS2_PDRSAug24_usable_battery_capacity": "15",
+    "prc": "337",
+    "apdr": "32.1"
+  },
+  {
+    "tid": "BESS2_C_004",
+    "user-type": "Government",
+    "BESS2_PDRSAug24_PDRS__postcode": "2024",
+    "BESS2_PDRSAug24_installation_activity": "true",
+    "BESS2_PDRSAug24_usable_battery_capacity": "21",
+    "prc": "467",
+    "apdr": "44.94"
+  },
+  {
+    "tid": "BESS2_C_005",
+    "user-type": "Government",
+    "BESS2_PDRSAug24_PDRS__postcode": "2024",
+    "BESS2_PDRSAug24_installation_activity": "true",
+    "BESS2_PDRSAug24_usable_battery_capacity": "5",
+    "prc": "111",
+    "apdr": "10.7"
+  },
+  {
+    "tid": "BESS2_C_006",
+    "user-type": "Government",
+    "BESS2_PDRSAug24_PDRS__postcode": "2024",
+    "BESS2_PDRSAug24_installation_activity": "true",
+    "BESS2_PDRSAug24_usable_battery_capacity": "6.3",
+    "prc": "140",
+    "apdr": "13.48"
+  },
+  {
+    "tid": "BESS2_C_007",
+    "user-type": "Government",
+    "BESS2_PDRSAug24_PDRS__postcode": "2024",
+    "BESS2_PDRSAug24_installation_activity": "true",
+    "BESS2_PDRSAug24_usable_battery_capacity": "34",
+    "prc": "756",
+    "apdr": "72.75"
+  },
+  {
+    "tid": "BESS2_C_008",
+    "user-type": "Government",
+    "BESS2_PDRSAug24_PDRS__postcode": "2024",
+    "BESS2_PDRSAug24_installation_activity": "true",
+    "BESS2_PDRSAug24_usable_battery_capacity": "27",
+    "prc": "600",
+    "apdr": "57.78"
+  },
+  {
+    "tid": "BESS2_C_009",
+    "user-type": "Government",
+    "BESS2_PDRSAug24_PDRS__postcode": "2024",
+    "BESS2_PDRSAug24_installation_activity": "true",
+    "BESS2_PDRSAug24_usable_battery_capacity": "12",
+    "prc": "267",
+    "apdr": "25.68"
+  },
+  {
+    "tid": "BESS2_C_010",
+    "user-type": "Government",
+    "BESS2_PDRSAug24_PDRS__postcode": "2024",
+    "BESS2_PDRSAug24_installation_activity": "true",
+    "BESS2_PDRSAug24_usable_battery_capacity": "8",
+    "prc": "178",
+    "apdr": "17.12"
+  },
+  {
+    "tid": "BESS2_C_011",
+    "user-type": "Government",
+    "BESS2_PDRSAug24_PDRS__postcode": "2024",
+    "BESS2_PDRSAug24_installation_activity": "true",
+    "BESS2_PDRSAug24_usable_battery_capacity": "211",
+    "prc": "4,695",
+    "apdr": "451.51"
+  }
+]

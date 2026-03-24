@@ -56,6 +56,11 @@ Cypress.Commands.add('fillForm', (formSelector: string, data: { [key: string]: a
         }
       } else if (tag === 'textarea' || type === 'text' || type === 'email' || type === 'number') {
         cy.wrap(input).clear().type(value);
+        // we put network idle here to wait that request may occurred
+        // whenever we fill the text input field, especially when we input postcode field
+        // in residential and commercial AC. In this case we want the dropdown field
+        // BCA Climate zone fully rendered correctly.
+        cy.waitForNetworkIdle(500);
       } else if (type === 'checkbox' || type === 'radio') {
         cy.wrap(input).check(value);
       } else {
@@ -70,7 +75,7 @@ Cypress.Commands.add(
   (fieldNames: string[], data: { [key: string]: any }) => {
     // const result: { [key: string]: string } = {};
     fieldNames.forEach((field) => {
-      cy.task('log', `Validating field ${field}`)
+      cy.task('log', `Validating field ${field}`);
       cy.get(`[data-ui-name="${field}"]`).should('be.exist').and('have.text', data[field]);
     });
   },
@@ -82,11 +87,15 @@ Cypress.Commands.add('nextOrCalculate', (selector: string) => {
 
 Cypress.Commands.add('calculate', (input: CalculateFormInputType) => {
   // Open page and wait
-  cy.task('log', `Running test calculate. Test ID: ${input.id}`);
-
   cy.intercept('POST', '**/calculate').as('calculateAPI');
 
-  cy.visitAndExpectRegistry(input.uri);
+  // Some Activities don't have product selection in form
+  if (input.productSelection) {
+    cy.visitAndExpectRegistry(input.uri);
+  } else {
+    cy.visit(input.uri);
+  }
+
   if (input.interceptPostcodeAPI) {
     cy.interceptPostcodeAPI(input.interceptPostcodeAPI).as('getResponsePostcode');
   }
@@ -97,9 +106,13 @@ Cypress.Commands.add('calculate', (input: CalculateFormInputType) => {
   cy.wait('@getResponsePostcode');
 
   // Next form
-  cy.get(input.nextSelector).should('be.exist');
-  cy.fillForm(input.calculateFormSelector, input.data);
-  cy.nextOrCalculate(input.nextSelector);
+  // There're activities that only have 2 steps
+  // So we can continue to calcute step.
+  if (!input.twoStep) {
+    cy.get(input.nextSelector).should('be.exist');
+    cy.fillForm(input.calculateFormSelector, input.data);
+    cy.nextOrCalculate(input.nextSelector);
+  }
 
   // make sure to wait calculate api completed first before do assertation.
   cy.wait('@calculateAPI');
@@ -109,8 +122,6 @@ Cypress.Commands.add('calculate', (input: CalculateFormInputType) => {
 });
 
 Cypress.Commands.add('calculateEligibility', (input: CalculateEligibilityFormInputType) => {
-  cy.task('log', `Running test calculate eligibility. Test ID: ${input.id}`);
-
   cy.intercept('POST', '**/calculate').as('calculateAPI');
 
   let variables: { [key: string]: any }[] = [];
@@ -135,7 +146,7 @@ Cypress.Commands.add('calculateEligibility', (input: CalculateEligibilityFormInp
       });
 
       if (variableDetail) {
-        cy.task('log', `Checking ineligible field ${selector}`)
+        cy.task('log', `Checking ineligible field ${selector}`);
         // replace all <br />, <br> with \n
         // because <br />, <br> element in eligibility clause text from response api
         // are being replaced by \n when rendered in eligibility result page.

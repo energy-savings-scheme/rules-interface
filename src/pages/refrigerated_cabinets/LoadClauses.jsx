@@ -137,7 +137,7 @@ export default function LoadClausesRF2(props) {
                   customTitle={<h3 dangerouslySetInnerHTML={{ __html: 'Activity Requirements' }} />}
                   className="nsw-col-lg-10"
                 >
-                  <p>
+                  <p data-ui-name="eligibility-result-text">
                     {/* <h4 className="nsw-content-block__title" style={{ textAlign: 'center' }}> */}
                     Based on the information you have provided{' '}
                     {formatResultString(calculationResult)}.
@@ -166,7 +166,7 @@ export default function LoadClausesRF2(props) {
                               {item.metadata.display_question} :{' '}
                               {formatBooleanToString(item.form_value)}
                             </div>
-                            <p style={{ whiteSpace: 'pre-line' }}>
+                            <p data-ui-name={item.name} style={{ whiteSpace: 'pre-line' }}>
                               {item.metadata.eligibility_clause &&
                                 item.metadata.eligibility_clause.split('<br />').join('\n')}
                             </p>

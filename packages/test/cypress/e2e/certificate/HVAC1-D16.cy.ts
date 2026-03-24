@@ -1,35 +1,18 @@
-import { WorkBook } from 'xlsx';
+import { FormSelector, ResultSelector, PostcodeState, URLPath } from 'cypress/enum';
 
-import { DataExcel, SheetName, EXCEL_PATH } from 'cypress/excel';
-import {
-  FormSelector,
-  ErrorSelector,
-  ResultSelector,
-  PostcodeState,
-  ErrorMessage,
-  URLPath,
-} from 'cypress/enum';
+import dataFixtures from 'cypress/fixtures/certificate/HVAC1_D16_C.json';
 
 describe('Calculate HVAC1 ESC and PRC certificate.', () => {
-  const urlPath: string = URLPath.HVAC1_C;
+  const urlPath: string = URLPath.HVAC1_D16_C;
   const resultSelector = [
     ResultSelector.ESC_CERTIFICATE_SELECTOR,
     ResultSelector.PRC_CERTIFICATE_SELECTOR,
     ResultSelector.ENERGY_SAVING_SELECTOR,
     ResultSelector.PEAK_DEMAND_REDUCTION_SELECTOR,
   ];
-  let dataExcel: DataExcel;
 
-  before(() => {
-    cy.task<WorkBook>('getDataExcel', EXCEL_PATH).then((workbook) => {
-      dataExcel = new DataExcel(workbook, SheetName.HVAC1_C);
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet.', () => {
-    const rowsData = dataExcel.getData();
-
-    rowsData.forEach((rowData, index) => {
+  dataFixtures.forEach((rowData: Record<string, any>) => {
+    it(`Calculate certificate test ID: ${rowData['tid']}`, () => {
       cy.calculate({
         id: rowData['tid'],
         uri: urlPath,
@@ -43,12 +26,31 @@ describe('Calculate HVAC1 ESC and PRC certificate.', () => {
           state: PostcodeState.NSW,
         },
       });
-
-      if (index <= rowsData.length - 1) {
-        cy.get(FormSelector.RECALCULATE_SELECTOR).should('be.exist').click();
-      }
     });
   });
+  // it('Calculate certificate based on Excel sheet.', () => {
+  //   const rowsData = dataExcel.getData();
+
+  //   rowsData.forEach((rowData, index) => {
+  //     cy.calculate({
+  //       id: rowData['tid'],
+  //       uri: urlPath,
+  //       initialFormSelector: FormSelector.INITIAL_FORM_SELECTOR,
+  //       calculateFormSelector: FormSelector.CALCULATE_FORM_SELECTOR,
+  //       nextSelector: FormSelector.NEXT_SELECTOR,
+  //       data: rowData,
+  //       resultSelector: resultSelector,
+  //       interceptPostcodeAPI: {
+  //         postcode: rowData['postcode'],
+  //         state: PostcodeState.NSW,
+  //       },
+  //     });
+
+  //     if (index <= rowsData.length - 1) {
+  //       cy.get(FormSelector.RECALCULATE_SELECTOR).should('be.exist').click();
+  //     }
+  //   });
+  // });
 
   // it('Failed because of invalid postcode.', () => {
   //   const testId: string = "HVAC1_C_004";

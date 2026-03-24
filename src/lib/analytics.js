@@ -99,6 +99,20 @@ function analyticIsDisabled() {
   return isDisabled;
 }
 
+function populateBaseEventsParams() {
+  const sfFormId = (estimatorFormAnalytics.values.sf_formId || '').replace(/\//, '-').toLowerCase();
+  const pageLocation = new URL(window.location.href);
+  pageLocation.pathname = `/safeguard-estimator/${sfFormId}`;
+  pageLocation.hash = '';
+  const pageLocationCleanUrl = pageLocation.toString();
+  return {
+    page_location: pageLocationCleanUrl,
+    page_title: document.title,
+    page_referrer: document.referrer || null,
+    user_agent: navigator.userAgent,
+  };
+}
+
 export async function submitEstimatorFormAnalytics() {
   if (analyticIsDisabled()) {
     return;
@@ -110,6 +124,7 @@ export async function submitEstimatorFormAnalytics() {
       client_id: await estimatorFormAnalytics.getGTMClientId(),
       session_id: await estimatorFormAnalytics.getGTMSessionId(),
       params: {
+        ...populateBaseEventsParams(),
         ...estimatorFormAnalytics.values,
         submittedAt: moment().utc().format(),
       },
@@ -130,6 +145,7 @@ export async function submitFeedbackFormAnalytics(isHelpful) {
       client_id: await feedbackFormAnalytics.getGTMClientId(),
       session_id: await feedbackFormAnalytics.getGTMSessionId(),
       params: {
+        ...populateBaseEventsParams(),
         ...feedbackFormAnalytics.values,
         sf_isHelpful: isHelpful,
         submittedAt: moment().utc().format(),
