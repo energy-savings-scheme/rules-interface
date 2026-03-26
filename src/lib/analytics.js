@@ -102,7 +102,7 @@ function analyticIsDisabled() {
 function populateBaseEventsParams() {
   const sfFormId = (estimatorFormAnalytics.values.sf_formId || '').replace(/\//, '-').toLowerCase();
   const pageLocation = new URL(window.location.href);
-  pageLocation.pathname = `/ess/${sfFormId}`;
+  pageLocation.pathname = `/safeguard-estimator/${sfFormId}`;
   pageLocation.hash = '';
   const pageLocationCleanUrl = pageLocation.toString();
   return {
