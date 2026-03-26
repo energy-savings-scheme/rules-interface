@@ -3,7 +3,7 @@ import * as path from 'path';
 
 import { WorkSheet, utils, readFile } from 'xlsx';
 
-import {SheetName} from './excel';
+import { SheetName } from './excel';
 
 const EXCEL_PATH = 'cypress/fixtures/data.xlsx';
 const FIXTURE_FOLDER = 'cypress/fixtures';
@@ -11,7 +11,7 @@ const FIXTURE_FOLDER = 'cypress/fixtures';
 /**
  * Get headers from excel sheet where the header will be in row 2.
  * @param worksheet - worksheet instance
- * @returns 
+ * @returns
  */
 function getHeaders(worksheet: WorkSheet): string[] {
   const rows: string[][] = utils.sheet_to_json(worksheet, { header: 1, raw: false, defval: '' });
@@ -85,6 +85,4 @@ function transformExcelSheetToJson() {
   });
 }
 
-export {
-  transformExcelSheetToJson
-}
+export { transformExcelSheetToJson };

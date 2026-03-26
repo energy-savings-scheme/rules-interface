@@ -19,6 +19,7 @@ describe('Calculate F16 Electric ESC certificate.', () => {
         nextSelector: FormSelector.NEXT_SELECTOR,
         data: rowData,
         resultSelector: resultSelector,
+        productSelection: true,
         interceptPostcodeAPI: {
           postcode: rowData['postcode'],
           state: PostcodeState.NSW,

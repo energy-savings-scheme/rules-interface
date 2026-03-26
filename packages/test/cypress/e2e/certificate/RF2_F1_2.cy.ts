@@ -21,6 +21,7 @@ describe('Calculate RF2 ESC certificate.', () => {
         nextSelector: FormSelector.NEXT_SELECTOR,
         data: rowData,
         resultSelector: resultSelector,
+        productSelection: true,
         interceptPostcodeAPI: {
           postcode: rowData['postcode'],
           state: PostcodeState.NSW,
