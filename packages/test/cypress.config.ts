@@ -1,6 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig } from 'cypress';
 import { readFile, WorkBook } from 'xlsx';
+
+import { transformExcelSheetToJson } from 'cypress/transform';
 import 'dotenv/config';
 
 export default defineConfig({
@@ -30,9 +31,19 @@ export default defineConfig({
           }
         },
       });
+      on('before:run', (details) => {
+        transformExcelSheetToJson();
+      });
     },
     env: {},
   },
   env: {},
   trashAssetsBeforeRuns: false,
 });
+
+/* 
+TODO: 
+- Multiple reporters. (spec to console, and junit to xml file)
+- find a way to know which report file is failed.
+- what happened when the excel file does not exist.
+*/
