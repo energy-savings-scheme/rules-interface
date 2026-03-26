@@ -11,6 +11,10 @@ export default defineConfig({
     viewportHeight: 1280,
     video: true,
     retries: 2,
+    reporter: 'cypress-multi-reporters',
+    reporterOptions: {
+      configFile: 'reporter-config.json',
+    },
     setupNodeEvents(on, config) {
       // implement node event listeners here
       on('task', {
@@ -45,5 +49,4 @@ export default defineConfig({
 TODO: 
 - Multiple reporters. (spec to console, and junit to xml file)
 - find a way to know which report file is failed.
-- what happened when the excel file does not exist.
 */

@@ -44,12 +44,12 @@
     "postcode": "2423",
     "brand": "EMERALD ENERGY",
     "model": "ACSS25",
-    "HVAC1_PDRSAug24_Activity": "new_installation_activity",
+    "HVAC1_PDRSAug24_Activity": "replacement_activity",
     "HVAC1_PDRSAug24_Air_Conditioner_type": "non_ducted_split_system",
-    "esc": "8",
-    "prc": "48",
-    "aes": "7.85",
-    "apdr": "4.65"
+    "esc": "9",
+    "prc": "69",
+    "aes": "8.98",
+    "apdr": "6.58"
   },
   {
     "tid": "HVAC1_D16_C_005",
