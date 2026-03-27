@@ -47,6 +47,5 @@ export default defineConfig({
 
 /* 
 TODO: 
-- Multiple reporters. (spec to console, and junit to xml file)
-- find a way to know which report file is failed.
+- if possible find a way to know which report file is failed.
 */
