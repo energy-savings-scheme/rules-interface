@@ -1,7 +1,6 @@
-import { WorkBook } from 'xlsx';
-
-import { DataExcel, SheetName, EXCEL_PATH } from 'cypress/excel';
 import { FormSelector, ResultSelector, PostcodeState, URLPath } from 'cypress/enum';
+
+import dataFixtures from 'cypress/fixtures/certificate/BESS2_C.json';
 
 describe('Calculate BESS2 PRC certificate.', () => {
   const urlPath: string = URLPath.BESS2_C;
@@ -9,18 +8,9 @@ describe('Calculate BESS2 PRC certificate.', () => {
     ResultSelector.PRC_CERTIFICATE_SELECTOR,
     ResultSelector.PEAK_DEMAND_REDUCTION_SELECTOR,
   ];
-  let dataExcel: DataExcel;
 
-  before(() => {
-    cy.task<WorkBook>('getDataExcel', EXCEL_PATH).then((workbook) => {
-      dataExcel = new DataExcel(workbook, SheetName.BESS2_C);
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet.', () => {
-    const rowsData = dataExcel.getData();
-
-    rowsData.forEach((rowData, index) => {
+  dataFixtures.forEach((rowData: Record<string, any>) => {
+    it(`Calculate certificate test ID: ${rowData['tid']}`, () => {
       cy.calculate({
         id: rowData['tid'],
         uri: urlPath,
@@ -35,10 +25,6 @@ describe('Calculate BESS2 PRC certificate.', () => {
           state: PostcodeState.NSW,
         },
       });
-
-      if (index <= rowsData.length - 1) {
-        cy.get(FormSelector.RECALCULATE_SELECTOR).should('be.exist').click();
-      }
     });
   });
 });

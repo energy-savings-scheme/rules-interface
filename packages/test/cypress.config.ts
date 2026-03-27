@@ -9,6 +9,7 @@ export default defineConfig({
     viewportWidth: 960,
     viewportHeight: 1280,
     video: true,
+    retries: 2,
     setupNodeEvents(on, config) {
       // implement node event listeners here
       on('task', {

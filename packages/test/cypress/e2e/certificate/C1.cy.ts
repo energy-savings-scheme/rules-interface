@@ -1,7 +1,6 @@
-import { WorkBook } from 'xlsx';
-
-import { DataExcel, SheetName, EXCEL_PATH } from 'cypress/excel';
 import { FormSelector, ResultSelector, PostcodeState, URLPath } from 'cypress/enum';
+
+import dataFixtures from 'cypress/fixtures/certificate/C1_C.json';
 
 describe('Calculate C1 ESC certificate.', () => {
   const urlPath: string = URLPath.C1_C;
@@ -9,18 +8,9 @@ describe('Calculate C1 ESC certificate.', () => {
     ResultSelector.ESC_CERTIFICATE_SELECTOR,
     ResultSelector.ENERGY_SAVING_SELECTOR,
   ];
-  let dataExcel: DataExcel;
 
-  before(() => {
-    cy.task<WorkBook>('getDataExcel', EXCEL_PATH).then((workbook) => {
-      dataExcel = new DataExcel(workbook, SheetName.C1_C);
-    });
-  });
-
-  it('Calculate certificate based on Excel sheet.', () => {
-    const rowsData = dataExcel.getData();
-
-    rowsData.forEach((rowData, index) => {
+  dataFixtures.forEach((rowData: Record<string, any>) => {
+    it(`Calculate certificate test ID: ${rowData['tid']}`, () => {
       cy.calculate({
         id: rowData['tid'],
         uri: urlPath,
@@ -35,10 +25,6 @@ describe('Calculate C1 ESC certificate.', () => {
           state: PostcodeState.NSW,
         },
       });
-
-      if (index <= rowsData.length - 1) {
-        cy.get(FormSelector.RECALCULATE_SELECTOR).should('be.exist').click();
-      }
     });
   });
 });

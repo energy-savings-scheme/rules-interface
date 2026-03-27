@@ -1,17 +1,9 @@
-import { WorkBook } from 'xlsx';
-
-import { DataExcel, SheetName, EXCEL_PATH } from 'cypress/excel';
 import { FormSelector, EligibilityResultText, URLPath } from 'cypress/enum';
 
-describe('Calculate HVAC1 Eligibility.', () => {
-  const urlPath: string = URLPath.HVAC1_E;
-  let dataExcel: DataExcel;
+import dataFixtures from 'cypress/fixtures/eligibility/HVAC1_D16_E.json';
 
-  before(() => {
-    cy.task<WorkBook>('getDataExcel', EXCEL_PATH).then((workbook) => {
-      dataExcel = new DataExcel(workbook, SheetName.HVAC1_E);
-    });
-  });
+describe('Calculate HVAC1 Eligibility.', () => {
+  const urlPath: string = URLPath.HVAC1_D16_E;
 
   beforeEach(() => {
     cy.intercept('**/variables/**', { middleware: true }, (req) => {
@@ -25,10 +17,8 @@ describe('Calculate HVAC1 Eligibility.', () => {
     }).as('getVariableDetail');
   });
 
-  it('Successfully calculate eligibility with eligible or ineligible result.', () => {
-    const rowsData = dataExcel.getData();
-
-    rowsData.forEach((rowData, index) => {
+  dataFixtures.forEach((rowData: Record<string, any>) => {
+    it(`Successfully calculate residential ac eligibility with eligible or ineligible result. Test ID: ${rowData['tid']}`, () => {
       let ineligibleSelectors: string[] = [];
       if (rowData['ineligibleQuestions']) {
         ineligibleSelectors = rowData['ineligibleQuestions'].split(',');
@@ -48,44 +38,6 @@ describe('Calculate HVAC1 Eligibility.', () => {
         eligibilityResultText: eligibleResult,
         ineligibleSelectors: ineligibleSelectors,
       });
-
-      if (index <= rowsData.length - 1) {
-        // reload page needed to trigger the **/variables/** API again.
-        // because we need the network request triggered in order to intercept the request.
-        // detail on beforeEach above.
-        cy.reload();
-      }
     });
   });
-
-  // it('Failed because required fields are empty.', () => {
-  //   const testId: string = "HVAC1_E_003";
-  //   const rowData = dataExcel.getRowData(testId);
-  //   const requiredFields: string[] = rowData["requiredFields"].split(",");
-
-  //   cy.visit(urlPath);
-  //   cy.get(FormSelector.USER_TYPE_SELECTOR).select("Government");
-  //   cy.fillForm(FormSelector.CALCULATE_FORM_SELECTOR, rowData);
-  //   cy.nextOrCalculate(FormSelector.NEXT_SELECTOR);
-
-  //   requiredFields.forEach((selector) => {
-  //     cy.get(`[data-ui-name="${selector}"]`).should("be.exist");
-  //   })
-  // })
-
-  // it('Failed because Openfisca server unreachable.', () => {
-  //   const testId: string = "HVAC1_E_004";
-  //   const rowData = dataExcel.getRowData(testId);
-
-  //   cy.visit(urlPath);
-  //   cy.get(FormSelector.USER_TYPE_SELECTOR).select("Government");
-  //   cy.fillForm(FormSelector.CALCULATE_FORM_SELECTOR, rowData);
-  //   cy.intercept("POST", "**/calculate", {forceNetworkError: true});
-  //   cy.nextOrCalculate(FormSelector.NEXT_SELECTOR);
-
-  //   cy.get(`[data-ui-name="error-calculation"]`)
-  //     .should("be.exist")
-  //     .find("p")
-  //     .and("have.text", ErrorMessage.UnreachableOpenfiscaServer);
-  // })
 });
