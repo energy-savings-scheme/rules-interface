@@ -21,6 +21,7 @@ describe('Calculate HVAC1 ESC and PRC certificate.', () => {
         nextSelector: FormSelector.NEXT_SELECTOR,
         data: rowData,
         resultSelector: resultSelector,
+        productSelection: true,
         interceptPostcodeAPI: {
           postcode: rowData['postcode'],
           state: PostcodeState.NSW,

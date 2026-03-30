@@ -11,7 +11,9 @@
   },
   "devDependencies": {
     "cypress": "^15.8.1",
+    "cypress-multi-reporters": "^2.0.5",
     "dotenv": "^17.2.3",
+    "mocha-junit-reporter": "^2.2.1",
     "typescript": "^5.9.3"
   },
   "dependencies": {

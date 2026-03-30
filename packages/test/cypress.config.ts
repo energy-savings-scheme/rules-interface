@@ -1,6 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig } from 'cypress';
 import { readFile, WorkBook } from 'xlsx';
+
+import { transformExcelSheetToJson } from 'cypress/transform';
 import 'dotenv/config';
 
 export default defineConfig({
@@ -10,6 +11,10 @@ export default defineConfig({
     viewportHeight: 1280,
     video: true,
     retries: 2,
+    reporter: 'cypress-multi-reporters',
+    reporterOptions: {
+      configFile: 'reporter-config.json',
+    },
     setupNodeEvents(on, config) {
       // implement node event listeners here
       on('task', {
@@ -30,9 +35,17 @@ export default defineConfig({
           }
         },
       });
+      on('before:run', (details) => {
+        transformExcelSheetToJson();
+      });
     },
     env: {},
   },
   env: {},
   trashAssetsBeforeRuns: false,
 });
+
+/* 
+TODO: 
+- if possible find a way to know which report file is failed.
+*/

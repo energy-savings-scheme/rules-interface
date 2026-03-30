@@ -86,8 +86,8 @@ Cypress.Commands.add('nextOrCalculate', (selector: string) => {
 });
 
 Cypress.Commands.add('calculate', (input: CalculateFormInputType) => {
-  // Open page and wait
   cy.intercept('POST', '**/calculate').as('calculateAPI');
+  cy.intercept('POST', '**/metadata').as('getMetadata');
 
   // Some Activities don't have product selection in form
   if (input.productSelection) {
@@ -102,8 +102,11 @@ Cypress.Commands.add('calculate', (input: CalculateFormInputType) => {
 
   // Fill first form
   cy.fillForm(input.initialFormSelector, input.data);
+  if (input.productSelection) {
+    cy.wait('@getMetadata');
+  }
   cy.nextOrCalculate(input.nextSelector);
-  cy.wait('@getResponsePostcode');
+  cy.wait(['@getResponsePostcode']);
 
   // Next form
   // There're activities that only have 2 steps
