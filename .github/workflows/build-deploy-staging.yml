@@ -59,7 +59,7 @@ jobs:
           working-directory: packages/test
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 60
-          browser: chrome
+          browser: chrome-for-testing
         env:
           CYPRESS_BASE_URL: http://localhost:3000
 
