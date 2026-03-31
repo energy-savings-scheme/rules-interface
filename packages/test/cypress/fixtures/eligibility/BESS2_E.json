@@ -1,0 +1,36 @@
+[
+  {
+    "tid": "BESS2_E_001",
+    "user-type": "Government",
+    "BESS2_V5Nov24_demand_response_contract": "true",
+    "BESS2_V5Nov24_existing_solar_battery": "true",
+    "BESS2_V5Nov24_solar_panels_existing_address": "true",
+    "BESS2_V5Nov24_life_support_equipment": "true",
+    "BESS2_V5Nov24_engaged_ACP": "true",
+    "BESS2_V5Nov24_battery_capacity": "true",
+    "BESS2_V5Nov24_length_battery_warranty": "true",
+    "BESS2_V5Nov24_temperature_range_warranty": "true",
+    "BESS2_V5Nov24_minimum_throughput_warranty_before_April_2026": "true",
+    "BESS2_V5Nov24_internet_connectable": "true",
+    "BESS2_V5Nov24_battery_controllable_third_party": "true",
+    "BESS2_V5Nov24_approved_battery_list": "true",
+    "ineligibleQuestions": ""
+  },
+  {
+    "tid": "BESS2_E_002",
+    "user-type": "Government",
+    "BESS2_V5Nov24_demand_response_contract": "true",
+    "BESS2_V5Nov24_existing_solar_battery": "false",
+    "BESS2_V5Nov24_solar_panels_existing_address": "false",
+    "BESS2_V5Nov24_life_support_equipment": "true",
+    "BESS2_V5Nov24_engaged_ACP": "true",
+    "BESS2_V5Nov24_battery_capacity": "true",
+    "BESS2_V5Nov24_length_battery_warranty": "true",
+    "BESS2_V5Nov24_temperature_range_warranty": "true",
+    "BESS2_V5Nov24_minimum_throughput_warranty_before_April_2026": "true",
+    "BESS2_V5Nov24_internet_connectable": "true",
+    "BESS2_V5Nov24_battery_controllable_third_party": "true",
+    "BESS2_V5Nov24_approved_battery_list": "true",
+    "ineligibleQuestions": "BESS2_V5Nov24_existing_solar_battery,BESS2_V5Nov24_solar_panels_existing_address"
+  }
+]

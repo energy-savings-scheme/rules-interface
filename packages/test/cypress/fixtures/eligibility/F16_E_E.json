@@ -1,0 +1,38 @@
+[
+  {
+    "tid": "F16_E_E_001",
+    "user-type": "Government",
+    "F16_electric_PDRSDec24__equipment_replaced": "true",
+    "F16_electric_PDRSDec24__existing_equipment_removed": "true",
+    "F16_electric_PDRSDec24__equipment_installed_on_site": "true",
+    "F16_electric_PDRSDec24__qualified_install_removal": "true",
+    "F16_electric_PDRSDec24__split_system": "false",
+    "F16_electric_PDRSDec24__safety_requirement": "",
+    "F16_electric_PDRSDec24__engaged_ACP": "true",
+    "F16_electric_PDRSDec24__minimum_payment": "true",
+    "F16_electric_PDRSDec24__building_BCA_class_1_or_4": "false",
+    "F16_electric_PDRSDec24__4234_certified": "true",
+    "F16_electric_PDRSDec24__minimum_annual_energy": "true",
+    "F16_electric_PDRSDec24__storage_volume": "false",
+    "F16_electric_PDRSDec24__certified": "",
+    "ineligibleQuestions": ""
+  },
+  {
+    "tid": "F16_E_E_002",
+    "user-type": "Government",
+    "F16_electric_PDRSDec24__equipment_replaced": "false",
+    "F16_electric_PDRSDec24__existing_equipment_removed": "false",
+    "F16_electric_PDRSDec24__equipment_installed_on_site": "false",
+    "F16_electric_PDRSDec24__qualified_install_removal": "false",
+    "F16_electric_PDRSDec24__split_system": "true",
+    "F16_electric_PDRSDec24__safety_requirement": "false",
+    "F16_electric_PDRSDec24__engaged_ACP": "false",
+    "F16_electric_PDRSDec24__minimum_payment": "false",
+    "F16_electric_PDRSDec24__building_BCA_class_1_or_4": "true",
+    "F16_electric_PDRSDec24__4234_certified": "false",
+    "F16_electric_PDRSDec24__minimum_annual_energy": "false",
+    "F16_electric_PDRSDec24__storage_volume": "true",
+    "F16_electric_PDRSDec24__certified": "false",
+    "ineligibleQuestions": "F16_electric_PDRSDec24__equipment_replaced,F16_electric_PDRSDec24__existing_equipment_removed,F16_electric_PDRSDec24__equipment_installed_on_site,F16_electric_PDRSDec24__qualified_install_removal,F16_electric_PDRSDec24__safety_requirement,F16_electric_PDRSDec24__engaged_ACP,F16_electric_PDRSDec24__minimum_payment,F16_electric_PDRSDec24__building_BCA_class_1_or_4,F16_electric_PDRSDec24__4234_certified,F16_electric_PDRSDec24__minimum_annual_energy,F16_electric_PDRSDec24__certified"
+  }
+]

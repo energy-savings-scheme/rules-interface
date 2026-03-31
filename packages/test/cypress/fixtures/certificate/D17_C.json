@@ -1,0 +1,90 @@
+[
+  {
+    "tid": "D17_C_001",
+    "user-type": "Government",
+    "postcode": "2000",
+    "brand": "DUX",
+    "model": "200DHA20",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_medium",
+    "esc": "26",
+    "aes": "25.09"
+  },
+  {
+    "tid": "D17_C_002",
+    "user-type": "Government",
+    "postcode": "2358",
+    "brand": "SOLARBUILD",
+    "model": "NA31-210A",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_medium",
+    "esc": "29",
+    "aes": "26.73"
+  },
+  {
+    "tid": "D17_C_003",
+    "user-type": "Government",
+    "postcode": "2476",
+    "brand": "SOLTARO",
+    "model": "HPWSTR002",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_medium",
+    "esc": "27",
+    "aes": "25.47"
+  },
+  {
+    "tid": "D17_C_004",
+    "user-type": "Government",
+    "postcode": "2148",
+    "brand": "EMERALD ENERGY",
+    "model": "EE-HWS-A1-220",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_medium",
+    "esc": "29",
+    "aes": "27.78"
+  },
+  {
+    "tid": "D17_C_005",
+    "user-type": "Government",
+    "postcode": "2148",
+    "brand": "IHEAT",
+    "model": "PASHW008-180LD-NM",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_medium",
+    "esc": "26",
+    "aes": "25.28"
+  },
+  {
+    "tid": "D17_C_006",
+    "user-type": "Government",
+    "postcode": "2372",
+    "brand": "RHEEM",
+    "model": "551180",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_small",
+    "esc": "18",
+    "aes": "16.56"
+  },
+  {
+    "tid": "D17_C_007",
+    "user-type": "Government",
+    "postcode": "2352",
+    "brand": "DUX",
+    "model": "200DHA20",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_medium",
+    "esc": "27",
+    "aes": "25.09"
+  },
+  {
+    "tid": "D17_C_008",
+    "user-type": "Government",
+    "postcode": "2024",
+    "brand": "ECONOVA",
+    "model": "ECON-260RVW",
+    "D17_ESSJun24_replacement_activity": "true",
+    "D17_ESSJun24_system_size": "system_size_medium",
+    "esc": "28",
+    "aes": "27.34"
+  }
+]
