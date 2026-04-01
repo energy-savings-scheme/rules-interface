@@ -1,9 +1,13 @@
 import { defineConfig } from 'cypress';
 import { readFile, WorkBook } from 'xlsx';
 
-import { transformExcelSheetToJson } from 'cypress/transform';
-import 'dotenv/config';
+import { configDotenv } from 'dotenv'
 
+configDotenv();
+
+import { transformExcelSheetToJson } from 'cypress/transform';
+import { sendReport } from 'cypress/email';
+import { SummaryReport, TestFailureDetail } from 'cypress/type';
 
 export default defineConfig({
   e2e: {
@@ -40,55 +44,47 @@ export default defineConfig({
       on('before:run', (details: Cypress.BeforeRunDetails): void => {
         transformExcelSheetToJson();
       });
-      on('after:run', (results: CypressCommandLine.CypressRunResult | CypressCommandLine.CypressFailedRunResult): void => {
-        /**
-         * We can provide
-         * - Start At : results.startedTestsAt
-         * - End At : results.endedTestsAt
-         * - Browser : results.browserName - results.browserVersion
-         * - Total duration : results.totalDuration (in ms)
-         * - Total tests : results.totalTests
-         * - Total passed : results.totalPassed
-         * - Total failed : results.totalFailed
-         * - Failures : custom and optional if we have any test that failed.
-         *    - file : results.runs[i].spec.relative
-         *    - duration : results.runs[i].spec.duration (in ms)
-         *    - test title : results.runs[i].tests[j].title (["Calculate D18 ESC certificate.", "Calculate certificate test ID: D18_C_002"])
-         *    - error message : results.runs[i].tests[j].displayError
-         */
+      on('after:run', async (results: CypressCommandLine.CypressRunResult | CypressCommandLine.CypressFailedRunResult): Promise<void> => {
+        const sendReportToEmail = process.env['SEND_REPORT_TO_EMAIL'] == 'true' || false
         if ('status' in results) {
           console.log(JSON.stringify(results, null, 2))
           return
         }
 
-        const summary: Record<string, any> = {}
-        summary['started_at'] = results.startedTestsAt
-        summary['ended_at'] = results.endedTestsAt
-        summary['browser'] = `${results.browserName} - ${results.browserVersion}`
-        summary['duration'] = `${Math.round(results.totalDuration / 1000)} seconds`
-        summary['total_tests'] = results.totalTests
-        summary['total_passed_tests'] = results.totalPassed
-        summary['total_failed_tests'] = results.totalFailed
-        summary['failures'] = []
+        const summary: SummaryReport = {
+          start: results.startedTestsAt,
+          end: results.endedTestsAt,
+          browser: `${results.browserName} - ${results.browserVersion}`,
+          duration: `${Math.round(results.totalDuration / 1000)} seconds`,
+          totalTest: results.totalTests,
+          totalPassedTest: results.totalPassed,
+          totalFailedTest: results.totalFailed
+        }
+
+        const failures: TestFailureDetail[] = []
         if (results.totalFailed > 0) {
-          const rundetails: Record<string, any> = results.runs.filter((run: CypressCommandLine.RunResult) => {
+          const rundetails: CypressCommandLine.RunResult[] = results.runs.filter((run: CypressCommandLine.RunResult) => {
             return run['stats']['failures'] > 0
           })
           rundetails.forEach((runDetail: CypressCommandLine.RunResult) => {
             runDetail.tests.forEach((testDetail: CypressCommandLine.TestResult) => {
               if (testDetail.state === "failed") {
-                const failureDetail: Record<string, any> = {}
-                failureDetail['file'] = runDetail.spec.relative
-                failureDetail['duration'] = runDetail.stats.duration
-                failureDetail['title'] = testDetail.title.join(' - ')
-                failureDetail['error_message'] = testDetail.displayError
-                summary['failures'].push(failureDetail)
+                const failureDetail: TestFailureDetail = {
+                  file: runDetail.spec.relative,
+                  duration: runDetail.stats.duration ? `${Math.round(runDetail.stats.duration / 1000)} seconds` : '-',
+                  title: testDetail.title.join(' - ')
+                }
+                failures.push(failureDetail)
               }
             })
           })
         }
 
-        console.log(JSON.stringify(summary, null, 2))
+        console.log('FAILURES : ')
+        console.log(JSON.stringify(failures, null, 2))
+        if (sendReportToEmail) {
+          await sendReport(summary, failures)
+        }
       })
     },
     env: {},

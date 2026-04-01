@@ -3,9 +3,13 @@ import * as path from 'path';
 
 import { WorkSheet, utils, readFile, WorkBook } from 'xlsx';
 
+import {configDotenv} from 'dotenv';
+
 import { SheetName } from './excel';
 
-const EXCEL_PATH = 'cypress/fixtures/data.xlsx';
+configDotenv();
+
+const EXCEL_PATH = process.env['CYPRESS_EXCEL_PATH'] || 'cypress/fixtures/data.xlsx';
 const FIXTURE_FOLDER = 'cypress/fixtures';
 
 /**
