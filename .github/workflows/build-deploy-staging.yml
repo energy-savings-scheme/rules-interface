@@ -71,6 +71,7 @@ jobs:
           name: cypress-screenshots
           path: packages/test/cypress/screenshots/
           if-no-files-found: ignore
+          retention-days: 7
 
       - name: Upload videos
         uses: actions/upload-artifact@v6
@@ -79,6 +80,7 @@ jobs:
           name: cypress-videos
           path: packages/test/cypress/videos/
           if-no-files-found: ignore
+          retention-days: 7
 
       - name: Tear down docker
         if: always()

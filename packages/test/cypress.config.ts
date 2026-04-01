@@ -72,7 +72,8 @@ export default defineConfig({
                 const failureDetail: TestFailureDetail = {
                   file: runDetail.spec.relative,
                   duration: runDetail.stats.duration ? `${Math.round(runDetail.stats.duration / 1000)} seconds` : '-',
-                  title: testDetail.title.join(' - ')
+                  title: testDetail.title.join(' - '),
+                  error: testDetail.displayError
                 }
                 failures.push(failureDetail)
               }
@@ -92,8 +93,3 @@ export default defineConfig({
   env: {},
   trashAssetsBeforeRuns: false,
 });
-
-/* 
-TODO: 
-- if possible find a way to know which report file is failed.
-*/

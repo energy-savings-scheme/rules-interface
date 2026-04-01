@@ -52,4 +52,5 @@ export interface TestFailureDetail {
   file: string
   duration: string
   title: string
+  error: string | null
 }

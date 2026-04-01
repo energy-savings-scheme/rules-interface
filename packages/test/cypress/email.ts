@@ -1,4 +1,4 @@
-import { EmailClient, EmailMessage, EmailSendOptionalParams, EmailSendResponse, KnownEmailSendStatus } from '@azure/communication-email';
+import { EmailClient, EmailSendResponse, KnownEmailSendStatus } from '@azure/communication-email';
 import type { SimplePollerLike, OperationState } from "@azure/core-lro";
 
 import { configDotenv } from 'dotenv';
@@ -32,34 +32,44 @@ export async function sendReport(summaryReport: SummaryReport, failures: TestFai
   const nameRecipient = process.env['RECIPIENT_NAME'] || ''
 
   const messageRows = Object.entries(summaryReport)
-    .map(([key, value]) => `${key.padEnd(20)}: ${value}`)
-    .join('\n  ');
+    .map(([key, value]) => `
+      <tr>
+        <td style="border-bottom: 1px solid #eee; font-weight: bold; width: 200px; text-transform: capitalize;">${key}</td>
+        <td style="border-bottom: 1px solid #eee; padding-left: 20px;">${value}</td>
+      </tr>`)
+    .join('');
 
-  let failureRows = '---';
+  let failureRows = '-----';
   if (failures.length > 0) {
     failureRows = failures
     .map((failure: TestFailureDetail) => {
-      return Object.entries(failure)
-        .map(([key, value]) => `${key.padEnd(20)}: ${value}`)
-        .join('\n  ');
+      const rows: string = Object.entries(failure)
+        .map(([key, value]) => `
+          <tr>
+            <td style="border-bottom: 1px solid #eee; font-weight: bold; width: 200px; text-transform: capitalize;">${key}</td>
+            <td style="border-bottom: 1px solid #eee; padding-left: 20px;">${value}</td>
+          </tr>`)
+        .join('');
+      
+      return `
+        <table style="width: 100%; border-collapse: collapse; margin-bottom:20px;">
+          ${rows}
+        </table>
+      `
     })
-    .join('\n  -------------------------------------------\n  ');
+    .join('');
   }
 
-  const plainTextContent = `
-  This is the summary automated testing report:
-  -------------------------------------------
-  ${messageRows}
-  -------------------------------------------
-
-  Failures:
-  -------------------------------------------
-  ${failureRows}
-  -------------------------------------------
-
-  Regards,
-  Azure VM System.
-  `;
+  const htmlContent: string = `
+    <div style="max-width: 800px; margin: auto; border: 1px solid #ddd; padding: 20px;">
+      <h2 style="font-family: Arial;">This is the summary automated testing report:</h2>
+      <table style="width: 100%; border-collapse: collapse;">
+        ${messageRows}
+      </table>
+      <h2 style="font-family: Arial;">Failed Tests:</h2>
+      ${failureRows}
+    </div>
+  `
 
   if (senderDomain) {
     const POLLER_WAIT_TIME = 10
@@ -68,7 +78,7 @@ export async function sendReport(summaryReport: SummaryReport, failures: TestFai
         senderAddress: senderDomain,
         content: {
           subject: subject,
-          plainText: plainTextContent,
+          html: htmlContent,
         },
         recipients: {
           to: [
