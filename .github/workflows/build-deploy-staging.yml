@@ -53,6 +53,11 @@ jobs:
         working-directory: packages/test
         run: yarn install --frozen-lockfile
 
+      - name: Cleanup old Cypress assets
+        run: |
+          rm -rf cypress/screenshots/*
+          rm -rf cypress/videos/*
+
       - name: Run Cypress
         uses: cypress-io/github-action@v6
         with:

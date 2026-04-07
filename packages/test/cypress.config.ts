@@ -1,3 +1,6 @@
+import fs from "fs";
+import { readdir } from "fs/promises";
+
 import { defineConfig } from 'cypress';
 import { readFile, WorkBook } from 'xlsx';
 
@@ -9,6 +12,18 @@ import { transformExcelSheetToJson } from 'cypress/transform';
 import { sendReport } from 'cypress/email';
 import { SummaryReport, TestFailureDetail } from 'cypress/type';
 
+async function listFiles(folderPath: string): Promise<void> {
+  try {
+    const files = await readdir(folderPath);
+
+    for (const file of files) {
+      console.log(file);
+    }
+  } catch (err) {
+    console.error("Error reading directory:", err);
+  }
+}
+
 export default defineConfig({
   e2e: {
     baseUrl: process.env.CYPRESS_BASE_URL,
@@ -17,9 +32,15 @@ export default defineConfig({
     defaultBrowser: 'chrome',
     video: true,
     retries: 2,
-    reporter: 'cypress-multi-reporters',
+    // reporter: 'cypress-multi-reporters',
+    // reporterOptions: {
+    //   configFile: 'reporter-config.json',
+    // },
+    reporter: "mochawesome",
     reporterOptions: {
-      configFile: 'reporter-config.json',
+      reportDir: "cypress/reports",
+      reportFilename: "[name]-[status]",
+      json: false
     },
     setupNodeEvents(on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) {
       // implement node event listeners here
@@ -50,6 +71,10 @@ export default defineConfig({
           console.log(JSON.stringify(results, null, 2))
           return
         }
+
+        const isDir = fs.existsSync("cypress/reports") && fs.lstatSync("cypress/reports").isDirectory();
+        console.log(`IS DIRECTORY: ${isDir}`)
+        await listFiles("cypress/reports");
 
         const summary: SummaryReport = {
           start: results.startedTestsAt,
