@@ -3,13 +3,10 @@ import * as path from 'path';
 
 import { WorkSheet, utils, readFile, WorkBook } from 'xlsx';
 
-import {configDotenv} from 'dotenv';
-
 import { SheetName } from './excel';
 
-configDotenv();
+import config from 'cypress/config';
 
-const EXCEL_PATH = process.env['CYPRESS_EXCEL_PATH'] || 'cypress/fixtures/data.xlsx';
 const FIXTURE_FOLDER = 'cypress/fixtures';
 
 /**
@@ -30,7 +27,7 @@ function getHeaders(worksheet: WorkSheet): string[] {
 function getData(sheetName: string): Record<string, any>[] {
   let wb: WorkBook;
   try {
-    wb = readFile(EXCEL_PATH);
+    wb = readFile(config.excelPath);
   } catch (e) {
     throw new Error(`Failed to load data for test. ${e}`);
   }

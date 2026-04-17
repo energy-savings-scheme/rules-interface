@@ -1,46 +1,27 @@
-import fs from "fs";
-import { readdir } from "fs/promises";
-
 import { defineConfig } from 'cypress';
 import { readFile, WorkBook } from 'xlsx';
 
-import { configDotenv } from 'dotenv'
-
-configDotenv();
-
 import { transformExcelSheetToJson } from 'cypress/transform';
-import { sendReport } from 'cypress/email';
-import { SummaryReport, TestFailureDetail } from 'cypress/type';
+import { uploadToGithub, generateSummaryReport, sendEmail } from 'cypress/report';
+import { TestFailureDetail } from 'cypress/type';
+import appConfig from 'cypress/config';
 
-async function listFiles(folderPath: string): Promise<void> {
-  try {
-    const files = await readdir(folderPath);
-
-    for (const file of files) {
-      console.log(file);
-    }
-  } catch (err) {
-    console.error("Error reading directory:", err);
-  }
-}
 
 export default defineConfig({
   e2e: {
-    baseUrl: process.env.CYPRESS_BASE_URL,
+    baseUrl: appConfig.baseUrl,
     viewportWidth: 960,
     viewportHeight: 1280,
     defaultBrowser: 'chrome',
     video: true,
     retries: 2,
-    // reporter: 'cypress-multi-reporters',
-    // reporterOptions: {
-    //   configFile: 'reporter-config.json',
-    // },
     reporter: "mochawesome",
     reporterOptions: {
       reportDir: "cypress/reports",
-      reportFilename: "[name]-[status]",
-      json: false
+      reportFilename: "[name]",
+      code: false,
+      json: true,
+      html: false,
     },
     setupNodeEvents(on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) {
       // implement node event listeners here
@@ -66,24 +47,10 @@ export default defineConfig({
         transformExcelSheetToJson();
       });
       on('after:run', async (results: CypressCommandLine.CypressRunResult | CypressCommandLine.CypressFailedRunResult): Promise<void> => {
-        const sendReportToEmail = process.env['SEND_REPORT_TO_EMAIL'] == 'true' || false
+        // test failed, it will return CypressFailedRunResult as the results, and it will have "status" property.
         if ('status' in results) {
           console.log(JSON.stringify(results, null, 2))
           return
-        }
-
-        const isDir = fs.existsSync("cypress/reports") && fs.lstatSync("cypress/reports").isDirectory();
-        console.log(`IS DIRECTORY: ${isDir}`)
-        await listFiles("cypress/reports");
-
-        const summary: SummaryReport = {
-          start: results.startedTestsAt,
-          end: results.endedTestsAt,
-          browser: `${results.browserName} - ${results.browserVersion}`,
-          duration: `${Math.round(results.totalDuration / 1000)} seconds`,
-          totalTest: results.totalTests,
-          totalPassedTest: results.totalPassed,
-          totalFailedTest: results.totalFailed
         }
 
         const failures: TestFailureDetail[] = []
@@ -105,11 +72,19 @@ export default defineConfig({
             })
           })
         }
-
         console.log('FAILURES : ')
         console.log(JSON.stringify(failures, null, 2))
-        if (sendReportToEmail) {
-          await sendReport(summary, failures)
+
+        const filepath: string = await generateSummaryReport();
+        
+        let githubUrl: string | undefined;
+        if (appConfig.uploadReportToGithub) {
+          githubUrl = await uploadToGithub(filepath);
+        }
+
+        if (appConfig.sendReportToEmail) {
+          const status = results.totalFailed == 0 ? "PASSED" : "FAILED";
+          await sendEmail(status, filepath, githubUrl);
         }
       })
     },

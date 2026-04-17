@@ -38,16 +38,6 @@ export interface PostCodeResponseType {
   status: string;
 }
 
-export interface SummaryReport {
-  start: string
-  end: string
-  browser: string
-  duration: string
-  totalTest: number
-  totalPassedTest: number
-  totalFailedTest: number
-}
-
 export interface TestFailureDetail {
   file: string
   duration: string

@@ -12,15 +12,16 @@
   "devDependencies": {
     "@types/mochawesome": "^6.2.5",
     "cypress": "^15.8.1",
-    "cypress-multi-reporters": "^2.0.5",
     "dotenv": "^17.3.1",
-    "mocha-junit-reporter": "^2.2.1",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.1.1",
+    "mochawesome-report-generator": "^6.3.2",
     "typescript": "^5.9.3"
   },
   "dependencies": {
     "@azure/communication-email": "^1.1.0",
+    "@octokit/rest": "20",
     "cypress-network-idle": "^1.15.0",
-    "mochawesome": "^7.1.4",
     "xlsx": "^0.18.5"
   }
 }
