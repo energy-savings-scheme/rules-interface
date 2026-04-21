@@ -3,8 +3,7 @@ import * as path from 'path';
 
 import { WorkSheet, utils, readFile, WorkBook } from 'xlsx';
 
-import { SheetName } from './excel';
-
+import { SheetName } from 'cypress/enum';
 import config from 'cypress/config';
 
 const FIXTURE_FOLDER = 'cypress/fixtures';

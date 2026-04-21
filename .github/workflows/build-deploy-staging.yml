@@ -66,9 +66,12 @@ jobs:
           wait-on-timeout: 60
           browser: chrome-for-testing
         env:
-          BASE_URL: http://localhost:3000
           EXCEL_PATH: /home/azureuser/data.xlsx
-
+          SEND_REPORT_TO_EMAIL: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+          UPLOAD_REPORT_TO_GITHUB: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+          COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.COMMUNICATION_SERVICES_CONNECTION_STRING }}
+          COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN: ${{ secrets.COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload screenshot
         uses: actions/upload-artifact@v6
         if: failure()
