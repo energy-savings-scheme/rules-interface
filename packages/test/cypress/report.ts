@@ -52,7 +52,7 @@ async function generateSummaryReport(): Promise<string> {
   const files: string[] = await generator.create(report, {
     reportDir: `${config.reportDir}`,
     reportFilename: "report-[datetime]",
-    timestamp: "yyyy-mm-dd",
+    timestamp: "yyyy-mm-dd_HH:MM:ss",
     reportPageTitle: `Cypress Auto Testing Report - ${reportDate()}`,
     inline: true,
     saveHtml: true,
