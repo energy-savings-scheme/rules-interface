@@ -1,11 +1,11 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { WorkSheet, utils, readFile } from 'xlsx';
+import { WorkSheet, utils, readFile, WorkBook } from 'xlsx';
 
-import { SheetName } from './excel';
+import { SheetName } from 'cypress/enum';
+import config from 'cypress/config';
 
-const EXCEL_PATH = 'cypress/fixtures/data.xlsx';
 const FIXTURE_FOLDER = 'cypress/fixtures';
 
 /**
@@ -24,7 +24,12 @@ function getHeaders(worksheet: WorkSheet): string[] {
  * @returns
  */
 function getData(sheetName: string): Record<string, any>[] {
-  const wb = readFile(EXCEL_PATH);
+  let wb: WorkBook;
+  try {
+    wb = readFile(config.excelPath);
+  } catch (e) {
+    throw new Error(`Failed to load data for test. ${e}`);
+  }
   const worksheet = wb.Sheets[sheetName];
   const headers = getHeaders(worksheet);
   const rowsData = utils.sheet_to_json<Record<string, any>[]>(worksheet, {

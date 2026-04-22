@@ -1,28 +1,84 @@
-name: Build and Deploy to DEV
+name: All Jobs Definitions
 
 on:
-  workflow_dispatch:
-  pull_request:
-    types: [opened, synchronize, labeled]
-    branches:
-      - nonprod
-  push:
-    branches:
-      - nonprod
+  workflow_call:
+    inputs:
+      run-test:
+        description: 'Whether to run test step.'
+        required: false
+        default: true
+        type: boolean
+      run-deploy:
+        description: 'Whether to run deploy step.'
+        required: false
+        default: false
+        type: boolean
+      send-report-email:
+        description: 'Whether to send report email after test. Only works when run-test is true.'
+        required: false
+        default: false
+        type: boolean
+      upload-report-github:
+        description: 'Whether to upload report to GitHub after test. Only works when run-test is true.'
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      REACT_APP_OPENFISCA_BASE_URL:
+        description: 'The base URL for OpenFisca API.'
+        required: true
+      REACT_APP_API_BASE_URL:
+        description: 'The base URL for Django API.'
+        required: true
+      REACT_APP_REGISTRY_API_BASE_URL:
+        description: 'The base URL for Registry API.'
+        required: true
+      COMMUNICATION_SERVICES_CONNECTION_STRING:
+        description: 'Azure Communication Services connection string for sending email.'
+        required: false
+      COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN:
+        description: 'Azure Communication Services email sender domain.'
+        required: false
+      GITHUB_TOKEN:
+        description: 'GitHub token for uploading report to GitHub.'
+        required: false
+      DEPLOY_SAS_URL:
+        description: 'The SAS URL for deploying to Azure Storage.'
+        required: false
+      AZURE_CREDENTIALS:
+        description: 'The Azure credentials for starting VM.'
+        required: false
+      AZURE_RESOURCE_GROUP:
+        description: 'The Azure resource group name for starting VM.'
+        required: false
+      AZURE_VM_NAME:
+        description: 'The Azure VM name for starting VM.'
+        required: false
 
 env:
-  REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_DEV }}'
-  REACT_APP_API_BASE_URL: '${{ secrets.REACT_APP_API_BASE_URL_DEV }}'
-  REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_DEV }}'
+  REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL }}'
+  REACT_APP_API_BASE_URL: '${{ secrets.REACT_APP_API_BASE_URL }}'
+  REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL }}'
 
 jobs:
+  # uncomment this if we already have the credentials to start the VM.
+  # start-vm:
+  #   name: Start VM
+  #   if: ${{ inputs.run-test }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Azure login
+  #       uses: azure/login@v3
+  #       with:
+  #         creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+  #     - name: Start VM
+  #       run: az vm start -g ${{ secrets.AZURE_RESOURCE_GROUP }} -n ${{ secrets.AZURE_VM_NAME }}
+
   test:
     name: Run Test
-    if: |
-      contains(github.event.pull_request.labels.*.name, 'run-test') || 
-      github.event.action == 'opened' ||
-      github.event_name == 'push' ||
-      github.event_name == 'workflow_dispatch'
+    # needs: start-vm
+    if: ${{ inputs.run-test }}
     runs-on: self-hosted
     steps:
       - name: Checkout
@@ -67,12 +123,11 @@ jobs:
           browser: chrome-for-testing
         env:
           EXCEL_PATH: /home/azureuser/data.xlsx
-          SEND_REPORT_TO_EMAIL: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
-          UPLOAD_REPORT_TO_GITHUB: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+          SEND_REPORT_TO_EMAIL: ${{ inputs.send-report && 'true' || 'false' }}
+          UPLOAD_REPORT_TO_GITHUB: ${{ inputs.upload-report-github && 'true' || 'false' }}
           COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.COMMUNICATION_SERVICES_CONNECTION_STRING }}
           COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN: ${{ secrets.COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Upload screenshot
         uses: actions/upload-artifact@v6
         if: failure()
@@ -99,9 +154,8 @@ jobs:
   build-and-deploy:
     name: Build and deploy
     needs: test
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    if: ${{ inputs.run-deploy }}
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
 
@@ -160,4 +214,4 @@ jobs:
         with:
           source-path: build
           cleanup: false
-          sas-url: ${{ secrets.DEPLOY_SAS_URL_DEV }}
+          sas-url: ${{ secrets.DEPLOY_SAS_URL }}

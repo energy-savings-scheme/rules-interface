@@ -1,0 +1,26 @@
+name: Automated Tests on DEV
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 5:00 AM every Monday in Sydney
+    - cron: '0 5 * * 1'
+      timezone: 'Australia/Sydney'
+
+jobs:
+  test:
+    uses: ./.github/workflows/main.yml
+    with:
+      run-test: true
+      run-deploy: true
+      upload-report-github: true
+    secrets: 
+      REACT_APP_OPENFISCA_BASE_URL: ${{ secrets.REACT_APP_OPENFISCA_BASE_URL_PROD }}
+      REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL_PROD }}
+      REACT_APP_REGISTRY_API_BASE_URL: ${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_PROD }}
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS_PROD }}
+      AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP_PROD }}
+      AZURE_VM_NAME: ${{ secrets.AZURE_VM_NAME_PROD }}
+      COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.COMMUNICATION_SERVICES_CONNECTION_STRING }}
+      COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN: ${{ secrets.COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

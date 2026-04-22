@@ -40,7 +40,7 @@ src/fullList.json
 packages/test/node_modules/
 packages/test/cypress/screenshots
 packages/test/cypress/videos
-# packages/test/cypress/fixtures/certificate
-# packages/test/cypress/fixtures/eligibility
-# packages/test/cypress/fixtures/data.xlsx
+packages/test/cypress/fixtures/certificate
+packages/test/cypress/fixtures/eligibility
 packages/test/cypress/reports
+data.xlsx

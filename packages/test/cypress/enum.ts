@@ -1,3 +1,36 @@
+
+enum SheetName {
+  HVAC1_D16_C = 'HVAC1_D16_C',
+  SYS2_D5_C = 'SYS2_D5_C',
+  D17_C = 'D17_C',
+  D18_C = 'D18_C',
+  D19_C = 'D19_C',
+  D20_C = 'D20_C',
+  C1_C = 'C1_C',
+  BESS2_C = 'BESS2_C',
+  HVAC2_F4_C = 'HVAC2_F4_C',
+  F16_E_C = 'F16_E_C',
+  F16_G_C = 'F16_G_C',
+  F17_C = 'F17_C',
+  RF2_F1_2_C = 'RF2_F1_2_C',
+  F7_C = 'F7_C',
+  CORE_E = 'CORE_E',
+  HVAC1_D16_E = 'HVAC1_D16_E',
+  SYS2_D5_E = 'SYS2_D5_E',
+  C1_E = 'C1_E',
+  BESS2_E = 'BESS2_E',
+  D17_E = 'D17_E',
+  D18_E = 'D18_E',
+  D19_E = 'D19_E',
+  D20_E = 'D20_E',
+  HVAC2_F4_E = 'HVAC2_F4_E',
+  F16_E_E = 'F16_E_E',
+  F16_G_E = 'F16_G_E',
+  F17_E = 'F17_E',
+  RF2_F1_2_E = 'RF2_F1_2_E',
+  F7_E = 'F7_E',
+}
+
 enum FormSelector {
   INITIAL_FORM_SELECTOR = '[data-ui-name="initial-form"]',
   CALCULATE_FORM_SELECTOR = '[data-ui-name="calculate-form"]',
@@ -74,6 +107,7 @@ enum URLPath {
 }
 
 export {
+  SheetName,
   FormSelector,
   ResultSelector,
   EligibilityResultText,
