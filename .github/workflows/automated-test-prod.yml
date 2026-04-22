@@ -1,4 +1,4 @@
-name: Automated Tests on DEV
+name: Automated Tests on PROD
 
 on:
   workflow_dispatch:
