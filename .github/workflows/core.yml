@@ -30,22 +30,23 @@ env:
   REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_DEV }}'
 
 jobs:
-  start-vm:
-    name: Start VM
-    if: ${{ inputs.run-test }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Azure login
-        uses: azure/login@v3
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+  # uncomment this if we already have the credentials to start the VM.
+  # start-vm:
+  #   name: Start VM
+  #   if: ${{ inputs.run-test }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Azure login
+  #       uses: azure/login@v3
+  #       with:
+  #         creds: ${{ secrets.AZURE_CREDENTIALS }}
           
-      - name: Start VM
-        run: az vm start -g ${{ secrets.AZURE_RESOURCE_GROUP }} -n ${{ secrets.AZURE_VM_NAME }}
+  #     - name: Start VM
+  #       run: az vm start -g ${{ secrets.AZURE_RESOURCE_GROUP }} -n ${{ secrets.AZURE_VM_NAME }}
 
   test:
     name: Run Test
-    needs: start-vm
+    # needs: start-vm
     if: ${{ inputs.run-test }}
     runs-on: self-hosted
     steps:
