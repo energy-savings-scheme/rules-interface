@@ -23,7 +23,7 @@ jobs:
       github.event.action == 'opened' ||
       github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -53,15 +53,25 @@ jobs:
         working-directory: packages/test
         run: yarn install --frozen-lockfile
 
+      - name: Cleanup old Cypress assets
+        run: |
+          rm -rf cypress/screenshots/*
+          rm -rf cypress/videos/*
+
       - name: Run Cypress
         uses: cypress-io/github-action@v6
         with:
           working-directory: packages/test
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 60
-          browser: chrome
+          browser: chrome-for-testing
         env:
-          CYPRESS_BASE_URL: http://localhost:3000
+          EXCEL_PATH: /home/azureuser/data.xlsx
+          SEND_REPORT_TO_EMAIL: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+          UPLOAD_REPORT_TO_GITHUB: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+          COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.COMMUNICATION_SERVICES_CONNECTION_STRING }}
+          COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN: ${{ secrets.COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload screenshot
         uses: actions/upload-artifact@v6
@@ -70,6 +80,7 @@ jobs:
           name: cypress-screenshots
           path: packages/test/cypress/screenshots/
           if-no-files-found: ignore
+          retention-days: 7
 
       - name: Upload videos
         uses: actions/upload-artifact@v6
@@ -78,6 +89,7 @@ jobs:
           name: cypress-videos
           path: packages/test/cypress/videos/
           if-no-files-found: ignore
+          retention-days: 7
 
       - name: Tear down docker
         if: always()
