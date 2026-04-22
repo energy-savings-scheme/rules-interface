@@ -15,5 +15,5 @@ jobs:
     uses: ./.github/workflows/core.yml
     with:
       run-test: true
-      run-deploy: true
+      run-deploy: if ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' && true || false }}
     secrets: inherit
