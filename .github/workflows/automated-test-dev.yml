@@ -9,9 +9,18 @@ on:
 
 jobs:
   test:
-    uses: ./.github/workflows/core.yml
+    uses: ./.github/workflows/main.yml
     with:
       run-test: true
       run-deploy: false
       upload-report-github: true
-    secrets: inherit
+    secrets: 
+      REACT_APP_OPENFISCA_BASE_URL: ${{ secrets.REACT_APP_OPENFISCA_BASE_URL_DEV }}
+      REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL_DEV }}
+      REACT_APP_REGISTRY_API_BASE_URL: ${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_DEV }}
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS_DEV }}
+      AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP_DEV }}
+      AZURE_VM_NAME: ${{ secrets.AZURE_VM_NAME_DEV }}
+      COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.COMMUNICATION_SERVICES_CONNECTION_STRING }}
+      COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN: ${{ secrets.COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

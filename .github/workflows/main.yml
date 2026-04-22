@@ -23,11 +23,42 @@ on:
         required: false
         default: false
         type: boolean
+    secrets:
+      REACT_APP_OPENFISCA_BASE_URL:
+        description: 'The base URL for OpenFisca API.'
+        required: true
+      REACT_APP_API_BASE_URL:
+        description: 'The base URL for Django API.'
+        required: true
+      REACT_APP_REGISTRY_API_BASE_URL:
+        description: 'The base URL for Registry API.'
+        required: true
+      COMMUNICATION_SERVICES_CONNECTION_STRING:
+        description: 'Azure Communication Services connection string for sending email.'
+        required: false
+      COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN:
+        description: 'Azure Communication Services email sender domain.'
+        required: false
+      GITHUB_TOKEN:
+        description: 'GitHub token for uploading report to GitHub.'
+        required: false
+      DEPLOY_SAS_URL:
+        description: 'The SAS URL for deploying to Azure Storage.'
+        required: false
+      AZURE_CREDENTIALS:
+        description: 'The Azure credentials for starting VM.'
+        required: false
+      AZURE_RESOURCE_GROUP:
+        description: 'The Azure resource group name for starting VM.'
+        required: false
+      AZURE_VM_NAME:
+        description: 'The Azure VM name for starting VM.'
+        required: false
 
 env:
-  REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_DEV }}'
-  REACT_APP_API_BASE_URL: '${{ secrets.REACT_APP_API_BASE_URL_DEV }}'
-  REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_DEV }}'
+  REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL }}'
+  REACT_APP_API_BASE_URL: '${{ secrets.REACT_APP_API_BASE_URL }}'
+  REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL }}'
 
 jobs:
   # uncomment this if we already have the credentials to start the VM.
@@ -183,4 +214,4 @@ jobs:
         with:
           source-path: build
           cleanup: false
-          sas-url: ${{ secrets.DEPLOY_SAS_URL_DEV }}
+          sas-url: ${{ secrets.DEPLOY_SAS_URL }}
