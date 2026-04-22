@@ -28,7 +28,7 @@ const config: Config = {
   communicationServicesEmailSenderDomain: process.env['COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN'] || '',
   recipientEmail: process.env['RECIPIENT_EMAIL'] || 'sustainability@environment.nsw.gov.au',
   recipientName: process.env['RECIPIENT_NAME'] || 'sustainability',
-  githubToken: process.env['GITHUB_TOKEN'] || '',
+  githubToken: process.env['GH_TOKEN'] || '', // The name of the environment variable for GitHub token is GH_TOKEN, not GITHUB_TOKEN, to avoid confusion with GitHub Actions' built-in GITHUB_TOKEN
   githubOwner: process.env['GITHUB_OWNER'] || 'energy-savings-scheme',
   githubRepositoryName: process.env['GITHUB_REPOSITORY_NAME'] || 'product-registry-files',
   githubTestReportDir: process.env['GITHUB_REPORT_DIR'] || 'auto-test-result/'

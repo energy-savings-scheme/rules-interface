@@ -39,7 +39,7 @@ on:
       COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN:
         description: 'Azure Communication Services email sender domain.'
         required: false
-      GITHUB_TOKEN:
+      GH_TOKEN:
         description: 'GitHub token for uploading report to GitHub.'
         required: false
       DEPLOY_SAS_URL:
@@ -127,7 +127,7 @@ jobs:
           UPLOAD_REPORT_TO_GITHUB: ${{ inputs.upload-report-github && 'true' || 'false' }}
           COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.COMMUNICATION_SERVICES_CONNECTION_STRING }}
           COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN: ${{ secrets.COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Upload screenshot
         uses: actions/upload-artifact@v6
         if: failure()
