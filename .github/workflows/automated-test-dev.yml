@@ -2,10 +2,6 @@ name: Automated Tests on DEV
 
 on:
   workflow_dispatch:
-  schedule:
-    # 5:00 AM every Monday in Sydney
-    - cron: '0 5 * * 1'
-      timezone: 'Australia/Sydney'
 
 jobs:
   test:
