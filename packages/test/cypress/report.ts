@@ -9,8 +9,6 @@ import { Octokit } from "@octokit/rest";
 
 import config from "cypress/config";
 
-console.log(JSON.stringify(config, null, 2))
-
 
 type ReportStatus = "PASSED" | "FAILED"
 let emailClient: EmailClient;
@@ -52,7 +50,7 @@ async function generateSummaryReport(): Promise<string> {
   const files: string[] = await generator.create(report, {
     reportDir: `${config.reportDir}`,
     reportFilename: "report-[datetime]",
-    timestamp: "yyyy-mm-dd_HH:MM:ss",
+    timestamp: "yyyy-mm-dd HH-MM-ss",
     reportPageTitle: `Cypress Auto Testing Report - ${reportDate()}`,
     inline: true,
     saveHtml: true,
