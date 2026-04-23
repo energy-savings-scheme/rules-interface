@@ -14,6 +14,9 @@ export default defineConfig({
     viewportHeight: 1280,
     defaultBrowser: 'chrome',
     video: true,
+    screenshotsFolder: 'cypress/screenshots', // Ensure this matches reality
+    videosFolder: 'cypress/videos',
+    trashAssetsBeforeRuns: true,
     retries: 2,
     reporter: "mochawesome",
     reporterOptions: {
