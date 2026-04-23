@@ -1,4 +1,4 @@
-name: Build and Deploy to DEV
+name: Automated Tests to DEV
 
 on:
   workflow_dispatch:

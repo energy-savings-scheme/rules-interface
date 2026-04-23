@@ -106,6 +106,7 @@ async function uploadToGithub(reportPath: string): Promise<string | undefined> {
         branch: "main",
         content: file.toString('base64'),
       })
+      console.log(`Report file ${filename} is uploaded to Github successfully.`)
       return data.content?.html_url
     } catch (error) {
       if (error instanceof Error && "response" in error && "status" in error) {
@@ -113,9 +114,9 @@ async function uploadToGithub(reportPath: string): Promise<string | undefined> {
         console.log("Data:", (error as any).response.data); 
       }
     }
+  } else {
+    console.log(`File ${githubPath} already exist in Github.`)
   }
-
-  console.log(`File ${githubPath} already exist in Github.`)
 }
 
 
