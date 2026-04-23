@@ -55,10 +55,10 @@ on:
         description: 'The Azure VM name for starting VM.'
         required: false
 
-env:
-  REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL }}'
-  REACT_APP_API_BASE_URL: '${{ secrets.REACT_APP_API_BASE_URL }}'
-  REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL }}'
+# env:
+#   REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL }}'
+#   REACT_APP_API_BASE_URL: '${{ secrets.REACT_APP_API_BASE_URL }}'
+#   REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL }}'
 
 jobs:
   # uncomment this if we already have the credentials to start the VM.
@@ -86,9 +86,9 @@ jobs:
 
       - name: Create env file from secrets
         run: |
-          echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> .env
-          echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> .env
-          echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> .env
+          echo "REACT_APP_OPENFISCA_BASE_URL=${{ secrets.REACT_APP_OPENFISCA_BASE_URL }}" >> .env
+          echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}" >> .env
+          echo "REACT_APP_REGISTRY_API_BASE_URL=${{ secrets.REACT_APP_REGISTRY_API_BASE_URL }}" >> .env
 
       - name: Start app with Docker Compose
         working-directory: .
@@ -186,9 +186,9 @@ jobs:
 
           # Create .env file
           touch ./.env
-          echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> ./.env
-          echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> ./.env
-          echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> ./.env
+          echo "REACT_APP_OPENFISCA_BASE_URL=${{ secrets.REACT_APP_OPENFISCA_BASE_URL }}" >> ./.env
+          echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}" >> ./.env
+          echo "REACT_APP_REGISTRY_API_BASE_URL=${{ secrets.REACT_APP_REGISTRY_API_BASE_URL }}" >> ./.env
 
           # Build all the JS files for the Drupal
           yarn run dist-build
