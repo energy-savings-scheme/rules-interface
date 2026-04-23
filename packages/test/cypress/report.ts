@@ -102,7 +102,7 @@ async function uploadToGithub(reportPath: string): Promise<string | undefined> {
         owner: config.githubOwner,
         repo: config.githubRepositoryName,
         path: githubPath,
-        message: `System upload cypress auto testing report`,
+        message: `System upload.`,
         branch: "main",
         content: file.toString('base64'),
       })
