@@ -14,31 +14,70 @@ Functionality:
 - The "Rule Dashboard" repo assumes the above application stack.
 - The stack comprises of the ['OpenFisca-Core API'](https://github.com/energy-savings-scheme/openfisca_nsw_safeguard) and the ['Django API'](https://github.com/energy-savings-scheme/openfisca-djangoapi)
 
-## To serve locally:
+## Prerequisite
+- Docker Engine - [Installation Guide](https://docs.docker.com/engine/install/)
+- Docker Compose - [Installation Guide](https://docs.docker.com/compose/install/)
+- Node Version Manager (NVM) - [Installation Guide](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-#### Ensure you have installed the necessary requirements on your machine
+## How to Run
 
-Installation process may differ on Windows/Mac/Linux. If unsure, Google the steps for your operating systems.
+### Prepare Configuration
+- Create new .env file in root folder
+- Copy all environment variable definition from .env.example to .env
+- Fill in .env file with appropriate value
 
-- Node.JS and NPM (https://www.npmjs.com/get-npm)
-- Yarn (https://classic.yarnpkg.com/en/docs/install/#debian-stable)
-
-#### Launch the app locally
-
-In the project directory, you can run:
-
-```bash
-# Copy the .env.example, and set the variable correctly
-cp .env.example .env
-
-# Use NVM if available, otherwise make sure npm is version 14
-nvm use
-# Do not attempt to use npm, there is issue with the incompatibility packages
-# That requires specific on node 14 + yarn
-npm i -g yarn
-yarn install
-
-yarn run start
-
-# Open the http://localhost:3000
+### Build Application
+```sh
+docker-compose build
 ```
+
+### Run Application
+```sh
+docker-compose up -d
+```
+
+
+## Test
+
+### Prepare Configuration
+- Create new .env file packages/test/ folder
+- Copy all environment variable definition from packages/test/.env.example to packages/test/.env
+- Fill in packages/test/.env file with appropriate value
+
+### Install packages dependency
+```sh
+cd packages/test
+nvm use
+yarn install
+```
+
+### How to Run
+- *Before run the test, make sure the rule interface application is running, if you want to run the test for local application.*
+- *Make sure you already set node runtime version.*
+#### Set node runtime version
+```sh
+cd packages/test
+nvm use
+```
+
+#### Run the test
+```sh
+npm run test
+```
+
+To run in the browser (*visually*) and with the dashboard
+```sh
+npm run cypress:open
+```
+
+## Deployment
+
+For deployment, it all happening through CI/CD in Github workflow.
+All workflows defined in *.github/workflows/*.
+
+Deployment to _**DEV**_ and _**UAT/STAGING**_ are automatically, but to deploy to _**PROD**_ it need to be triggered manually from Github Actions.
+
+## Notes
+- We have separate workflow for automated test, defined in _.github/workflows/automated-test-{ENV}.yml_. This workflow usually used by users to have test in PROD and it always triggered on Monday morning.
+
+_ENV can _**PROD / DEV**_ depends on which environment we want the test to be run_.
