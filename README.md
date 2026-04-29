@@ -81,3 +81,5 @@ Deployment to _**DEV**_ and _**UAT/STAGING**_ are automatically, but to deploy t
 - We have separate workflow for automated test, defined in _.github/workflows/automated-test-{ENV}.yml_. This workflow usually used by users to have test in PROD and it always triggered on Monday morning.
 
 _ENV can _**PROD / DEV**_ depends on which environment we want the test to be run_.
+
+- When you have a pull request that still work in progress and want to have the automated test run every time new changes pushed, make sure label "run-test" added in the pull request
