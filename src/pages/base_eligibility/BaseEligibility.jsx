@@ -198,7 +198,7 @@ export default function BaseEligibility(props) {
             <>
               {stepNumber === 1 && (
                 <FormGroup
-                  label="What is your interest in the scheme?"
+                  label="What is your interest in the scheme..?"
                   helper="Select the option that best describes you"
                   htmlId="user-type"
                   status={isUserTypeValid ? '' : 'invalid'}
