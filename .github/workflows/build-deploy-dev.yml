@@ -110,9 +110,6 @@ jobs:
         with:
           node-version: 14.x
 
-      - name: Print Node Version
-        run: node -v
-
       - name: Install Yarn
         run: npm install -g yarn
 
