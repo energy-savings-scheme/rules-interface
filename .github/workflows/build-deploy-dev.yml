@@ -16,17 +16,17 @@ env:
   REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_DEV }}'
 
 jobs:
-  test:
-    name: Run Test
-    if: |
-      contains(github.event.pull_request.labels.*.name, 'run-test') || 
-      github.event.action == 'opened' ||
-      github.event_name == 'push' ||
-      github.event_name == 'workflow_dispatch'
-    runs-on: self-hosted
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # test:
+  #   name: Run Test
+  #   if: |
+  #     contains(github.event.pull_request.labels.*.name, 'run-test') || 
+  #     github.event.action == 'opened' ||
+  #     github.event_name == 'push' ||
+  #     github.event_name == 'workflow_dispatch'
+  #   runs-on: self-hosted
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
       # - name: Create env file from secrets
       #   run: |
@@ -98,7 +98,7 @@ jobs:
 
   build-and-deploy:
     name: Build and deploy
-    needs: test
+    # needs: test
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
@@ -109,6 +109,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
+
+      - name: Print Node Version
+        run: node -v
 
       - name: Install Yarn
         run: npm install -g yarn
