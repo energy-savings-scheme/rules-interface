@@ -110,7 +110,6 @@ export async function submitEstimatorFormAnalytics() {
       client_id: await estimatorFormAnalytics.getGTMClientId(),
       session_id: await estimatorFormAnalytics.getGTMSessionId(),
       params: {
-        ...populateBaseEventsParams(),
         ...estimatorFormAnalytics.values,
         submittedAt: moment().utc().format(),
       },
@@ -131,7 +130,6 @@ export async function submitFeedbackFormAnalytics(isHelpful) {
       client_id: await feedbackFormAnalytics.getGTMClientId(),
       session_id: await feedbackFormAnalytics.getGTMSessionId(),
       params: {
-        ...populateBaseEventsParams(),
         ...feedbackFormAnalytics.values,
         sf_isHelpful: isHelpful,
         submittedAt: moment().utc().format(),
