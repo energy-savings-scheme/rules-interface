@@ -16,88 +16,88 @@ env:
   REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_PROD }}'
 
 jobs:
-  # test:
-  #   name: Run Test
-  #   if: |
-  #     contains(github.event.pull_request.labels.*.name, 'run-test') || 
-  #     github.event.action == 'opened' ||
-  #     github.event_name == 'push' ||
-  #     github.event_name == 'workflow_dispatch'
-  #   runs-on: self-hosted
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
+  test:
+    name: Run Test
+    if: |
+      contains(github.event.pull_request.labels.*.name, 'run-test') || 
+      github.event.action == 'opened' ||
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch'
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # - name: Create env file from secrets
-      #   run: |
-      #     echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> .env
-      #     echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> .env
-      #     echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> .env
+      - name: Create env file from secrets
+        run: |
+          echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> .env
+          echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> .env
+          echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> .env
 
-      # - name: Start app with Docker Compose
-      #   working-directory: .
-      #   run: docker compose up -d
+      - name: Start app with Docker Compose
+        working-directory: .
+        run: docker compose up -d
 
-      # - name: Setup Node for Cypress
-      #   uses: actions/setup-node@v6
-      #   with:
-      #     node-version: 24
+      - name: Setup Node for Cypress
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
 
-      # # 1. Lock Chrome version
-      # - name: Setup Chrome 143
-      #   uses: browser-actions/setup-chrome@v1
-      #   with:
-      #     chrome-version: 143
+      # 1. Lock Chrome version
+      - name: Setup Chrome 143
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 143
 
-      # - name: Install Cypress dependencies
-      #   working-directory: packages/test
-      #   run: yarn install --frozen-lockfile
+      - name: Install Cypress dependencies
+        working-directory: packages/test
+        run: yarn install --frozen-lockfile
 
-      # - name: Cleanup old Cypress assets
-      #   run: |
-      #     rm -rf cypress/screenshots/*
-      #     rm -rf cypress/videos/*
+      - name: Cleanup old Cypress assets
+        run: |
+          rm -rf cypress/screenshots/*
+          rm -rf cypress/videos/*
 
-      # - name: Run Cypress
-      #   uses: cypress-io/github-action@v6
-      #   with:
-      #     working-directory: packages/test
-      #     wait-on: 'http://localhost:3000'
-      #     wait-on-timeout: 60
-      #     browser: chrome-for-testing
-      #   env:
-      #     EXCEL_PATH: /home/azureuser/data.xlsx
-      #     SEND_REPORT_TO_EMAIL: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
-      #     UPLOAD_REPORT_TO_GITHUB: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
-      #     COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.COMMUNICATION_SERVICES_CONNECTION_STRING }}
-      #     COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN: ${{ secrets.COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN }}
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Upload screenshot
-      #   uses: actions/upload-artifact@v6
-      #   if: failure()
-      #   with:
-      #     name: cypress-screenshots
-      #     path: packages/test/cypress/screenshots/
-      #     if-no-files-found: ignore
-      #     retention-days: 7
+      - name: Run Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: packages/test
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 60
+          browser: chrome-for-testing
+        env:
+          EXCEL_PATH: /home/azureuser/data.xlsx
+          SEND_REPORT_TO_EMAIL: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+          UPLOAD_REPORT_TO_GITHUB: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+          COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.COMMUNICATION_SERVICES_CONNECTION_STRING }}
+          COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN: ${{ secrets.COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload screenshot
+        uses: actions/upload-artifact@v6
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: packages/test/cypress/screenshots/
+          if-no-files-found: ignore
+          retention-days: 7
 
-      # - name: Upload videos
-      #   uses: actions/upload-artifact@v6
-      #   if: failure()
-      #   with:
-      #     name: cypress-videos
-      #     path: packages/test/cypress/videos/
-      #     if-no-files-found: ignore
-      #     retention-days: 7
+      - name: Upload videos
+        uses: actions/upload-artifact@v6
+        if: failure()
+        with:
+          name: cypress-videos
+          path: packages/test/cypress/videos/
+          if-no-files-found: ignore
+          retention-days: 7
 
-      # - name: Tear down docker
-      #   if: always()
-      #   run: docker compose down
-      #   working-directory: .
+      - name: Tear down docker
+        if: always()
+        run: docker compose down
+        working-directory: .
 
   build-and-deploy:
     name: Build and deploy
-    # needs: test
+    needs: test
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
