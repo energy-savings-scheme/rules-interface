@@ -156,4 +156,8 @@ const writeRouteFile = (
   }
 };
 
-build();
+try {
+  build();
+} catch (error) {
+  console.error('Error occurred while building:', error);
+}
