@@ -16,47 +16,47 @@ env:
   REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_DEV }}'
 
 jobs:
-  # test:
-  #   name: Run Test
-  #   if: |
-  #     contains(github.event.pull_request.labels.*.name, 'run-test') || 
-  #     github.event.action == 'opened' ||
-  #     github.event_name == 'push' ||
-  #     github.event_name == 'workflow_dispatch'
-  #   runs-on: self-hosted
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
+  test:
+    name: Run Test
+    if: |
+      contains(github.event.pull_request.labels.*.name, 'run-test') || 
+      github.event.action == 'opened' ||
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch'
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # - name: Create env file from secrets
-      #   run: |
-      #     echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> .env
-      #     echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> .env
-      #     echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> .env
+      - name: Create env file from secrets
+        run: |
+          echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> .env
+          echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> .env
+          echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> .env
 
-      # - name: Start app with Docker Compose
-      #   working-directory: .
-      #   run: docker compose up --build -d
+      - name: Start app with Docker Compose
+        working-directory: .
+        run: docker compose up --build -d
 
-      # - name: Setup Node for Cypress
-      #   uses: actions/setup-node@v6
-      #   with:
-      #     node-version: 24
+      - name: Setup Node for Cypress
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
 
-      # # 1. Lock Chrome version
-      # - name: Setup Chrome 143
-      #   uses: browser-actions/setup-chrome@v1
-      #   with:
-      #     chrome-version: 143
+      # 1. Lock Chrome version
+      - name: Setup Chrome 143
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 143
 
-      # - name: Install Cypress dependencies
-      #   working-directory: packages/test
-      #   run: yarn install --frozen-lockfile
+      - name: Install Cypress dependencies
+        working-directory: packages/test
+        run: yarn install --frozen-lockfile
 
-      # - name: Cleanup old Cypress assets
-      #   run: |
-      #     rm -rf cypress/screenshots/*
-      #     rm -rf cypress/videos/*
+      - name: Cleanup old Cypress assets
+        run: |
+          rm -rf cypress/screenshots/*
+          rm -rf cypress/videos/*
 
       # - name: Run Cypress
       #   uses: cypress-io/github-action@v6
@@ -91,14 +91,14 @@ jobs:
       #     if-no-files-found: ignore
       #     retention-days: 7
 
-      # - name: Tear down docker
-      #   if: always()
-      #   run: docker compose down
-      #   working-directory: .
+      - name: Tear down docker
+        if: always()
+        run: docker compose down
+        working-directory: .
 
   build-and-deploy:
     name: Build and deploy
-    # needs: test
+    needs: test
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
