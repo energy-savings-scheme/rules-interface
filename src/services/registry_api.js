@@ -250,7 +250,6 @@ const RegistryApi = {
   getResidentialSolarBatteryModels,
   getResidentialSolarBatteryMetadata,
   getCertificatePrice,
-  sendToGoogleAnalytics,
 };
 
 export default RegistryApi;
