@@ -2,17 +2,17 @@ name: Automated Tests on PROD
 
 on:
   workflow_dispatch:
-  schedule:
-    # 5:00 AM every Monday in Sydney
-    - cron: '0 5 * * 1'
-      timezone: 'Australia/Sydney'
+  # schedule:
+  #   # 5:00 AM every Monday in Sydney
+  #   - cron: '0 5 * * 1'
+  #     timezone: 'Australia/Sydney'
 
 jobs:
   test:
     uses: ./.github/workflows/main.yml
     with:
       run-test: true
-      run-deploy: true
+      run-deploy: false
       upload-report-github: true
     secrets: 
       REACT_APP_OPENFISCA_BASE_URL: ${{ secrets.REACT_APP_OPENFISCA_BASE_URL_PROD }}
