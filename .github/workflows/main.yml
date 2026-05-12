@@ -154,7 +154,15 @@ jobs:
   build-and-deploy:
     name: Build and deploy
     needs: test
-    if: ${{ inputs.run-deploy }}
+    # Logic: Run if 'run-deploy' is true AND (test passed OR test was skipped)
+    # We use !failure() and !cancelled() to allow the job to run if 'test' was skipped.
+    # if 'run-test' is false, 'test' status will be 'skipped'.
+    if: >-
+      always() &&
+      inputs.run-deploy &&
+      !failure() &&
+      !cancelled() &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

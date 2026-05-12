@@ -3,68 +3,87 @@ name: Build and Deploy to PROD
 on:
   workflow_dispatch:
 
-env:
-  REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_PROD }}'
-  REACT_APP_API_BASE_URL: '${{ secrets.REACT_APP_API_BASE_URL_PROD }}'
-  REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_PROD }}'
-
 jobs:
-  build-and-deploy:
-    name: Build and deploy
-    runs-on: ubuntu-latest
+  deploy:
+    uses: ./.github/workflows/main.yml
+    with:
+      run-test: false
+      run-deploy: true
+      upload-report-github: true
+    secrets: 
+      REACT_APP_OPENFISCA_BASE_URL: ${{ secrets.REACT_APP_OPENFISCA_BASE_URL_PROD }}
+      REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL_PROD }}
+      REACT_APP_REGISTRY_API_BASE_URL: ${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_PROD }}
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS_PROD }}
+      AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP_PROD }}
+      AZURE_VM_NAME: ${{ secrets.AZURE_VM_NAME_PROD }}
+      COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.COMMUNICATION_SERVICES_CONNECTION_STRING }}
+      COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN: ${{ secrets.COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      DEPLOY_SAS_URL: ${{ secrets.DEPLOY_SAS_URL_PROD }}
 
-    steps:
-      - uses: actions/checkout@v2
+# env:
+#   REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL_PROD }}'
+#   REACT_APP_API_BASE_URL: '${{ secrets.REACT_APP_API_BASE_URL_PROD }}'
+#   REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL_PROD }}'
 
-      - name: Install Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
+# jobs:
+#   build-and-deploy:
+#     name: Build and deploy
+#     runs-on: ubuntu-latest
 
-      - name: Install Yarn
-        run: npm install -g yarn
+#     steps:
+#       - uses: actions/checkout@v2
 
-      - name: Install tools
-        run: |
-          if ! command -v azcopy &> /dev/null
-          then
-            echo "azcopy not found, installing..."
-            curl -L https://aka.ms/downloadazcopy-v10-linux | \
-            sudo tar --strip-components=1 -C /usr/local/bin/ --no-same-owner --exclude=*.txt -xzvf -
-            sudo ln -s /usr/local/bin/azcopy /usr/local/bin/azcopy10
-          fi
+#       - name: Install Node.js
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 14.x
 
-      - name: Build website
-        run: |
-          # Install all npm packages
-          YARN_IGNORE_ENGINES=true yarn install --frozen-lockfile
+#       - name: Install Yarn
+#         run: npm install -g yarn
 
-          export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
+#       - name: Install tools
+#         run: |
+#           if ! command -v azcopy &> /dev/null
+#           then
+#             echo "azcopy not found, installing..."
+#             curl -L https://aka.ms/downloadazcopy-v10-linux | \
+#             sudo tar --strip-components=1 -C /usr/local/bin/ --no-same-owner --exclude=*.txt -xzvf -
+#             sudo ln -s /usr/local/bin/azcopy /usr/local/bin/azcopy10
+#           fi
 
-          # Create .env file
-          touch ./.env
-          echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> ./.env
-          echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> ./.env
-          echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> ./.env
+#       - name: Build website
+#         run: |
+#           # Install all npm packages
+#           YARN_IGNORE_ENGINES=true yarn install --frozen-lockfile
 
-          # Build all the JS files for the Drupal
-          yarn run dist-build
+#           export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
 
-          # Prepare dist files to versioned directory
-          mkdir -p ./build/dist/$REACT_APP_BUILD_VERSION
-          cp -R ./dist/* ./build/dist/$REACT_APP_BUILD_VERSION/
+#           # Create .env file
+#           touch ./.env
+#           echo "REACT_APP_OPENFISCA_BASE_URL=$REACT_APP_OPENFISCA_BASE_URL" >> ./.env
+#           echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> ./.env
+#           echo "REACT_APP_REGISTRY_API_BASE_URL=$REACT_APP_REGISTRY_API_BASE_URL" >> ./.env
 
-          # Prepare dist files to latest directory
-          mkdir -p ./build/dist/latest
-          cp -R ./dist/* ./build/dist/latest/
+#           # Build all the JS files for the Drupal
+#           yarn run dist-build
 
-          # Copy dynamic loader script
-          cp ./src/dynamic-loader.js ./build/dist/latest/
+#           # Prepare dist files to versioned directory
+#           mkdir -p ./build/dist/$REACT_APP_BUILD_VERSION
+#           cp -R ./dist/* ./build/dist/$REACT_APP_BUILD_VERSION/
 
-      - name: Deploy to Azure
-        uses: TravisSpomer/deploy-to-azure-storage@v1.4.0
-        with:
-          source-path: build
-          cleanup: false
-          container: ${{ secrets.DEPLOY_SAS_CONTAINER_PROD }}
-          sas-url: ${{ secrets.DEPLOY_SAS_URL_PROD }}
+#           # Prepare dist files to latest directory
+#           mkdir -p ./build/dist/latest
+#           cp -R ./dist/* ./build/dist/latest/
+
+#           # Copy dynamic loader script
+#           cp ./src/dynamic-loader.js ./build/dist/latest/
+
+#       - name: Deploy to Azure
+#         uses: TravisSpomer/deploy-to-azure-storage@v1.4.0
+#         with:
+#           source-path: build
+#           cleanup: false
+#           container: ${{ secrets.DEPLOY_SAS_CONTAINER_PROD }}
+#           sas-url: ${{ secrets.DEPLOY_SAS_URL_PROD }}
