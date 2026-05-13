@@ -439,7 +439,10 @@ export default function CertificateEstimatorRC(props) {
                         required
                       />
                     </FormGroup>
-                    <p style={{ fontSize: '14px', marginBottom: '2%' }}>
+                    <p
+                      data-ui-name="registry-update"
+                      style={{ fontSize: '14px', marginBottom: '2%' }}
+                    >
                       {' '}
                       Updated from product registry: {lastModified}
                     </p>

@@ -1,0 +1,231 @@
+name: All Jobs Definitions
+
+on:
+  workflow_call:
+    inputs:
+      run-test:
+        description: 'Whether to run test step.'
+        required: false
+        default: true
+        type: boolean
+      run-deploy:
+        description: 'Whether to run deploy step.'
+        required: false
+        default: false
+        type: boolean
+      send-report-email:
+        description: 'Whether to send report email after test. Only works when run-test is true.'
+        required: false
+        default: false
+        type: boolean
+      upload-report-github:
+        description: 'Whether to upload report to GitHub after test. Only works when run-test is true.'
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      REACT_APP_OPENFISCA_BASE_URL:
+        description: 'The base URL for OpenFisca API.'
+        required: true
+      REACT_APP_API_BASE_URL:
+        description: 'The base URL for Django API.'
+        required: true
+      REACT_APP_REGISTRY_API_BASE_URL:
+        description: 'The base URL for Registry API.'
+        required: true
+      COMMUNICATION_SERVICES_CONNECTION_STRING:
+        description: 'Azure Communication Services connection string for sending email.'
+        required: false
+      COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN:
+        description: 'Azure Communication Services email sender domain.'
+        required: false
+      GH_TOKEN:
+        description: 'GitHub token for uploading report to GitHub.'
+        required: false
+      DEPLOY_SAS_URL:
+        description: 'The SAS URL for deploying to Azure Storage.'
+        required: false
+      AZURE_CREDENTIALS:
+        description: 'The Azure credentials for starting VM.'
+        required: false
+      AZURE_RESOURCE_GROUP:
+        description: 'The Azure resource group name for starting VM.'
+        required: false
+      AZURE_VM_NAME:
+        description: 'The Azure VM name for starting VM.'
+        required: false
+
+# env:
+#   REACT_APP_OPENFISCA_BASE_URL: '${{ secrets.REACT_APP_OPENFISCA_BASE_URL }}'
+#   REACT_APP_API_BASE_URL: '${{ secrets.REACT_APP_API_BASE_URL }}'
+#   REACT_APP_REGISTRY_API_BASE_URL: '${{ secrets.REACT_APP_REGISTRY_API_BASE_URL }}'
+
+jobs:
+  # uncomment this if we already have the credentials to start the VM.
+  # start-vm:
+  #   name: Start VM
+  #   if: ${{ inputs.run-test }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Azure login
+  #       uses: azure/login@v3
+  #       with:
+  #         creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+  #     - name: Start VM
+  #       run: az vm start -g ${{ secrets.AZURE_RESOURCE_GROUP }} -n ${{ secrets.AZURE_VM_NAME }}
+
+  test:
+    name: Run Test
+    # needs: start-vm
+    if: >-
+      always() &&
+      inputs.run-test && 
+      (contains(github.event.pull_request.labels.*.name, 'run-test') ||
+      github.event.action == 'opened' ||
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch')
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create env file from secrets
+        run: |
+          echo "REACT_APP_OPENFISCA_BASE_URL=${{ secrets.REACT_APP_OPENFISCA_BASE_URL }}" >> .env
+          echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}" >> .env
+          echo "REACT_APP_REGISTRY_API_BASE_URL=${{ secrets.REACT_APP_REGISTRY_API_BASE_URL }}" >> .env
+
+      - name: Start app with Docker Compose
+        working-directory: .
+        run: docker compose up --build -d
+
+      - name: Setup Node for Cypress
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      # 1. Lock Chrome version
+      - name: Setup Chrome 143
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 143
+
+      - name: Install Cypress dependencies
+        working-directory: packages/test
+        run: yarn install --frozen-lockfile
+
+      - name: Cleanup old Cypress assets
+        run: |
+          rm -rf cypress/screenshots/*
+          rm -rf cypress/videos/*
+
+      - name: Run Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: packages/test
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 60
+          browser: chrome-for-testing
+        env:
+          EXCEL_PATH: /home/azureuser/data.xlsx
+          SEND_REPORT_TO_EMAIL: ${{ inputs.send-report && 'true' || 'false' }}
+          UPLOAD_REPORT_TO_GITHUB: ${{ inputs.upload-report-github && 'true' || 'false' }}
+          COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.COMMUNICATION_SERVICES_CONNECTION_STRING }}
+          COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN: ${{ secrets.COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Upload screenshot
+        uses: actions/upload-artifact@v6
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: packages/test/cypress/screenshots/
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload videos
+        uses: actions/upload-artifact@v6
+        if: failure()
+        with:
+          name: cypress-videos
+          path: packages/test/cypress/videos/
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Tear down docker
+        if: always()
+        run: docker compose down
+        working-directory: .
+
+  build-and-deploy:
+    name: Build and deploy
+    needs: test
+    # Logic: Run if 'run-deploy' is true AND (test passed OR test was skipped)
+    # We use !failure() and !cancelled() to allow the job to run if 'test' was skipped.
+    # if 'run-test' is false, 'test' status will be 'skipped'.
+    if: >-
+      always() &&
+      inputs.run-deploy &&
+      !failure() &&
+      !cancelled() &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Install tools
+        run: |
+          if ! command -v azcopy &> /dev/null
+          then
+            echo "azcopy not found, installing..."
+            curl -L https://aka.ms/downloadazcopy-v10-linux | \
+            sudo tar --strip-components=1 -C /usr/local/bin/ --no-same-owner --exclude=*.txt -xzvf -
+            sudo ln -s /usr/local/bin/azcopy /usr/local/bin/azcopy10
+          fi
+
+      - name: Build website
+        run: |
+          # Install all npm packages
+          YARN_IGNORE_ENGINES=true yarn install --frozen-lockfile
+
+          export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
+
+          # Create .env file
+          touch ./.env
+          echo "REACT_APP_OPENFISCA_BASE_URL=${{ secrets.REACT_APP_OPENFISCA_BASE_URL }}" >> ./.env
+          echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}" >> ./.env
+          echo "REACT_APP_REGISTRY_API_BASE_URL=${{ secrets.REACT_APP_REGISTRY_API_BASE_URL }}" >> ./.env
+
+          # Build all the JS files for the Drupal
+          yarn run dist-build
+          # Build the react pages
+          yarn run build
+
+          # Prepare dist files to versioned directory
+          mkdir -p ./build/dist/$REACT_APP_BUILD_VERSION
+          cp -R ./dist/* ./build/dist/$REACT_APP_BUILD_VERSION/
+
+          # Prepare dist files to latest directory
+          mkdir -p ./build/dist/latest
+          cp -R ./dist/* ./build/dist/latest/
+
+          # Copy poc acp list folder
+          cp -R ./poc_acp/* ./build/dist/latest/
+
+          # Copy dynamic loader script
+          cp ./src/dynamic-loader.js ./build/dist/latest/
+
+      - name: Deploy to Azure
+        uses: TravisSpomer/deploy-to-azure-storage@v1.4.0
+        with:
+          source-path: build
+          cleanup: false
+          sas-url: ${{ secrets.DEPLOY_SAS_URL }}

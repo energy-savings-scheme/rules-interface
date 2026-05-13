@@ -37,3 +37,10 @@ export interface PostCodeResponseType {
   message: string;
   status: string;
 }
+
+export interface TestFailureDetail {
+  file: string
+  duration: string
+  title: string
+  error: string | null
+}

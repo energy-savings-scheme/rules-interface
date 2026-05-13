@@ -1,21 +1,14 @@
-name: Build and Deploy to DEV
+name: Automated Tests on DEV
 
 on:
   workflow_dispatch:
-  pull_request:
-    types: [opened, synchronize, labeled]
-    branches:
-      - nonprod
-  push:
-    branches:
-      - nonprod
 
 jobs:
-  test-and-deploy:
+  automated-tests:
     uses: ./.github/workflows/main.yml
     with:
       run-test: true
-      run-deploy: true
+      run-deploy: false
       upload-report-github: true
     secrets: 
       REACT_APP_OPENFISCA_BASE_URL: ${{ secrets.REACT_APP_OPENFISCA_BASE_URL_DEV }}
@@ -27,4 +20,3 @@ jobs:
       COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.COMMUNICATION_SERVICES_CONNECTION_STRING }}
       COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN: ${{ secrets.COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      DEPLOY_SAS_URL: ${{ secrets.DEPLOY_SAS_URL_DEV }}
