@@ -219,14 +219,6 @@ function getCertificatePrice() {
   });
 }
 
-function sendToGoogleAnalytics(payload) {
-  return RegistryApiBase({
-    url: '/collect-data',
-    method: 'POST',
-    data: payload,
-  });
-}
-
 const RegistryApi = {
   getCommercialHVACBrands,
   getCommercialHVACLastModified,
@@ -258,7 +250,6 @@ const RegistryApi = {
   getResidentialSolarBatteryModels,
   getResidentialSolarBatteryMetadata,
   getCertificatePrice,
-  sendToGoogleAnalytics,
 };
 
 export default RegistryApi;

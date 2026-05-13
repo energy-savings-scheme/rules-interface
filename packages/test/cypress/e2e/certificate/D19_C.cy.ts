@@ -1,14 +1,12 @@
 import { FormSelector, ResultSelector, PostcodeState, URLPath } from 'cypress/enum';
 
-import dataFixtures from 'cypress/fixtures/certificate/HVAC2_F4_C.json';
+import dataFixtures from 'cypress/fixtures/certificate/D19_C.json';
 
-describe('Calculate HVAC2 ESC and PRC certificate.', () => {
-  const urlPath: string = URLPath.HVAC2_F4_C;
+describe('Calculate D19 ESC certificate.', () => {
+  const urlPath: string = URLPath.D19_C;
   const resultSelector = [
     ResultSelector.ESC_CERTIFICATE_SELECTOR,
-    ResultSelector.PRC_CERTIFICATE_SELECTOR,
     ResultSelector.ENERGY_SAVING_SELECTOR,
-    ResultSelector.PEAK_DEMAND_REDUCTION_SELECTOR,
   ];
 
   dataFixtures.forEach((rowData: Record<string, any>) => {
@@ -21,6 +19,7 @@ describe('Calculate HVAC2 ESC and PRC certificate.', () => {
         nextSelector: FormSelector.NEXT_SELECTOR,
         data: rowData,
         resultSelector: resultSelector,
+        productSelection: true,
         interceptPostcodeAPI: {
           postcode: rowData['postcode'],
           state: PostcodeState.NSW,

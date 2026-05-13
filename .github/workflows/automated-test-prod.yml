@@ -1,21 +1,18 @@
-name: Build and Deploy to STAGING
+name: Automated Tests on PROD
 
 on:
   workflow_dispatch:
-  pull_request:
-    types: [opened, synchronize, labeled]
-    branches:
-      - master
-  push:
-    branches:
-      - master
+  # schedule:
+  #   # 5:00 AM every Monday in Sydney
+  #   - cron: '0 5 * * 1'
+  #     timezone: 'Australia/Sydney'
 
 jobs:
-  test-and-deploy:
+  test:
     uses: ./.github/workflows/main.yml
     with:
       run-test: true
-      run-deploy: true
+      run-deploy: false
       upload-report-github: true
     secrets: 
       REACT_APP_OPENFISCA_BASE_URL: ${{ secrets.REACT_APP_OPENFISCA_BASE_URL_PROD }}
@@ -27,4 +24,3 @@ jobs:
       COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.COMMUNICATION_SERVICES_CONNECTION_STRING }}
       COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN: ${{ secrets.COMMUNICATION_SERVICES_EMAIL_SENDER_DOMAIN }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      DEPLOY_SAS_URL: ${{ secrets.DEPLOY_SAS_URL }}

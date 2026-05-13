@@ -1,9 +1,9 @@
 import { FormSelector, ResultSelector, PostcodeState, URLPath } from 'cypress/enum';
 
-import dataFixtures from 'cypress/fixtures/certificate/D17_C.json';
+import dataFixtures from 'cypress/fixtures/certificate/F16_G_C.json';
 
-describe('Calculate D17 ESC certificate.', () => {
-  const urlPath: string = URLPath.D17_C;
+describe('Calculate F16 Gas ESC certificate.', () => {
+  const urlPath: string = URLPath.F16_G_C;
   const resultSelector = [
     ResultSelector.ESC_CERTIFICATE_SELECTOR,
     ResultSelector.ENERGY_SAVING_SELECTOR,
@@ -19,6 +19,7 @@ describe('Calculate D17 ESC certificate.', () => {
         nextSelector: FormSelector.NEXT_SELECTOR,
         data: rowData,
         resultSelector: resultSelector,
+        productSelection: true,
         interceptPostcodeAPI: {
           postcode: rowData['postcode'],
           state: PostcodeState.NSW,
