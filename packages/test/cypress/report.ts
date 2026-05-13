@@ -9,8 +9,6 @@ import { Octokit } from "@octokit/rest";
 
 import config from "cypress/config";
 
-console.log(JSON.stringify(config, null, 2))
-
 
 type ReportStatus = "PASSED" | "FAILED"
 let emailClient: EmailClient;
@@ -52,7 +50,7 @@ async function generateSummaryReport(): Promise<string> {
   const files: string[] = await generator.create(report, {
     reportDir: `${config.reportDir}`,
     reportFilename: "report-[datetime]",
-    timestamp: "yyyy-mm-dd_HH:MM:ss",
+    timestamp: "yyyy-mm-dd HH-MM-ss",
     reportPageTitle: `Cypress Auto Testing Report - ${reportDate()}`,
     inline: true,
     saveHtml: true,
@@ -104,10 +102,11 @@ async function uploadToGithub(reportPath: string): Promise<string | undefined> {
         owner: config.githubOwner,
         repo: config.githubRepositoryName,
         path: githubPath,
-        message: `System upload cypress auto testing report`,
+        message: `System upload.`,
         branch: "main",
         content: file.toString('base64'),
       })
+      console.log(`Report file ${filename} is uploaded to Github successfully.`)
       return data.content?.html_url
     } catch (error) {
       if (error instanceof Error && "response" in error && "status" in error) {
@@ -115,9 +114,9 @@ async function uploadToGithub(reportPath: string): Promise<string | undefined> {
         console.log("Data:", (error as any).response.data); 
       }
     }
+  } else {
+    console.log(`File ${githubPath} already exist in Github.`)
   }
-
-  console.log(`File ${githubPath} already exist in Github.`)
 }
 
 
