@@ -172,6 +172,12 @@ export const BASE_BESS2_ESTIMATOR_ANALYTICS_DATA = {
   sf_formId: 'BESS2_C',
   sf_versionId: '202501_P',
 };
+export const BASE_BESS3_ESTIMATOR_ANALYTICS_DATA = {
+  sf_activityId: 'BESS3',
+  sf_activityType: 'Certificates',
+  sf_formId: 'BESS3_C',
+  sf_versionId: '202501_P',
+};
 
 export const BASE_COMMERCIAL_AC_ESTIMATOR_ANALYTICS_DATA = {
   sf_activityId: 'F4',
