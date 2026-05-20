@@ -9,6 +9,7 @@ on:
 
 jobs:
   test:
+    name: Automated Tests
     uses: ./.github/workflows/main.yml
     with:
       run-test: true

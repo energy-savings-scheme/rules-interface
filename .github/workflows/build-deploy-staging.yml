@@ -12,11 +12,12 @@ on:
 
 jobs:
   test-and-deploy:
+    name: Test and Deploy
     uses: ./.github/workflows/main.yml
     with:
       run-test: true
       run-deploy: true
-      upload-report-github: true
+      upload-report-github: false
     secrets: 
       REACT_APP_OPENFISCA_BASE_URL: ${{ secrets.REACT_APP_OPENFISCA_BASE_URL_PROD }}
       REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL_PROD }}
