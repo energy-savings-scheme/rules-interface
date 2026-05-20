@@ -185,6 +185,7 @@ export default function Breadcrumb() {
     location.pathname === '/solar-battery-certificates' ||
     location.pathname === '/residential-solar-battery-certificates' ||
     location.pathname === '/residential-solar-battery-demand-response-certificates' ||
+    location.pathname === '/residential-apartments-battery-certificates' ||
     location.pathname === '/commercial-heat-pump-water-heater-certificates' ||
     location.pathname === '/commercial-electric-to-heat-pump-water-heater-certificates' ||
     location.pathname === '/commercial-new-heat-pump-water-heater-certificates' ||
