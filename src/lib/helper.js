@@ -35,4 +35,14 @@ function getCookie(name) {
   return null;
 }
 
-export { formatNumber, focusElement, getCookie };
+/**
+ * Get today's date in YYYY-MM-DD format
+ *
+ * @return {string}
+ */
+function getTodayDate() {
+  const today = new Date();
+  return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+}
+
+export { formatNumber, focusElement, getCookie, getTodayDate };

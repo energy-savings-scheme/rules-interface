@@ -12,6 +12,7 @@ import {
   BESS1_V5Nov24_PRC_calculation,
   BESS2_V5Nov24_PDRS__postcode,
   BESS2_V5Nov24_PRC_calculation,
+  BESS3_postcode,
   C1_PDRSAug24_ESC_calculation,
   C1_PDRSAug24_PDRS__postcode,
   F7_PDRSAug24_ESC_calculation,
@@ -32,6 +33,7 @@ import {
   D19_ESSJun24_ESC_calculation,
   D20_ESSJun24_ESC_calculation,
   F17_ESC_calculation,
+  BESS3_PRC_calculation,
 } from 'types/openfisca_variables';
 
 import { Float } from 'types/value_type';
@@ -144,6 +146,7 @@ export default function CalculateForm(props) {
       F7_PDRSAug24_ESC_calculation,
       BESS1_PDRSAug24_PRC_calculation,
       BESS2_PDRSAug24_PRC_calculation,
+      BESS3_PRC_calculation,
     ];
 
     // if eligibility and certificate pages with only 2 steps
@@ -391,7 +394,8 @@ export default function CalculateForm(props) {
           variable.name === BESS1_V5Nov24_PDRS__postcode ||
           variable.name === BESS2_V5Nov24_PDRS__postcode ||
           variable.name === BESS1_PDRSAug24_PDRS__postcode ||
-          variable.name === BESS2_PDRSAug24_PDRS__postcode
+          variable.name === BESS2_PDRSAug24_PDRS__postcode || 
+          variable.name === BESS3_postcode
         ) {
           if (['2817', '2818', '2819'].includes(variable.form_value)) {
             setFlow(null);
@@ -484,7 +488,8 @@ export default function CalculateForm(props) {
             (variable.name === C1_PDRSAug24_ESC_calculation ||
               variable.name === F7_PDRSAug24_ESC_calculation ||
               variable.name === BESS1_PDRSAug24_PRC_calculation ||
-              variable.name === BESS2_PDRSAug24_PRC_calculation) ? (
+              variable.name === BESS2_PDRSAug24_PRC_calculation ||
+              variable.name === BESS3_PRC_calculation) ? (
             <></>
           ) : workflow === Workflow.CERTIFICATES ? (
             <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>

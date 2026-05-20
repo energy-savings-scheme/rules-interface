@@ -52,6 +52,7 @@ import SolarBatteryCertificatePage from 'pages/homepage/SolarBatteryCertificateP
 import CertificateEstimatorBESS1 from 'pages/BESS1/CertificateEstimatorBESS1';
 import ActivityRequirementsBESS2 from 'pages/BESS2/ActivityRequirementsBESS2';
 import CertificateEstimatorBESS2 from 'pages/BESS2/CertificateEstimatorBESS2';
+import CertificateEstimatorBESS3 from 'pages/BESS3/CertificateEstimator';
 import CertificateEstimatorWH2_test from 'pages/WH2_test/CertificateEstimatorWH';
 import ActivityRequirementsF17 from 'pages/commercial_wh_f17/ActivityRequirementsWaterHeater';
 import CommercialHotWaterHeaterEligibilityPage from 'pages/homepage/CommercialHotWaterHeaterEligibility';
@@ -337,6 +338,18 @@ function App() {
         <Route path="/residential-solar-battery-demand-response-certificates" exact>
           {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorBESS2
+            entities={entities}
+            variables={variables}
+            brands={resSolarBatteryBrands}
+            loading={loading}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+          />
+        </Route>
+        <Route path="/residential-apartments-battery-certificates" exact>
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
+          <CertificateEstimatorBESS3
             entities={entities}
             variables={variables}
             brands={resSolarBatteryBrands}
