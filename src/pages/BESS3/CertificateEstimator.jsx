@@ -22,7 +22,7 @@ import {
   clearSearchCaptureAnalytics,
   updateSegmentCaptureAnalytics
 } from 'lib/analytics';
-import { formatNumber } from 'lib/helper';
+import { formatNumber, getTodayDate } from 'lib/helper';
 import FeedbackComponent from 'components/feedback/feedback';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
@@ -198,6 +198,7 @@ export default function CertificateEstimatorBESS3(props) {
                   </FormGroup>
       
                   <CalculateBlock
+                    calculationDate={getTodayDate()}
                     variable={variableData1}
                     // variable2={variableData2}
                     variables={variables}
