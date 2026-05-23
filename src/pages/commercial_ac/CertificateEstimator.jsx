@@ -228,13 +228,6 @@ export default function CertificateEstimatorHVAC(props) {
     } catch (err) {
       console.log(err);
     }
-    // RegistryApi.getHvacModelsMetadata(payload)
-    //   .then((res) => {
-    //     setMetadata(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   }, [selectedModel]);
 
   useEffect(() => {
@@ -256,16 +249,6 @@ export default function CertificateEstimatorHVAC(props) {
       setRegistryData(false);
       focusElement('error-data-registry');
     }
-    // RegistryApi.listHvacModels(selectedBrand)
-    //   .then((res) => {
-    //     setModels(res.data);
-    //     setRegistryData(true);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setRegistryData(false);
-    //     focusElement('error-data-registry');
-    //   });
   }, [selectedBrand]);
 
   useEffect(() => {
@@ -310,18 +293,6 @@ export default function CertificateEstimatorHVAC(props) {
         console.log(err);
       }
 
-      // OpenFiscaApi.postCalculate(payload)
-      //   .then((res) => {
-      //     var result =
-      //       res.data.buildings.building_1['HVAC2_PDRSAug24_get_climate_zone_by_postcode'][
-      //         '2021-01-01'
-      //       ];
-      //     setZone(result);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
-
       const payload_bca = {
         buildings: {
           building_1: {
@@ -342,19 +313,6 @@ export default function CertificateEstimatorHVAC(props) {
       } catch (err) {
         console.log(err);
       }
-
-      // OpenFiscaApi.postCalculate(payload_bca)
-      //   .then((res) => {
-      //     var result =
-      //       res.data.buildings.building_1['HVAC2_PDRSAug24_BCA_climate_zone_by_postcode'][
-      //         '2021-01-01'
-      //       ];
-      //     setBCAZone(result);
-      //     setSelectedClimateZone(getClimateZoneText(result));
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
     }
   }, [postcode]);
 
