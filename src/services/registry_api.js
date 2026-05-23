@@ -10,9 +10,23 @@ function getCommercialHVACBrands() {
   });
 }
 
+function getResidentialACBrands() {
+  return RegistryApiBase({
+    url: `/residential_hvac/brands`,
+    method: 'GET',
+  });
+}
+
 function getCommercialHVACLastModified() {
   return RegistryApiBase({
     url: `/commercial_hvac/last_modified`,
+    method: 'GET',
+  });
+}
+
+function listResidentialACModels(brandName) {
+  return RegistryApiBase({
+    url: `/residential_hvac/brands/${brandName}/models`,
     method: 'GET',
   });
 }
@@ -221,9 +235,11 @@ function getCertificatePrice() {
 
 const RegistryApi = {
   getCommercialHVACBrands,
+  getResidentialACBrands,
   getCommercialHVACLastModified,
   getCommercialWHBrands,
   getCommercialWHLastModified,
+  listResidentialACModels,
   listHvacModels,
   getHvacModelsMetadata,
   listWHModels,

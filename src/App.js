@@ -67,6 +67,7 @@ function App() {
   const [variables, setVariables] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hvacBrands, setHvacBrands] = useState([]);
+  const [residentialACBrands, setResidentialACBrands] = useState([]);
   const [whBrands, setWhBrands] = useState([]);
   const [RF2Brands, setRF2Brands] = useState([]);
   const [PoolPumpBrands, setPoolPumpBrands] = useState([]);
@@ -92,6 +93,15 @@ function App() {
     RegistryApi.getCommercialHVACBrands()
       .then((res) => {
         setHvacBrands(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    RegistryApi.getResidentialACBrands()
+      .then((res) => {
+        setResidentialACBrands(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -218,12 +228,12 @@ function App() {
           <CertificateEstimatorResidentialAC
             entities={entities}
             variables={variables}
-            hvacBrands={hvacBrands}
+            hvacBrands={residentialACBrands}
             loading={loading}
             setEntities={setEntities}
             setVariables={setVariables}
             setLoading={setLoading}
-            setHvacBrands={setHvacBrands}
+            setHvacBrands={setResidentialACBrands}
           />
         </Route>
         <Route path="/refrigerated-cabinet-estimator" exact>

@@ -45,4 +45,34 @@ function getTodayDate() {
   return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 }
 
-export { formatNumber, focusElement, getCookie, getTodayDate };
+/**
+ * Reorders air conditioner types based on a predefined order
+ * @param {Object} possibleValues 
+ * @returns {Object}
+ */
+function reOrderAirConditionerTypes(possibleValues) {
+    const desiredOrder = [
+      "ducted_split_system",
+      "ducted_multi_split_system",
+      "ducted_unitary_system",
+      "non_ducted_split_system",
+      "non_ducted_multi_split_system",
+      "non_ducted_unitary_system"
+    ];
+
+    // Reduce the desired order array to an object that maintains the order of keys as specified in desiredOrder
+    return desiredOrder.reduce((acc, key) => {
+      if (key in possibleValues) {
+        acc[key] = possibleValues[key];
+      }
+      return acc;
+    }, {});
+  }
+
+export { 
+  formatNumber, 
+  focusElement, 
+  getCookie, 
+  getTodayDate, 
+  reOrderAirConditionerTypes,
+};
