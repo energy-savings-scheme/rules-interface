@@ -11,7 +11,9 @@ import OpenFiscaApi from 'services/openfisca_api';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import { HVAC1_PDRSAug24_product_class } from 'types/openfisca_variables';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import { MAP_AIR_CONDITIONER_TYPES } from 'constant/product';
 import { BASE_COMMERCIAL_AC_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
@@ -59,6 +61,9 @@ export default function CertificateEstimatorHVAC(props) {
   const [escMaxPrice, setEscMaxPrice] = useState(0);
   const [prcMinPrice, setPrcMinPrice] = useState(0);
   const [prcMaxPrice, setPrcMaxPrice] = useState(0);
+  const [productClass, setProductClass] = useState('');
+  const [type, setType] = useState('');
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -77,16 +82,6 @@ export default function CertificateEstimatorHVAC(props) {
       { text: 'BCA Climate Zone 8', value: 'BCA_Climate_Zone_8' },
     ]);
 
-    if (variables.length < 1) {
-      OpenFiscaAPI.listEntities()
-        .then((res) => {
-          setEntities(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
     if (lastModified.length === 0) {
       RegistryApi.getCommercialHVACLastModified('commercial_hvac')
         .then((res) => {
@@ -96,21 +91,7 @@ export default function CertificateEstimatorHVAC(props) {
           console.log(err);
         });
     }
-  }, []);
 
-  useEffect(() => {
-    if (annualEnergySavingsNumber < 0) {
-      setAnnualEnergySavingsNumber(0);
-    }
-  }, [annualEnergySavingsNumber]);
-
-  useEffect(() => {
-    if (peakDemandReductionSavingsNumber < 0) {
-      setPeakDemandReductionSavingsNumber(0);
-    }
-  }, [peakDemandReductionSavingsNumber]);
-
-  useEffect(() => {
     const fetchCertificatePrice = async function () {
       try {
         const response = await RegistryApi.getCertificatePrice();
@@ -125,6 +106,18 @@ export default function CertificateEstimatorHVAC(props) {
 
     fetchCertificatePrice();
   }, []);
+
+  useEffect(() => {
+    if (annualEnergySavingsNumber < 0) {
+      setAnnualEnergySavingsNumber(0);
+    }
+  }, [annualEnergySavingsNumber]);
+
+  useEffect(() => {
+    if (peakDemandReductionSavingsNumber < 0) {
+      setPeakDemandReductionSavingsNumber(0);
+    }
+  }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
     if (calculationError && calculationError2 && showError) {
@@ -159,12 +152,6 @@ export default function CertificateEstimatorHVAC(props) {
     };
     return zoneMapping[value] || '';
   };
-
-  useEffect(() => {
-    if (postcode && postcode.length < 4) {
-      setShowPostcodeError(false);
-    }
-  }, [postcode]);
 
   const validatePostcode = (postcode) => {
     if (['2817', '2818', '2819'].includes(postcode)) {
@@ -214,21 +201,33 @@ export default function CertificateEstimatorHVAC(props) {
     models.forEach((item) => populateModelDropDown({ text: item, value: item }));
   }, [models]);
 
-  useEffect(() => {
-    if (!selectedBrand) return null;
-    if (!selectedModel) return null;
+  useEffect(async () => {
+    if (!selectedModel) {
+      setProductClass('');
+      return;
+    }
 
     var payload = {
       brand: selectedBrand,
       model: selectedModel,
     };
-    RegistryApi.getHvacModelsMetadata(payload)
-      .then((res) => {
-        setMetadata(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+    try {
+      const res = await RegistryApi.getHvacModelsMetadata(payload);
+      setMetadata(res.data);
+
+      const productClass = res.data['Product Class'] ? res.data['Product Class'] : '';
+      setProductClass(productClass);
+
+      const productType = res.data['Product Type'] ? res.data['Product Type'].toLowerCase() : null;
+      if (MAP_AIR_CONDITIONER_TYPES[productType]) {
+        const installationType = res.data['Installation Type'] ? res.data['Installation Type'].toLowerCase() : null;
+        const type = MAP_AIR_CONDITIONER_TYPES[productType][installationType] || ''
+        setType(type);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }, [selectedModel]);
 
   useEffect(() => {
@@ -237,17 +236,19 @@ export default function CertificateEstimatorHVAC(props) {
     }
   }, [hvacBrands]);
 
-  useEffect(() => {
-    RegistryApi.listHvacModels(selectedBrand)
-      .then((res) => {
-        setModels(res.data);
-        setRegistryData(true);
-      })
-      .catch((err) => {
-        console.log(err);
-        setRegistryData(false);
-        focusElement('error-data-registry');
-      });
+  useEffect(async () => {
+    setSelectedModel('');
+    setProductClass('');
+
+    try {
+      const res = await RegistryApi.listHvacModels(selectedBrand);
+      setModels(res.data);
+      setRegistryData(true);
+    } catch (err) {
+      console.log(err);
+      setRegistryData(false);
+      focusElement('error-data-registry');
+    }
   }, [selectedBrand]);
 
   useEffect(() => {
@@ -262,71 +263,56 @@ export default function CertificateEstimatorHVAC(props) {
     }
   }, [calculationResult2]);
 
-  useEffect(() => {
-    if (annualEnergySavingsNumber < 0) {
-      setAnnualEnergySavingsNumber(0);
-    }
-  }, [annualEnergySavingsNumber]);
-
-  useEffect(() => {
-    if (peakDemandReductionSavingsNumber < 0) {
-      setPeakDemandReductionSavingsNumber(0);
-    }
-  }, [peakDemandReductionSavingsNumber]);
-
-  useEffect(() => {
+  useEffect(async () => {
     if (!postcode) return;
 
-    const payload = {
-      buildings: {
-        building_1: {
-          HVAC2_PDRSAug24_PDRS__postcode: { '2021-01-01': postcode },
-          HVAC2_PDRSAug24_get_climate_zone_by_postcode: { '2021-01-01': null },
-        },
-      },
-      persons: {
-        person1: {},
-      },
-    };
-
-    OpenFiscaApi.postCalculate(payload)
-      .then((res) => {
-        var result =
-          res.data.buildings.building_1['HVAC2_PDRSAug24_get_climate_zone_by_postcode'][
-            '2021-01-01'
-          ];
-        setZone(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    const payload_bca = {
-      buildings: {
-        building_1: {
-          HVAC2_PDRSAug24_PDRS__postcode: { '2021-01-01': postcode },
-          HVAC2_PDRSAug24_BCA_climate_zone_by_postcode: { '2021-01-01': null },
-        },
-      },
-      persons: {
-        person1: {},
-      },
-    };
+    if (postcode && postcode.length < 4) {
+      setShowPostcodeError(false);
+      return;
+    }
 
     if (postcode.length === 4) {
-      OpenFiscaApi.postCalculate(payload_bca)
-        .then((res) => {
-          var result =
-            res.data.buildings.building_1['HVAC2_PDRSAug24_BCA_climate_zone_by_postcode'][
-              '2021-01-01'
-            ];
-          setBCAZone(result);
-          setSelectedClimateZone(getClimateZoneText(result));
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      setSelectedClimateZone(BCAzone);
+
+      const payload = {
+        buildings: {
+          building_1: {
+            HVAC2_PDRSAug24_PDRS__postcode: { '2021-01-01': postcode },
+            HVAC2_PDRSAug24_get_climate_zone_by_postcode: { '2021-01-01': null },
+          },
+        },
+        persons: {
+          person1: {},
+        },
+      };
+
+      try {
+        const res = await OpenFiscaApi.postCalculate(payload);
+        var result = res.data.buildings.building_1['HVAC2_PDRSAug24_get_climate_zone_by_postcode']['2021-01-01'];
+        setZone(result);
+      } catch (err) {
+        console.log(err);
+      }
+
+      const payload_bca = {
+        buildings: {
+          building_1: {
+            HVAC2_PDRSAug24_PDRS__postcode: { '2021-01-01': postcode },
+            HVAC2_PDRSAug24_BCA_climate_zone_by_postcode: { '2021-01-01': null },
+          },
+        },
+        persons: {
+          person1: {},
+        },
+      };
+
+      try {
+        const res = await OpenFiscaApi.postCalculate(payload_bca);
+        var result = res.data.buildings.building_1['HVAC2_PDRSAug24_BCA_climate_zone_by_postcode']['2021-01-01'];
+        setBCAZone(result);
+        setSelectedClimateZone(getClimateZoneText(result));
+      } catch (err) {
+        console.log(err);
+      }
     }
   }, [postcode]);
 
@@ -525,7 +511,6 @@ export default function CertificateEstimatorHVAC(props) {
                         options={dropdownOptions}
                         onChange={(e) => {
                           setSelectedBrand(hvacBrands.find((item) => item === e.target.value));
-                          setSelectedModel('');
                         }}
                         value={selectedBrand}
                         required
@@ -547,6 +532,25 @@ export default function CertificateEstimatorHVAC(props) {
                           setSelectedModel(models.find((item) => item === e.target.value));
                         }}
                         value={selectedModel}
+                        required
+                      />
+                    </FormGroup>
+
+                    <FormGroup
+                      htmlId={HVAC1_PDRSAug24_product_class}
+                      label="Product Class"
+                      helper="Product class of selected brand and model" // helper text (secondary label)
+                      errorText="Invalid value!" // error text if invalid
+                    >
+                      <TextInput
+                        htmlId={HVAC1_PDRSAug24_product_class}
+                        className="nsw-col-lg-6"
+                        data-ui-name={HVAC1_PDRSAug24_product_class}
+                        as="input"
+                        type="text"
+                        placeholder="Enter product class"
+                        value={productClass}
+                        readOnly={true}
                         required
                       />
                     </FormGroup>
@@ -626,6 +630,8 @@ export default function CertificateEstimatorHVAC(props) {
               escMaxPrice={escMaxPrice}
               prcMinPrice={prcMinPrice}
               prcMaxPrice={prcMaxPrice}
+              productClass={productClass}
+              type={type}
             />
           )}
 
@@ -669,6 +675,8 @@ export default function CertificateEstimatorHVAC(props) {
               escMaxPrice={escMaxPrice}
               prcMinPrice={prcMinPrice}
               prcMaxPrice={prcMaxPrice}
+              productClass={productClass}
+              type={type}
             />
           )}
 

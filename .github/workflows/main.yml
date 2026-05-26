@@ -23,6 +23,11 @@ on:
         required: false
         default: false
         type: boolean
+      excel-test-path:
+        description: 'The path to the Excel file used for testing. Only works when run-test is true.'
+        required: false
+        default: /home/azureuser/data.xlsx
+        type: string
     secrets:
       REACT_APP_OPENFISCA_BASE_URL:
         description: 'The base URL for OpenFisca API.'
@@ -128,7 +133,7 @@ jobs:
           wait-on-timeout: 60
           browser: chrome-for-testing
         env:
-          EXCEL_PATH: /home/azureuser/data.xlsx
+          EXCEL_PATH: ${{ inputs.excel-test-path }}
           SEND_REPORT_TO_EMAIL: ${{ inputs.send-report && 'true' || 'false' }}
           UPLOAD_REPORT_TO_GITHUB: ${{ inputs.upload-report-github && 'true' || 'false' }}
           COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.COMMUNICATION_SERVICES_CONNECTION_STRING }}
@@ -171,7 +176,7 @@ jobs:
       (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Install Node.js
         uses: actions/setup-node@v1
