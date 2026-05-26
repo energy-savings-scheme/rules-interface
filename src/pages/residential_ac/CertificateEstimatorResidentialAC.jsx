@@ -21,8 +21,8 @@ import {
   updateSearchCaptureAnalytics,
   updateSegmentCaptureAnalytics,
 } from 'lib/analytics';
-import { focusElement } from 'lib/helper';
-import { AIR_CONDITIONER_TYPES } from 'constant/product';
+import { focusElement, selectAirConditionerType } from 'lib/helper';
+import { MAP_AIR_CONDITIONER_TYPES } from 'constant/product';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
 
 export default function CertificateEstimatorResidentialAC(props) {
@@ -207,14 +207,12 @@ export default function CertificateEstimatorResidentialAC(props) {
     try {
       const res = await RegistryApi.getHvacModelsMetadata(payload);
       setMetadata(res.data);
+      
       const productClass = res.data['Product Class'] ? res.data['Product Class'] : '';
       setProductClass(productClass);
-      const productType = res.data['Product Type'] ? res.data['Product Type'].toLowerCase() : null;
-      if (AIR_CONDITIONER_TYPES[productType]) {
-        const installationType = res.data['Installation Type'] ? res.data['Installation Type'].toLowerCase() : null;
-        const type = AIR_CONDITIONER_TYPES[productType][installationType] || ''
-        setType(type);
-      }
+
+      const type = selectAirConditionerType(res.data['Product Type'], res.data['Installation Type']);
+      setType(type);
     } catch (error) {
       console.log(error);
     }

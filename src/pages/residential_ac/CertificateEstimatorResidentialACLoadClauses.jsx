@@ -123,11 +123,12 @@ export default function CertificateEstimatorResidentialACLoadClauses(props) {
           formValue = productClass;
           child.hide = true;
         }
-        //TODO: 
+        
         // Implement reorder air conditioner types when the variabe is updated from openfisca to ensure the dropdown is in the correct order.
-        // if (child.name === HVAC1_PDRSAug24_Air_Conditioner_type) {
-        //   child.possible_values = reOrderAirConditionerTypes(child.possible_values);
-        // }
+        if (child.name === HVAC1_PDRSAug24_Air_Conditioner_type) {
+          formValue = type;
+          child.possible_values = reOrderAirConditionerTypes(child.possible_values);
+        }
         array1.push({ ...child, form_value: formValue, invalid: false });
       });
 

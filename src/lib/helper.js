@@ -1,3 +1,12 @@
+import {
+  AC_DUCTED_SINGLE_SPLIT_SYSTEM,
+  AC_DUCTED_MULTI_SPLIT_SYSTEM,
+  AC_DUCTED_UNITARY_SYSTEM,
+  AC_NON_DUCTED_SINGLE_SPLIT_SYSTEM,
+  AC_NON_DUCTED_MULTI_SPLIT_SYSTEM,
+  AC_NON_DUCTED_UNITARY_SYSTEM,
+} from 'constant/product';
+
 /**
  * Format a number with commas for readability, and two decimal places.
  *
@@ -51,23 +60,61 @@ function getTodayDate() {
  * @returns {Object}
  */
 function reOrderAirConditionerTypes(possibleValues) {
-    const desiredOrder = [
-      "ducted_split_system",
-      "ducted_multi_split_system",
-      "ducted_unitary_system",
-      "non_ducted_split_system",
-      "non_ducted_multi_split_system",
-      "non_ducted_unitary_system"
-    ];
+  const desiredOrder = [
+    AC_DUCTED_SINGLE_SPLIT_SYSTEM,
+    AC_DUCTED_MULTI_SPLIT_SYSTEM,
+    AC_DUCTED_UNITARY_SYSTEM,
+    AC_NON_DUCTED_SINGLE_SPLIT_SYSTEM,
+    AC_NON_DUCTED_MULTI_SPLIT_SYSTEM,
+    AC_NON_DUCTED_UNITARY_SYSTEM,
+  ];
 
-    // Reduce the desired order array to an object that maintains the order of keys as specified in desiredOrder
-    return desiredOrder.reduce((acc, key) => {
-      if (key in possibleValues) {
-        acc[key] = possibleValues[key];
-      }
-      return acc;
-    }, {});
+  // Reduce the desired order array to an object that maintains the order of keys as specified in desiredOrder
+  return desiredOrder.reduce((acc, key) => {
+    if (key in possibleValues) {
+      acc[key] = possibleValues[key];
+    }
+    return acc;
+  }, {});
+}
+
+function selectAirConditionerType(productType, installationType) {
+  const pType = productType ? productType.trim().toLowerCase() : '';
+  const iType = installationType ? installationType.trim().toLowerCase() : '';
+    
+  const unitaryTypes = ['portable', 'unitary double duct wall mounted', 'window wall'];
+  const multiSplitTypes = ['fixed', 'vrf'];
+
+  switch (true) {
+    // --- Unitary Systems ---
+    case (pType === 'ducted' && unitaryTypes.includes(iType)):
+      return AC_DUCTED_UNITARY_SYSTEM;
+
+    case (pType === 'non ducted' && unitaryTypes.includes(iType)):
+      return AC_NON_DUCTED_UNITARY_SYSTEM;
+
+
+    // --- Single Split Systems ---
+    case (pType === 'ducted' && iType === 'single split system'):
+      return AC_DUCTED_SINGLE_SPLIT_SYSTEM;
+
+    case (pType === 'non ducted' && iType === 'single split system'):
+      return AC_NON_DUCTED_SINGLE_SPLIT_SYSTEM;
+
+
+    // --- Multi-Split Systems ---
+    case (pType === 'ducted' && multiSplitTypes.includes(iType)):
+      return AC_DUCTED_MULTI_SPLIT_SYSTEM;
+
+    case (pType === 'non ducted' && multiSplitTypes.includes(iType)):
+      return AC_NON_DUCTED_MULTI_SPLIT_SYSTEM;
+
+
+    // --- Fallback ---
+    default:
+      return '';
   }
+}
 
 export { 
   formatNumber, 
@@ -75,4 +122,5 @@ export {
   getCookie, 
   getTodayDate, 
   reOrderAirConditionerTypes,
+  selectAirConditionerType
 };

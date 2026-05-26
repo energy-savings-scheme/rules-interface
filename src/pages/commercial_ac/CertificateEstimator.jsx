@@ -13,7 +13,7 @@ import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import { HVAC1_PDRSAug24_product_class } from 'types/openfisca_variables';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import { AIR_CONDITIONER_TYPES } from 'constant/product';
+import { MAP_AIR_CONDITIONER_TYPES } from 'constant/product';
 import { BASE_COMMERCIAL_AC_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
@@ -220,9 +220,9 @@ export default function CertificateEstimatorHVAC(props) {
       setProductClass(productClass);
 
       const productType = res.data['Product Type'] ? res.data['Product Type'].toLowerCase() : null;
-      if (AIR_CONDITIONER_TYPES[productType]) {
+      if (MAP_AIR_CONDITIONER_TYPES[productType]) {
         const installationType = res.data['Installation Type'] ? res.data['Installation Type'].toLowerCase() : null;
-        const type = AIR_CONDITIONER_TYPES[productType][installationType] || ''
+        const type = MAP_AIR_CONDITIONER_TYPES[productType][installationType] || ''
         setType(type);
       }
     } catch (err) {
