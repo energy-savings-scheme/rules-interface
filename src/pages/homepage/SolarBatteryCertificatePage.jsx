@@ -49,9 +49,6 @@ export default function SolarBatteryCertificatePage(props) {
                       </li>
                     </ul> */}
                   </p>
-                  <p className="nsw-content-block__copy">
-                    Both of these activities are for residential buildings only.
-                  </p>
                 </div>
               </div>
             </div>
@@ -86,7 +83,7 @@ export default function SolarBatteryCertificatePage(props) {
                 </div> */}
                 <div className="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
-                    copy="Install a new batter for residential apartments"
+                    copy="Install a new battery for residential apartments"
                     headline="Install a new battery for apartments"
                     image="BESS3.jpg"
                     highlight

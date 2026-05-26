@@ -22,7 +22,7 @@ import {
   clearSearchCaptureAnalytics,
   updateSegmentCaptureAnalytics
 } from 'lib/analytics';
-import { formatNumber, getTodayDate } from 'lib/helper';
+import { formatNumber, getTodayDate, focusElement } from 'lib/helper';
 import FeedbackComponent from 'components/feedback/feedback';
 import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
@@ -53,26 +53,32 @@ export default function CertificateEstimatorBESS3(props) {
     setUserTypeError(errorMessage);
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     window.scrollTo(0, 0);
     clearSearchCaptureAnalytics();
     updateEstimatorFormAnalytics(BASE_BESS3_ESTIMATOR_ANALYTICS_DATA);
     updateFeedbackFormAnalytics(BASE_BESS3_ESTIMATOR_ANALYTICS_DATA);
-  }, []);
 
-  useEffect(() => {
-    Promise.all([
-      OpenFiscaAPI.getVariable(BESS3_PRC_calculation),
-      OpenFiscaAPI.getVariable(BESS3_PRC_calculation),
-    ])
-      .then(([variable1, variable2]) => {
-        setVariableData1(variable1.data);
-        setVariableData2(variable2.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      const [variable1, variable2] = await Promise.all([
+        OpenFiscaAPI.getVariable(BESS3_PRC_calculation),
+        OpenFiscaAPI.getVariable(BESS3_PRC_calculation),
+      ]);
+      setVariableData1(variable1.data);
+      setVariableData2(variable2.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching variable data:', error);
+      setLoading(false);
+    }
+
+    try {
+      const response = await RegistryApi.getCertificatePrice()
+      setPrcMinPrice(Number(response.data.PRC.min_price))
+      setPrcMaxPrice(Number(response.data.PRC.max_price))
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   useEffect(() => {
@@ -97,18 +103,10 @@ export default function CertificateEstimatorBESS3(props) {
   }, [peakDemandReductionSavingsNumber]);
 
   useEffect(() => {
-    const fetchCertificatePrice = async function () {
-      try {
-        const response = await RegistryApi.getCertificatePrice()
-        setPrcMinPrice(Number(response.data.PRC.min_price))
-        setPrcMaxPrice(Number(response.data.PRC.max_price))
-      } catch (e) {
-        console.log(e)
-      }
+    if (stepNumber === 2 && calculationError && showError) {
+      focusElement("error-calculation");
     }
-
-    fetchCertificatePrice()
-  }, []);
+  }, [stepNumber, calculationError, showError])
 
   return (
     <Fragment>
@@ -122,7 +120,7 @@ export default function CertificateEstimatorBESS3(props) {
               src: 'BESS3.jpg',
             }}
             intro="Residential and small business"
-            title="Install a new multi-dweliing solar battery system - certificates"
+            title="Install a new multi-dwelling solar battery system - certificates"
           />
         </div>
       )}
@@ -157,7 +155,7 @@ export default function CertificateEstimatorBESS3(props) {
         {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
 
         <Fragment>
-          {stepNumber === 2 && calculationError && calculationError2 && showError && (
+          {(stepNumber === 2 && calculationError && showError && 
             <Alert as="error" customTitle={
               <h3 dangerouslySetInnerHTML={{__html: "Sorry!"}}/>
             } id="error-calculation" className="nsw-col-lg-10" tabIndex="-1">
@@ -169,7 +167,7 @@ export default function CertificateEstimatorBESS3(props) {
 
           <div data-ui-name="initial-form">
             <div style={{ marginTop: 70, marginBottom: 70 }}>
-              {stepNumber === 1 && !loading && (
+              {stepNumber === 1 && (variableData1 && variableData2) && (
                 <Fragment>
                   <p className="nsw-content-block__copy" style={{ paddingBottom: '30px' }}>
                     <b>Please answer the following questions to calculate your PRCs</b>
@@ -193,6 +191,7 @@ export default function CertificateEstimatorBESS3(props) {
                         updateSegmentCaptureAnalytics(e.target.value);
                       }}
                       value={userType}
+                      status={isUserTypeValid ? '' : 'invalid'}
                       required
                     />
                   </FormGroup>
@@ -241,7 +240,7 @@ export default function CertificateEstimatorBESS3(props) {
                 </Fragment>
               )}
       
-              {stepNumber === 2 && !calculationError && !calculationError2 && (
+              {stepNumber === 2 && !calculationError && (
                 <Fragment>
                   <InfoBox postcode={postcode} />
                   {
@@ -283,19 +282,6 @@ export default function CertificateEstimatorBESS3(props) {
               )}
       
               {stepNumber === 2 && loading && <SpinnerFullscreen />}
-      
-              {(stepNumber === 2 && calculationError === true) ||
-                (stepNumber === 2 && calculationError2 === true && (
-                  <Alert
-                    as="error"
-                    customTitle={
-                      <h3 dangerouslySetInnerHTML={{ __html: 'Sorry! An error has occurred.' }} />
-                    }
-                    className="nsw-col-lg-10"
-                  >
-                    <p>An error occurred during calculation. Try re-running the calculation</p>
-                  </Alert>
-                ))}
       
               {stepNumber === 2 && (
                 <Fragment>
