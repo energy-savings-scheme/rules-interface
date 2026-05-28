@@ -22,7 +22,6 @@ import {
   updateSegmentCaptureAnalytics,
 } from 'lib/analytics';
 import { focusElement, selectAirConditionerType } from 'lib/helper';
-import { MAP_AIR_CONDITIONER_TYPES } from 'constant/product';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
 
 export default function CertificateEstimatorResidentialAC(props) {
@@ -211,7 +210,7 @@ export default function CertificateEstimatorResidentialAC(props) {
       const productClass = res.data['Product Class'] ? res.data['Product Class'] : '';
       setProductClass(productClass);
 
-      const type = selectAirConditionerType(res.data['Product Type'], res.data['Installation Type']);
+      const type = selectAirConditionerType(res.data['Product Type'], res.data['Product Class']);
       setType(type);
     } catch (error) {
       console.log(error);

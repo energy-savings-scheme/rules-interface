@@ -5,7 +5,6 @@ import Button from 'nsw-ds-react/button/button';
 import { FormGroup, TextInput, Select } from 'nsw-ds-react/forms';
 import RegistryApi from 'services/registry_api';
 import CertificateEstimatorLoadClauses from './CertificatEstimatorLoadClauses';
-import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import OpenFiscaApi from 'services/openfisca_api';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
@@ -13,7 +12,6 @@ import Alert from 'nsw-ds-react/alert/alert';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import { HVAC1_PDRSAug24_product_class } from 'types/openfisca_variables';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
-import { MAP_AIR_CONDITIONER_TYPES } from 'constant/product';
 import { BASE_COMMERCIAL_AC_ESTIMATOR_ANALYTICS_DATA } from 'constant/base-analytics-data';
 import {
   updateEstimatorFormAnalytics,
@@ -21,7 +19,7 @@ import {
   updateSearchCaptureAnalytics,
   updateSegmentCaptureAnalytics,
 } from 'lib/analytics';
-import { focusElement } from 'lib/helper';
+import { focusElement, selectAirConditionerType } from 'lib/helper';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
 
@@ -219,12 +217,8 @@ export default function CertificateEstimatorHVAC(props) {
       const productClass = res.data['Product Class'] ? res.data['Product Class'] : '';
       setProductClass(productClass);
 
-      const productType = res.data['Product Type'] ? res.data['Product Type'].toLowerCase() : null;
-      if (MAP_AIR_CONDITIONER_TYPES[productType]) {
-        const installationType = res.data['Installation Type'] ? res.data['Installation Type'].toLowerCase() : null;
-        const type = MAP_AIR_CONDITIONER_TYPES[productType][installationType] || ''
-        setType(type);
-      }
+      const type = selectAirConditionerType(res.data['Product Type'], res.data['Product Class']);
+      setType(type);
     } catch (err) {
       console.log(err);
     }

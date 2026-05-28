@@ -94,29 +94,22 @@ export default function CertificateEstimatorLoadClauses(props) {
     return arr;
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     window.scrollTo(0, 0);
+
+    try {
+      const [variableData1, variableData2] = await Promise.all([
+        OpenFiscaApi.getVariable(variableToLoad1),
+        OpenFiscaApi.getVariable(variableToLoad2),
+      ]);
+
+      setVariableData1(variableData1.data);
+      setVariableData2(variableData2.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
-
-  useEffect(async () => {
-    try {
-      const res = await OpenFiscaApi.getVariable(variableToLoad1);
-      setVariableData1(res.data);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  }, [variableToLoad1]);
-
-  useEffect(async () => {
-    try {
-      const res = await OpenFiscaApi.getVariable(variableToLoad2);
-      setVariableData2(res.data);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  }, [variableToLoad2]);
 
   useEffect(() => {
     if (Object.keys(variableData1).length && Object.keys(variableData2).length) {
@@ -135,9 +128,10 @@ export default function CertificateEstimatorLoadClauses(props) {
         }
         //TODO: 
         // Implement reorder air conditioner types when the variabe is updated from openfisca to ensure the dropdown is in the correct order.
-        // if (child.name === HVAC2_PDRSAug24_Air_Conditioner_type) {
-        //   child.possible_values = reOrderAirConditionerTypes(child.possible_values);
-        // }
+        if (child.name === HVAC2_PDRSAug24_Air_Conditioner_type) {
+          formValue = type;
+          child.possible_values = reOrderAirConditionerTypes(child.possible_values);
+        }
         array1.push({ ...child, form_value: formValue, invalid: false });
       });
 
