@@ -126,7 +126,7 @@ export default function CertificateEstimatorLoadClauses(props) {
           formValue = productClass;
           child.hide = true;
         }
-        //TODO: 
+
         // Implement reorder air conditioner types when the variabe is updated from openfisca to ensure the dropdown is in the correct order.
         if (child.name === HVAC2_PDRSAug24_Air_Conditioner_type) {
           formValue = type;
