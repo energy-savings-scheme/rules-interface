@@ -78,42 +78,53 @@ function reOrderAirConditionerTypes(possibleValues) {
   }, {});
 }
 
-function selectAirConditionerType(productType, installationType) {
+function selectAirConditionerType(productType, productClass) {
   const pType = productType ? productType.trim().toLowerCase() : '';
-  const iType = installationType ? installationType.trim().toLowerCase() : '';
-    
-  const unitaryTypes = ['portable', 'unitary double duct wall mounted', 'window wall'];
-  const multiSplitTypes = ['fixed', 'vrf'];
+  const pClass = productClass ? productClass.trim().toLowerCase() : '';
 
-  switch (true) {
-    // --- Unitary Systems ---
-    case (pType === 'ducted' && unitaryTypes.includes(iType)):
-      return AC_DUCTED_UNITARY_SYSTEM;
+  const DUCTED = 'ducted';
+  const NON_DUCTED = 'non ducted';
+  const SINGLE_SPLIT = 'single split';
+  const MULTI_SPLIT = 'multi split';
+  const UNITARY = 'unitary';
 
-    case (pType === 'non ducted' && unitaryTypes.includes(iType)):
-      return AC_NON_DUCTED_UNITARY_SYSTEM;
-
-
-    // --- Single Split Systems ---
-    case (pType === 'ducted' && iType === 'single split system'):
-      return AC_DUCTED_SINGLE_SPLIT_SYSTEM;
-
-    case (pType === 'non ducted' && iType === 'single split system'):
-      return AC_NON_DUCTED_SINGLE_SPLIT_SYSTEM;
-
-
-    // --- Multi-Split Systems ---
-    case (pType === 'ducted' && multiSplitTypes.includes(iType)):
-      return AC_DUCTED_MULTI_SPLIT_SYSTEM;
-
-    case (pType === 'non ducted' && multiSplitTypes.includes(iType)):
-      return AC_NON_DUCTED_MULTI_SPLIT_SYSTEM;
-
-
-    // --- Fallback ---
-    default:
-      return '';
+  const productTypeByProductClass = {
+    'class 5': UNITARY,
+    'class 6': UNITARY,
+    'class 7': UNITARY,
+    'class 24': UNITARY,
+    'class 8': SINGLE_SPLIT,
+    'class 9': SINGLE_SPLIT,
+    'class 10': SINGLE_SPLIT,
+    'class 11': SINGLE_SPLIT,
+    'class 12': SINGLE_SPLIT,
+    'class 25': SINGLE_SPLIT,
+    'class 18': MULTI_SPLIT,
+    'class 19': MULTI_SPLIT,
+    'class 20': MULTI_SPLIT,
+    'class 21': MULTI_SPLIT,
+    'class 27': MULTI_SPLIT,
   }
+
+  const mapAirConditionerType = {
+    [DUCTED]: {
+      [SINGLE_SPLIT]: AC_DUCTED_SINGLE_SPLIT_SYSTEM,
+      [MULTI_SPLIT]: AC_DUCTED_MULTI_SPLIT_SYSTEM,
+      [UNITARY]: AC_DUCTED_UNITARY_SYSTEM,
+    },
+    [NON_DUCTED]: {
+      [SINGLE_SPLIT]: AC_NON_DUCTED_SINGLE_SPLIT_SYSTEM,
+      [MULTI_SPLIT]: AC_NON_DUCTED_MULTI_SPLIT_SYSTEM,
+      [UNITARY]: AC_NON_DUCTED_UNITARY_SYSTEM,
+    }
+  }
+
+  if (mapAirConditionerType[pType]) {
+    const typeByClass = productTypeByProductClass[pClass];
+    return mapAirConditionerType[pType][typeByClass] || '';
+  }
+
+  return '';
 }
 
 export { 
