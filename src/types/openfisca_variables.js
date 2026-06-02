@@ -35,8 +35,12 @@ export const C1_PDRSAug24_energy_savings = 'C1_PDRSAug24_energy_savings';
 export const HVAC1_PDRSAug24_BCA_Climate_Zone = 'HVAC1_PDRSAug24_BCA_Climate_Zone';
 export const HVAC1_PDRSAug24_new_installation_or_replacement =
   'HVAC1_PDRSAug24_new_installation_or_replacement';
+export const HVAC1_PDRSAug24_Air_Conditioner_type = 'HVAC1_PDRSAug24_Air_Conditioner_type';
+export const HVAC1_PDRSAug24_product_class = 'HVAC1_PDRSAug24_product_class_input';
 export const HVAC2_PDRSAug24_BCA_Climate_Zone = 'HVAC2_PDRSAug24_BCA_Climate_Zone';
 export const HVAC2_new_installation_or_replacement = 'HVAC2_new_installation_or_replacement';
+export const HVAC2_PDRSAug24_Air_Conditioner_type = 'HVAC2_PDRSAug24_Air_Conditioner_type';
+export const HVAC2_PDRSAug24_product_class = 'HVAC2_PDRSAug24_product_class_input';
 
 export const BESS1_V5Nov24_installation_final_activity_eligibility =
   'BESS1_V5Nov24_installation_final_activity_eligibility';

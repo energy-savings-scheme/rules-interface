@@ -13,8 +13,10 @@ import CertificiatePrice from 'components/certificate-price/CertificiatePrice';
 import {
   HVAC2_PDRSAug24_PDRS__postcode,
   HVAC2_PDRSAug24_BCA_Climate_Zone,
+  HVAC2_PDRSAug24_Air_Conditioner_type,
+  HVAC2_PDRSAug24_product_class,
 } from 'types/openfisca_variables';
-import { formatNumber } from 'lib/helper';
+import { formatNumber, reOrderAirConditionerTypes } from 'lib/helper';
 
 export default function CertificateEstimatorLoadClauses(props) {
   const {
@@ -34,6 +36,8 @@ export default function CertificateEstimatorLoadClauses(props) {
     calculationResult2,
     setCalculationResult2,
     postcode,
+    productClass,
+    type,
     zone,
     formValues,
     setFormValues,
@@ -71,10 +75,6 @@ export default function CertificateEstimatorLoadClauses(props) {
     BCA_Climate_Zone_8: 'BCA Climate Zone 8',
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const [variable, setVariable] = useState({}); // all info about variable
 
   var today = new Date();
@@ -86,28 +86,6 @@ export default function CertificateEstimatorLoadClauses(props) {
   const [variableData1, setVariableData1] = useState({});
   const [variableData2, setVariableData2] = useState({});
 
-  useEffect(() => {
-    OpenFiscaApi.getVariable(variableToLoad1)
-      .then((res) => {
-        setVariableData1(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [variableToLoad1]);
-
-  useEffect(() => {
-    OpenFiscaApi.getVariable(variableToLoad2)
-      .then((res) => {
-        setVariableData2(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [variableToLoad2]);
-
   function addElement(arr, obj) {
     const { length } = arr;
     const id = length + 1;
@@ -116,17 +94,45 @@ export default function CertificateEstimatorLoadClauses(props) {
     return arr;
   }
 
+  useEffect(async () => {
+    window.scrollTo(0, 0);
+
+    try {
+      const [variableData1, variableData2] = await Promise.all([
+        OpenFiscaApi.getVariable(variableToLoad1),
+        OpenFiscaApi.getVariable(variableToLoad2),
+      ]);
+
+      setVariableData1(variableData1.data);
+      setVariableData2(variableData2.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   useEffect(() => {
     if (Object.keys(variableData1).length && Object.keys(variableData2).length) {
       const children1 = variableData1.input_offsprings;
       const children2 = variableData2.input_offsprings;
 
       // Define the original array (at a minimum include the Implementation Date)
-      var array1 = [];
-      var array2 = [];
+      const array1 = [];
+      const array2 = [];
 
       children1.map((child) => {
-        array1.push({ ...child, form_value: '', invalid: false });
+        let formValue = '';
+        if (child.name === HVAC2_PDRSAug24_product_class) {
+          formValue = productClass;
+          child.hide = true;
+        }
+
+        // Implement reorder air conditioner types when the variabe is updated from openfisca to ensure the dropdown is in the correct order.
+        if (child.name === HVAC2_PDRSAug24_Air_Conditioner_type) {
+          formValue = type;
+          child.possible_values = reOrderAirConditionerTypes(child.possible_values);
+        }
+        array1.push({ ...child, form_value: formValue, invalid: false });
       });
 
       children2.map((child) => {
@@ -216,6 +222,7 @@ export default function CertificateEstimatorLoadClauses(props) {
               climateZone={selectedClimateZone}
               brand={selectedBrand}
               model={selectedModel}
+              productClass={productClass}
             />
 
             <CalculateBlock
@@ -269,6 +276,7 @@ export default function CertificateEstimatorLoadClauses(props) {
               climateZone={selectedClimateZone}
               brand={selectedBrand}
               model={selectedModel}
+              productClass={productClass}
             />
             {
               <Alert

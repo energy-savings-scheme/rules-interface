@@ -7,6 +7,7 @@ const pathToFilename = {
   'residential-small-business-electric-to-solar-water-heater-certificates': 'residential_solar_water_heater_estimator.js',
   'residential-small-business-gas-to-solar-water-heater-certificates': 'residential_gas_replacement_solar_water_heater_estimator.js',
   'residential-solar-battery-demand-response-certificates': 'residential_solar_battery_demand_response_certificates.js',
+  'residential-apartments-battery-certificates': 'residential_apartments_battery_certificates.js',
   'commercial-air-conditioner-certificates': 'commercial_ac_estimator.js',
   'commercial-electric-to-heat-pump-water-heater-certificates': 'commercial_electric_to_heat_pump_water_heater_certificates.js',
   'commercial-gas-to-heat-pump-water-heater-certificates': 'commercial_gas_to_heat_pump_water_heater_certificates.js',
