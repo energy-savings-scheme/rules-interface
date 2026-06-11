@@ -106,7 +106,9 @@ Cypress.Commands.add('calculate', (input: CalculateFormInputType) => {
     cy.wait('@getMetadata');
   }
   cy.nextOrCalculate(input.nextSelector);
-  cy.wait(['@getResponsePostcode']);
+  if (input.interceptPostcodeAPI && input.waitForPostcode !== false) {
+    cy.wait(['@getResponsePostcode']);
+  }
 
   // Next form
   // There're activities that only have 2 steps
