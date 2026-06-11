@@ -195,7 +195,7 @@ export default function EligibilityPage(props) {
                 </div>
                 <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
-                    copy="Install a new solar battery, sign it up to a demand response contract, or do both"
+                    copy="Install a new battery for apartments or connect your solar battery to a virtual power plant, or do both"
                     headline="Solar battery"
                     image="SolarBattery.jpg"
                     links={[

@@ -48,6 +48,8 @@ export const BESS2_V5Nov24_installation_final_activity_eligibility =
   'BESS2_V5Nov24_installation_final_activity_eligibility';
 export const BESS1_PDRSDec24_installation_final_activity_eligibility =
   'BESS1_PDRSDec24_installation_final_activity_eligibility';
+export const BESS3_installation_final_activity_eligibility =
+  'BESS3_installation_final_activity_eligibility';
 
 export const BESS1_V5Nov24_peak_demand_annual_savings = 'BESS1_V5Nov24_peak_demand_annual_savings';
 export const BESS2_V5Nov24_peak_demand_annual_savings = 'BESS2_V5Nov24_peak_demand_annual_savings';

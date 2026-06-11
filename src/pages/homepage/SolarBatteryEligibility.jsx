@@ -29,7 +29,7 @@ export default function SolarBatteryEligibilityPage(props) {
           alt: 'homepage',
           src: '/SolarBattery.jpg',
         }}
-        intro="Residential"
+        intro="Residential and small business"
         title="Solar battery - eligibility"
       />
 
@@ -40,17 +40,8 @@ export default function SolarBatteryEligibilityPage(props) {
               <div className="nsw-grid nsw-grid--spaced">
                 <div className="nsw-col nsw-col-md-12">
                   <p className="nsw-content-block__copy">
-                    The Safeguard certificate estimator reviews eligibility for:
-                    <ul>
-                      <li>installation of a new residential solar battery or</li>
-                      <li>
-                        signing up a solar battery to a demand response contract, also known as a
-                        Virtual Power Plant (VPP)
-                      </li>
-                    </ul>
-                  </p>
-                  <p className="nsw-content-block__copy">
-                    Both of these incentives are for residential and small business sites only.
+                    The Safeguard certificate estimator reviews eligibility for installing a new battery for apartments
+                    or connecting your solar battery to a Virtual Power Plan (VPP).
                   </p>
                 </div>
               </div>
@@ -84,6 +75,20 @@ export default function SolarBatteryEligibilityPage(props) {
                     ]}
                   />
                 </div> */}
+                <div className="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
+                  <ContentBlock
+                    copy="Install a new battery for residential apartments"
+                    headline="Install a new battery for apartments"
+                    image="BESS3.jpg"
+                    highlight
+                    links={[
+                      {
+                        href: '#residential-apartments-battery-eligibility',
+                        title: 'Check eligibility',
+                      },
+                    ]}
+                  />
+                </div>
                 <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
                     copy="Onboard a behind the meter battery with a Virtual Power Plant (VPP)"

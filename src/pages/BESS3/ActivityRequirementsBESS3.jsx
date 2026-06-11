@@ -1,0 +1,242 @@
+import React, { Fragment, useState, useEffect } from 'react';
+
+import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
+import OpenFiscaAPI from 'services/openfisca_api';
+import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
+import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
+import LoadClausesBESS3 from './LoadClausesActReq';
+import {
+  BESS3_installation_final_activity_eligibility,
+} from 'types/openfisca_variables';
+import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import { FormGroup, Select } from 'nsw-ds-react/forms';
+import { USER_TYPE_OPTIONS } from 'constant/user-type';
+import {
+  updateEstimatorFormAnalytics,
+  updateFeedbackFormAnalytics,
+  updateSegmentCaptureAnalytics,
+  clearSearchCaptureAnalytics,
+} from 'lib/analytics';
+import FeedbackComponent from 'components/feedback/feedback';
+import MoreOptionsCard from 'components/more-options-card/more-options-card';
+import { BASE_BESS3_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
+
+export default function ActivityRequirementsBESS3(props) {
+  const { entities, variables, loading, setLoading } = props;
+
+  const [formValues, setFormValues] = useState([]);
+  const [stepNumber, setStepNumber] = useState(1);
+  const [dependencies, setDependencies] = useState([]);
+  const [variableToLoad, setVariableToLoad] = useState(
+    BESS3_installation_final_activity_eligibility,
+  );
+  const [variable, setVariable] = useState({});
+  const [clausesForm, setClausesForm] = useState([]);
+  const [showError, setShowError] = useState(false);
+  const [userType, setUserType] = useState('');
+  const [isUserTypeValid, setIsUserTypeValid] = useState(true);
+  const [userTypeError, setUserTypeError] = useState('');
+
+  if (formValues.length === 0) {
+    setLoading(true);
+  } else {
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    clearSearchCaptureAnalytics();
+    updateEstimatorFormAnalytics(BASE_BESS3_ELIGIBILITY_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_BESS3_ELIGIBILITY_ANALYTICS_DATA);
+  }, [stepNumber]);
+
+  useEffect(() => {
+    OpenFiscaAPI.getVariable(variableToLoad)
+      .then((res) => {
+        setVariable(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [variableToLoad]);
+
+  useEffect(() => {
+    if (Object.keys(variable).length && stepNumber === 1) {
+      const children = variable.input_offsprings;
+
+      // Define the original array (at a minimum include the Implementation Date)
+      var array = [];
+      var dep_arr = [];
+
+      children.map((child) => {
+        array.push({ ...child, form_value: '', invalid: false, hide: false });
+      });
+
+      array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
+
+      const names = [];
+      dep_arr = array.filter((item) => names.includes(item.name));
+      array.find((item) => {
+        if (names.includes(item.name)) {
+          item.hide = true;
+        }
+      });
+
+      dep_arr = dep_arr.map((obj, i) => ({ ...obj, hide: true }));
+
+      setFormValues(array);
+      setDependencies(dep_arr);
+      setLoading(false);
+    }
+  }, [variable]);
+
+  useEffect(() => {
+    let new_arr = [];
+
+    formValues
+      .filter((x) => x.hide === false)
+      .map((child) => {
+        if (
+          child.form_value !== child.default_value &&
+          new_arr.find((o) => o.name === child.name) === undefined &&
+          child.value_type === 'Boolean'
+        )
+          new_arr.push(child);
+      });
+    setClausesForm(new_arr);
+  }, [stepNumber]);
+
+  function onValidateUserType(isValid, errorMessage) {
+    setIsUserTypeValid(isValid);
+    setUserTypeError(errorMessage);
+  }
+
+  return (
+    <Fragment>
+      {!IS_DRUPAL_PAGES && (
+        <div style={{ marginTop: '1rem' }}>
+          <HeroBanner
+            wide
+            style="dark"
+            image={{
+              alt: 'Solar battery system - eligibility',
+              src: 'BESS3.jpg',
+            }}
+            intro="Residential and small business"
+            title="Install a new battery for apartments - eligibility"
+          />
+        </div>
+      )}
+
+      <div className="nsw-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
+        <br></br>
+        <br></br>
+        {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
+          <div className="nsw-grid nsw-grid--spaced">
+            <div className="nsw-col nsw-col-md-12">
+              <br></br>
+              <p className="nsw-content-block__copy">
+                Answer the following questions to check if you meet the eligibility requirements for
+                installing a new battery for apartments incentive (BESS3 in the{' '}
+                <a
+                  href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
+                  target="_blank"
+                >
+                  Peak Demand Reduction Scheme
+                </a>{' '}
+                ). This incentive is for the installation of a new ‘behind the meter’ battery at a residential apartments address.
+              </p>
+              <p className="nsw-content-block__copy">
+                If you're ineligible, we will show you why and give you the corresponding rule
+                clauses.
+              </p>
+              <p className="nsw-content-block__copy">
+                Please keep in mind that the results are a guide only and cannot be promoted or
+                published.
+              </p>
+            </div>
+          </div>
+        )}
+
+        <ProgressIndicator step={stepNumber} of={2} className="nsw-col-lg-10" />
+
+        <Fragment>
+          {loading && <SpinnerFullscreen />}
+          {!loading && (
+            <>
+              {stepNumber === 1 && (
+                <FormGroup
+                  label="What is your interest in the scheme?"
+                  helper="Select the option that best describes you"
+                  htmlId="user-type"
+                  status={isUserTypeValid ? '' : 'invalid'}
+                  statusText={userTypeError}
+                  style={{ marginBottom: '4%' }}
+                >
+                  <Select
+                    htmlId="user-type"
+                    data-ui-name="user-type"
+                    className="nsw-col-lg-6"
+                    options={USER_TYPE_OPTIONS}
+                    onChange={(e) => {
+                      setUserType(e.target.value);
+                      updateSegmentCaptureAnalytics(e.target.value);
+                    }}
+                    value={userType}
+                    status={isUserTypeValid ? '' : 'invalid'}
+                    required
+                  />
+                </FormGroup>
+              )}
+              <LoadClausesBESS3
+                variableToLoad={variableToLoad}
+                variables={variables}
+                entities={entities}
+                stepNumber={stepNumber}
+                setStepNumber={setStepNumber}
+                formValues={formValues}
+                dependencies={dependencies}
+                setFormValues={setFormValues}
+                clausesForm={clausesForm}
+                setClausesForm={setClausesForm}
+                showError={showError}
+                setShowError={setShowError}
+                backAction={(e) => {
+                  setStepNumber(stepNumber - 1);
+                }}
+                onValidateUserType={onValidateUserType}
+              />
+            </>
+          )}
+        </Fragment>
+      </div>
+      {stepNumber === 2 && (
+        <>
+          <FeedbackComponent />
+          {!IS_DRUPAL_PAGES && (
+            <div className="nsw-container">
+              <div
+                className="nsw-row"
+                style={{
+                  padding: 'inherit',
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                }}
+              >
+                <MoreOptionsCard
+                  options={[
+                    {
+                      title: 'Estimate certificates for this activity',
+                      link: '/#residential-apartments-battery-certificates',
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          )}
+        </>
+      )}
+    </Fragment>
+  );
+}
