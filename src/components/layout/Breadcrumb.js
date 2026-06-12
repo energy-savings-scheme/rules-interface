@@ -132,6 +132,7 @@ export default function Breadcrumb() {
     location.pathname === '/residential-solar-battery-eligibility' ||
     location.pathname === '/solar-battery-eligibility' ||
     location.pathname === '/residential-solar-battery-demand-response-eligibility' ||
+    location.pathname === '/residential-apartments-battery-eligibility' ||
     location.pathname === '/commercial-water-heater-f17-activity-requirements' ||
     location.pathname === '/commercial-heat-pump-water-heater-eligibility' ||
     location.pathname === '/commercial-heat-pump-water-heater-new-air-source-eligibility' ||
