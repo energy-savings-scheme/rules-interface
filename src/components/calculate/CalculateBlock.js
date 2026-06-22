@@ -24,6 +24,9 @@ import {
   F17_safety_requirement,
   SYS2_PDRSAug24_new_installation_or_replacement,
   HVAC1_PDRSAug24_new_installation_or_replacement,
+  HVAC1_PDRSAug24_multi_split_product_class,
+  HVAC1_PDRSAug24_outdoor_units,
+  HVAC1_PDRSAug24_manufacture_approved_GEMS,
   HVAC2_new_installation_or_replacement,
   D17_ESSJun24_split_system,
   D17_ESSJun24_safety_requirement,
@@ -177,6 +180,18 @@ export default function CalculateBlock(props) {
     ) {
       formValues.find((v) => v.name === 'HVAC2_TCPSF_greater_than_minimum').hide = false;
       formValues.find((v) => v.name === 'HVAC2_AEER_greater_than_minimum').hide = true;
+    }
+
+    if (formItem.name === HVAC1_PDRSAug24_multi_split_product_class && 
+      (formItem.form_value === false || formItem.default_value === false)
+    ) {
+      formValues.find((v) => v.name === HVAC1_PDRSAug24_outdoor_units).hide = true;
+      formValues.find((v) => v.name === HVAC1_PDRSAug24_manufacture_approved_GEMS).hide = true;
+    } else if (formItem.name === HVAC1_PDRSAug24_multi_split_product_class && 
+      (formItem.form_value === true || formItem.default_value === true)
+    ) {
+      formValues.find((v) => v.name === HVAC1_PDRSAug24_outdoor_units).hide = false;
+      formValues.find((v) => v.name === HVAC1_PDRSAug24_manufacture_approved_GEMS).hide = false;
     }
 
     if (
@@ -543,6 +558,22 @@ export default function CalculateBlock(props) {
           formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
           formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
           formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = false;
+        }
+
+        else if (e.target.value === '') {
+          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
+          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
+          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
+        }
+      }
+
+      if (formItem.name === HVAC1_PDRSAug24_multi_split_product_class) {
+        if (formItem.form_value === false || formItem.default_value === false) {
+          formValues.find((v) => v.name === HVAC1_PDRSAug24_outdoor_units).hide = true;
+          formValues.find((v) => v.name === HVAC1_PDRSAug24_manufacture_approved_GEMS).hide = true;
+        } else if (formItem.form_value === true || formItem.default_value === true) {
+          formValues.find((v) => v.name === HVAC1_PDRSAug24_outdoor_units).hide = false;
+          formValues.find((v) => v.name === HVAC1_PDRSAug24_manufacture_approved_GEMS).hide = false;
         }
       }
 

@@ -6,6 +6,13 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesResidentialActivityRequirements from './LoadClausesActivityRequirements';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
+import { 
+  HVAC1_PDRSAug24_AEER_greater_than_minimum,
+  HVAC1_PDRSAug24_TCPSF_greater_than_minimum,
+  HVAC1_PDRSAug24_HSPF_mixed_eligible,
+  HVAC1_PDRSAug24_HSPF_cold_eligible,
+  HVAC1_PDRSAug24_ACOP_eligible,
+} from 'types/openfisca_variables';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
 import {
@@ -19,7 +26,7 @@ import MoreOptionsCard from 'components/more-options-card/more-options-card';
 import { BASE_RESIDENTIAL_AC_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
 
 export default function ActivityRequirementsResAC(props) {
-  const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
+  const { entities, variables, setEntities, setVariables } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
@@ -33,19 +40,14 @@ export default function ActivityRequirementsResAC(props) {
   const [userType, setUserType] = useState('');
   const [isUserTypeValid, setIsUserTypeValid] = useState(true);
   const [userTypeError, setUserTypeError] = useState('');
-
-  if (formValues.length === 0) {
-    setLoading(true);
-  } else {
-    setLoading(false);
-  }
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     clearSearchCaptureAnalytics();
     updateEstimatorFormAnalytics(BASE_RESIDENTIAL_AC_ELIGIBILITY_ANALYTICS_DATA);
     updateFeedbackFormAnalytics(BASE_RESIDENTIAL_AC_ELIGIBILITY_ANALYTICS_DATA);
-  }, [stepNumber]);
+  }, []);
 
   useEffect(() => {
     OpenFiscaAPI.getVariable(variableToLoad)
@@ -56,7 +58,7 @@ export default function ActivityRequirementsResAC(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, [variableToLoad]);
+  }, []);
 
   useEffect(() => {
     if (Object.keys(variable).length && stepNumber === 1) {
@@ -74,15 +76,15 @@ export default function ActivityRequirementsResAC(props) {
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
 
       const names = [
-        'HVAC1_PDRSAug24_AEER_greater_than_minimum',
-        'HVAC1_PDRSAug24_TCPSF_greater_than_minimum',
-        'HVAC1_PDRSAug24_HSPF_mixed_eligible',
-        'HVAC1_PDRSAug24_HSPF_cold_eligible',
-        'HVAC1_PDRSAug24_ACOP_eligible',
+        HVAC1_PDRSAug24_AEER_greater_than_minimum,
+        HVAC1_PDRSAug24_TCPSF_greater_than_minimum,
+        HVAC1_PDRSAug24_HSPF_mixed_eligible,
+        HVAC1_PDRSAug24_HSPF_cold_eligible,
+        HVAC1_PDRSAug24_ACOP_eligible,
       ];
 
       dep_arr = array.filter((item) => names.includes(item.name));
-      array.find((item) => {
+      array.forEach((item) => {
         if (names.includes(item.name)) {
           item.hide = true;
         }
@@ -217,6 +219,7 @@ export default function ActivityRequirementsResAC(props) {
               )}
               <LoadClausesResidentialActivityRequirements
                 variableToLoad={variableToLoad}
+                variable={variable}
                 variables={variables}
                 entities={entities}
                 stepNumber={stepNumber}
@@ -232,6 +235,8 @@ export default function ActivityRequirementsResAC(props) {
                   setStepNumber(stepNumber - 1);
                 }}
                 onValidateUserType={onValidateUserType}
+                loading={loading}
+                setLoading={setLoading}
               />
             </>
           )}

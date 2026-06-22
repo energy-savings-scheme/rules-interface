@@ -13,7 +13,7 @@ import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 
 export default function LoadClausesResidentialActivityRequirements(props) {
   const {
-    variableToLoad,
+    variable,
     variables,
     entities,
     setStepNumber,
@@ -26,17 +26,15 @@ export default function LoadClausesResidentialActivityRequirements(props) {
     showError,
     setShowError,
     onValidateUserType,
+    loading,
+    setLoading,
   } = props;
-
-  const [variable, setVariable] = useState({}); // all info about variable
 
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
 
-  const [calculationResult, setCalculationResult] = useState(null);
+  const [calculationResult, setCalculationResult] = useState(false);
   const [calculationError, setCalculationError] = useState(false);
-
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (stepNumber === 1) {
@@ -47,21 +45,6 @@ export default function LoadClausesResidentialActivityRequirements(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  useEffect(() => {
-    OpenFiscaApi.getVariable(variableToLoad)
-      .then((res) => {
-        setVariable(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    return () => {
-      setVariable({});
-    };
-  }, [variableToLoad]);
 
   useEffect(() => {
     if (calculationError && showError) {
