@@ -17,6 +17,7 @@ export interface CalculateFormInputType extends FirstFormType {
   productSelection?: boolean;
   twoStep?: boolean;
   interceptPostcodeAPI?: InterceptPostcodeAPIOptions;
+  waitForPostcode?: boolean;
 }
 
 export interface CalculateEligibilityFormInputType extends BaseInputFormType {

@@ -57,11 +57,14 @@ export const BESS2_V5Nov24_peak_demand_annual_savings = 'BESS2_V5Nov24_peak_dema
 export const HVAC2_equipment_replaced = 'HVAC2_equipment_replaced';
 export const HVAC2_installed_centralised_system_common_area_BCA_Class2_building =
   'HVAC2_installed_centralised_system_common_area_BCA_Class2_building';
+export const HVAC2_outdoor_units = 'HVAC2_outdoor_units';
+export const HVAC2_manufacture_approved_GEMS = 'HVAC2_manufacture_approved_GEMS';
 export const HVAC2_AEER_greater_than_minimum = 'HVAC2_AEER_greater_than_minimum';
 export const HVAC2_TCPSF_greater_than_minimum = 'HVAC2_TCPSF_greater_than_minimum';
 export const HVAC2_HSPF_mixed_eligible = 'HVAC2_HSPF_mixed_eligible';
 export const HVAC2_HSPF_cold_eligible = 'HVAC2_HSPF_cold_eligible';
 export const HVAC2_ACOP_eligible = 'HVAC2_ACOP_eligible';
+export const HVAC2_ACOP_cold_eligible = 'HVAC2_ACOP_cold_eligible';
 
 export const BESS1_V5Nov24_usable_battery_capacity = 'BESS1_V5Nov24_usable_battery_capacity';
 export const BESS1_PDRSDec24_inverter_installed = 'BESS1_PDRSDec24_inverter_installed';
