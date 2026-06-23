@@ -445,6 +445,17 @@ export default function CalculateBlock(props) {
         }
       }
 
+      // equipment multi-split approval path
+      if (formItem.name === 'HVAC2_multi_split_product_class') {
+        if (e.target.value === 'true') {
+          formValues.find((v) => v.name === 'HVAC2_outdoor_units').hide = false;
+          formValues.find((v) => v.name === 'HVAC2_manufacture_approved_GEMS').hide = false;
+        } else {
+          formValues.find((v) => v.name === 'HVAC2_outdoor_units').hide = true;
+          formValues.find((v) => v.name === 'HVAC2_manufacture_approved_GEMS').hide = true;
+        }
+      }
+
       // cooling capacity path
       if (formItem.name === 'HVAC2_new_equipment_cooling_capacity') {
         if (e.target.value === 'true') {

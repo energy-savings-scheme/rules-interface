@@ -1,9 +1,9 @@
 import { FormSelector, ResultSelector, PostcodeState, URLPath } from 'cypress/enum';
 
-import dataFixtures from 'cypress/fixtures/certificate/BESS2_C.json';
+import dataFixtures from 'cypress/fixtures/certificate/BESS3_C.json';
 
-describe('Calculate BESS2 PRC certificate.', () => {
-  const urlPath: string = URLPath.BESS2_C;
+describe('Calculate BESS3 PRC certificate.', () => {
+  const urlPath: string = URLPath.BESS3_C;
   const resultSelector = [
     ResultSelector.PRC_CERTIFICATE_SELECTOR,
     ResultSelector.PEAK_DEMAND_REDUCTION_SELECTOR,
@@ -21,7 +21,7 @@ describe('Calculate BESS2 PRC certificate.', () => {
         resultSelector: resultSelector,
         twoStep: true,
         interceptPostcodeAPI: {
-          postcode: rowData['BESS2_PDRSAug24_PDRS__postcode'],
+          postcode: rowData['BESS3_postcode'],
           state: PostcodeState.NSW,
         },
         waitForPostcode: false,
