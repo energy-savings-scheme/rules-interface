@@ -82,6 +82,7 @@ export default function ActivityRequirementsCommercialAC(props) {
         'HVAC2_HSPF_mixed_eligible',
         'HVAC2_HSPF_cold_eligible',
         'HVAC2_ACOP_eligible',
+        'HVAC2_ACOP_cold_eligible',
       ];
 
       dep_arr = array.filter((item) => names.includes(item.name));

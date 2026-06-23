@@ -490,35 +490,45 @@ export default function CalculateBlock(props) {
         const heating_capacity = formValues.find(
           (o) => o.name === 'HVAC2_new_equipment_heating_capacity',
         ).form_value;
-
-        if (
-          (e.target.value === 'hot_zone' || e.target.value === 'average_zone') &&
-          heating_capacity === true
-        ) {
-          formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = false;
-          formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
+        if (heating_capacity === true) {
+          if (e.target.value === 'hot_zone' || e.target.value === 'average_zone') {
+            formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = false;
+            formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_cold_eligible').hide = true;
+          }
+          else if (e.target.value === 'cold_zone') {
+            formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = false;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_cold_eligible').hide = true;
+          }
+          else {
+            formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_cold_eligible').hide = true;
+          }
         }
-
-        if (
-          (e.target.value === 'hot_zone' || e.target.value === 'average_zone') &&
-          heating_capacity === false
-        ) {
-          formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = false;
-        }
-
-        if (e.target.value === 'cold_zone' && heating_capacity === true) {
-          formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = false;
-          formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
-        }
-
-        if (e.target.value === 'cold_zone' && heating_capacity === false) {
-          formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = false;
+        if (heating_capacity === false) {
+          if (e.target.value === 'hot_zone' || e.target.value === 'average_zone') {
+            formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = false;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_cold_eligible').hide = true;
+          }
+          else if (e.target.value === 'cold_zone') {
+            formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_cold_eligible').hide = false;
+          }
+          else {
+            formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_cold_eligible').hide = true;
+          }
         }
       }
 
@@ -561,25 +571,45 @@ export default function CalculateBlock(props) {
       // Not added for page load
       if (formItem.name === 'HVAC2_new_equipment_heating_capacity') {
         const climateZone = formValues.find((o) => o.name === 'HVAC2_climate_zone').form_value;
-        if (e.target.value === 'true' && climateZone === 'hot_zone') {
-          formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = false;
-          formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
-        }
-        if (e.target.value === 'true' && climateZone === 'average_zone') {
-          formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = false;
-          formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
-        }
-        if (e.target.value === 'true' && climateZone === 'cold_zone') {
-          formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = false;
-          formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
+        if (e.target.value === 'true') {
+          if (climateZone === 'hot_zone' || climateZone === 'average_zone') {
+            formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = false;
+            formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_cold_eligible').hide = true;
+          }
+          else if (climateZone === 'cold_zone') {
+            formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = false;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_cold_eligible').hide = true;
+          }
+          else {
+            formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_cold_eligible').hide = true;
+          }
         }
         if (e.target.value === 'false') {
-          formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = false;
+          if (climateZone === 'hot_zone' || climateZone === 'average_zone') {
+            formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = false;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_cold_eligible').hide = true;
+          }
+          else if (climateZone === 'cold_zone') {
+            formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_cold_eligible').hide = false;
+          }
+          else {
+            formValues.find((v) => v.name === 'HVAC2_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC2_ACOP_cold_eligible').hide = true;
+          }
         }
       }
 
