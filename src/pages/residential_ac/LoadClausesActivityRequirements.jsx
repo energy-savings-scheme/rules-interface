@@ -7,34 +7,41 @@ import moment from 'moment';
 import CalculateBlock from 'components/calculate/CalculateBlock';
 import { focusElement } from 'lib/helper';
 import Button from 'nsw-ds-react/button/button';
-import OpenFiscaApi from 'services/openfisca_api';
+import OpenFiscaAPI from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 
+import { 
+  HVAC1_PDRSAug24_AEER_greater_than_minimum,
+  HVAC1_PDRSAug24_TCPSF_greater_than_minimum,
+  HVAC1_PDRSAug24_HSPF_mixed_eligible,
+  HVAC1_PDRSAug24_HSPF_cold_eligible,
+  HVAC1_PDRSAug24_ACOP_eligible,
+} from 'types/openfisca_variables';
+
 export default function LoadClausesResidentialActivityRequirements(props) {
   const {
-    variable,
+    variableToLoad,
     variables,
     entities,
     setStepNumber,
     stepNumber,
     formValues,
     setFormValues,
-    dependencies,
     clausesForm,
     setClausesForm,
     showError,
     setShowError,
     onValidateUserType,
-    loading,
-    setLoading,
   } = props;
 
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
-
+  const [variable, setVariable] = useState({});
   const [calculationResult, setCalculationResult] = useState(false);
   const [calculationError, setCalculationError] = useState(false);
+  const [dependencies, setDependencies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (stepNumber === 1) {
@@ -44,7 +51,57 @@ export default function LoadClausesResidentialActivityRequirements(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    OpenFiscaAPI.getVariable(variableToLoad)
+      .then((res) => {
+        setVariable(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
+
+  useEffect(() => {
+    if (Object.keys(variable).length && stepNumber === 1) {
+      const children = variable.input_offsprings;
+
+      // Define the original array (at a minimum include the Implementation Date)
+      var array = [];
+
+      var dep_arr = [];
+
+      children.map((child) => {
+        array.push({ ...child, form_value: '', invalid: false, hide: false });
+      });
+
+      array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
+
+      const names = [
+        HVAC1_PDRSAug24_AEER_greater_than_minimum,
+        HVAC1_PDRSAug24_TCPSF_greater_than_minimum,
+        HVAC1_PDRSAug24_HSPF_mixed_eligible,
+        HVAC1_PDRSAug24_HSPF_cold_eligible,
+        HVAC1_PDRSAug24_ACOP_eligible,
+      ];
+
+      dep_arr = array.filter((item) => names.includes(item.name));
+      array.forEach((item) => {
+        if (names.includes(item.name)) {
+          item.hide = true;
+        }
+      });
+
+      dep_arr = dep_arr.map((obj, i) => ({ ...obj, hide: true }));
+
+      setFormValues(array);
+      setDependencies(dep_arr);
+      setLoading(false);
+    }
+  }, [variable]);
+
+  useEffect(() => {
+    console.log('calculationResult', calculationResult);
+  }, [calculationResult]);
 
   useEffect(() => {
     if (calculationError && showError) {
