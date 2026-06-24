@@ -46,7 +46,7 @@ export default function LoadClausesResidentialActivityRequirements(props) {
 
   useEffect(() => {
     if (stepNumber === 1) {
-      setCalculationResult(null);
+      setCalculationResult(false);
     }
   }, [stepNumber]);
 
@@ -100,10 +100,6 @@ export default function LoadClausesResidentialActivityRequirements(props) {
       setLoading(false);
     }
   }, [variable]);
-
-  useEffect(() => {
-    console.log('calculationResult', calculationResult);
-  }, [calculationResult]);
 
   useEffect(() => {
     if (calculationError && showError) {
