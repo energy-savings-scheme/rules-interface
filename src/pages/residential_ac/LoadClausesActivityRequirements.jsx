@@ -17,6 +17,7 @@ import {
   HVAC1_PDRSAug24_HSPF_mixed_eligible,
   HVAC1_PDRSAug24_HSPF_cold_eligible,
   HVAC1_PDRSAug24_ACOP_eligible,
+  HVAC1_PDRSAug24_ACOP_cold,
 } from 'types/openfisca_variables';
 
 export default function LoadClausesResidentialActivityRequirements(props) {
@@ -82,6 +83,7 @@ export default function LoadClausesResidentialActivityRequirements(props) {
         HVAC1_PDRSAug24_HSPF_mixed_eligible,
         HVAC1_PDRSAug24_HSPF_cold_eligible,
         HVAC1_PDRSAug24_ACOP_eligible,
+        HVAC1_PDRSAug24_ACOP_cold
       ];
 
       dep_arr = array.filter((item) => names.includes(item.name));

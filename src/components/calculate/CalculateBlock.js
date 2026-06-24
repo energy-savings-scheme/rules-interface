@@ -531,49 +531,45 @@ export default function CalculateBlock(props) {
           (o) => o.name === 'HVAC1_PDRSAug24_new_equipment_heating_capacity',
         ).form_value;
 
-        if (
-          (e.target.value === 'hot_zone' || e.target.value === 'average_zone') &&
-          heating_capacity === true
-        ) {
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = false;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
+        if (heating_capacity === true) {
+          if (e.target.value === 'hot_zone' || e.target.value === 'average_zone') {
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = false;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_cold').hide = true;
+          }
+          else if (e.target.value === 'cold_zone') {
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = false;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_cold').hide = true;
+          }
+          else {
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_cold').hide = true;
+          }
         }
-        if (
-          (e.target.value === 'hot_zone' || e.target.value === 'average_zone') &&
-          heating_capacity === false
-        ) {
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = false;
-        }
-
-        if (e.target.value === 'cold_zone' && heating_capacity === true) {
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = false;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
-        }
-
-        if (e.target.value === 'cold_zone' && heating_capacity === false) {
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = false;
-        }
-
-        else if (e.target.value === '') {
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
-        }
-      }
-
-      if (formItem.name === HVAC1_PDRSAug24_multi_split_product_class) {
-        if (formItem.form_value === false || formItem.default_value === false) {
-          formValues.find((v) => v.name === HVAC1_PDRSAug24_outdoor_units).hide = true;
-          formValues.find((v) => v.name === HVAC1_PDRSAug24_manufacture_approved_GEMS).hide = true;
-        } else if (formItem.form_value === true || formItem.default_value === true) {
-          formValues.find((v) => v.name === HVAC1_PDRSAug24_outdoor_units).hide = false;
-          formValues.find((v) => v.name === HVAC1_PDRSAug24_manufacture_approved_GEMS).hide = false;
+        if (heating_capacity === false) {
+          if (e.target.value === 'hot_zone' || e.target.value === 'average_zone') {
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = false;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_cold').hide = true;
+          }
+          else if (e.target.value === 'cold_zone') {
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_cold').hide = false;
+          }
+          else {
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_cold').hide = true;
+          }
         }
       }
 
@@ -606,25 +602,43 @@ export default function CalculateBlock(props) {
       if (formItem.name === 'HVAC1_PDRSAug24_new_equipment_heating_capacity') {
         const climateZone = formValues.find((o) => o.name === 'HVAC1_PDRSAug24_climate_zone')
           .form_value;
-        if (e.target.value === 'true' && climateZone === 'hot_zone') {
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = false;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
-        }
-        if (e.target.value === 'true' && climateZone === 'average_zone') {
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = false;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
-        }
-        if (e.target.value === 'true' && climateZone === 'cold_zone') {
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = false;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
-        }
+
+        if (e.target.value === 'true') {
+          if (climateZone === 'hot_zone' || climateZone === 'average_zone') {
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = false;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_cold').hide = true;
+          } else if (climateZone === 'cold_zone') {
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = false;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_cold').hide = true;
+          } else {
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_cold').hide = true;
+          }
+        } 
+
         if (e.target.value === 'false') {
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
-          formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = false;
+          if (climateZone === 'hot_zone' || climateZone === 'average_zone') {
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = false;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_cold').hide = true;
+          } else if (climateZone === 'cold_zone') {
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_cold').hide = false;
+          } else {
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_mixed_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_HSPF_cold_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_eligible').hide = true;
+            formValues.find((v) => v.name === 'HVAC1_PDRSAug24_ACOP_cold').hide = true;
+          }
         }
       }
 

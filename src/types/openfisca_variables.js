@@ -46,6 +46,7 @@ export const HVAC1_PDRSAug24_TCPSF_greater_than_minimum = 'HVAC1_PDRSAug24_TCPSF
 export const HVAC1_PDRSAug24_HSPF_mixed_eligible = 'HVAC1_PDRSAug24_HSPF_mixed_eligible';
 export const HVAC1_PDRSAug24_HSPF_cold_eligible = 'HVAC1_PDRSAug24_HSPF_cold_eligible';
 export const HVAC1_PDRSAug24_ACOP_eligible = 'HVAC1_PDRSAug24_ACOP_eligible';
+export const HVAC1_PDRSAug24_ACOP_cold = 'HVAC1_PDRSAug24_ACOP_cold';
 
 export const HVAC2_PDRSAug24_BCA_Climate_Zone = 'HVAC2_PDRSAug24_BCA_Climate_Zone';
 export const HVAC2_new_installation_or_replacement = 'HVAC2_new_installation_or_replacement';
