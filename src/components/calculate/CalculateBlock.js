@@ -28,6 +28,9 @@ import {
   HVAC1_PDRSAug24_outdoor_units,
   HVAC1_PDRSAug24_manufacture_approved_GEMS,
   HVAC2_new_installation_or_replacement,
+  HVAC2_multi_split_product_class,
+  HVAC2_outdoor_units,
+  HVAC2_manufacture_approved_GEMS,
   D17_ESSJun24_split_system,
   D17_ESSJun24_safety_requirement,
   D19_ESSJun24_split_system,
@@ -461,13 +464,13 @@ export default function CalculateBlock(props) {
       }
 
       // equipment multi-split approval path
-      if (formItem.name === 'HVAC2_multi_split_product_class') {
+      if (formItem.name === HVAC2_multi_split_product_class) {
         if (e.target.value === 'true') {
-          formValues.find((v) => v.name === 'HVAC2_outdoor_units').hide = false;
-          formValues.find((v) => v.name === 'HVAC2_manufacture_approved_GEMS').hide = false;
+          formValues.find((v) => v.name === HVAC2_outdoor_units).hide = false;
+          formValues.find((v) => v.name === HVAC2_manufacture_approved_GEMS).hide = false;
         } else {
-          formValues.find((v) => v.name === 'HVAC2_outdoor_units').hide = true;
-          formValues.find((v) => v.name === 'HVAC2_manufacture_approved_GEMS').hide = true;
+          formValues.find((v) => v.name === HVAC2_outdoor_units).hide = true;
+          formValues.find((v) => v.name === HVAC2_manufacture_approved_GEMS).hide = true;
         }
       }
 
