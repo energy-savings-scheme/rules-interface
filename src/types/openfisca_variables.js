@@ -32,6 +32,7 @@ export const BESS3_peak_demand_savings = 'BESS3_peak_demand_savings';
 export const C1_PDRSAug24_ESC_calculation = 'C1_PDRSAug24_ESC_calculation';
 export const C1_PDRSAug24_energy_savings = 'C1_PDRSAug24_energy_savings';
 
+// Residential D16/HVAC1
 export const HVAC1_PDRSAug24_BCA_Climate_Zone = 'HVAC1_PDRSAug24_BCA_Climate_Zone';
 export const HVAC1_PDRSAug24_new_installation_or_replacement =
   'HVAC1_PDRSAug24_new_installation_or_replacement';
@@ -41,8 +42,12 @@ export const HVAC1_PDRSAug24_climate_zone = 'HVAC1_PDRSAug24_climate_zone';
 export const HVAC1_PDRSAug24_multi_split_product_class = 'HVAC1_PDRSAug24_multi_split_product_class';
 export const HVAC1_PDRSAug24_outdoor_units = 'HVAC1_PDRSAug24_outdoor_units';
 export const HVAC1_PDRSAug24_manufacture_approved_GEMS = 'HVAC1_PDRSAug24_manufacture_approved_GEMS';
+
+export const HVAC1_PDRSAug24_new_equipment_cooling_capacity = 'HVAC1_PDRSAug24_new_equipment_cooling_capacity';
 export const HVAC1_PDRSAug24_AEER_greater_than_minimum = 'HVAC1_PDRSAug24_AEER_greater_than_minimum';
 export const HVAC1_PDRSAug24_TCPSF_greater_than_minimum = 'HVAC1_PDRSAug24_TCPSF_greater_than_minimum';
+
+export const HVAC1_PDRSAug24_new_equipment_heating_capacity = 'HVAC1_PDRSAug24_new_equipment_heating_capacity';
 export const HVAC1_PDRSAug24_HSPF_mixed_eligible = 'HVAC1_PDRSAug24_HSPF_mixed_eligible';
 export const HVAC1_PDRSAug24_HSPF_cold_eligible = 'HVAC1_PDRSAug24_HSPF_cold_eligible';
 export const HVAC1_PDRSAug24_ACOP_eligible = 'HVAC1_PDRSAug24_ACOP_eligible';
