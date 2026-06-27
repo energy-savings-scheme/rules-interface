@@ -191,3 +191,7 @@ export const RF2_F1_2_ESSJun24_EEI_under_81 = 'RF2_F1_2_ESSJun24_EEI_under_81';
 
 // CORE ELIGIBILITY
 export const ESS__PDRS__ACP_base_scheme_eligibility = 'ESS__PDRS__ACP_base_scheme_eligibility';
+export const Base_removing_or_replacing = 'Base_removing_or_replacing';
+export const Base_meets_mandatory_requirement = 'Base_meets_mandatory_requirement';
+export const Base_tradeable_certificates = 'Base_tradeable_certificates';
+export const Base_replacement_water_heater_certificates = 'Base_replacement_water_heater_certificates';
