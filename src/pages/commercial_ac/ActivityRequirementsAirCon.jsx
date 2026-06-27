@@ -16,7 +16,7 @@ import {
 } from 'lib/analytics';
 import {
   HVAC2_multi_split_product_class,
-  HVAC2_residential_building,
+  HVAC2_large_business_building,
   HVAC2_new_equipment_cooling_capacity,
   HVAC2_new_equipment_heating_capacity,
 } from 'types/openfisca_variables';
@@ -110,7 +110,7 @@ export default function ActivityRequirementsCommercialAC(props) {
     let new_arr = [];
     const excludeClauses = [
       HVAC2_multi_split_product_class,
-      HVAC2_residential_building,
+      HVAC2_large_business_building,
       HVAC2_new_equipment_cooling_capacity,
       HVAC2_new_equipment_heating_capacity,
     ];
