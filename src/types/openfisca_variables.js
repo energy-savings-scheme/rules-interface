@@ -74,7 +74,7 @@ export const BESS2_V5Nov24_peak_demand_annual_savings = 'BESS2_V5Nov24_peak_dema
 export const HVAC2_equipment_replaced = 'HVAC2_equipment_replaced';
 export const HVAC2_installed_centralised_system_common_area_BCA_Class2_building =
   'HVAC2_installed_centralised_system_common_area_BCA_Class2_building';
-export const HVAC2_residential_building = 'HVAC2_residential_building';
+export const HVAC2_large_business_building = 'HVAC2_large_business_building';
 export const HVAC2_multi_split_product_class = 'HVAC2_multi_split_product_class';
 export const HVAC2_outdoor_units = 'HVAC2_outdoor_units';
 export const HVAC2_manufacture_approved_GEMS = 'HVAC2_manufacture_approved_GEMS';
