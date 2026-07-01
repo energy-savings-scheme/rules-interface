@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
-import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
 import LoadClausesResidentialActivityRequirements from './LoadClausesActivityRequirements';
@@ -14,90 +13,44 @@ import {
   updateSegmentCaptureAnalytics,
   clearSearchCaptureAnalytics,
 } from 'lib/analytics';
+import { 
+  HVAC1_PDRSAug24_multi_split_product_class,
+  HVAC1_PDRSAug24_new_equipment_cooling_capacity,
+  HVAC1_PDRSAug24_new_equipment_heating_capacity,
+} from 'types/openfisca_variables';
+
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
 import { BASE_RESIDENTIAL_AC_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
 
 export default function ActivityRequirementsResAC(props) {
-  const { entities, variables, setEntities, setVariables, loading, setLoading } = props;
+  const { entities, variables, loading } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
-  const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
     'HVAC1_PDRSAug24_installation_replacement_final_activity_eligibility',
   );
-  const [variable, setVariable] = useState({});
   const [clausesForm, setClausesForm] = useState([]);
   const [showError, setShowError] = useState(false);
   const [userType, setUserType] = useState('');
   const [isUserTypeValid, setIsUserTypeValid] = useState(true);
   const [userTypeError, setUserTypeError] = useState('');
 
-  if (formValues.length === 0) {
-    setLoading(true);
-  } else {
-    setLoading(false);
-  }
-
   useEffect(() => {
     window.scrollTo(0, 0);
     clearSearchCaptureAnalytics();
     updateEstimatorFormAnalytics(BASE_RESIDENTIAL_AC_ELIGIBILITY_ANALYTICS_DATA);
     updateFeedbackFormAnalytics(BASE_RESIDENTIAL_AC_ELIGIBILITY_ANALYTICS_DATA);
-  }, [stepNumber]);
-
-  useEffect(() => {
-    OpenFiscaAPI.getVariable(variableToLoad)
-      .then((res) => {
-        setVariable(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [variableToLoad]);
-
-  useEffect(() => {
-    if (Object.keys(variable).length && stepNumber === 1) {
-      const children = variable.input_offsprings;
-
-      // Define the original array (at a minimum include the Implementation Date)
-      var array = [];
-
-      var dep_arr = [];
-
-      children.map((child) => {
-        array.push({ ...child, form_value: '', invalid: false, hide: false });
-      });
-
-      array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
-
-      const names = [
-        'HVAC1_PDRSAug24_AEER_greater_than_minimum',
-        'HVAC1_PDRSAug24_TCPSF_greater_than_minimum',
-        'HVAC1_PDRSAug24_HSPF_mixed_eligible',
-        'HVAC1_PDRSAug24_HSPF_cold_eligible',
-        'HVAC1_PDRSAug24_ACOP_eligible',
-      ];
-
-      dep_arr = array.filter((item) => names.includes(item.name));
-      array.find((item) => {
-        if (names.includes(item.name)) {
-          item.hide = true;
-        }
-      });
-
-      dep_arr = dep_arr.map((obj, i) => ({ ...obj, hide: true }));
-
-      setFormValues(array);
-      setDependencies(dep_arr);
-      setLoading(false);
-    }
-  }, [variable]);
+  }, []);
 
   useEffect(() => {
     let new_arr = [];
+    const excludeClauses = [
+      HVAC1_PDRSAug24_multi_split_product_class,
+      HVAC1_PDRSAug24_new_equipment_cooling_capacity,
+      HVAC1_PDRSAug24_new_equipment_heating_capacity,
+    ];
 
     formValues
       .filter((x) => x.hide === false)
@@ -105,7 +58,8 @@ export default function ActivityRequirementsResAC(props) {
         if (
           child.form_value !== child.default_value &&
           new_arr.find((o) => o.name === child.name) === undefined &&
-          child.value_type === 'Boolean'
+          child.value_type === 'Boolean'  &&
+          !excludeClauses.includes(child.name)
         )
           new_arr.push(child);
       });
@@ -222,7 +176,6 @@ export default function ActivityRequirementsResAC(props) {
                 stepNumber={stepNumber}
                 setStepNumber={setStepNumber}
                 formValues={formValues}
-                dependencies={dependencies}
                 setFormValues={setFormValues}
                 clausesForm={clausesForm}
                 setClausesForm={setClausesForm}

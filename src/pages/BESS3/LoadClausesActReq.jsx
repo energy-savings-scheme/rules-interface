@@ -5,22 +5,14 @@ import moment from 'moment';
 
 // Import components
 import CalculateBlock from 'components/calculate/CalculateBlock';
-import { focusElement } from 'lib/helper';
+
 import Button from 'nsw-ds-react/button/button';
-import OpenFiscaAPI from 'services/openfisca_api';
+import OpenFiscaApi from 'services/openfisca_api';
 import Alert from 'nsw-ds-react/alert/alert';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
+import { focusElement } from 'lib/helper';
 
-import { 
-  HVAC1_PDRSAug24_AEER_greater_than_minimum,
-  HVAC1_PDRSAug24_TCPSF_greater_than_minimum,
-  HVAC1_PDRSAug24_HSPF_mixed_eligible,
-  HVAC1_PDRSAug24_HSPF_cold_eligible,
-  HVAC1_PDRSAug24_ACOP_eligible,
-  HVAC1_PDRSAug24_ACOP_cold,
-} from 'types/openfisca_variables';
-
-export default function LoadClausesResidentialActivityRequirements(props) {
+export default function LoadClausesBESS3(props) {
   const {
     variableToLoad,
     variables,
@@ -29,6 +21,7 @@ export default function LoadClausesResidentialActivityRequirements(props) {
     stepNumber,
     formValues,
     setFormValues,
+    dependencies,
     clausesForm,
     setClausesForm,
     showError,
@@ -36,23 +29,28 @@ export default function LoadClausesResidentialActivityRequirements(props) {
     onValidateUserType,
   } = props;
 
+  const [variable, setVariable] = useState({}); // all info about variable
+
   var today = new Date();
   const [calculationDate, setCalculationDate] = useState(moment(today).format('YYYY-MM-DD'));
-  const [variable, setVariable] = useState({});
-  const [calculationResult, setCalculationResult] = useState(false);
+
+  const [calculationResult, setCalculationResult] = useState(null);
   const [calculationError, setCalculationError] = useState(false);
-  const [dependencies, setDependencies] = useState([]);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (stepNumber === 1) {
-      setCalculationResult(false);
+      setCalculationResult(null);
     }
   }, [stepNumber]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    OpenFiscaAPI.getVariable(variableToLoad)
+  }, []);
+
+  useEffect(() => {
+    OpenFiscaApi.getVariable(variableToLoad)
       .then((res) => {
         setVariable(res.data);
         setLoading(false);
@@ -60,46 +58,7 @@ export default function LoadClausesResidentialActivityRequirements(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-
-  useEffect(() => {
-    if (Object.keys(variable).length && stepNumber === 1) {
-      const children = variable.input_offsprings;
-
-      // Define the original array (at a minimum include the Implementation Date)
-      var array = [];
-
-      var dep_arr = [];
-
-      children.map((child) => {
-        array.push({ ...child, form_value: '', invalid: false, hide: false });
-      });
-
-      array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
-
-      const names = [
-        HVAC1_PDRSAug24_AEER_greater_than_minimum,
-        HVAC1_PDRSAug24_TCPSF_greater_than_minimum,
-        HVAC1_PDRSAug24_HSPF_mixed_eligible,
-        HVAC1_PDRSAug24_HSPF_cold_eligible,
-        HVAC1_PDRSAug24_ACOP_eligible,
-        HVAC1_PDRSAug24_ACOP_cold
-      ];
-
-      dep_arr = array.filter((item) => names.includes(item.name));
-      array.forEach((item) => {
-        if (names.includes(item.name)) {
-          item.hide = true;
-        }
-      });
-
-      dep_arr = dep_arr.map((obj, i) => ({ ...obj, hide: true }));
-
-      setFormValues(array);
-      setDependencies(dep_arr);
-      setLoading(false);
-    }
-  }, [variable]);
+  }, [variableToLoad]);
 
   useEffect(() => {
     if (calculationError && showError) {
@@ -127,21 +86,6 @@ export default function LoadClausesResidentialActivityRequirements(props) {
 
   return (
     <div className style={{ marginBottom: '7%' }}>
-      {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
-
-      {stepNumber === 2 && calculationError && showError && (
-        <Alert
-          as="error"
-          customTitle={<h3 dangerouslySetInnerHTML={{ __html: 'Sorry!' }} />}
-          id="error-calculation"
-          className="nsw-col-lg-10"
-          data-ui-name="error-calculation"
-          tabIndex="-1"
-        >
-          <p>We are experiencing technical difficulties right now, please try again later.</p>
-        </Alert>
-      )}
-
       <div>
         {stepNumber === 1 && (
           <Fragment>
@@ -169,6 +113,20 @@ export default function LoadClausesResidentialActivityRequirements(props) {
               onValidateUserType={onValidateUserType}
             />
           </Fragment>
+        )}
+
+        {stepNumber === 2 && loading && !showError && <SpinnerFullscreen />}
+
+        {stepNumber === 2 && calculationError && showError && (
+          <Alert
+            as="error"
+            customTitle={<h3 dangerouslySetInnerHTML={{ __html: 'Sorry!' }} />}
+            id="error-calculation"
+            className="nsw-col-lg-10"
+            tabIndex="-1"
+          >
+            <p>We are experiencing technical difficulties right now, please try again later.</p>
+          </Alert>
         )}
 
         {stepNumber === 2 && calculationResult !== null && (
@@ -223,13 +181,6 @@ export default function LoadClausesResidentialActivityRequirements(props) {
             }
           </Fragment>
         )}
-
-        {/* 
-        {stepNumber === 2 && calculationError & showError && (
-          <Alert as="error" title="Sorry! An error has occurred.">
-            <p>An error occurred during calculation. Please try again.</p>
-          </Alert>
-        )} */}
 
         {stepNumber === 2 && (
           <Fragment>

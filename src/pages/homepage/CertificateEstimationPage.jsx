@@ -33,10 +33,10 @@ export default function CertificateEstimationPage(props) {
         title="Safeguard certificate estimator"
       />
 
-      <div class="nsw-section nsw-section--white">
-        <div class="nsw-container">
-          <div class="nsw-layout">
-            <div class="nsw-layout__main">
+      <div className="nsw-section nsw-section--white">
+        <div className="nsw-container">
+          <div className="nsw-layout">
+            <div className="nsw-layout__main">
               <div className="nsw-grid nsw-grid--spaced" style={{ fontFamily: 'sans-serif' }}>
                 <div className="nsw-col nsw-col-md-12">
                   <h2>Certificate estimation</h2>
@@ -68,15 +68,15 @@ export default function CertificateEstimationPage(props) {
         </div>
       </div>
 
-      <section class="nsw-section nsw-section--off-white" style={{ backgroundColor: '#F5F5F5' }}>
-        <div class="nsw-container" style={{ paddingBottom: '4rem' }}>
-          <div class="nsw-layout">
-            <div class="nsw-layout__main">
+      <section className="nsw-section nsw-section--off-white" style={{ backgroundColor: '#F5F5F5' }}>
+        <div className="nsw-container" style={{ paddingBottom: '4rem' }}>
+          <div className="nsw-layout">
+            <div className="nsw-layout__main">
               <h2 className="nsw-content-block__title" style={{ paddingBottom: '2%' }}>
                 Residential and small business
               </h2>
-              <div class="nsw-grid">
-                <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
+              <div className="nsw-grid">
+                <div className="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
                     copy="Install a new or replace an existing air conditioner with a high efficiency air conditioner"
                     headline="Air conditioner"
@@ -89,7 +89,7 @@ export default function CertificateEstimationPage(props) {
                     ]}
                   />
                 </div>
-                <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
+                <div className="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
                     copy="Replace an existing pool pump with a high efficiency pool pump"
                     headline="Pool pump"
@@ -103,7 +103,7 @@ export default function CertificateEstimationPage(props) {
                   />
                 </div>
 
-                <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
+                <div className="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
                     copy="Remove a spare refrigerator or freezer"
                     headline="Spare refrigerator or freezer"
@@ -117,7 +117,7 @@ export default function CertificateEstimationPage(props) {
                   />
                 </div>
 
-                <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
+                <div className="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
                     copy="Replace an existing gas or electric water heater with an (air source) heat pump or solar (electric boosted) water heater"
                     headline="Hot water heater"
@@ -130,9 +130,9 @@ export default function CertificateEstimationPage(props) {
                     ]}
                   />
                 </div>
-                <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
+                <div className="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
-                    copy="Install a new solar battery, sign it up to a demand response contract, or do both"
+                    copy="Install a new battery for apartments or connect your solar battery to a virtual power plant, or do both"
                     headline="Solar battery"
                     image="SolarBattery.jpg"
                     links={[
@@ -149,15 +149,15 @@ export default function CertificateEstimationPage(props) {
         </div>
       </section>
 
-      <section class="nsw-section nsw-section--white">
-        <div class="nsw-container">
-          <div class="nsw-layout">
-            <div class="nsw-layout__main">
+      <section className="nsw-section nsw-section--white">
+        <div className="nsw-container">
+          <div className="nsw-layout">
+            <div className="nsw-layout__main">
               <h2 className="nsw-content-block__title" style={{ paddingBottom: '2%' }}>
                 Commercial
               </h2>
               <div className="nsw-grid">
-                <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
+                <div className="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
                     copy="Install a new or replace an existing air conditioner with a high efficiency
       air conditioner"
@@ -171,7 +171,7 @@ export default function CertificateEstimationPage(props) {
                     ]}
                   />
                 </div>
-                <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
+                <div className="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
                     copy="Replace one or more existing hot water boilers or water heaters with one or more air source heat pump water heater systems"
                     headline="Heat pump water heater"
@@ -184,7 +184,7 @@ export default function CertificateEstimationPage(props) {
                     ]}
                   />
                 </div>
-                <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
+                <div className="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
                     copy="Install a new high efficiency refrigerated cabinet or replace an existing
       refrigerated cabinet"
@@ -212,7 +212,7 @@ export default function CertificateEstimationPage(props) {
                   </Card>
                 </div> */}
 
-                <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
+                <div className="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
                     copy="Install a new or replace an existing motor with a high efficiency motor"
                     headline="Ventilation or refrigeration motor"
@@ -230,17 +230,17 @@ export default function CertificateEstimationPage(props) {
                   <h4>More options</h4>
                   <br></br>
 
-                  <div class="nsw-grid nsw-grid--spaced">
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="#" class="nsw-card__link">
+                  <div className="nsw-grid nsw-grid--spaced">
+                    <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div className="nsw-card__content null">
+                          <div className="nsw-card__title">
+                            <a href="#" className="nsw-card__link">
                               Back to estimator homepage
                             </a>
                           </div>
                           <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
+                            className="material-icons nsw-material-icons nsw-card__icon"
                             focusable="false"
                             aria-hidden="true"
                           >
@@ -250,16 +250,16 @@ export default function CertificateEstimationPage(props) {
                       </div>
                     </div>
 
-                    {/* <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="/#core-eligibility" class="nsw-card__link">
+                    {/* <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div className="nsw-card__content null">
+                          <div className="nsw-card__title">
+                            <a href="/#core-eligibility" className="nsw-card__link">
                               Check core eligibility
                             </a>
                           </div>
                           <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
+                            className="material-icons nsw-material-icons nsw-card__icon"
                             focusable="false"
                             aria-hidden="true"
                           >
@@ -269,16 +269,16 @@ export default function CertificateEstimationPage(props) {
                       </div>
                     </div> */}
 
-                    <div class="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
-                      <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
-                        <div class="nsw-card__content null">
-                          <div class="nsw-card__title">
-                            <a href="/#eligibility" class="nsw-card__link">
+                    <div className="nsw-col nsw-col-md-4" style={{ height: '12vw' }}>
+                      <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
+                        <div className="nsw-card__content null">
+                          <div className="nsw-card__title">
+                            <a href="/#eligibility" className="nsw-card__link">
                               Check eligibility requirements
                             </a>
                           </div>
                           <span
-                            class="material-icons nsw-material-icons nsw-card__icon"
+                            className="material-icons nsw-material-icons nsw-card__icon"
                             focusable="false"
                             aria-hidden="true"
                           >

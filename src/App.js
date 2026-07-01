@@ -52,6 +52,8 @@ import SolarBatteryCertificatePage from 'pages/homepage/SolarBatteryCertificateP
 import CertificateEstimatorBESS1 from 'pages/BESS1/CertificateEstimatorBESS1';
 import ActivityRequirementsBESS2 from 'pages/BESS2/ActivityRequirementsBESS2';
 import CertificateEstimatorBESS2 from 'pages/BESS2/CertificateEstimatorBESS2';
+import ActivityRequirementsBESS3 from 'pages/BESS3/ActivityRequirementsBESS3';
+import CertificateEstimatorBESS3 from 'pages/BESS3/CertificateEstimator';
 import CertificateEstimatorWH2_test from 'pages/WH2_test/CertificateEstimatorWH';
 import ActivityRequirementsF17 from 'pages/commercial_wh_f17/ActivityRequirementsWaterHeater';
 import CommercialHotWaterHeaterEligibilityPage from 'pages/homepage/CommercialHotWaterHeaterEligibility';
@@ -66,6 +68,7 @@ function App() {
   const [variables, setVariables] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hvacBrands, setHvacBrands] = useState([]);
+  const [residentialACBrands, setResidentialACBrands] = useState([]);
   const [whBrands, setWhBrands] = useState([]);
   const [RF2Brands, setRF2Brands] = useState([]);
   const [PoolPumpBrands, setPoolPumpBrands] = useState([]);
@@ -91,6 +94,15 @@ function App() {
     RegistryApi.getCommercialHVACBrands()
       .then((res) => {
         setHvacBrands(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    RegistryApi.getResidentialACBrands()
+      .then((res) => {
+        setResidentialACBrands(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -217,12 +229,12 @@ function App() {
           <CertificateEstimatorResidentialAC
             entities={entities}
             variables={variables}
-            hvacBrands={hvacBrands}
+            hvacBrands={residentialACBrands}
             loading={loading}
             setEntities={setEntities}
             setVariables={setVariables}
             setLoading={setLoading}
-            setHvacBrands={setHvacBrands}
+            setHvacBrands={setResidentialACBrands}
           />
         </Route>
         <Route path="/refrigerated-cabinet-estimator" exact>
@@ -337,6 +349,18 @@ function App() {
         <Route path="/residential-solar-battery-demand-response-certificates" exact>
           {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <CertificateEstimatorBESS2
+            entities={entities}
+            variables={variables}
+            brands={resSolarBatteryBrands}
+            loading={loading}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+          />
+        </Route>
+        <Route path="/residential-apartments-battery-certificates" exact>
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
+          <CertificateEstimatorBESS3
             entities={entities}
             variables={variables}
             brands={resSolarBatteryBrands}
@@ -606,6 +630,17 @@ function App() {
         <Route path="/residential-solar-battery-demand-response-eligibility" exact>
           {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <ActivityRequirementsBESS2
+            entities={entities}
+            variables={variables}
+            loading={loading}
+            setEntities={setEntities}
+            setVariables={setVariables}
+            setLoading={setLoading}
+          />
+        </Route>
+        <Route path="/residential-apartments-battery-eligibility" exact>
+          {!IS_DRUPAL_PAGES && <Breadcrumb />}
+          <ActivityRequirementsBESS3
             entities={entities}
             variables={variables}
             loading={loading}

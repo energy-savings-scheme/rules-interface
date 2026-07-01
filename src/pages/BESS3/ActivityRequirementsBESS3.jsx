@@ -1,10 +1,13 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
 import { ProgressIndicator } from 'nsw-ds-react/forms/progress-indicator/progressIndicator';
-import LoadClauses from './LoadClauses';
 import OpenFiscaAPI from 'services/openfisca_api';
 import SpinnerFullscreen from 'components/layout/SpinnerFullscreen';
 import HeroBanner from 'nsw-ds-react/heroBanner/heroBanner';
+import LoadClausesBESS3 from './LoadClausesActReq';
+import {
+  BESS3_installation_final_activity_eligibility,
+} from 'types/openfisca_variables';
 import { IS_DRUPAL_PAGES } from 'types/app_variables';
 import { FormGroup, Select } from 'nsw-ds-react/forms';
 import { USER_TYPE_OPTIONS } from 'constant/user-type';
@@ -14,24 +17,18 @@ import {
   updateSegmentCaptureAnalytics,
   clearSearchCaptureAnalytics,
 } from 'lib/analytics';
-import {
-  HVAC2_multi_split_product_class,
-  HVAC2_large_business_building,
-  HVAC2_new_equipment_cooling_capacity,
-  HVAC2_new_equipment_heating_capacity,
-} from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
-import { BASE_COMMERCIAL_AC_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
+import { BASE_BESS3_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
 
-export default function ActivityRequirementsCommercialAC(props) {
+export default function ActivityRequirementsBESS3(props) {
   const { entities, variables, loading, setLoading } = props;
 
   const [formValues, setFormValues] = useState([]);
   const [stepNumber, setStepNumber] = useState(1);
   const [dependencies, setDependencies] = useState([]);
   const [variableToLoad, setVariableToLoad] = useState(
-    'HVAC2_installation_replacement_final_activity_eligibility',
+    BESS3_installation_final_activity_eligibility,
   );
   const [variable, setVariable] = useState({});
   const [clausesForm, setClausesForm] = useState([]);
@@ -49,8 +46,8 @@ export default function ActivityRequirementsCommercialAC(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
     clearSearchCaptureAnalytics();
-    updateEstimatorFormAnalytics(BASE_COMMERCIAL_AC_ELIGIBILITY_ANALYTICS_DATA);
-    updateFeedbackFormAnalytics(BASE_COMMERCIAL_AC_ELIGIBILITY_ANALYTICS_DATA);
+    updateEstimatorFormAnalytics(BASE_BESS3_ELIGIBILITY_ANALYTICS_DATA);
+    updateFeedbackFormAnalytics(BASE_BESS3_ELIGIBILITY_ANALYTICS_DATA);
   }, [stepNumber]);
 
   useEffect(() => {
@@ -78,19 +75,7 @@ export default function ActivityRequirementsCommercialAC(props) {
 
       array.sort((a, b) => a.metadata.sorting - b.metadata.sorting);
 
-      const names = [
-        'HVAC2_equipment_replaced',
-        'HVAC2_installed_centralised_system_common_area_BCA_Class2_building',
-        'HVAC2_outdoor_units',
-        'HVAC2_manufacture_approved_GEMS',
-        'HVAC2_AEER_greater_than_minimum',
-        'HVAC2_TCPSF_greater_than_minimum',
-        'HVAC2_HSPF_mixed_eligible',
-        'HVAC2_HSPF_cold_eligible',
-        'HVAC2_ACOP_eligible',
-        'HVAC2_ACOP_cold_eligible',
-      ];
-
+      const names = [];
       dep_arr = array.filter((item) => names.includes(item.name));
       array.find((item) => {
         if (names.includes(item.name)) {
@@ -108,12 +93,6 @@ export default function ActivityRequirementsCommercialAC(props) {
 
   useEffect(() => {
     let new_arr = [];
-    const excludeClauses = [
-      HVAC2_multi_split_product_class,
-      HVAC2_large_business_building,
-      HVAC2_new_equipment_cooling_capacity,
-      HVAC2_new_equipment_heating_capacity,
-    ];
 
     formValues
       .filter((x) => x.hide === false)
@@ -121,8 +100,7 @@ export default function ActivityRequirementsCommercialAC(props) {
         if (
           child.form_value !== child.default_value &&
           new_arr.find((o) => o.name === child.name) === undefined &&
-          child.value_type === 'Boolean' &&
-          !excludeClauses.includes(child.name)
+          child.value_type === 'Boolean'
         )
           new_arr.push(child);
       });
@@ -142,11 +120,11 @@ export default function ActivityRequirementsCommercialAC(props) {
             wide
             style="dark"
             image={{
-              alt: 'commercial ac',
-              src: 'base_elig_hero.jpg',
+              alt: 'Solar battery system - eligibility',
+              src: 'BESS3.jpg',
             }}
-            intro="Commercial"
-            title="Air conditioner - eligibility"
+            intro="Residential and small business"
+            title="Install a new battery for apartments - eligibility"
           />
         </div>
       )}
@@ -157,48 +135,26 @@ export default function ActivityRequirementsCommercialAC(props) {
         {!IS_DRUPAL_PAGES && stepNumber !== 2 && (
           <div className="nsw-grid nsw-grid--spaced">
             <div className="nsw-col nsw-col-md-12">
-              <h2 className="nsw-content-block__title">
-                Commercial Air Conditioner activity eligibility check
-              </h2>
               <br></br>
               <p className="nsw-content-block__copy">
                 Answer the following questions to check if you meet the eligibility requirements for
-                the for the Commercial Air Conditioner Activity (F4 in the{' '}
-                <a
-                  href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/energy-savings-scheme"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Energy Savings Scheme
-                </a>{' '}
-                and HVAC2 in the{' '}
+                installing a new battery for apartments incentive (BESS3 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
                   target="_blank"
-                  rel="noreferrer"
                 >
                   Peak Demand Reduction Scheme
-                </a>
-                ).
+                </a>{' '}
+                ). This incentive is for the installation of a new ‘behind the meter’ battery at a residential apartments address.
               </p>
               <p className="nsw-content-block__copy">
-                If ineligible, you will be shown the ineligible answers and their corresponding rule
+                If you're ineligible, we will show you why and give you the corresponding rule
                 clauses.
               </p>
               <p className="nsw-content-block__copy">
                 Please keep in mind that the results are a guide only and cannot be promoted or
                 published.
               </p>
-            </div>
-          </div>
-        )}
-
-        {!IS_DRUPAL_PAGES && stepNumber === 2 && (
-          <div className="nsw-grid nsw-grid--spaced">
-            <div className="nsw-col nsw-col-md-12">
-              <h2 className="nsw-content-block__title">
-                Commercial Air Conditioner activity eligibility check
-              </h2>
             </div>
           </div>
         )}
@@ -220,8 +176,8 @@ export default function ActivityRequirementsCommercialAC(props) {
                 >
                   <Select
                     htmlId="user-type"
-                    className="nsw-col-lg-6"
                     data-ui-name="user-type"
+                    className="nsw-col-lg-6"
                     options={USER_TYPE_OPTIONS}
                     onChange={(e) => {
                       setUserType(e.target.value);
@@ -233,7 +189,7 @@ export default function ActivityRequirementsCommercialAC(props) {
                   />
                 </FormGroup>
               )}
-              <LoadClauses
+              <LoadClausesBESS3
                 variableToLoad={variableToLoad}
                 variables={variables}
                 entities={entities}
@@ -271,8 +227,8 @@ export default function ActivityRequirementsCommercialAC(props) {
                 <MoreOptionsCard
                   options={[
                     {
-                      title: 'Review eligibility for this activity',
-                      link: '/#commercial-ac-estimator',
+                      title: 'Estimate certificates for this activity',
+                      link: '/#residential-apartments-battery-certificates',
                     },
                   ]}
                 />

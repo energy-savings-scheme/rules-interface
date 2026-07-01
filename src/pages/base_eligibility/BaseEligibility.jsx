@@ -14,7 +14,13 @@ import {
   updateSegmentCaptureAnalytics,
   clearSearchCaptureAnalytics,
 } from 'lib/analytics';
-import { ESS__PDRS__ACP_base_scheme_eligibility } from 'types/openfisca_variables';
+import {
+  ESS__PDRS__ACP_base_scheme_eligibility,
+  Base_removing_or_replacing,
+  Base_meets_mandatory_requirement,
+  Base_tradeable_certificates,
+  Base_replacement_water_heater_certificates,
+} from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from '../../components/more-options-card/more-options-card';
 
@@ -102,6 +108,12 @@ export default function BaseEligibility(props) {
 
   useEffect(() => {
     let new_arr = [];
+    const excludeClauses = [
+      Base_removing_or_replacing,
+      Base_meets_mandatory_requirement,
+      Base_tradeable_certificates,
+      Base_replacement_water_heater_certificates,
+    ];
 
     formValues
       .filter((x) => x.hide === false)
@@ -109,7 +121,8 @@ export default function BaseEligibility(props) {
         if (
           child.form_value !== child.default_value &&
           new_arr.find((o) => o.name === child.name) === undefined &&
-          child.value_type === 'Boolean'
+          child.value_type === 'Boolean' &&
+          !excludeClauses.includes(child.name)
         ) {
           new_arr.push(child);
         }
