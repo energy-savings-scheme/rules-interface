@@ -70,13 +70,18 @@ export const BESS3_installation_final_activity_eligibility =
 export const BESS1_V5Nov24_peak_demand_annual_savings = 'BESS1_V5Nov24_peak_demand_annual_savings';
 export const BESS2_V5Nov24_peak_demand_annual_savings = 'BESS2_V5Nov24_peak_demand_annual_savings';
 
+// Commercial F4/HVAC2 Eligibility
 export const HVAC2_equipment_replaced = 'HVAC2_equipment_replaced';
 export const HVAC2_installed_centralised_system_common_area_BCA_Class2_building =
   'HVAC2_installed_centralised_system_common_area_BCA_Class2_building';
+export const HVAC2_large_business_building = 'HVAC2_large_business_building';
+export const HVAC2_multi_split_product_class = 'HVAC2_multi_split_product_class';
 export const HVAC2_outdoor_units = 'HVAC2_outdoor_units';
 export const HVAC2_manufacture_approved_GEMS = 'HVAC2_manufacture_approved_GEMS';
+export const HVAC2_new_equipment_cooling_capacity = 'HVAC2_new_equipment_cooling_capacity';
 export const HVAC2_AEER_greater_than_minimum = 'HVAC2_AEER_greater_than_minimum';
 export const HVAC2_TCPSF_greater_than_minimum = 'HVAC2_TCPSF_greater_than_minimum';
+export const HVAC2_new_equipment_heating_capacity = 'HVAC2_new_equipment_heating_capacity';
 export const HVAC2_HSPF_mixed_eligible = 'HVAC2_HSPF_mixed_eligible';
 export const HVAC2_HSPF_cold_eligible = 'HVAC2_HSPF_cold_eligible';
 export const HVAC2_ACOP_eligible = 'HVAC2_ACOP_eligible';
@@ -186,3 +191,7 @@ export const RF2_F1_2_ESSJun24_EEI_under_81 = 'RF2_F1_2_ESSJun24_EEI_under_81';
 
 // CORE ELIGIBILITY
 export const ESS__PDRS__ACP_base_scheme_eligibility = 'ESS__PDRS__ACP_base_scheme_eligibility';
+export const Base_removing_or_replacing = 'Base_removing_or_replacing';
+export const Base_meets_mandatory_requirement = 'Base_meets_mandatory_requirement';
+export const Base_tradeable_certificates = 'Base_tradeable_certificates';
+export const Base_replacement_water_heater_certificates = 'Base_replacement_water_heater_certificates';

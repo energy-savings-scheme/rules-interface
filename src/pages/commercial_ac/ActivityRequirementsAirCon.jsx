@@ -14,6 +14,12 @@ import {
   updateSegmentCaptureAnalytics,
   clearSearchCaptureAnalytics,
 } from 'lib/analytics';
+import {
+  HVAC2_multi_split_product_class,
+  HVAC2_large_business_building,
+  HVAC2_new_equipment_cooling_capacity,
+  HVAC2_new_equipment_heating_capacity,
+} from 'types/openfisca_variables';
 import FeedbackComponent from 'components/feedback/feedback';
 import MoreOptionsCard from 'components/more-options-card/more-options-card';
 import { BASE_COMMERCIAL_AC_ELIGIBILITY_ANALYTICS_DATA } from 'constant/base-analytics-data';
@@ -102,6 +108,12 @@ export default function ActivityRequirementsCommercialAC(props) {
 
   useEffect(() => {
     let new_arr = [];
+    const excludeClauses = [
+      HVAC2_multi_split_product_class,
+      HVAC2_large_business_building,
+      HVAC2_new_equipment_cooling_capacity,
+      HVAC2_new_equipment_heating_capacity,
+    ];
 
     formValues
       .filter((x) => x.hide === false)
@@ -109,7 +121,8 @@ export default function ActivityRequirementsCommercialAC(props) {
         if (
           child.form_value !== child.default_value &&
           new_arr.find((o) => o.name === child.name) === undefined &&
-          child.value_type === 'Boolean'
+          child.value_type === 'Boolean' &&
+          !excludeClauses.includes(child.name)
         )
           new_arr.push(child);
       });

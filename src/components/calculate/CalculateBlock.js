@@ -28,6 +28,9 @@ import {
   HVAC1_PDRSAug24_outdoor_units,
   HVAC1_PDRSAug24_manufacture_approved_GEMS,
   HVAC2_new_installation_or_replacement,
+  HVAC2_multi_split_product_class,
+  HVAC2_outdoor_units,
+  HVAC2_manufacture_approved_GEMS,
   D17_ESSJun24_split_system,
   D17_ESSJun24_safety_requirement,
   D19_ESSJun24_split_system,
@@ -208,22 +211,6 @@ export default function CalculateBlock(props) {
       formValues.find((v) => v.name === 'HVAC1_PDRSAug24_AEER_greater_than_minimum').hide = true;
     }
 
-    if (
-      formItem.name === 'HVAC2_residential_building' &&
-      (formItem.form_value === true || formItem.default_value === true)
-    ) {
-      formValues.find(
-        (v) => v.name === 'HVAC2_installed_centralised_system_common_area_BCA_Class2_building',
-      ).hide = false;
-    } else if (
-      formItem.name === 'HVAC2_residential_building' &&
-      (formItem.form_value === false || formItem.default_value === false)
-    ) {
-      formValues.find(
-        (v) => v.name === 'HVAC2_installed_centralised_system_common_area_BCA_Class2_building',
-      ).hide = true;
-    }
-
     if (formItem.name === D17_ESSJun24_split_system) {
       const field_safety_requirement = formValues.find(
         (v) => v.name === D17_ESSJun24_safety_requirement,
@@ -347,8 +334,8 @@ export default function CalculateBlock(props) {
         }
       }
 
-      if (formItem.name === 'HVAC2_residential_building') {
-        if (e.target.value === 'true') {
+      if (formItem.name === 'HVAC2_large_business_building') {
+        if (e.target.value === 'false') {
           formValues.find(
             (v) => v.name === 'HVAC2_installed_centralised_system_common_area_BCA_Class2_building',
           ).hide = false;
@@ -461,13 +448,13 @@ export default function CalculateBlock(props) {
       }
 
       // equipment multi-split approval path
-      if (formItem.name === 'HVAC2_multi_split_product_class') {
+      if (formItem.name === HVAC2_multi_split_product_class) {
         if (e.target.value === 'true') {
-          formValues.find((v) => v.name === 'HVAC2_outdoor_units').hide = false;
-          formValues.find((v) => v.name === 'HVAC2_manufacture_approved_GEMS').hide = false;
+          formValues.find((v) => v.name === HVAC2_outdoor_units).hide = false;
+          formValues.find((v) => v.name === HVAC2_manufacture_approved_GEMS).hide = false;
         } else {
-          formValues.find((v) => v.name === 'HVAC2_outdoor_units').hide = true;
-          formValues.find((v) => v.name === 'HVAC2_manufacture_approved_GEMS').hide = true;
+          formValues.find((v) => v.name === HVAC2_outdoor_units).hide = true;
+          formValues.find((v) => v.name === HVAC2_manufacture_approved_GEMS).hide = true;
         }
       }
 
