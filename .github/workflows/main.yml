@@ -53,11 +53,11 @@ on:
       AZURE_CREDENTIALS:
         description: 'The Azure credentials for starting VM.'
         required: false
-      AZURE_RESOURCE_GROUP:
-        description: 'The Azure resource group name for starting VM.'
+      AZURE_RESOURCE_GROUP_VM_CI:
+        description: 'The Azure resource group name for starting VM CI.'
         required: false
-      AZURE_VM_NAME:
-        description: 'The Azure VM name for starting VM.'
+      AZURE_VM_CI_NAME:
+        description: 'The Azure VM name for starting VM CI.'
         required: false
 
 # env:
@@ -78,7 +78,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           
       - name: Start VM
-        run: az vm start -g ${{ secrets.AZURE_RESOURCE_GROUP }} -n ${{ secrets.AZURE_VM_NAME }}
+        run: az vm start -g ${{ secrets.AZURE_RESOURCE_GROUP_VM_CI }} -n ${{ secrets.AZURE_VM_CI_NAME }}
 
   test:
     name: Run Test
