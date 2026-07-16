@@ -53,11 +53,11 @@ on:
       AZURE_CREDENTIALS:
         description: 'The Azure credentials for starting VM.'
         required: false
-      AZURE_RESOURCE_GROUP:
-        description: 'The Azure resource group name for starting VM.'
+      AZURE_RESOURCE_GROUP_VM_CI:
+        description: 'The Azure resource group name for starting VM CI.'
         required: false
-      AZURE_VM_NAME:
-        description: 'The Azure VM name for starting VM.'
+      AZURE_VM_CI_NAME:
+        description: 'The Azure VM name for starting VM CI.'
         required: false
 
 # env:
@@ -67,29 +67,30 @@ on:
 
 jobs:
   # uncomment this if we already have the credentials to start the VM.
-  # start-vm:
-  #   name: Start VM
-  #   if: ${{ inputs.run-test }}
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Azure login
-  #       uses: azure/login@v3
-  #       with:
-  #         creds: ${{ secrets.AZURE_CREDENTIALS }}
+  start-vm:
+    name: Start VM
+    if: ${{ inputs.run-test }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Azure login
+        uses: azure/login@v3
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
           
-  #     - name: Start VM
-  #       run: az vm start -g ${{ secrets.AZURE_RESOURCE_GROUP }} -n ${{ secrets.AZURE_VM_NAME }}
+      - name: Start VM
+        run: az vm start -g ${{ secrets.AZURE_RESOURCE_GROUP_VM_CI }} -n ${{ secrets.AZURE_VM_CI_NAME }}
 
   test:
     name: Run Test
-    # needs: start-vm
+    needs: start-vm
     if: >-
       always() &&
       inputs.run-test && 
       (contains(github.event.pull_request.labels.*.name, 'run-test') ||
       github.event.action == 'opened' ||
       github.event_name == 'push' ||
-      github.event_name == 'workflow_dispatch')
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule')
     runs-on: self-hosted
     steps:
       - name: Checkout
@@ -161,6 +162,20 @@ jobs:
         if: always()
         run: docker compose down
         working-directory: .
+
+  stop-vm:
+    name: Stop VM
+    needs: test
+    if: always() && inputs.run-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Azure login
+        uses: azure/login@v3
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Stop VM
+        run: az vm deallocate -g ${{ secrets.AZURE_RESOURCE_GROUP_VM_CI }} -n ${{ secrets.AZURE_VM_CI_NAME }}
 
   build-and-deploy:
     name: Build and deploy
