@@ -248,4 +248,5 @@ jobs:
         with:
           source-path: build
           cleanup: false
+          container: estimator
           sas-url: ${{ secrets.DEPLOY_SAS_URL }}
