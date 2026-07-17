@@ -47,6 +47,9 @@ on:
       GH_TOKEN:
         description: 'GitHub token for uploading report to GitHub.'
         required: false
+      DEPLOY_SAS_CONTAINER:
+        description: 'The SAS Container for deploying in Azure Storage.'
+        required: false
       DEPLOY_SAS_URL:
         description: 'The SAS URL for deploying to Azure Storage.'
         required: false
@@ -248,5 +251,5 @@ jobs:
         with:
           source-path: build
           cleanup: false
-          container: estimator
+          container: ${{ secrets.DEPLOY_SAS_CONTAINER }}
           sas-url: ${{ secrets.DEPLOY_SAS_URL }}
