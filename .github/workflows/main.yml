@@ -72,7 +72,14 @@ jobs:
   # uncomment this if we already have the credentials to start the VM.
   start-vm:
     name: Start VM
-    if: ${{ inputs.run-test }}
+    if: >-
+      always() &&
+      inputs.run-test && 
+      (contains(github.event.pull_request.labels.*.name, 'run-test') ||
+      github.event.action == 'opened' ||
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule')
     runs-on: ubuntu-latest
     steps:
       - name: Azure login
@@ -169,7 +176,14 @@ jobs:
   stop-vm:
     name: Stop VM
     needs: test
-    if: always() && inputs.run-test
+    if: >-
+      always() &&
+      inputs.run-test && 
+      (contains(github.event.pull_request.labels.*.name, 'run-test') ||
+      github.event.action == 'opened' ||
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule')
     runs-on: ubuntu-latest
     steps:
       - name: Azure login
