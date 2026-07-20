@@ -265,5 +265,5 @@ jobs:
         with:
           source-path: build
           cleanup: false
-          container: ${{ secrets.DEPLOY_SAS_CONTAINER }}
+          container: ${{ secrets.DEPLOY_SAS_CONTAINER || '$web' }}
           sas-url: ${{ secrets.DEPLOY_SAS_URL }}
