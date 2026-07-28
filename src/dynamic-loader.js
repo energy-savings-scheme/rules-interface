@@ -23,6 +23,7 @@ const pathToFilename = {
   'residential-small-business-electric-to-solar-water-heater-eligibility': 'residential_solar_water_heater_activity_requirements.js',
   'residential-small-business-gas-to-solar-water-heater-eligibility': 'residential_solar_gas_water_heater_activity_requirements.js',
   'residential-solar-battery-demand-response-eligibility': 'residential_solar_battery_demand_response_eligibility.js',
+  'residential-apartments-battery-eligibility': 'residential_apartments_battery_eligibility.js',
   'commercial-air-conditioner-eligibility': 'commercial_ac_activity_requirements.js',
   'commercial-electric-to-heat-pump-water-heater-eligibility': 'commercial_electric_to_heat_pump_water_heater_eligibility.js',
   'commercial-gas-to-heat-pump-water-heater-eligibility': 'commercial_gas_to_heat_pump_water_heater_eligibility.js',
