@@ -128,7 +128,7 @@ export default function CertificateEstimatorBESS2(props) {
               src: 'BESS2.jpg',
             }}
             intro="Residential"
-            title="Sign a solar battery up to a demand response contract  - certificates"
+            title="Sign a battery up to a virtual power plant - certificates"
           />
         </div>
       )}
@@ -149,10 +149,8 @@ export default function CertificateEstimatorBESS2(props) {
                 >
                   Peak Demand Reduction Scheme
                 </a>{' '}
-                ). This activity is for the signup of a 'behind the meter' residential solar battery
-                to a demand response contract, often called a virtual power plant (VPP). A key
-                requirement of this activity is that there is already a solar PV system installed at
-                the address.
+                ). This activity is for the signup of a 'behind the meter' residential battery
+                to a demand response contract, often called a virtual power plant (VPP).
                 <p className="nsw-content-block__copy">
                   Note that this activity is only eligible for the Peak Demand Reduction scheme, and
                   is not eligible for the Energy Savings Scheme.

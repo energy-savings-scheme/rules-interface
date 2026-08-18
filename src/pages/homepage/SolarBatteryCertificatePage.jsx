@@ -30,7 +30,7 @@ export default function SolarBatteryCertificatePage(props) {
           src: '/SolarBattery.jpg',
         }}
         intro="Residential and small business"
-        title="Solar battery - certificates"
+        title="Battery certificates"
       />
 
       <div className="nsw-section nsw-section--white" style={{ fontFamily: 'sans-serif' }}>
@@ -40,7 +40,7 @@ export default function SolarBatteryCertificatePage(props) {
               <div className="nsw-grid nsw-grid--spaced">
                 <div className="nsw-col nsw-col-md-12">
                   <p className="nsw-content-block__copy">
-                    The Safeguard certificate estimator estimates certificates for installing a new battery for apartments or connecting your solar battery to a Virtual Power Plan (VPP)
+                    The Safeguard certificate estimator can help you estimate the number of certificates for connecting your battery to a virtual power plan (VPP)
                     {/* <ul>
                       <li>installation of a new residential solar battery or</li>
                       <li>
@@ -97,8 +97,8 @@ export default function SolarBatteryCertificatePage(props) {
                 </div>
                 <div className="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
-                    copy="Onboard a behind the meter battery with a Virtual Power Plant (VPP)"
-                    headline="Sign a solar battery up to a Virtual Power Plant"
+                    copy="Onboard a behind the meter battery with a virtual power plant (VPP)"
+                    headline="Sign a battery up to a virtual power plant"
                     image="BESS2.jpg"
                     highlight
                     links={[
@@ -165,7 +165,7 @@ export default function SolarBatteryCertificatePage(props) {
                   <div className="nsw-card nsw-card--light nullnsw-card--headline" href="/">
                     <div className="nsw-card__content null">
                       <div className="nsw-card__title">
-                        <a href="/#solar-battery-eligibility" className="nsw-card__link">
+                        <a href="/#battery-eligibility-landing" className="nsw-card__link">
                           Review eligibility for this activity
                         </a>
                       </div>

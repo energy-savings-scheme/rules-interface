@@ -403,7 +403,7 @@ function App() {
             setLoading={setLoading}
           />
         </Route>
-        <Route path="/solar-battery-eligibility" exact>
+        <Route path="/battery-eligibility-landing" exact>
           {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <SolarBatteryEligibilityPage
             entities={entities}
@@ -414,7 +414,7 @@ function App() {
             setLoading={setLoading}
           />
         </Route>
-        <Route path="/solar-battery-certificates" exact>
+        <Route path="/battery-certificates-landing" exact>
           {!IS_DRUPAL_PAGES && <Breadcrumb />}
           <SolarBatteryCertificatePage
             entities={entities}
