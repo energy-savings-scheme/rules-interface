@@ -256,7 +256,7 @@ export default function ActivityRequirementsBESS2(props) {
                   options={[
                     {
                       title: 'Review eligibility for this activity',
-                      link: '/#residential-solar-battery-demand-response-certificates',
+                      link: '/#residential-battery-demand-response-certificates',
                     },
                   ]}
                 />
