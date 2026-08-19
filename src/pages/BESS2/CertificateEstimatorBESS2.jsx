@@ -288,7 +288,7 @@ export default function CertificateEstimatorBESS2(props) {
                   options={[
                     {
                       title: 'Review eligibility for this activity',
-                      link: '/#residential-solar-battery-demand-response-eligibility',
+                      link: '/#residential-battery-demand-response-eligibility',
                     },
                   ]}
                 />
