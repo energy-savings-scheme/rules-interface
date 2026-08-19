@@ -140,7 +140,7 @@ export default function ActivityRequirementsBESS2(props) {
               src: 'BESS2.jpg',
             }}
             intro="Residential"
-            title="Sign a solar battery up to a demand response contract - eligibility"
+            title="Sign a battery up to a virtual power plant - eligibility"
           />
         </div>
       )}
@@ -162,9 +162,8 @@ export default function ActivityRequirementsBESS2(props) {
                   Peak Demand Reduction Scheme
                 </a>{' '}
                 ). This incentive is for the signup of your behind the meter battery to a
-                residential demand response contract, also known as a Virtual Power Plant (VPP). A
-                key requirement of this incentive is that there is a solar photovoltaic (PV) and
-                battery system installed at your address.
+                residential demand response contract, also known as a virtual power plant (VPP). A
+                key requirement of this incentive is that there is a battery system installed at your address.
               </p>
               <p className="nsw-content-block__copy">
                 If you're ineligible, we'll show you why and give you the corresponding rule

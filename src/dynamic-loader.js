@@ -1,3 +1,5 @@
+// Left-hand side (key): Drupal page URL.
+// Right-hand side: Built JS file based on the path name in App.js.
 const pathToFilename = {
   'residential-small-business-air-conditioner-certificates': 'residential_ac_estimator.js',
   'residential-pool-pump-certificates': 'residential_pool_pump_certificates.js',
@@ -6,7 +8,8 @@ const pathToFilename = {
   'residential-small-business-gas-to-heat-pump-water-heater-certificates': 'gas_heat_pumps_estimator.js',
   'residential-small-business-electric-to-solar-water-heater-certificates': 'residential_solar_water_heater_estimator.js',
   'residential-small-business-gas-to-solar-water-heater-certificates': 'residential_gas_replacement_solar_water_heater_estimator.js',
-  'residential-solar-battery-demand-response-certificates': 'residential_solar_battery_demand_response_certificates.js',
+  'residential-battery-demand-response-certificates': 'residential_battery_demand_response_certificates.js',
+  'residential-solar-battery-demand-response-certificates': 'residential_battery_demand_response_certificates.js', // Please remove this after new URL for BESS2 released
   'residential-apartments-battery-certificates': 'residential_apartments_battery_certificates.js',
   'commercial-air-conditioner-certificates': 'commercial_ac_estimator.js',
   'commercial-electric-to-heat-pump-water-heater-certificates': 'commercial_electric_to_heat_pump_water_heater_certificates.js',
@@ -22,8 +25,9 @@ const pathToFilename = {
   'residential-small-business-gas-to-heat-pump-water-heater-eligibility': 'gas_residential_heat_pump_activity_requirements.js',
   'residential-small-business-electric-to-solar-water-heater-eligibility': 'residential_solar_water_heater_activity_requirements.js',
   'residential-small-business-gas-to-solar-water-heater-eligibility': 'residential_solar_gas_water_heater_activity_requirements.js',
-  'residential-solar-battery-demand-response-eligibility': 'residential_solar_battery_demand_response_eligibility.js',
   'residential-apartments-battery-eligibility': 'residential_apartments_battery_eligibility.js',
+  'residential-battery-demand-response-eligibility': 'residential_battery_demand_response_eligibility.js',
+  'residential-solar-battery-demand-response-eligibility': 'residential_battery_demand_response_eligibility.js', // Please remove this after new URL for BESS2 released
   'commercial-air-conditioner-eligibility': 'commercial_ac_activity_requirements.js',
   'commercial-electric-to-heat-pump-water-heater-eligibility': 'commercial_electric_to_heat_pump_water_heater_eligibility.js',
   'commercial-gas-to-heat-pump-water-heater-eligibility': 'commercial_gas_to_heat_pump_water_heater_eligibility.js',
