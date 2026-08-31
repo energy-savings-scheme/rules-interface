@@ -30,7 +30,7 @@ export default function SolarBatteryEligibilityPage(props) {
           src: '/SolarBattery.jpg',
         }}
         intro="Residential and small business"
-        title="Solar battery - eligibility"
+        title="Battery eligibility"
       />
 
       <div class="nsw-section nsw-section--white" style={{ fontFamily: 'sans-serif' }}>
@@ -40,8 +40,8 @@ export default function SolarBatteryEligibilityPage(props) {
               <div className="nsw-grid nsw-grid--spaced">
                 <div className="nsw-col nsw-col-md-12">
                   <p className="nsw-content-block__copy">
-                    The Safeguard certificate estimator reviews eligibility for installing a new battery for apartments
-                    or connecting your solar battery to a Virtual Power Plan (VPP).
+                    The Safeguard certificate estimator reviews eligibility for
+                    connecting your battery to a virtual power plan (VPP).
                   </p>
                 </div>
               </div>
@@ -91,13 +91,13 @@ export default function SolarBatteryEligibilityPage(props) {
                 </div>
                 <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
-                    copy="Onboard a behind the meter battery with a Virtual Power Plant (VPP)"
-                    headline="Sign a solar battery up to a Virtual Power Plant"
+                    copy="Onboard a behind the meter battery up with a virtual power plant (VPP)"
+                    headline="Sign a battery up to a virtual power plant (VPP)"
                     image="BESS2.jpg"
                     highlight
                     links={[
                       {
-                        href: '/#residential-solar-battery-demand-response-eligibility',
+                        href: '/#residential-battery-demand-response-eligibility',
                         title: 'Check eligibility',
                       },
                     ]}
@@ -159,7 +159,7 @@ export default function SolarBatteryEligibilityPage(props) {
                   <div class="nsw-card nsw-card--light nullnsw-card--headline" href="/">
                     <div class="nsw-card__content null">
                       <div class="nsw-card__title">
-                        <a href="/#solar-battery-certificates" class="nsw-card__link">
+                        <a href="/#battery-certificates-landing" class="nsw-card__link">
                           Estimate certificates for this activity
                         </a>
                       </div>

@@ -195,12 +195,12 @@ export default function EligibilityPage(props) {
                 </div>
                 <div class="nsw-col nsw-col-md-6 nsw-col-lg-4" style={{ backgroundColor: 'white' }}>
                   <ContentBlock
-                    copy="Install a new battery for apartments or connect your solar battery to a virtual power plant, or do both"
-                    headline="Solar battery"
+                    copy="Connect your battery to a virtual power plant"
+                    headline="Battery"
                     image="SolarBattery.jpg"
                     links={[
                       {
-                        href: '#solar-battery-eligibility',
+                        href: '#battery-eligibility-landing',
                         title: 'Check Activity Eligibility',
                       },
                     ]}

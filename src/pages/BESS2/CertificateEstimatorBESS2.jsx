@@ -128,7 +128,7 @@ export default function CertificateEstimatorBESS2(props) {
               src: 'BESS2.jpg',
             }}
             intro="Residential"
-            title="Sign a solar battery up to a demand response contract  - certificates"
+            title="Sign a battery up to a virtual power plant - certificates"
           />
         </div>
       )}
@@ -141,7 +141,7 @@ export default function CertificateEstimatorBESS2(props) {
             <div className="nsw-col nsw-col-md-10">
               <p className="nsw-content-block__copy">
                 Answer the following questions to estimate the peak reduction certificates (PRCs)
-                for the residential solar battery activity (BESS2 in the{' '}
+                for the residential battery activity (BESS2 in the{' '}
                 <a
                   href="https://www.energy.nsw.gov.au/nsw-plans-and-progress/regulation-and-policy/energy-security-safeguard/peak-demand-reduction-scheme"
                   target="_blank"
@@ -149,10 +149,8 @@ export default function CertificateEstimatorBESS2(props) {
                 >
                   Peak Demand Reduction Scheme
                 </a>{' '}
-                ). This activity is for the signup of a 'behind the meter' residential solar battery
-                to a demand response contract, often called a virtual power plant (VPP). A key
-                requirement of this activity is that there is already a solar PV system installed at
-                the address.
+                ). This activity is for the signup of a 'behind the meter' residential battery
+                to a demand response contract, often called a virtual power plant (VPP).
                 <p className="nsw-content-block__copy">
                   Note that this activity is only eligible for the Peak Demand Reduction scheme, and
                   is not eligible for the Energy Savings Scheme.
@@ -290,7 +288,7 @@ export default function CertificateEstimatorBESS2(props) {
                   options={[
                     {
                       title: 'Review eligibility for this activity',
-                      link: '/#residential-solar-battery-demand-response-eligibility',
+                      link: '/#residential-battery-demand-response-eligibility',
                     },
                   ]}
                 />

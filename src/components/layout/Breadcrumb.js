@@ -130,8 +130,8 @@ export default function Breadcrumb() {
     location.pathname === '/residential-solar-water-heater-activity-requirements' ||
     location.pathname === '/residential-solar-gas-water-heater-activity-requirements' ||
     location.pathname === '/residential-solar-battery-eligibility' ||
-    location.pathname === '/solar-battery-eligibility' ||
-    location.pathname === '/residential-solar-battery-demand-response-eligibility' ||
+    location.pathname === '/battery-eligibility-landing' ||
+    location.pathname === '/residential-battery-demand-response-eligibility' ||
     location.pathname === '/residential-apartments-battery-eligibility' ||
     location.pathname === '/commercial-water-heater-f17-activity-requirements' ||
     location.pathname === '/commercial-heat-pump-water-heater-eligibility' ||
@@ -183,9 +183,9 @@ export default function Breadcrumb() {
     location.pathname === '/hot-water-heater-certificate' ||
     location.pathname === '/residential-solar-water-heater-estimator' ||
     location.pathname === '/residential-gas-replacement-solar-water-heater-estimator' ||
-    location.pathname === '/solar-battery-certificates' ||
+    location.pathname === '/battery-certificates-landing' ||
     location.pathname === '/residential-solar-battery-certificates' ||
-    location.pathname === '/residential-solar-battery-demand-response-certificates' ||
+    location.pathname === '/residential-battery-demand-response-certificates' ||
     location.pathname === '/residential-apartments-battery-certificates' ||
     location.pathname === '/commercial-heat-pump-water-heater-certificates' ||
     location.pathname === '/commercial-electric-to-heat-pump-water-heater-certificates' ||
