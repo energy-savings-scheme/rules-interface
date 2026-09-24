@@ -129,7 +129,7 @@ export default function CertificateEstimatorPP(props) {
   }, [postcode]);
 
   useEffect(() => {
-    if (lastModified == '') {
+    if (lastModified === '') {
       RegistryApi.getPoolPumpLastModified('pool_pumps')
         .then((res) => {
           setLastModified(res.data);

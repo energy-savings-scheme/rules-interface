@@ -92,7 +92,7 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
   }, [postcode]);
 
   useEffect(() => {
-    if (lastModified == '') {
+    if (lastModified === '') {
       RegistryApi.getResidentialSolarWaterHeaterLastModified()
         .then((res) => {
           setLastModified(res.data);

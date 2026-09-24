@@ -92,7 +92,7 @@ export default function CertificateEstimatorGasHeatPump(props) {
   }, [postcode]);
 
   useEffect(() => {
-    if (lastModified == '') {
+    if (lastModified === '') {
       RegistryApi.getResidentialHeatPumpLastModified()
     .then((res) => {
       setLastModified(res.data);

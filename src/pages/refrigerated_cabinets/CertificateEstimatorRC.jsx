@@ -137,7 +137,7 @@ export default function CertificateEstimatorRC(props) {
   }, []);
 
   useEffect(() => {
-    if (lastModified == '') {
+    if (lastModified === '') {
       RegistryApi.getRF2LastModified()
         .then((res) => {
           setLastModified(res.data);

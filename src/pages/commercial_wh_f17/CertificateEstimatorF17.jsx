@@ -92,7 +92,7 @@ export default function CertificateEstimatorF17(props) {
   }, [postcode]);
 
   useEffect(() => {
-    if (lastModified == '') {
+    if (lastModified === '') {
       RegistryApi.getCommercialWHLastModified('commercial_wh')
     .then((res) => {
       setLastModified(res.data);

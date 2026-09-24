@@ -106,7 +106,7 @@ export default function CertificateEstimatorElectricHeatPump(props) {
   }, []);
 
   useEffect(() => {
-    if (lastModified == '') {
+    if (lastModified === '') {
       RegistryApi.getResidentialHeatPumpLastModified()
       .then((res) => {
         setLastModified(res.data);
