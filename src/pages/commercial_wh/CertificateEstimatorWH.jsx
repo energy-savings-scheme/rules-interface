@@ -95,13 +95,17 @@ export default function CertificateEstimatorWH(props) {
     }
   }, [postcode]);
 
-  RegistryApi.getCommercialWHLastModified('commercial_wh')
+  useEffect(() => {
+    if (lastModified === '') {
+      RegistryApi.getCommercialWHLastModified('commercial_wh')
     .then((res) => {
       setLastModified(res.data);
     })
     .catch((err) => {
       console.log(err);
     });
+    }
+  }, [lastModified]);
 
   const validatePostcode = (postcode) => {
     if (['2817', '2818', '2819'].includes(postcode)) {

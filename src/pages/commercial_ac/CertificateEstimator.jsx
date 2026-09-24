@@ -80,7 +80,7 @@ export default function CertificateEstimatorHVAC(props) {
       { text: 'BCA Climate Zone 8', value: 'BCA_Climate_Zone_8' },
     ]);
 
-    if (lastModified.length === 0) {
+    if (lastModified === '') {
       RegistryApi.getCommercialHVACLastModified('commercial_hvac')
         .then((res) => {
           setLastModified(res.data);
