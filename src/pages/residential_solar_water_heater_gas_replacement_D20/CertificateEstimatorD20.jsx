@@ -91,15 +91,17 @@ export default function CertificateEstimatorResidentialGasReplacementSolarWaterH
     }
   }, [postcode]);
 
-  if (lastModified.length == 0) {
-    RegistryApi.getResidentialSolarWaterHeaterLastModified()
-      .then((res) => {
-        setLastModified(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  useEffect(() => {
+    if (lastModified == '') {
+      RegistryApi.getResidentialSolarWaterHeaterLastModified()
+        .then((res) => {
+          setLastModified(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [lastModified]);
 
   const validatePostcode = (postcode) => {
     if (['2817', '2818', '2819'].includes(postcode)) {

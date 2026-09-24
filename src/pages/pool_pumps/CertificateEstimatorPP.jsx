@@ -128,15 +128,17 @@ export default function CertificateEstimatorPP(props) {
     }
   }, [postcode]);
 
-  if (lastModified.length == 0) {
-    RegistryApi.getPoolPumpLastModified('pool_pumps')
-      .then((res) => {
-        setLastModified(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  useEffect(() => {
+    if (lastModified == '') {
+      RegistryApi.getPoolPumpLastModified('pool_pumps')
+        .then((res) => {
+          setLastModified(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [lastModified]);
 
   const validatePostcode = (postcode) => {
     if (['2817', '2818', '2819'].includes(postcode)) {
