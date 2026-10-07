@@ -134,7 +134,7 @@ export default function CertificateEstimatorResidentialAC(props) {
   };
 
   useEffect(() => {
-    if (lastModified.length == 0) {
+    if (lastModified === '') {
       RegistryApi.getCommercialHVACLastModified()
         .then((res) => {
           setLastModified(res.data);
