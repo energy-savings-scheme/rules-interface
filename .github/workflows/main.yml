@@ -129,7 +129,7 @@ jobs:
 
       - name: Install Cypress dependencies
         working-directory: packages/test
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Cleanup old Cypress assets
         run: |
@@ -211,12 +211,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v6
         with:
-          node-version: 14.x
-
-      - name: Install Yarn
-        run: npm install -g yarn
+          node-version: 24
 
       - name: Install tools
         run: |
@@ -231,7 +228,7 @@ jobs:
       - name: Build website
         run: |
           # Install all npm packages
-          YARN_IGNORE_ENGINES=true yarn install --frozen-lockfile
+          npm ci
 
           export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
 
@@ -242,9 +239,9 @@ jobs:
           echo "REACT_APP_REGISTRY_API_BASE_URL=${{ secrets.REACT_APP_REGISTRY_API_BASE_URL }}" >> ./.env
 
           # Build all the JS files for the Drupal
-          yarn run dist-build
+          npm run dist-build
           # Build the react pages
-          yarn run build
+          npm run build
 
           # Prepare dist files to versioned directory
           mkdir -p ./build/dist/$REACT_APP_BUILD_VERSION
