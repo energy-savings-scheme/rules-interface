@@ -239,8 +239,10 @@ jobs:
           echo "REACT_APP_REGISTRY_API_BASE_URL=${{ secrets.REACT_APP_REGISTRY_API_BASE_URL }}" >> ./.env
 
           # Build all the JS files for the Drupal
+          echo "Building JS files for Drupal..."
           npm run dist-build
           # Build the react pages
+          echo "Building React pages..."
           npm run build
 
           # Prepare dist files to versioned directory

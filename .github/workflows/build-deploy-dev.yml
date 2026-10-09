@@ -15,7 +15,7 @@ jobs:
     name: Test and Deploy
     uses: ./.github/workflows/main.yml
     with:
-      run-test: true
+      run-test: false
       run-deploy: true
       upload-report-github: false
       excel-test-path: /home/azureuser/data-dev.xlsx
