@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 
 import VariableSearchBar from 'pages/homepage/VariableSearchBar';
 import ScheduleTile from './ScheduleTile';
