@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { useState } from 'react';
 import { SelectItem } from 'nsw-ds-react/forms';
 
 export const ModelSelect = ({
