@@ -196,7 +196,7 @@ jobs:
 
   build-and-deploy:
     name: Build and deploy
-    # needs: test
+    needs: test
     # Logic: Run if 'run-deploy' is true AND (test passed OR test was skipped)
     # We use !failure() and !cancelled() to allow the job to run if 'test' was skipped.
     # if 'run-test' is false, 'test' status will be 'skipped'.
@@ -231,6 +231,8 @@ jobs:
           npm ci
 
           export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
+
+          # This is to disable the eslint plugin and ci environment for the build step, as it can cause issues with the build process.
           export DISABLE_ESLINT_PLUGIN=true
           export CI=false
 
