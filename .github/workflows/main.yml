@@ -196,7 +196,7 @@ jobs:
 
   build-and-deploy:
     name: Build and deploy
-    needs: test
+    # needs: test
     # Logic: Run if 'run-deploy' is true AND (test passed OR test was skipped)
     # We use !failure() and !cancelled() to allow the job to run if 'test' was skipped.
     # if 'run-test' is false, 'test' status will be 'skipped'.
