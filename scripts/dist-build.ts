@@ -72,14 +72,7 @@ const build = () => {
     writeFileSync(appOriginalPath, routeFileContent);
 
     console.log(`Executing command "${buildCmd}"`);
-    try {
-      child.execSync(buildCmd, { encoding: 'utf-8', stdio: 'pipe' });
-    } catch (error: any) {
-      console.error('--- BUILD FAILED ---');
-      if (error.stdout) console.error('STDOUT:\n', error.stdout);
-      if (error.stderr) console.error('STDERR:\n', error.stderr);
-    }
-    // child.execSync(buildCmd, { stdio: 'inherit' });
+    child.execSync(buildCmd, { stdio: 'inherit' });
     writeRouteFile(filesFolder, buildFolder, pathRoute?.replace('/', ''));
     console.log(`Building route ${pathRoute} done.\n`);
   }

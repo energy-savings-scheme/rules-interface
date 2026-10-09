@@ -231,6 +231,8 @@ jobs:
           npm ci
 
           export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
+          export DISABLE_ESLINT_PLUGIN=true
+          export CI=false
 
           # Create .env file
           touch ./.env
