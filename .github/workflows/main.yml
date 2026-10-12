@@ -232,10 +232,6 @@ jobs:
 
           export REACT_APP_BUILD_VERSION=$(date +'%Y%m%d-%H%M%S')
 
-          # This is to disable the eslint plugin and ci environment for the build step, as it can cause issues with the build process.
-          export DISABLE_ESLINT_PLUGIN=true
-          export CI=false
-
           # Create .env file
           touch ./.env
           echo "REACT_APP_OPENFISCA_BASE_URL=${{ secrets.REACT_APP_OPENFISCA_BASE_URL }}" >> ./.env
