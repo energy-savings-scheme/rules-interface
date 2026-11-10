@@ -1,12 +1,13 @@
-FROM node:24.20.0
+FROM node:24.22.2
 
 RUN mkdir app
 
 WORKDIR /app
 
+COPY package*.json ./
 COPY . .
 
-RUN npm install
+RUN npm ci
 
 EXPOSE 3000
 

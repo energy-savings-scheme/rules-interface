@@ -122,10 +122,10 @@ jobs:
           node-version-file: packages/test/.nvmrc
 
       # 1. Lock Chrome version
-      - name: Setup Chrome 143
-        uses: browser-actions/setup-chrome@v1
+      - name: Setup Chrome 157
+        uses: browser-actions/setup-chrome@v2
         with:
-          chrome-version: 143
+          chrome-version: 157
 
       - name: Install Cypress dependencies
         working-directory: packages/test
