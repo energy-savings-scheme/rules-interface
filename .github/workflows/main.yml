@@ -28,6 +28,11 @@ on:
         required: false
         default: /home/azureuser/data.xlsx
         type: string
+      github-report-dir:
+        description: 'The directory to upload report to GitHub. Only works when run-test is true and upload-report-github is true.'
+        required: false
+        default: ''
+        type: string
     secrets:
       REACT_APP_OPENFISCA_BASE_URL:
         description: 'The base URL for OpenFisca API.'
@@ -145,6 +150,7 @@ jobs:
           browser: chrome-for-testing
         env:
           EXCEL_PATH: ${{ inputs.excel-test-path }}
+          GITHUB_REPORT_DIR: ${{ inputs.github-report-dir }}
           SEND_REPORT_TO_EMAIL: ${{ inputs.send-report && 'true' || 'false' }}
           UPLOAD_REPORT_TO_GITHUB: ${{ inputs.upload-report-github && 'true' || 'false' }}
           COMMUNICATION_SERVICES_CONNECTION_STRING: ${{ secrets.COMMUNICATION_SERVICES_CONNECTION_STRING }}
