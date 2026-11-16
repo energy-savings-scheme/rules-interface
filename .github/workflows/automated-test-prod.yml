@@ -9,12 +9,13 @@ on:
 
 jobs:
   test:
-    name: Automated Tests
+    name: Automated Tests PROD
     uses: ./.github/workflows/main.yml
     with:
       run-test: true
       run-deploy: false
       upload-report-github: true
+      github-report-dir: 'auto-test-result/'
     secrets: 
       REACT_APP_OPENFISCA_BASE_URL: ${{ secrets.REACT_APP_OPENFISCA_BASE_URL_PROD }}
       REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL_PROD }}
