@@ -1,13 +1,14 @@
-FROM node:14.21.3-slim
+FROM node:24.22.2
 
 RUN mkdir app
 
 WORKDIR /app
 
+COPY package*.json ./
 COPY . .
 
-RUN YARN_IGNORE_ENGINES=true yarn install
+RUN npm ci
 
 EXPOSE 3000
 
-CMD ["yarn", "run", "start"]
+CMD ["npm", "run", "start"]
